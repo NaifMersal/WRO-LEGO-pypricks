@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
+
+  <meta name="dcterms.date" content="2026-07-07">
+  <title>The Drive That Heals Itself</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-05b633aaffd58596cc6573a610a4b559.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+DQogIDxkZWZzPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYSIgeDE9Ii0xLjkxMSIgeDI9IjIuOTg1IiB5MT0iLS44NDEiIHkyPSIxLjQxNCIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjOTlkNjMzIi8+DQogICAgICA8c3RvcCBvZmZzZXQ9Ii41IiBzdG9wLWNvbG9yPSIjM2M5Ii8+DQogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyNzM0NzAiLz4NCiAgICA8L2xpbmVhckdyYWRpZW50Pg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYSIgaWQ9ImQiIHgxPSItMy41NjkiIHgyPSIxLjMyOCIgeTE9Ii0xLjYwNSIgeTI9Ii42NTEiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJlIiB4MT0iLTMuMDQ3IiB4Mj0iMS44NDkiIHkxPSItLjkwNCIgeTI9IjEuMzUyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iZiIgeDE9Ii0yLjg5IiB4Mj0iMi4wMDciIHkxPSItMS4yOTIiIHkyPSIuOTY0Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iZyIgeDE9Ii0yLjQiIHgyPSIyLjQ5NyIgeTE9Ii0xLjA2NiIgeTI9IjEuMTg5Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iaCIgeDE9Ii0uOTkyIiB4Mj0iMi42NzkiIHkxPSItLjQxOCIgeTI9IjEuMjczIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iaSIgeDE9Ii0xLjUxMiIgeDI9IjIuMTU5IiB5MT0iLS4xOTciIHkyPSIxLjQ5NSIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYSIgaWQ9ImoiIHgxPSItLjkxNCIgeDI9IjIuNzU4IiB5MT0iLjA3OSIgeTI9IjEuNzcxIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iayIgeDE9Ii0zLjQwNSIgeDI9IjEuNDkzIiB5MT0iLTEuMDY4IiB5Mj0iMS4xODciLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJsIiB4MT0iLjM0NyIgeDI9IjMuMjg1IiB5MT0iLjE5OSIgeTI9IjEuNTUyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0ibSIgeDE9Ii0uOTA1IiB4Mj0iMi43NjciIHkxPSIuMDgzIiB5Mj0iMS43NzUiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJuIiB4MT0iLTIuMTE5IiB4Mj0iMi43NzgiIHkxPSItLjQ3NiIgeTI9IjEuNzc5Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0ibyIgeDE9Ii01LjY0NCIgeDI9Ii40ODYiIHkxPSItMi45OTgiIHkyPSIuNzQxIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0icCIgeDE9Ii0zLjQ5NSIgeDI9IjIuNjM2IiB5MT0iLTEuNjg3IiB5Mj0iMi4wNTMiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJxIiB4MT0iLTEuNDIyIiB4Mj0iMy4xNzUiIHkxPSItLjkyMyIgeTI9IjEuODgyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iciIgeDE9Ii0zLjMwNiIgeDI9IjIuODI1IiB5MT0iLTIuMDcyIiB5Mj0iMS42NjgiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJzIiB4MT0iLTEuNjgzIiB4Mj0iMi45MTQiIHkxPSItMS4wODEiIHkyPSIxLjcyMyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYSIgaWQ9InQiIHgxPSItMS4xNTgiIHgyPSIyLjUyMSIgeTE9Ii0uMjYxIiB5Mj0iMS45ODMiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSIuMjYxIiB4Mj0iLjYyNCIgeTE9IjMuNTYiIHkyPSItMS40NjkiIGdyYWRpZW50VW5pdHM9Im9iamVjdEJvdW5kaW5nQm94Ij4NCiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzZjZiIvPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIuNSIgc3RvcC1jb2xvcj0iIzYyNThhNiIvPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMjczNDcwIi8+DQogICAgPC9saW5lYXJHcmFkaWVudD4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ1IiB4MT0iLjE2MyIgeDI9Ii41MjYiIHkxPSI0LjkyNCIgeTI9Ii0uMTAzIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0idiIgeDE9Ii4zODYiIHgyPSIuNjU4IiB5MT0iMS44MjUiIHkyPSItMS45NDUiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ3IiB4MT0iLjI1MiIgeDI9Ii42MTUiIHkxPSI0LjE4MiIgeTI9Ii0uODQ1Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0ieCIgeDE9Ii40MTciIHgyPSIuNjg5IiB5MT0iMS45IiB5Mj0iLTEuODciLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ5IiB4MT0iLjQ4NSIgeDI9Ii43MDMiIHkxPSIuOTU2IiB5Mj0iLTIuMDYiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ6IiB4MT0iLjM3NyIgeDI9Ii42NDkiIHkxPSIyLjQ1NSIgeTI9Ii0xLjMxNCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkEiIHgxPSIuMTk5IiB4Mj0iLjU2MiIgeTE9IjQuOTIyIiB5Mj0iLS4xMDUiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJCIiB4MT0iLjQzNyIgeDI9Ii43MDkiIHkxPSIxLjYyNSIgeTI9Ii0yLjE0NSIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkMiIHgxPSIuMjYxIiB4Mj0iLjYyNCIgeTE9IjQuMDU1IiB5Mj0iLS45NzIiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJEIiB4MT0iLjUiIHgyPSIuNSIgeTE9IjMuMDQ1IiB5Mj0iLTEuOTI3Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iRSIgeDE9Ii41IiB4Mj0iLjUiIHkxPSI0LjkwMSIgeTI9Ii0uMDcyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iRiIgeDE9Ii41IiB4Mj0iLjUiIHkxPSIyLjQzNSIgeTI9Ii0xLjI5NiIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkciIHgxPSIuNSIgeDI9Ii41IiB5MT0iLjkzNCIgeTI9Ii0yLjA1Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iSCIgeDE9Ii41IiB4Mj0iLjUiIHkxPSIzLjc4NSIgeTI9Ii0xLjE4NyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkkiIHgxPSIuNSIgeDI9Ii41IiB5MT0iMS44MDkiIHkyPSItMS45MjEiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJKIiB4MT0iLjUiIHgyPSIuNSIgeTE9IjMuMDQ2IiB5Mj0iLTEuOTI4Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iSyIgeDE9Ii41IiB4Mj0iLjUiIHkxPSIyLjc5NCIgeTI9Ii0yLjE3NyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYyIgeDE9IjUuMDEiIHgyPSItMi4yNzciIHkxPSItMS4zODMiIHkyPSIyLjAzOSIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmRiZDRkIi8+DQogICAgICA8c3RvcCBvZmZzZXQ9Ii41IiBzdG9wLWNvbG9yPSIjZjYzIi8+DQogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyNzM0NzAiLz4NCiAgICA8L2xpbmVhckdyYWRpZW50Pg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IkwiIHgxPSIyLjIzOSIgeDI9Ii0yLjEzNCIgeTE9Ii0uMDgyIiB5Mj0iMS45NzEiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJNIiB4MT0iNi4wOTgiIHgyPSItMS4xOTEiIHkxPSItMS44OTMiIHkyPSIxLjUyOCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9Ik4iIHgxPSIzLjM4NCIgeDI9Ii0yLjA4MSIgeTE9Ii0xLjA4OCIgeTI9IjEuNDc3Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iTyIgeDE9IjIuNzgiIHgyPSItMi42ODYiIHkxPSItLjgwNSIgeTI9IjEuNzYxIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iUCIgeDE9IjcuMDc0IiB4Mj0iLS4yMTIiIHkxPSItMi4zNTMiIHkyPSIxLjA2OSIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlEiIHgxPSI1LjA3NSIgeDI9Ii0yLjIxMSIgeTE9Ii0xLjQxNCIgeTI9IjIuMDA4Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iUiIgeDE9IjUuNzM2IiB4Mj0iLTEuNTUiIHkxPSItMi4xOTQiIHkyPSIxLjIyOCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlMiIHgxPSIyLjA4MSIgeDI9Ii0xLjc4MSIgeTE9Ii0uMDQ3IiB5Mj0iMS45Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iVCIgeDE9Ii43MjkiIHgyPSItMi4zNjEiIHkxPSIuMTM1IiB5Mj0iMS42OTIiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJVIiB4MT0iMi43MTciIHgyPSItMi40MzMiIHkxPSItLjg2OCIgeTI9IjEuNzI4Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iViIgeDE9IjEuNTE3IiB4Mj0iLTIuMzQ3IiB5MT0iLS4yNjIiIHkyPSIxLjY4NCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlciIHgxPSIzLjU0NCIgeDI9Ii0xLjYwNiIgeTE9Ii0xLjI4NCIgeTI9IjEuMzEyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iWCIgeDE9IjIuNjMxIiB4Mj0iLTEuMjMzIiB5MT0iLS4zMjQiIHkyPSIxLjYyMyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlkiIHgxPSIyLjAwMyIgeDI9Ii0xLjg2IiB5MT0iLS4wMDciIHkyPSIxLjk0Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iWiIgeDE9IjQuMTI1IiB4Mj0iLTEuMDI1IiB5MT0iLTEuMDc3IiB5Mj0iMS41MTgiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJhYSIgeDE9IjMuMDIyIiB4Mj0iLTIuMTI3IiB5MT0iLTEuMDIxIiB5Mj0iMS41NzQiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJhYiIgeDE9IjQuNjgxIiB4Mj0iLS40NjkiIHkxPSItMS44NTciIHkyPSIuNzM4Ii8+DQogIDwvZGVmcz4NCiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMy44IDEpIj4NCiAgPHBhdGggZmlsbD0iIzNjOSIgZD0ibTM2LjA0MSAyNi41My0xMS40NDggNi42MTF2MTMuMjJsMTEuNDQ4IDYuNjEyIDExLjQ0Ni02LjYwOFYzMy4xNDFaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjYSkiIGQ9Ik03MS40NjQgMjAuOTF2Ny45MzJsLTYuODctMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjZCkiIGQ9Ik02NC4yNDkgNTIuOTdsNi44NjkgMy45NjV2LTcuOTNaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjZSkiIGQ9Im02OC4xIDQ2LjM1OSAtNi44NjkgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2YpIiBkPSJNNzIuMzkyIDM1LjM3djcuOTMybC02Ljg2OSAtMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjZykiIGQ9Ik01Ni42NTEgNTYuODQ3djcuOTMybC02Ljg2OSAtMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjaCkiIGQ9Im01Ny43OTQgNTEuNjQzIC05LjE2IC01LjI4NiA5LjE2IC01LjI5WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2kpIiBkPSJtNTcuNzk1IDUyLjk3IC05LjE2IDUuMjlWNDcuNjg0WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2opIiBkPSJtNTcuNzkyIDM5Ljc0OSAtOS4xNTggNS4yODZ2LTEwLjU3MloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNrKSIgZD0ibTU4LjUgNzAuMzE4IC02Ljg2OCAzLjk2N3YtNy45MzJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjbCkiIGQ9Im00Ny40ODcgNDYuMzYxIC0xMS40NDYgLTYuNjEyIDExLjQ0NiAtNi42MTFaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjbSkiIGQ9Im00Ni4zNDQgNjEuMDc3IC05LjE1OCA1LjI4NnYtMTAuNTcyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI24pIiBkPSJtNDUuMTk5IDc0LjAzNSAtNi44NjggMy45NjV2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI28pIiBkPSJtNzAuMDIxIDYxLjc3NSAtNi44NjkgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3ApIiBkPSJtNjguMSAzMy4xNDIgLTYuODY5IDMuOTY3di03LjkzMloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNxKSIgZD0iTTU3Ljc5NCAyNy44NTJ2MTAuNTc2bC05LjE2IC01LjI5WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3IpIiBkPSJNNDUuMjAyIDYyLjg5MXY3LjkzMmwtNi44NjkgLTMuOTY3WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3MpIiBkPSJtNDYuMzQzIDU5Ljc1NiAtOS4xNTcgLTUuMjg2IDkuMTU3IC01LjI5WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3QpIiBkPSJtMzYuMDQxIDM5Ljc1IDExLjQ0NiA2LjYxMiAtMTEuNDQ2IDYuNjA4WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJtNjkuMzM0IDE3LjAzMSAtNi44NjkgMy45NjV2LTcuOTNaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjdSkiIGQ9Im01OC4wODIgNS40NiAtNi44NzEgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3YpIiBkPSJtNTcuNzk2IDI2LjUyOSAtOS4xNjIgNS4yODZWMjEuMjQxWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3cpIiBkPSJtNDUuMiAxNC41NDUgLTYuODY5IC0zLjk2NSA2Ljg2OSAtMy45NjdaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjeCkiIGQ9Ik00Ni4zNDQgMTkuNzQ0VjMwLjMxOWwtOS4xNTggLTUuMjg2WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3kpIiBkPSJNMzYuMDQxIDI2LjUzdjEzLjIyTDI0LjU5MyAzMy4xNDFaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjeikiIGQ9Im0zNC44OTcgMjMuNzA5IC05LjE1OCAtNS4yODYgOS4xNTggLTUuMjlaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjQSkiIGQ9Im0zMy43NSA3LjkzMiAtNi44NyAtMy45NjUgNi44NyAtMy45NjdaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjQikiIGQ9Im0yMy40NDkgMzEuODE2IC05LjE1OCAtNS4yOSA5LjE1OCAtNS4yODVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjQykiIGQ9Ik0xOS43NiA2LjAzOXY3LjkzMmwtNi44NjkgLTMuOTY1WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0QpIiBkPSJtNTYuNjQ3IDIyLjY1MSAtNi44NzEgLTMuOTY3IDYuODcxIC0zLjk2N1oiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNFKSIgZD0ibTQ1LjIgMy45NjcgLTYuODY5IDMuOTY1di03LjkzMloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNGKSIgZD0ibTQ2LjM0NCAxOC40MTcgLTkuMTU4IDUuMjg2di0xMC41NjhaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjRykiIGQ9Im00Ny40ODcgMzMuMTQxIC0xMS40NDYgNi42MTF2LTEzLjIyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0gpIiBkPSJtMzMuNzUzIDEyLjgxNCAtNi44NzEgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0kpIiBkPSJtMzQuODk2IDI1LjAzMyAtOS4xNTggNS4yODZ2LTEwLjU3NVoiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNKKSIgZD0ibTIyLjMgMTguNjg0IC02Ljg3IDMuOTY1di03LjkzWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0spIiBkPSJtNy41NTYgMjQuNjM3IC02Ljg3IC0zLjk2NSA2Ljg3IC0zLjk2N1oiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNjKSIgZD0ibTMzLjc1MSA3OC4wMDEgLTYuODcxIC0zLjk2NSA2Ljg3MSAtMy45NjdaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjTCkiIGQ9Ik0zNi4wNDEgMzkuNzV2MTMuMjJsLTExLjQ0OCAtNi42MTJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjTSkiIGQ9Ik0yMi4zIDY2Ljc2M3Y3LjkzMmwtNi44NyAtMy45NjZaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjTikiIGQ9Im0yMy40NDkgNDYuMzYyIC05LjE1OCA1LjI4NnYtMTAuNTc2WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI08pIiBkPSJtMjMuNDQ5IDMzLjE0MiAtOS4xNTggNS4yOXYtMTAuNThaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjUCkiIGQ9Ik05LjYxNiA1OS40MDF2Ny45M2wtNi44NzEgLTMuOTY1WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI1EpIiBkPSJNMTAuODUxIDI4Ljg5OXY3LjkzMmwtNi44NzEgLTMuOTY1WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI1IpIiBkPSJtNi44NzEgNDAuMDkzIC02Ljg3MSAzLjk2NXYtNy45M1oiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNTKSIgZD0ibTM0Ljg5NCA2Ni4zNjcgLTkuMTYgLTUuMjg2IDkuMTYgLTUuMjlaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjVCkiIGQ9Im0zNi4wNDEgMzkuNzUgLTExLjQ0OCA2LjYwOHYtMTMuMjJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjVSkiIGQ9Im0zMy43NSA2Ny40MjUgLTYuODcxIDMuOTY3di03LjkzMloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNWKSIgZD0ibTM0Ljg5MiA1NC40NjcgLTkuMTU3IDUuMjl2LTEwLjU4MloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNXKSIgZD0ibTIyLjI5OSA2MC44MTQgLTYuODY5IDMuOTY1di03LjkzWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI1gpIiBkPSJNMjMuNDQ5IDQ3LjY4M3YxMC41NzNsLTkuMTU4IC01LjI4NloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNZKSIgZD0iTTIzLjQ0OSAzNC40NTl2MTAuNTczbC05LjE1OCAtNS4yODNaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjWikiIGQ9Im0xMC44NSA1MC4zMjYgLTYuODcxIC0zLjk2NyA2Ljg3MSAtMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjYWEpIiBkPSJtNy4xNDUgMjYuNTMxIC02Ljg2OSAzLjk2NXYtNy45MzJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjYWIpIiBkPSJtNy41NTYgNTMuNDUyIC02Ljg3MSAzLjk2NXYtNy45MzVaIi8+DQogIDwvZz4NCjwvc3ZnPg0K">
+
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="../slides_template/assets/anim.svg" data-background-opacity="0.15" data-background-size="cover" class="quarto-title-block center">
+  <h1 class="title">The Drive That Heals Itself</h1>
+  <p class="subtitle">Day 4 · Robot Rockstars · SPIKE Prime + Pybricks</p>
+
+<div class="quarto-title-authors">
+</div>
+
+  <p class="date">2026-07-07</p>
+</section>
+<section>
+<section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
+<h1>A. Warm-Up</h1>
+<p>Yesterday your turn <em>watched itself</em> — and coasted to 94, guilty party named. Today: the cure. Then the cure gets a brain.</p>
+</section>
+<section id="where-we-left-off" class="slide level2">
+<h2>Where we left off</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Yesterday</th>
+<th>The trick</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>🧭 <strong>heading</strong></td>
+<td>one number for “which way” — net turning since <code>reset_heading(0)</code></td>
+</tr>
+<tr class="even">
+<td>👀 the <strong>watched turn</strong></td>
+<td>spin · watch <code>heading()</code> · stop <em>at</em> the target — <code>while</code></td>
+</tr>
+<tr class="odd">
+<td>🔁 <strong>loops, nested</strong></td>
+<td><code>for</code> draws the shape, <code>while</code> lands the corner — 360 ÷ sides</td>
+</tr>
+<tr class="even">
+<td>🚨 the <strong>open case</strong></td>
+<td>it printed <strong>94</strong> — guilty party: <em>momentum</em>. Diagnosed, not cured</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up">
+<p>🤔 Shape Shifter’s traces told the same story: every corner a few degrees hot, and the octagon paid 8 times. Today the coast meets its cure.</p>
+</div>
+<p>⏱️ <strong>Time: 10 minutes</strong></p>
+</section>
+<section id="setup-same-bench-one-new-import" class="slide level2">
+<h2>Setup — same bench, one new import</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-4|6-8|10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">from</span> pybricks.hubs <span class="im">import</span> PrimeHub</span>
+<span id="cb1-2"><a></a><span class="im">from</span> pybricks.pupdevices <span class="im">import</span> Motor</span>
+<span id="cb1-3"><a></a><span class="im">from</span> pybricks.parameters <span class="im">import</span> Port, Direction</span>
+<span id="cb1-4"><a></a><span class="im">from</span> pybricks.tools <span class="im">import</span> wait, StopWatch</span>
+<span id="cb1-5"><a></a></span>
+<span id="cb1-6"><a></a>hub <span class="op">=</span> PrimeHub()</span>
+<span id="cb1-7"><a></a>left <span class="op">=</span> Motor(Port.A, Direction.COUNTERCLOCKWISE)</span>
+<span id="cb1-8"><a></a>right <span class="op">=</span> Motor(Port.E)</span>
+<span id="cb1-9"><a></a></span>
+<span id="cb1-10"><a></a><span class="co"># your watched turn from yesterday goes here — it still coasts to ~94. For now.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<p>Everyone starts from their own D3 file — imports plus their watched-turn lines. <code>StopWatch</code> sneaks into the imports here; it gets used (and explained in one breath) in the race lab. Recap by asking, not telling: “walk me through your watched turn line by line — and who was guilty for the 94?” — two or three students, one loop. Do NOT preview the fix; the next act builds it from the coast they already diagnosed.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="b.-the-cure-arrive-slowly" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
+<h1>B. The Cure: Arrive Slowly</h1>
+<p>Momentum needs <em>speed</em> to steal degrees. So give it none — at the end.</p>
+</section>
+<section id="feel-the-fix-arrive-slowly" class="slide level2">
+<h2>Feel the fix: arrive slowly</h2>
+<div style="text-align:center;font-size:17px;color:#5b6678;margin-bottom:2px;">🚗 that's your <b>robot seen from above</b> — nose up = heading 0°. The judge calls: turn right to the <b style="color:#00AE8D;">90° tick</b>.</div>
+<div style="display:flex;justify-content:center;align-items:flex-start;gap:80px;">
+  <div style="text-align:center;">
+    <div style="font-weight:800;color:#1C355E;font-size:23px;">🚀 Full speed all the way</div>
+    <svg width="210" height="210" viewbox="-110 -110 220 220" style="margin:6px auto;display:block;">
+      <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="6"></circle>
+      <line x1="86" y1="0" x2="102" y2="0" stroke="#00C9A7" stroke-width="6"></line>
+      <text x="92" y="-12" font-size="17" fill="#00C9A7" font-weight="700">90°</text>
+      <path id="odArc" d="M 86 0 A 86 86 0 0 1 85.4 10.5" fill="none" stroke="#E96852" stroke-width="7" stroke-linecap="round" opacity="0"></path>
+      <g id="odN1">
+        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#FF7A5C"></rect>
+        <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+        <circle cy="-30" r="4" fill="#FFD500"></circle>
+      </g>
+    </svg>
+    <div style="font-size:24px;font-weight:800;color:#FF7A5C;"><span id="odV1">0</span>° <span id="odS1" style="font-size:17px;"></span></div>
+  </div>
+  <div style="display:flex;flex-direction:column;justify-content:center;height:240px;">
+    <button onclick="raceDials()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:10px 26px;font-size:22px;font-weight:700;cursor:pointer;">▶ Turn to 90°</button>
+  </div>
+  <div style="text-align:center;">
+    <div style="font-weight:800;color:#1C355E;font-size:23px;">🐢 Fast, then crawl</div>
+    <svg width="210" height="210" viewbox="-110 -110 220 220" style="margin:6px auto;display:block;">
+      <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="6"></circle>
+      <line x1="86" y1="0" x2="102" y2="0" stroke="#00C9A7" stroke-width="6"></line>
+      <text x="92" y="-12" font-size="17" fill="#00C9A7" font-weight="700">90°</text>
+      <g id="odN2">
+        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00C9A7"></rect>
+        <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+        <circle cy="-30" r="4" fill="#FFD500"></circle>
+      </g>
+    </svg>
+    <div style="font-size:24px;font-weight:800;color:#00C9A7;"><span id="odV2">0</span>° <span id="odS2" style="font-size:17px;"></span></div>
+  </div>
+</div>
+<script>
+var odRAF = null;
+function raceDials(){
+  if(odRAF) cancelAnimationFrame(odRAF);
+  var t0 = performance.now();
+  document.getElementById('odArc').setAttribute('opacity','0');
+  document.getElementById('odS1').textContent = '';
+  document.getElementById('odS2').textContent = '';
+  function pose(el, val, deg){
+    document.getElementById(el).setAttribute('transform','rotate('+deg.toFixed(1)+')');
+    document.getElementById(val).textContent = Math.round(deg);
+  }
+  function step(now){
+    var t = (now-t0)/1000;
+    // Dial 1: 180°/s to 90, then coast +7° over 0.45 s (ease-out)
+    var a1;
+    if(t < 0.5) a1 = 180*t;
+    else { var c = Math.min((t-0.5)/0.45, 1); a1 = 90 + 7*(1-(1-c)*(1-c)); }
+    // Dial 2: 180°/s to 60, then 35°/s to 90, dead stop
+    var a2;
+    if(t < 0.3333) a2 = 180*t;
+    else a2 = Math.min(60 + 35*(t-0.3333), 90);
+    pose('odN1','odV1',a1);
+    pose('odN2','odV2',a2);
+    if(t < 1.4){ odRAF = requestAnimationFrame(step); }
+    else {
+      odRAF = null;
+      document.getElementById('odArc').setAttribute('opacity','1');
+      var s1 = document.getElementById('odS1'); s1.textContent = '— coasted past 😬'; s1.style.color = '#E96852';
+      var s2 = document.getElementById('odS2'); s2.textContent = '— parked on it 🎯'; s2.style.color = '#00AE8D';
+    }
+  }
+  odRAF = requestAnimationFrame(step);
+}
+</script>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p>Same target. Same gyro. The only difference: the 🐢 arrives <strong>slowly</strong> — so there’s nothing left to coast. Fast when far, slow when close.</p>
+</div>
+</div>
+</section>
+<section id="the-fix-in-code" class="slide level2">
+<h2>The fix, in code</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1|2|3-5|6-8|9|11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="kw">def</span> gyro_turn(target):                        <span class="co"># def = name a move once, use it forever</span></span>
+<span id="cb2-2"><a></a>    hub.imu.reset_heading(<span class="dv">0</span>)</span>
+<span id="cb2-3"><a></a>    left.run(<span class="dv">200</span>)<span class="op">;</span> right.run(<span class="op">-</span><span class="dv">200</span>)            <span class="co"># fast for the long haul…</span></span>
+<span id="cb2-4"><a></a>    <span class="cf">while</span> hub.imu.heading() <span class="op">&lt;</span> target <span class="op">-</span> <span class="dv">30</span>:</span>
+<span id="cb2-5"><a></a>        wait(<span class="dv">5</span>)</span>
+<span id="cb2-6"><a></a>    left.run(<span class="dv">50</span>)<span class="op">;</span> right.run(<span class="op">-</span><span class="dv">50</span>)              <span class="co"># …crawl the last 30°</span></span>
+<span id="cb2-7"><a></a>    <span class="cf">while</span> hub.imu.heading() <span class="op">&lt;</span> target:</span>
+<span id="cb2-8"><a></a>        wait(<span class="dv">5</span>)</span>
+<span id="cb2-9"><a></a>    left.stop()<span class="op">;</span> right.stop()</span>
+<span id="cb2-10"><a></a></span>
+<span id="cb2-11"><a></a>gyro_turn(<span class="dv">90</span>)     <span class="co"># or gyro_turn(45), gyro_turn(180)…</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p>Two speeds, two <code>while</code>s: <strong>fast for the long haul, crawl the last 30°</strong> — momentum arrives with nothing left to steal. And line 1: <code>def</code> <strong>names the move once</strong>; every call replays it.</p>
+</div>
+</div>
+<aside class="notes">
+<p>First <code>def</code> of the bootcamp — land it hard: a function is a <em>named move</em>, exactly like <code>run_angle</code> is someone else’s named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two <code>run</code> signs and the <code>&lt;</code> to <code>&gt;</code>, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; <code>RobotConfig</code> at D10. Demo on the next slide — walk the highlights here first.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="one-recipe-card-many-calls" class="slide level2">
+<h2>One recipe card, many calls 📝</h2>
+<div style="width:820px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:8px;">
+    <span style="font-size:18px;color:#1C355E;font-weight:700;">call the one recipe:</span>
+    <button onclick="rcCall(45)" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:18px;font-weight:700;cursor:pointer;">gyro_turn(45)</button>
+    <button onclick="rcCall(90)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:18px;font-weight:700;cursor:pointer;">gyro_turn(90)</button>
+    <button onclick="rcCall(180)" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:18px;font-weight:700;cursor:pointer;">gyro_turn(180)</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:48px;">
+    <div id="rcCard" style="font-family:Consolas,monospace;font-size:16px;color:#1C355E;background:#eef3f8;border-radius:12px;border-left:5px solid #625D9C;padding:12px 18px;transition:box-shadow .15s,transform .15s;">
+      <div style="font-weight:800;color:#625D9C;margin-bottom:4px;">📝 one recipe card</div>
+      <div>def gyro_turn(target):</div>
+      <div>&nbsp;&nbsp;fast … then crawl</div>
+      <div>&nbsp;&nbsp;stop at the target</div>
+    </div>
+    <div style="text-align:center;">
+      <svg width="170" height="170" viewbox="-100 -100 200 200" style="display:block;">
+        <circle r="82" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
+        <g id="rcTick" opacity="0"><line x1="0" y1="-82" x2="0" y2="-98" stroke="#00AE8D" stroke-width="6"></line></g>
+        <g id="rcNeedle">
+          <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#625D9C"></rect>
+          <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+          <circle cy="-30" r="4" fill="#FFD500"></circle>
+        </g>
+      </svg>
+      <div style="font-family:Consolas,monospace;font-size:18px;color:#1C355E;">landed <span id="rcLand" style="font-weight:800;">–</span>°</div>
+      <div style="font-size:15px;color:#625D9C;">calls made: <b><span id="rcN">0</span></b> · recipes written: <b>1</b></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var T=0, h=0, phase='idle', raf=null, last=null, n=0;
+  function el(id){return document.getElementById(id);}
+  function step(now){
+    var dt = last ? Math.min((now-last)/1000,0.05) : 0.016; last=now;
+    if(phase==='fast'){ h += 300*dt; if(h >= T-30) phase='crawl'; }
+    else if(phase==='crawl'){ h += 70*dt; if(h >= T){ h=T; phase='settle'; } }
+    el('rcNeedle').setAttribute('transform','rotate('+h.toFixed(1)+')');
+    el('rcLand').textContent = Math.round(h);
+    if(phase==='settle'){ el('rcLand').style.color='#00AE8D'; raf=null; return; }
+    raf=requestAnimationFrame(step);
+  }
+  window.rcCall=function(t){
+    T=t; h=0; phase='fast'; last=null;
+    n++; el('rcN').textContent=n;
+    el('rcLand').style.color='#1C355E';
+    el('rcTick').setAttribute('transform','rotate('+T+')');
+    el('rcTick').setAttribute('opacity','1');
+    var c=el('rcCard');
+    c.style.boxShadow='0 0 0 3px #625D9C'; c.style.transform='scale(1.03)';
+    setTimeout(function(){ c.style.boxShadow='none'; c.style.transform='scale(1)'; },220);
+    if(raf) cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(step);
+  };
+})();
+</script>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p><strong>The 94 is cured</strong> — and you just wrote your first robot <em>move</em>: one recipe card, any number of calls, and the 🚗 parks on every tick.</p>
+</div>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>Can you beat two speeds? Imagine speed <strong>shrinking as the degrees-left shrink</strong>. Hold that thought — it comes due before lunch. 😏</p>
+</div>
+</div>
+<aside class="notes">
+<p>Run the demo BEFORE any fragment: click all three calls, watch the same recipe card flash and the car park on three different ticks — that <em>is</em> the def/call story, animated. Only then reveal the cards. The teal teaser plants the smarter fix (push proportional to distance-left) — do NOT name it: it gets built and <em>named</em> before lunch as the start of the PID story.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bug-hunt-the-silent-robot" class="slide level2">
+<h2>🐛 Bug hunt: the silent robot</h2>
+<div class="qbox">
+<p><span class="qtitle">No red error. No crash. The robot just… <strong>sits there.</strong> The code looks perfect. What did we forget?</span></p>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> gyro_turn(target):</span>
+<span id="cb3-2"><a></a>    hub.imu.reset_heading(<span class="dv">0</span>)</span>
+<span id="cb3-3"><a></a>    left.run(<span class="dv">200</span>)<span class="op">;</span> right.run(<span class="op">-</span><span class="dv">200</span>)</span>
+<span id="cb3-4"><a></a>    <span class="cf">while</span> hub.imu.heading() <span class="op">&lt;</span> target:</span>
+<span id="cb3-5"><a></a>        wait(<span class="dv">5</span>)</span>
+<span id="cb3-6"><a></a>    left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p><code>def</code> only <strong>writes</strong> the recipe — it never cooks it. Nothing happens until you <strong>call</strong> the move by name: add <code>gyro_turn(90)</code> below. Defining a move and <em>using</em> a move are two separate steps.</p>
+</div>
+</div>
+<aside class="notes">
+<p>The most instructive bug of the week — no error to read, so the robot’s stillness <em>is</em> the message. Elicit first: “if the code is right, why no movement?” Draw the split on the board — <code>def …:</code> writes the recipe card, <code>gyro_turn(90)</code> hands it to the cook. Leads straight into the bench lab, where they call it three times.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bench-check-tune-your-crawl" class="slide level2">
+<h2>Bench check: tune your crawl 🎯</h2>
+<ul>
+<li>Build <code>gyro_turn</code>, then judge-call yourself: <strong>90° · 45° · 180°</strong> — print the landing each time.</li>
+<li>Tune <strong>200 / 50 / 30</strong> until 90° lands within a degree or two. Write your three numbers on a sticky note — they’re about to testify.</li>
+</ul>
+<p>⏱️ <strong>Time: 20 minutes</strong></p>
+<aside class="notes">
+<p><em>Perfect Pivot</em>, folded into a bench lab: the cure is verified on 90°, but nobody is asked (yet) whether one tuning serves all three calls — that tension is the next act’s job. Make every squad physically write their three numbers down; the race lab reads them straight back.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="c.-break-it" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
+<h1>C. Break It</h1>
+<p>The judge adds a <strong>stopwatch</strong>. Suddenly your crawl zone has a price tag.</p>
+</section>
+<section id="three-calls-one-tuning" class="slide level2">
+<h2>Three calls, one tuning 🎯⏱️</h2>
+<div class="qbox">
+<p><span class="qtitle">The judge calls <strong>45° → 90° → 180°</strong>, back-to-back, same <code>gyro_turn</code> — and today the clock counts too. Predict: which call comes out <em>sleepy</em>? Which one <em>blows past</em> — and what would make it?</span></p>
+<p>Hint: sketch where the crawl zone <strong>starts</strong> for each call.</p>
+</div>
+<div class="fragment fade-up">
+<p>Do the sketch with your partner and <strong>write both predictions down</strong> — the stopwatch is about to grade them. 👀</p>
+</div>
+<aside class="notes">
+<p>Pure prediction, nothing revealed. The sketch gives it away for 45: the crawl zone starts at 15°, so <strong>two-thirds of the turn is crawl</strong> — sleepy. For 180 the zone is proportionally tiny — fine at 200 deg/s, but the moment someone chases the clock by cranking the speed, the robot arrives at the zone hot and 30° isn’t enough braking distance. Don’t say any of that — collect predictions on the board and let the race lab answer.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="lab-race-your-own-turn" class="slide level2">
+<h2>Lab: race your own turn 🏁</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers="|1|3-7|8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>timer <span class="op">=</span> StopWatch()                 <span class="co"># a stopwatch, in code</span></span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a><span class="cf">for</span> target <span class="kw">in</span> [<span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">180</span>]:</span>
+<span id="cb4-4"><a></a>    timer.reset()</span>
+<span id="cb4-5"><a></a>    gyro_turn(target)</span>
+<span id="cb4-6"><a></a>    <span class="bu">print</span>(target, <span class="st">"-&gt;"</span>, timer.time(), <span class="st">"ms, landed"</span>, hub.imu.heading())</span>
+<span id="cb4-7"><a></a>    wait(<span class="dv">3000</span>)                      <span class="co"># set the robot straight again</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Run it with <strong>your bench tuning</strong> — the sticky note. Look at 45°’s time. Sleepy? That’s the crawl lane eating two-thirds of a small turn.</li>
+<li>Now chase the clock: crank the fast speed <strong>200 → 500</strong> and rerun. Look at where <strong>180° lands</strong>. 😬</li>
+</ul>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p>One tuning, three calls: <strong>accurate but sleepy</strong> — or <strong>fast but flying past</strong>. The fixed crawl zone can’t serve every angle <em>and</em> every speed.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Board the results next to the predictions. Expected shape: at 200, everything lands within a few degrees but 45 feels absurdly slow for such a small turn and 180 takes ~2 s; at 500, the 180 blows through the 30° zone still hot and coasts well past (the 45 mostly survives — its crawl lane absorbs the speed). Battery level moves these numbers — that’s a feature, mention it. Squads that finish early: try 90 at 500 too.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-tuning-treadmill" class="slide level2">
+<h2>The tuning treadmill 🎡</h2>
+<div class="qbox">
+<p><span class="qtitle">Fix it with yesterday’s toolbox: a <strong>wider</strong> crawl zone? A <strong>third</strong> speed? A different tuning <strong>per angle</strong>? — what does each one cost?</span></p>
+<p>Talk it out. Follow each fix two steps ahead.</p>
+</div>
+<div class="fragment fade-up">
+<p>Board your fixes — then we <strong>test-drive every single one</strong>. 🚗</p>
+</div>
+<p>⏱️ <strong>Time: 20 minutes</strong> <em>(discussion + test-drives)</em></p>
+<aside class="notes">
+<p>This is the morning’s teal teaser (“imagine speed shrinking as the degrees-left shrink”) coming due. Let them propose the staircase fixes seriously — each is a real idea with a real cost; the point isn’t that they’re dumb, it’s that they don’t <em>scale</em>. Collect the fixes on the board first; the next slide drives them.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="test-drive-the-fixes" class="slide level2">
+<h2>Test-drive the fixes 🚗</h2>
+<div style="width:880px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:6px;">
+    <span style="font-size:18px;color:#1C355E;font-weight:700;">your fixes:</span>
+    <button onclick="stFix('wider')" style="background:#00C9A7;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">wider zone</button>
+    <button onclick="stFix('speed')" style="background:#625D9C;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">+ a speed</button>
+    <button onclick="stFix('table')" style="background:#FF7A5C;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">table per angle</button>
+    <button onclick="stReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">reset</button>
+    <button onclick="stDrive()" style="background:#1C355E;color:#fff;border:none;border-radius:9px;padding:6px 18px;font-size:17px;font-weight:700;cursor:pointer;">▶ drive it</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:16px;">
+    <svg width="700" height="290" viewbox="0 0 700 290" style="display:block;">
+      <line x1="70" y1="240" x2="670" y2="240" stroke="#1C355E" stroke-width="3"></line>
+      <line x1="70" y1="240" x2="70" y2="35" stroke="#1C355E" stroke-width="3"></line>
+      <text x="34" y="140" font-size="15" fill="#1C355E" font-weight="700" transform="rotate(-90 34 140)" text-anchor="middle">wheel speed</text>
+      <text x="62" y="50" font-size="16" text-anchor="end">🚀</text>
+      <text x="62" y="232" font-size="16" text-anchor="end">🐢</text>
+      <text x="370" y="276" font-size="15" fill="#1C355E" font-weight="700" text-anchor="middle">degrees still to go</text>
+      <text x="668" y="258" font-size="14" fill="#1C355E" text-anchor="middle">0 🎯</text>
+      <g id="stGhosts"></g>
+      <polyline id="stStair" points="" fill="none" stroke="#FF7A5C" stroke-width="6" stroke-linejoin="round"></polyline>
+      <line x1="650" y1="240" x2="650" y2="35" stroke="#c9d4e0" stroke-width="2" stroke-dasharray="6 6"></line>
+      <text id="stCliff" x="644" y="60" font-size="14" fill="#E96852" text-anchor="end">cliff at 0: stop() while still moving 🤞</text>
+      <polyline id="stTrace" points="" fill="none" stroke="#1C355E" stroke-width="2.5" opacity="0.45"></polyline>
+      <circle id="stDot" r="9" fill="#FFD500" stroke="#1C355E" stroke-width="3" opacity="0"></circle>
+      <text id="stHere" font-size="14" fill="#1C355E" font-weight="800" opacity="0">you are HERE</text>
+    </svg>
+    <div style="text-align:center;">
+      <svg width="140" height="140" viewbox="-75 -75 150 150" style="display:block;margin:0 auto;">
+        <circle r="62" fill="#eef3f8" stroke="#1C355E" stroke-width="4"></circle>
+        <line x1="62" y1="0" x2="74" y2="0" stroke="#00AE8D" stroke-width="5"></line>
+        <g id="stCar" transform="rotate(0)">
+          <g transform="scale(0.72)">
+            <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#FF7A5C"></rect>
+            <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+            <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+            <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+            <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+            <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+            <circle cy="-30" r="4" fill="#FFD500"></circle>
+          </g>
+        </g>
+      </svg>
+      <div style="font-family:Consolas,monospace;font-size:16px;color:#1C355E;margin-top:4px;">landed <span id="stLand" style="font-weight:800;">–</span>°<br>in <span id="stTime" style="font-weight:800;">–</span> s</div>
+    </div>
+  </div>
+  <div style="text-align:center;font-size:18px;color:#1C355E;margin-top:2px;">
+    knobs to hand-tune: <b style="color:#E96852;"><span id="stKnobs">2</span></b> · <span id="stMsg" style="color:#625D9C;">two speeds, one crawl zone — where we started</span>
+  </div>
+</div>
+<script>
+(function(){
+  var steps=2, ghosts=0, sleepy=0, raf=null;
+  var X0=70, X1=610, BOT=210;
+  function el(id){return document.getElementById(id);}
+  function topY(){ var t=70+sleepy*28; return t>BOT-20 ? BOT-20 : t; }
+  function segY(i,n){ var t=topY(); return t + (BOT-t)*i/(n-1||1); }
+  function build(n){
+    var pts=[];
+    for(var i=0;i<n;i++){
+      var xa = X0 + (X1-X0)*i/n, xb = X0 + (X1-X0)*(i+1)/n;
+      var y = segY(i,n);
+      pts.push(xa+','+y, xb+','+y);
+    }
+    pts.push('610,240','650,240');
+    return pts.join(' ');
+  }
+  function render(){
+    el('stStair').setAttribute('points', build(steps));
+    el('stKnobs').textContent = steps + ghosts*steps + sleepy;
+  }
+  function clearRun(){
+    if(raf) cancelAnimationFrame(raf); raf=null;
+    el('stTrace').setAttribute('points','');
+    el('stDot').setAttribute('opacity','0');
+    el('stHere').setAttribute('opacity','0');
+    el('stLand').textContent='–'; el('stTime').textContent='–';
+    el('stLand').style.color='#1C355E';
+    el('stCar').setAttribute('transform','rotate(0)');
+    el('stCliff').setAttribute('font-weight','normal');
+  }
+  window.stDrive=function(){
+    clearRun();
+    var e=90, t=0, last=null, tr=[], coastPhase=false, coast=0, cT=0, spEnd=0;
+    el('stDot').setAttribute('opacity','1');
+    el('stHere').setAttribute('opacity','1');
+    function frame(now){
+      var dt = last ? Math.min((now-last)/1000,0.05) : 0.016; last=now;
+      if(!coastPhase){
+        var i = Math.min(steps-1, Math.floor((90-e)/90*steps));
+        var y = segY(i,steps);
+        var sp = (240-y)*1.5;                       // px → deg/s
+        e -= sp*dt; t += dt;
+        if(e<=0){ e=0; coastPhase=true; spEnd=sp; coast=sp*0.05; }
+        var x = X0 + (X1-X0)*(90-e)/90;
+        el('stDot').setAttribute('cx',x.toFixed(1)); el('stDot').setAttribute('cy',y.toFixed(1));
+        el('stHere').setAttribute('x',(x-14).toFixed(1)); el('stHere').setAttribute('y',(y-16).toFixed(1));
+        el('stHere').setAttribute('text-anchor', x>420 ? 'end' : 'start');
+        tr.push(x.toFixed(0)+','+y.toFixed(0));
+        el('stTrace').setAttribute('points',tr.join(' '));
+        el('stCar').setAttribute('transform','rotate('+(90-e).toFixed(1)+')');
+        el('stTime').textContent=t.toFixed(2);
+        raf=requestAnimationFrame(frame);
+      } else {
+        cT += dt;
+        var c = Math.min(cT/0.35, 1), ease = 1-(1-c)*(1-c);
+        el('stCar').setAttribute('transform','rotate('+(90+coast*ease).toFixed(1)+')');
+        var x2 = 610 + 40*ease;
+        el('stDot').setAttribute('cx',x2.toFixed(1)); el('stDot').setAttribute('cy','240');
+        el('stHere').setAttribute('x',(x2-14).toFixed(1)); el('stHere').setAttribute('y','226');
+        if(c<1){ raf=requestAnimationFrame(frame); }
+        else {
+          raf=null;
+          el('stLand').textContent=(90+coast).toFixed(1);
+          el('stLand').style.color='#E96852';
+          el('stCliff').setAttribute('font-weight','bold');
+        }
+      }
+    }
+    raf=requestAnimationFrame(frame);
+  };
+  window.stFix=function(k){
+    clearRun();
+    if(k==='wider'){ sleepy++; el('stMsg').textContent='wider zone → the whole turn goes sleepy'; el('stMsg').style.color='#00AE8D'; }
+    else if(k==='speed'){ steps++; el('stMsg').textContent='another speed → now it begs for a fourth…'; el('stMsg').style.color='#625D9C'; }
+    else if(k==='table'){
+      ghosts++;
+      var g=''; for(var j=0;j<Math.min(ghosts*3,9);j++){ g+='<polyline points="'+build(steps)+'" fill="none" stroke="#FF7A5C" stroke-width="2" opacity="0.18" transform="translate('+(j*4-16)+','+(j*3-9)+')"/>'; }
+      el('stGhosts').innerHTML=g;
+      el('stMsg').textContent='table per angle → new battery, new mat: retune ×10'; el('stMsg').style.color='#E96852';
+    }
+    render();
+  };
+  window.stReset=function(){ clearRun(); steps=2; ghosts=0; sleepy=0; el('stGhosts').innerHTML=''; el('stMsg').textContent='two speeds, one crawl zone — where we started'; el('stMsg').style.color='#625D9C'; render(); };
+  render();
+})();
+</script>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p>Every fix adds a <strong>step</strong> and a <strong>knob</strong> — and <em>every</em> drive still ends the same: the 🚗 crosses the cliff <strong>still moving</strong>. What you actually want: speed that <strong>shrinks by itself</strong> as the degrees-left shrink.</p>
+</div>
+</div>
+<aside class="notes">
+<p>How to read the picture — say it out loud, every time: the yellow dot is the robot’s <em>moment</em>: how far it walks right = degrees used up; how high it sits = how hard the wheels push. Apply a fix, hit ▶ drive it, and narrate the dot + car together: “far away → high up → car whips around… close → low → car creeps.” Wider zone: slower time, same coast. Extra speed: better time, same coast. Table: same staircase, ×10 retuning. The landing readout says ~92-and-something every single run — THAT’s the cliff no staircase removes. Someone usually says the magic sentence (“just make the speed depend on how far is left”) — hand them the chalk.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="d.-name-it-the-p-controller" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
+<h1>D. Name It: the P-controller</h1>
+<p>You’ve been running this controller your whole life. Time to write it down.</p>
+</section>
+<section id="you-already-run-this-controller" class="slide level2">
+<h2>You already run this controller 🚶</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The game</strong></p>
+</div>
+<div class="callout-content">
+<p>Stand three big steps from the wall. Walk to it and stop with your toes <strong>exactly on the line</strong>. Round 1: normal. Round 2: <em>robot style</em> — full speed, then slam the brakes at the end. Round 3: crawl the entire way. Which round felt right — and what were your legs doing in it?</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p>Your legs already run the deal: <strong>far → fast · close → gentle · there → zero.</strong> No zones, no steps — your speed simply <em>follows</em> the distance left. Robots can sign the same deal.</p>
+</div>
+</div>
+<p>⏱️ <strong>Time: 5 minutes</strong></p>
+<aside class="notes">
+<p>Same unplugged-first habit as the D3 inner-ear game. Round 2 reproduces the coast (they’ll lean past the line or stutter-brake); round 3 is the sleepy 45. Ask round-1 walkers to narrate their own speed out loud — “fast… slower… slower… stop” — that sentence <em>is</em> the controller.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="say-the-deal-in-numbers" class="slide level2">
+<h2>Say the deal in numbers</h2>
+<div class="qbox">
+<p><span class="qtitle">Target <strong>90°</strong>, heading reads <strong>20°</strong>. Call the degrees-left the <strong>error</strong> — here, 70. Build the wheel speed <em>from</em> the error: you’re allowed one multiplication.</span></p>
+<p>What does your rule give at error 70? At 10? At 0?</p>
+</div>
+<div class="fragment fade-up">
+<div style="font-family:Consolas,monospace;font-size:23px;color:#1C355E;background:#eef3f8;border-radius:12px;padding:14px 26px;line-height:2.0;width:fit-content;margin:0 auto;">
+  <div>speed = <span style="color:#E96852;font-weight:800;">error</span> × <span style="color:#625D9C;font-weight:800;">gain</span>&nbsp;&nbsp;<span style="opacity:0.65;">(gain = 4)</span></div>
+  <div>error <span style="color:#E96852;font-weight:700;">70</span> → speed <b>280</b>&nbsp;&nbsp;flat out 🚀</div>
+  <div>error <span style="color:#E96852;font-weight:700;">10</span> → speed <b>40</b>&nbsp;&nbsp;&nbsp;&nbsp;tiptoe 🐢</div>
+  <div>error <span style="color:#E96852;font-weight:700;">0</span>&nbsp; → speed <b>0</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parks itself 🎯</div>
+</div>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p><strong><code>speed = error × gain</code></strong> — the whole staircase, in one line. <code>gain</code> is the slope: how hard to push <em>per degree still to go</em>. And at error 0 the speed is 0 — it doesn’t need to be told to stop.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Elicit the multiplication — don’t reveal it. Most squads propose “speed = distance left” first; ask “what if the wheels need bigger numbers?” and the × gain falls out. The three sample rows are the wall-walk in numbers: narrate them as “fast… slower… stop”, same sentence as the game.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="one-picture-staircase-vs-ramp" class="slide level2">
+<h2>One picture: staircase vs ramp</h2>
+<div style="display:flex;justify-content:center;align-items:flex-start;gap:24px;">
+  <svg width="620" height="350" viewbox="0 0 620 350" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+    <!-- axes -->
+    <line x1="70" y1="300" x2="600" y2="300" stroke="#1C355E" stroke-width="3"></line>
+    <line x1="70" y1="300" x2="70" y2="45" stroke="#1C355E" stroke-width="3"></line>
+    <text x="28" y="175" font-size="17" fill="#1C355E" font-weight="700" transform="rotate(-90 28 175)" text-anchor="middle">wheel speed</text>
+    <text x="60" y="60" font-size="16" text-anchor="end">🚀</text>
+    <text x="60" y="292" font-size="16" text-anchor="end">🐢</text>
+    <text x="315" y="340" font-size="17" fill="#1C355E" font-weight="700" text-anchor="middle">degrees still to go (the error)</text>
+    <text x="70" y="320" font-size="15" fill="#1C355E" text-anchor="middle">90</text>
+    <text x="233" y="320" font-size="15" fill="#1C355E" text-anchor="middle">60</text>
+    <text x="397" y="320" font-size="15" fill="#1C355E" text-anchor="middle">30</text>
+    <text x="560" y="320" font-size="15" fill="#1C355E" text-anchor="middle">0 🎯</text>
+    <!-- crawl-zone marker -->
+    <line x1="397" y1="300" x2="397" y2="72" stroke="#c9d4e0" stroke-width="2.5" stroke-dasharray="8 8"></line>
+    <text x="397" y="60" font-size="14" fill="#8a97a8" text-anchor="middle">crawl zone starts</text>
+    <!-- staircase (two speeds) -->
+    <polyline points="70,90 397,90 397,248 560,248 560,300" fill="none" stroke="#FF7A5C" stroke-width="6" stroke-linejoin="round"></polyline>
+    <text x="150" y="78" font-size="16" fill="#E96852" font-weight="800">🪜 two speeds: 200</text>
+    <text x="440" y="236" font-size="15" fill="#E96852" font-weight="700">crawl: 50</text>
+    <!-- ramp (P) — dim until it runs -->
+    <g id="opRampG" opacity="0.15">
+      <line x1="70" y1="73" x2="560" y2="300" stroke="#00C9A7" stroke-width="6" stroke-linecap="round"></line>
+      <text x="150" y="130" font-size="16" fill="#00AE8D" font-weight="800">📈 speed = error × 4</text>
+      <text x="150" y="150" font-size="14" fill="#00AE8D">slope = the gain</text>
+      <circle cx="560" cy="300" r="8" fill="#00AE8D"></circle>
+    </g>
+    <polyline id="opTrace" points="" fill="none" stroke="#1C355E" stroke-width="2.5" opacity="0.45"></polyline>
+    <circle id="opDot" r="9" fill="#FFD500" stroke="#1C355E" stroke-width="3" opacity="0"></circle>
+    <text id="opHere" font-size="14" fill="#1C355E" font-weight="800" opacity="0">you are HERE</text>
+  </svg>
+  <div style="text-align:center;width:250px;">
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:6px;">
+      <button onclick="opRun('stair')" style="background:#FF7A5C;color:#fff;border:none;border-radius:9px;padding:6px 12px;font-size:16px;font-weight:700;cursor:pointer;">▶ 🪜 drive it</button>
+      <button onclick="opRun('ramp')" style="background:#00C9A7;color:#fff;border:none;border-radius:9px;padding:6px 12px;font-size:16px;font-weight:700;cursor:pointer;">▶ 📈 drive it</button>
+    </div>
+    <svg width="150" height="150" viewbox="-80 -80 160 160" style="display:block;margin:0 auto;">
+      <circle r="66" fill="#eef3f8" stroke="#1C355E" stroke-width="4"></circle>
+      <line x1="66" y1="0" x2="78" y2="0" stroke="#00AE8D" stroke-width="5"></line>
+      <g id="opCar" transform="rotate(0)">
+        <g transform="scale(0.78)">
+          <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"></rect>
+          <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#101820"></rect>
+          <rect x="13" y="-21" width="6" height="14" rx="3" fill="#101820"></rect>
+          <rect x="-19" y="6" width="6" height="14" rx="3" fill="#101820"></rect>
+          <rect x="13" y="6" width="6" height="14" rx="3" fill="#101820"></rect>
+          <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+          <circle cy="-30" r="4" fill="#FFD500"></circle>
+        </g>
+      </g>
+    </svg>
+    <div style="text-align:left;font-size:15px;color:#1C355E;margin-top:6px;">
+      <div>degrees still to go: <b><span id="opErrV">90</span>°</b></div>
+      <div style="height:16px;background:#eef3f8;border-radius:5px;overflow:hidden;margin:2px 0 8px 0;"><div id="opErrBar" style="height:100%;width:100%;background:#E96852;"></div></div>
+      <div>wheel speed: <b><span id="opSpdV">0</span></b></div>
+      <div style="height:16px;background:#eef3f8;border-radius:5px;overflow:hidden;margin-top:2px;"><div id="opSpdBar" style="height:100%;width:0%;background:#00AE8D;"></div></div>
+    </div>
+    <div id="opMsg" style="font-size:15px;font-weight:700;color:#625D9C;margin-top:8px;min-height:44px;">the dot and the 🚗 move <b>together</b> — same robot, two views</div>
+  </div>
+</div>
+<script>
+(function(){
+  var X0=70, X1=560, YB=300, raf=null;
+  function el(id){return document.getElementById(id);}
+  function spOf(mode, e){ return mode==='stair' ? (e>30 ? 200 : 50) : 4*e; }
+  function yOf(mode, e){ return mode==='stair' ? (e>30 ? 90 : 248) : YB - (e/90)*227; }
+  window.opRun=function(mode){
+    if(raf) cancelAnimationFrame(raf); raf=null;
+    if(mode==='ramp') el('opRampG').setAttribute('opacity','1');
+    var e=90, last=null, tr=[], coastPhase=false, cT=0;
+    el('opTrace').setAttribute('points','');
+    el('opDot').setAttribute('opacity','1');
+    el('opHere').setAttribute('opacity','1');
+    el('opCar').setAttribute('transform','rotate(0)');
+    el('opMsg').style.color='#625D9C';
+    el('opMsg').innerHTML = mode==='stair' ? 'reading the 🪜: high = fast, low = crawl…' : 'reading the 📈: speed <b>shrinks with</b> the error…';
+    function frame(now){
+      var dt = last ? Math.min((now-last)/1000,0.05) : 0.016; last=now;
+      if(!coastPhase){
+        var sp = spOf(mode,e);
+        e -= sp*1.6*dt;
+        var done = false;
+        if(mode==='stair' && e<=0){ e=0; coastPhase=true; }
+        else if(mode==='ramp' && e<=0.5){ e=0; done=true; }
+        var x = X0 + (X1-X0)*(90-e)/90, y = yOf(mode, Math.max(e,0.001));
+        if(e===0) y = YB;
+        el('opDot').setAttribute('cx',x.toFixed(1)); el('opDot').setAttribute('cy',y.toFixed(1));
+        el('opHere').setAttribute('x',(x-14).toFixed(1)); el('opHere').setAttribute('y',(y-16).toFixed(1));
+        el('opHere').setAttribute('text-anchor', x>340 ? 'end' : 'start');
+        tr.push(x.toFixed(0)+','+y.toFixed(0));
+        el('opTrace').setAttribute('points',tr.join(' '));
+        el('opCar').setAttribute('transform','rotate('+(90-e).toFixed(1)+')');
+        el('opErrV').textContent = Math.round(e);
+        el('opSpdV').textContent = Math.round(spOf(mode,e));
+        el('opErrBar').style.width = (e/90*100)+'%';
+        el('opSpdBar').style.width = Math.min(spOf(mode,e)/360*100,100)+'%';
+        if(done){
+          el('opMsg').style.color='#00AE8D';
+          el('opMsg').innerHTML='speed hit 0 <b>exactly at the target</b> — parked at 90.0° 🎯';
+          raf=null; return;
+        }
+        raf=requestAnimationFrame(frame);
+      } else {
+        cT += dt;
+        var c = Math.min(cT/0.35,1), ease = 1-(1-c)*(1-c);
+        el('opCar').setAttribute('transform','rotate('+(90+2.5*ease).toFixed(1)+')');
+        var x2 = X1 + 35*ease;
+        el('opDot').setAttribute('cx',x2.toFixed(1)); el('opDot').setAttribute('cy',YB);
+        el('opHere').setAttribute('x',(x2-14).toFixed(1)); el('opHere').setAttribute('y',(YB-16));
+        if(c<1){ raf=requestAnimationFrame(frame); }
+        else {
+          el('opMsg').style.color='#E96852';
+          el('opMsg').innerHTML='hit 0 still doing 50 → <b>coasted to 92.5°</b> 🤞';
+          raf=null;
+        }
+      }
+    }
+    raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>Every staircase fix added a step. The ramp has <strong>no steps to tune</strong> — it touches zero exactly at the target, so there’s never anything left to coast.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Same reading ritual as the test-drive slide — the kids already know it: dot walks right = degrees getting used up; dot height = wheel push; the 🚗 dial is the same robot in real life. Drive the staircase first and narrate; then drive the ramp. Freeze the comparison at error = 30: the ramp is still doing 120 where the staircase crawls at 50 — <em>faster</em> there, yet it parks softer, because it keeps shrinking all the way in. That resolves the “fast OR accurate” trade from the race lab. The bars under the dial are the two axes, live — point at bar ↔︎ axis once and the graph is decoded.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-proportional-turn" class="slide level2">
+<h2>The proportional turn</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1|3|4|5-6|8|10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> gyro_turn_p(target, gain<span class="op">=</span><span class="dv">4</span>):</span>
+<span id="cb5-2"><a></a>    hub.imu.reset_heading(<span class="dv">0</span>)</span>
+<span id="cb5-3"><a></a>    <span class="cf">while</span> <span class="bu">abs</span>(target <span class="op">-</span> hub.imu.heading()) <span class="op">&gt;</span> <span class="dv">1</span>:   <span class="co"># until within 1°…</span></span>
+<span id="cb5-4"><a></a>        error <span class="op">=</span> target <span class="op">-</span> hub.imu.heading()       <span class="co"># degrees still to go</span></span>
+<span id="cb5-5"><a></a>        left.run(gain <span class="op">*</span> error)                   <span class="co"># far → fast</span></span>
+<span id="cb5-6"><a></a>        right.run(<span class="op">-</span>gain <span class="op">*</span> error)                 <span class="co"># close → gentle</span></span>
+<span id="cb5-7"><a></a>        wait(<span class="dv">5</span>)</span>
+<span id="cb5-8"><a></a>    left.stop()<span class="op">;</span> right.stop()</span>
+<span id="cb5-9"><a></a></span>
+<span id="cb5-10"><a></a>gyro_turn_p(<span class="dv">90</span>)   <span class="co"># gyro_turn_p(45)… gyro_turn_p(180)… gyro_turn_p(-90)!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>Line 10: a <strong>negative</strong> target flips the sign, the wheels swap — <strong>left turns come free.</strong> Yesterday’s version needed surgery for that.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Walk the highlight stops: <code>gain</code> arrives as a <em>parameter with a default</em> — new syntax, teach it in one breath (“a knob you can leave alone”). Line 3’s <code>abs()</code> is what makes negative targets work. Demo on the next slide.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="watch-it-ride-the-error-down" class="slide level2">
+<h2>Watch it ride the error down 🎢</h2>
+<div style="width:800px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;gap:12px;margin-bottom:8px;">
+    <button onclick="ptRun(90)" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ gyro_turn_p(90)</button>
+    <button onclick="ptRun(-90)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">◀ gyro_turn_p(−90)</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:40px;">
+    <svg width="190" height="190" viewbox="-100 -100 200 200" style="display:block;">
+      <circle r="84" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
+      <g id="ptTick" opacity="0"><line x1="0" y1="-84" x2="0" y2="-100" stroke="#00AE8D" stroke-width="6"></line></g>
+      <g id="ptNeedle">
+        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00C9A7"></rect>
+        <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+        <circle cy="-30" r="4" fill="#FFD500"></circle>
+      </g>
+    </svg>
+    <div style="font-family:Consolas,monospace;font-size:19px;color:#1C355E;min-width:320px;">
+      <div style="margin-bottom:6px;">error = <span id="ptErr" style="font-weight:800;color:#E96852;">0</span>° &nbsp;<span style="opacity:.6;font-size:15px;">degrees still to go</span></div>
+      <div style="height:20px;background:#eef3f8;border-radius:6px;overflow:hidden;margin-bottom:12px;">
+        <div id="ptErrBar" style="height:100%;width:0%;background:#E96852;"></div>
+      </div>
+      <div>speed = 4 × error = <span id="ptSpd" style="font-weight:800;color:#00AE8D;">0</span></div>
+      <div style="height:20px;background:#eef3f8;border-radius:6px;overflow:hidden;margin-top:6px;">
+        <div id="ptSpdBar" style="height:100%;width:0%;background:#00AE8D;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var T=0, h=0, raf=null, last=null, gain=4;
+  function el(id){return document.getElementById(id);}
+  function frame(now){
+    var dt = last ? Math.min((now-last)/1000,0.05) : 0.016; last=now;
+    var err = T - h;
+    var spd = gain*err;
+    if(spd>364) spd=364; if(spd<-364) spd=-364;
+    h += spd*0.9*dt;
+    var ae=Math.abs(err);
+    el('ptErr').textContent = err.toFixed(0);
+    el('ptSpd').textContent = (gain*err).toFixed(0);
+    el('ptErrBar').style.width = Math.min(ae/90*100,100)+'%';
+    el('ptSpdBar').style.width = Math.min(Math.abs(gain*err)/364*100,100)+'%';
+    el('ptNeedle').setAttribute('transform','rotate('+h.toFixed(1)+')');
+    if(ae>1){ raf=requestAnimationFrame(frame); }
+    else { el('ptErr').textContent='0'; el('ptErr').style.color='#00AE8D'; el('ptSpd').textContent='0'; el('ptSpdBar').style.width='0%'; el('ptErrBar').style.width='0%'; raf=null; }
+  }
+  window.ptRun=function(t){
+    T=t; h=0; last=null;
+    el('ptErr').style.color='#E96852';
+    el('ptTick').setAttribute('transform','rotate('+T+')');
+    el('ptTick').setAttribute('opacity','1');
+    if(raf) cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>The two bars are the graph’s two axes, <strong>live</strong>: error bar shrinks → speed bar shrinks with it, re-measured <strong>200×/second</strong>. No crawl zone, no second <code>while</code> — and the 🚗 parks itself, both directions.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Run both buttons before the fragment — narrate the bars in the wall-walk sentence: “fast… slower… slower… stop.” Two honest subtleties, keep them in your pocket for the quiz: at tiny errors the push (<code>4 × 2 = 8</code> deg/s) can be too weak to break friction — it may park a hair short; and at silly gains it can leap right over the ±1° window between checks and zig-zag back. Both are <em>felt</em> in the lab, and the leftover gets its name (and fix) tomorrow.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="playground-one-knob-every-angle" class="slide level2">
+<h2>Playground: one knob, every angle 🎛️</h2>
+<div style="width:880px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:4px;">
+    <span style="font-size:19px;color:#1C355E;font-weight:700;">judge calls:</span>
+    <button onclick="pgRun(45)" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ 45°</button>
+    <button onclick="pgRun(90)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ 90°</button>
+    <button onclick="pgRun(180)" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ 180°</button>
+    <span style="font-size:17px;color:#1C355E;margin-left:14px;">the game: land within <b>±2°</b> and under <b>1.3 s</b> — on <b>all three</b> calls. Which side can?</span>
+  </div>
+  <div style="display:flex;justify-content:center;gap:70px;">
+    <div style="text-align:center;">
+      <div style="font-weight:800;color:#E96852;font-size:21px;">🪜 two speeds (yesterday)</div>
+      <svg width="195" height="195" viewbox="-105 -105 210 210" style="display:block;margin:2px auto;">
+        <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
+        <g id="tsTick" opacity="0"><line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6"></line></g>
+        <g id="tsNeedle">
+          <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#E96852"></rect>
+          <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+          <circle cy="-30" r="4" fill="#FFD500"></circle>
+        </g>
+      </svg>
+      <div style="font-family:Consolas,monospace;font-size:19px;color:#1C355E;">landed <span id="tsLand" style="font-weight:800;">–</span>° · <span id="tsTime" style="font-weight:800;">–</span> s</div>
+      <div style="font-size:17px;color:#1C355E;margin-top:4px;">fast speed: <b><span id="tsFastV">200</span></b> °/s<br>
+      <input type="range" min="200" max="600" step="20" value="200" oninput="pgFast(this.value)" style="width:190px;accent-color:#E96852;"></div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-weight:800;color:#00AE8D;font-size:21px;">📈 speed = error × gain</div>
+      <svg width="195" height="195" viewbox="-105 -105 210 210" style="display:block;margin:2px auto;">
+        <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
+        <g id="ppTick" opacity="0"><line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6"></line></g>
+        <g id="ppNeedle">
+          <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00C9A7"></rect>
+          <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+          <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+          <circle cy="-30" r="4" fill="#FFD500"></circle>
+        </g>
+      </svg>
+      <div style="font-family:Consolas,monospace;font-size:19px;color:#1C355E;">landed <span id="ppLand" style="font-weight:800;">–</span>° · <span id="ppTime" style="font-weight:800;">–</span> s</div>
+      <div style="font-size:17px;color:#1C355E;margin-top:4px;">gain: <b><span id="ppGainV">4</span></b><br>
+      <input type="range" min="1" max="20" step="0.5" value="4" oninput="pgGain(this.value)" style="width:190px;accent-color:#00AE8D;"></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var W = 1.65;                 // wheel deg/s -> robot deg/s divisor (gap/wheel)
+  var T = 90, fast = 200, gain = 4, raf = null, last = null;
+  var A, B;
+  function el(id){ return document.getElementById(id); }
+  function fresh(){ return {h:0, r:0, t:0, stopped:false, stall:0, done:false, buf:[]}; }
+  function stepA(s, dt){                      // two speeds + coast
+    var cmd;
+    if(!s.stopped){
+      if(s.h >= T){ s.stopped = true; cmd = 0; }
+      else cmd = (s.h < T - 30) ? fast/W : 50/W;
+    } else cmd = 0;
+    var k = s.stopped ? 22 : 7;               // motor lag / braking
+    s.r += (cmd - s.r) * Math.min(k*dt, 1);
+    s.h += s.r * dt; s.t += dt;
+    if((s.stopped && Math.abs(s.r) < 1) || s.t > 6){ s.r = 0; s.done = true; }
+  }
+  function stepB(s, dt){                      // proportional + lag + friction
+    s.buf.push(s.h);
+    var hs = s.buf.length > 5 ? s.buf[s.buf.length-6] : 0;   // 25 ms stale
+    var cmd;
+    if(!s.stopped){
+      if(Math.abs(T - s.h) <= 1){ s.stopped = true; cmd = 0; }
+      else cmd = Math.max(-364, Math.min(364, gain*(T - hs)/W));
+    } else cmd = 0;
+    var k = s.stopped ? 22 : 7;
+    s.r += (cmd - s.r) * Math.min(k*dt, 1);
+    if(!s.stopped && Math.abs(cmd) < 4 && Math.abs(s.r) < 6){   // static friction
+      s.r = 0; s.stall += dt;
+      if(s.stall > 0.6){ s.done = true; }                       // parked short
+    }
+    s.h += s.r * dt; s.t += dt;
+    if((s.stopped && Math.abs(s.r) < 1) || s.t > 6){ s.r = 0; s.done = true; }
+  }
+  function put(land, time, s){
+    var okL = Math.abs(s.h - T) <= 2, okT = s.t <= 1.3;
+    el(land).textContent = s.h.toFixed(1);
+    el(time).textContent = s.t.toFixed(2);
+    el(land).style.color = s.done ? (okL ? '#00AE8D' : '#E96852') : '#1C355E';
+    el(time).style.color = s.done ? (okT ? '#00AE8D' : '#E96852') : '#1C355E';
+  }
+  function draw(){
+    el('tsNeedle').setAttribute('transform', 'rotate(' + A.h.toFixed(1) + ')');
+    el('ppNeedle').setAttribute('transform', 'rotate(' + B.h.toFixed(1) + ')');
+    put('tsLand','tsTime',A); put('ppLand','ppTime',B);
+  }
+  function frame(now){
+    var dt = last ? Math.min((now - last)/1000, 0.05) : 0.016;
+    last = now;
+    var n = Math.max(1, Math.round(dt/0.005));
+    for(var i = 0; i < n; i++){
+      if(!A.done) stepA(A, 0.005);
+      if(!B.done) stepB(B, 0.005);
+    }
+    draw();
+    if(!A.done || !B.done){ raf = requestAnimationFrame(frame); } else { raf = null; }
+  }
+  window.pgRun = function(t){
+    T = t;
+    el('tsTick').setAttribute('transform', 'rotate(' + T + ')');
+    el('ppTick').setAttribute('transform', 'rotate(' + T + ')');
+    el('tsTick').setAttribute('opacity', '1');
+    el('ppTick').setAttribute('opacity', '1');
+    A = fresh(); B = fresh(); last = null;
+    if(raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(frame);
+  };
+  window.pgFast = function(v){ fast = parseFloat(v); el('tsFastV').textContent = v; };
+  window.pgGain = function(v){ gain = parseFloat(v); el('ppGainV').textContent = v; };
+  A = fresh(); B = fresh(); draw();
+})();
+</script>
+<aside class="notes">
+<p>Drive it from their hypotheses. Round 1: all three calls at fast = 200 — the staircase lands everything but watch 180’s clock (~2 s) and how long 45 spends in the crawl lane. Round 2: crank fast to 600 to beat the clock — 180 blows past by ~7°: the fixed zone can’t absorb the speed. Round 3: the P side at gain 4 — all three calls land within a degree, at staircase-500 pace, <strong>same knob</strong>. Then let them feel the failures: gain 1 parks short (friction beats a tiny push — tomorrow’s breadcrumb), gain 20 arrives hot and flies past. The sim is illustrative, not gospel — the real robot’s sweet spot is theirs to find in the lab.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="name-the-move" class="slide level2">
+<h2>Name the move 🏷️</h2>
+<p>You just built: a controller whose push is <strong>proportional</strong> to the error.</p>
+<div class="fragment fade-up">
+<div style="text-align:center;font-size:44px;font-weight:800;color:#1C355E;margin:18px 0 6px 0;">the <span style="color:#00AE8D;">P</span>-controller</div>
+<div style="text-align:center;font-size:22px;color:#1C355E;">P = proportional — the first letter of <b>PID</b></div>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>This exact line runs inside every drone, thermostat, cruise control, elevator, and Mars rover. You didn’t learn a LEGO trick today — you wrote the opening letter of the most-used formula in robotics. <strong>I</strong> and <strong>D</strong>? They earn their seats tomorrow.</p>
+</div>
+</div>
+<aside class="notes">
+<p>This is the payoff of yesterday’s “it has a name every roboticist on Earth knows” — let it land with a beat of silence. Do NOT preview what I and D do; tomorrow each arrives as the rescue to a failure they’ll <em>see</em> (P in a hurry overshoots → D; a leftover P can’t kill → I).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="quick-quiz-the-gain-knob" class="slide level2">
+<h2>Quick quiz: the gain knob 🚨</h2>
+<div class="qbox">
+<p><span class="qtitle">Before you touch the robot: <strong>gain = 1</strong> — what will the turn <em>feel</em> like? <strong>gain = 20</strong>? Predict both.</span></p>
+</div>
+<div style="width:720px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:4px;">
+    <button onclick="qgPlay()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 22px;font-size:19px;font-weight:700;cursor:pointer;">▶ now run both</button>
+  </div>
+  <div style="display:flex;justify-content:center;gap:70px;">
+    <div style="text-align:center;">
+      <div style="font-weight:800;color:#00AE8D;font-size:20px;">gain = 1 · lazy</div>
+      <svg width="160" height="160" viewbox="-100 -100 200 200" style="display:block;margin:2px auto;"><circle r="82" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle><line x1="0" y1="-82" x2="0" y2="-99" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"></line><g id="qgN1"><rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00C9A7"></rect><rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect><rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect><rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect><rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect><path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path><circle cy="-30" r="4" fill="#FFD500"></circle></g></svg>
+      <div style="font-family:Consolas,monospace;font-size:18px;color:#1C355E;">landed <span id="qgL1" style="font-weight:800;">–</span>° <span id="qgT1" style="font-weight:700;"></span></div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-weight:800;color:#E96852;font-size:20px;">gain = 20 · hot</div>
+      <svg width="160" height="160" viewbox="-100 -100 200 200" style="display:block;margin:2px auto;"><circle r="82" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle><line x1="0" y1="-82" x2="0" y2="-99" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"></line><g id="qgN2"><rect x="-14" y="-30" width="28" height="54" rx="8" fill="#FF7A5C"></rect><rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect><rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect><rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect><rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect><path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path><circle cy="-30" r="4" fill="#FFD500"></circle></g></svg>
+      <div style="font-family:Consolas,monospace;font-size:18px;color:#1C355E;">landed <span id="qgL2" style="font-weight:800;">–</span>° <span id="qgT2" style="font-weight:700;"></span></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var T=90, raf=null, last=null;
+  var A, B;
+  function el(id){return document.getElementById(id);}
+  function frame(now){
+    var dt=last?Math.min((now-last)/1000,0.04):0.016; last=now;
+    A.t+=dt; B.t+=dt;
+    if(!A.done){
+      var e=T-A.h, spd=1*e;
+      if(Math.abs(spd)<12 && A.h<T-2){ A.done=true; el('qgL1').textContent=A.h.toFixed(0); el('qgL1').style.color='#E96852'; el('qgT1').textContent='parks short ✗'; el('qgT1').style.color='#E96852'; }
+      else { A.h += spd*0.9*dt; if(A.h>=T-0.5){A.h=T;A.done=true; el('qgL1').textContent='90'; el('qgL1').style.color='#00AE8D';} }
+      el('qgN1').setAttribute('transform','rotate('+A.h.toFixed(1)+')');
+    }
+    if(!B.done){
+      var e2=T-B.h, cmd=20*e2;
+      if(cmd>500)cmd=500; if(cmd<-500)cmd=-500;
+      B.v += (cmd - B.v)*Math.min(11*dt,1); B.h += B.v*0.55*dt;
+      if((Math.abs(e2)<0.8 && Math.abs(B.v)<10) || B.t>1.8){ B.h=T; B.done=true; el('qgL2').textContent='90'; el('qgL2').style.color='#00AE8D'; el('qgT2').textContent='overshot, settled'; el('qgT2').style.color='#E96852'; }
+      el('qgN2').setAttribute('transform','rotate('+B.h.toFixed(1)+')');
+    }
+    if(!A.done || !B.done){ raf=requestAnimationFrame(frame); } else raf=null;
+  }
+  window.qgPlay=function(){
+    A={h:0,t:0,done:false}; B={h:0,v:0,t:0,done:false}; last=null;
+    el('qgL1').textContent='–'; el('qgL1').style.color='#1C355E'; el('qgT1').textContent='';
+    el('qgL2').textContent='–'; el('qgL2').style.color='#1C355E'; el('qgT2').textContent='';
+    if(raf) cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p><strong>1 = lazy</strong> — near the target it pushes too weakly to beat friction and <strong>parks short.</strong> <strong>20 = hot</strong> — it flies past and zig-zags back. Tuning is the middle: hard enough to <em>arrive</em>, soft enough to arrive <em>calm</em>. That lazy leftover it parks on gets a name tomorrow. 😏</p>
+</div>
+</div>
+<aside class="notes">
+<p>The prediction is the day’s real gate: “the bigger the error, the harder the push” plus what too-small/too-big does. Per the plan, tuning this by feel <em>without prompting</em> is the strongest robotics-instinct signal on the scorecard — watch for who reaches for the knob before you suggest it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="lab-your-gain-your-rematch" class="slide level2">
+<h2>Lab: your gain, your rematch 🎛️</h2>
+<ul>
+<li>Build <code>gyro_turn_p</code>, then rerun the <strong>morning race</strong> — same three calls, one gain. Beat your two-speed times <em>and</em> landings?</li>
+<li>Find <strong>your</strong> gain: start at 4 → halve it, double it, feel both failures, close in from the middle.</li>
+<li>Try <code>gyro_turn_p(-90)</code>. No surgery required. 😎</li>
+</ul>
+<p>⏱️ <strong>Time: 30 minutes</strong></p>
+<aside class="notes">
+<p>Every squad’s best gain is different (battery, tire wear, robot mass) — that’s the point of it being a knob, and why nobody copies a neighbor’s number. Log times + landings like the morning so the win over the staircase is on paper. Fast squads: call <code>gyro_turn_p(360)</code> — a full spin that parks where it started — or race 45 at gain 8 vs 4.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="e.-straight-with-it" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
+<h1>E. Straight With It</h1>
+<p>Turns are true. But is your “straight”… actually straight?</p>
+</section>
+<section id="break-it-the-nudge-test" class="slide level2">
+<h2>Break it: the nudge test 💥</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="|1-2|4-7|8-9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>hub.imu.reset_heading(<span class="dv">0</span>)</span>
+<span id="cb6-2"><a></a>left.reset_angle(<span class="dv">0</span>)              <span class="co"># zero the wheel's degree-counter</span></span>
+<span id="cb6-3"><a></a></span>
+<span id="cb6-4"><a></a>left.run(<span class="dv">500</span>)<span class="op">;</span> right.run(<span class="dv">500</span>)</span>
+<span id="cb6-5"><a></a><span class="cf">while</span> left.angle() <span class="op">&lt;</span> <span class="dv">1304</span>:       <span class="co"># ≈ 100 cm — Day 2's number!</span></span>
+<span id="cb6-6"><a></a>    <span class="bu">print</span>(hub.imu.heading())</span>
+<span id="cb6-7"><a></a>    wait(<span class="dv">100</span>)</span>
+<span id="cb6-8"><a></a>left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>left.angle()</code> = the same degree-counter <code>run_angle</code> uses — now <strong>you</strong> read it.</li>
+<li>While it drives, give the robot’s side a <strong>gentle nudge</strong> (or lay a pencil in its path). Watch the printout…</li>
+</ul>
+<aside class="notes">
+<p>Line-walk the code first; the sim of the nudge is on the next slide, then they do it for real on the bench.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="watch-the-printout" class="slide level2">
+<h2>Watch the printout 👀</h2>
+<div style="width:820px;margin:0 auto;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+    <div style="display:flex;gap:12px;">
+      <button onclick="nbDrive()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ Drive</button>
+      <button onclick="nbNudge()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">💥 Nudge</button>
+    </div>
+    <div style="font-family:Consolas,monospace;font-size:21px;color:#1C355E;">printout: heading <span id="nbHdg" style="font-weight:800;color:#FF7A5C;">0</span>° <span id="nbStuck" style="color:#E96852;font-weight:700;"></span></div>
+  </div>
+  <svg width="820" height="210" viewbox="0 0 820 210" style="display:block;">
+    <rect x="0" y="15" width="820" height="180" rx="14" fill="#eef3f8"></rect>
+    <line x1="20" y1="105" x2="800" y2="105" stroke="#c9d4e0" stroke-width="3" stroke-dasharray="16 12"></line>
+    <polyline id="nbTrace" points="" fill="none" stroke="#00C9A7" stroke-width="4"></polyline>
+    <g id="nbBot" transform="translate(40,105)"><g transform="rotate(90) scale(0.42)"><rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"></rect><rect x="-19" y="-21" width="6" height="14" rx="3" fill="#101820"></rect><rect x="13" y="-21" width="6" height="14" rx="3" fill="#101820"></rect><rect x="-19" y="6" width="6" height="14" rx="3" fill="#101820"></rect><rect x="13" y="6" width="6" height="14" rx="3" fill="#101820"></rect><path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path><circle cy="-30" r="4" fill="#FFD500"></circle></g></g>
+  </svg>
+</div>
+<script>
+(function(){
+  var x=40,y=105,h=0,raf=null,last=null,pts=[],frame=0,nudged=false;
+  function el(id){return document.getElementById(id);}
+  function reset(){x=40;y=105;h=0;pts=[];nudged=false;el('nbTrace').setAttribute('points','');el('nbStuck').textContent='';el('nbHdg').textContent='0';el('nbHdg').style.color='#FF7A5C';}
+  function step(now){
+    var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+    var r=h*Math.PI/180;
+    x+=120*Math.cos(r)*dt; y+=120*Math.sin(r)*dt;
+    if(y<28)y=28; if(y>182)y=182;
+    if(++frame%3===0){ pts.push(x.toFixed(0)+','+y.toFixed(0)); if(pts.length>400)pts.shift(); el('nbTrace').setAttribute('points',pts.join(' ')); }
+    el('nbBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
+    el('nbHdg').textContent=Math.round(h);
+    if(x>790){ el('nbBot').setAttribute('transform','translate(790,'+y.toFixed(1)+') rotate('+h.toFixed(1)+')'); raf=null; return; }
+    raf=requestAnimationFrame(step);
+  }
+  window.nbDrive=function(){ if(raf)cancelAnimationFrame(raf); reset(); last=null; raf=requestAnimationFrame(step); };
+  window.nbNudge=function(){ if(!nudged){ h=8; nudged=true; el('nbStuck').textContent='… and stays at 8'; } };
+})();
+</script>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p>It jumps to <strong>8 — and stays at 8.</strong> <code>run()</code> spins the wheels equally; nobody keeps the robot <em>pointing</em>.</p>
+</div>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p>But the gyro <strong>knew</strong> — it read the 8 the whole time. 👀</p>
+</div>
+</div>
+</section>
+<section id="talk-it-out" class="slide level2">
+<h2>Talk it out</h2>
+<div class="qbox">
+<p><span class="qtitle">Heading says <strong>+8</strong> — nosed right. You command each wheel’s speed. What should the wheels do about it?</span></p>
+<p>And should a +2 error get the same medicine as a +20 error?</p>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p>Steer back <strong>left</strong> — right wheel faster, left slower — until heading reads 0. And the <strong>bigger</strong> the error, the <strong>harder</strong> the push.</p>
+</div>
+</div>
+</section>
+<section id="the-drive-that-heals-itself" class="slide level2">
+<h2>The drive that heals itself</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-code-line-numbers="|1-2|4|5|6-7|8-9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>hub.imu.reset_heading(<span class="dv">0</span>)</span>
+<span id="cb7-2"><a></a>left.reset_angle(<span class="dv">0</span>)</span>
+<span id="cb7-3"><a></a></span>
+<span id="cb7-4"><a></a><span class="cf">while</span> left.angle() <span class="op">&lt;</span> <span class="dv">1304</span>:        <span class="co"># until ≈ 100 cm rolls by…</span></span>
+<span id="cb7-5"><a></a>    error <span class="op">=</span> hub.imu.heading()     <span class="co"># +8 = nosed right · -5 = nosed left</span></span>
+<span id="cb7-6"><a></a>    left.run(<span class="dv">500</span> <span class="op">-</span> <span class="dv">4</span> <span class="op">*</span> error)     <span class="co"># nosed right? left eases off…</span></span>
+<span id="cb7-7"><a></a>    right.run(<span class="dv">500</span> <span class="op">+</span> <span class="dv">4</span> <span class="op">*</span> error)    <span class="co"># …right pushes harder → steers back left</span></span>
+<span id="cb7-8"><a></a>    wait(<span class="dv">10</span>)</span>
+<span id="cb7-9"><a></a>left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run it — and <strong>nudge it again.</strong> 😈</p>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p><strong>It fights back.</strong> A hundred times a second: read the error, steer against it. Error 0 → wheels equal → dead straight. That tiny loop is the heart of every self-driving machine on Earth.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Check the signs with them, don’t just assert: error +8 → left runs 468, right runs 532 → right faster → robot swings left → error shrinks. Negative error works out symmetrically. The <code>4</code> is a strength knob — let one squad try 1 (lazy) and 20 (jittery zig-zag). Name it out loud: <strong>the same P-controller as this morning’s turn</strong> — one formula, second application; the third is D7’s line-follower.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="watch-it-heal" class="slide level2">
+<h2>Watch it heal 🩹</h2>
+<div style="width:880px;margin:0 auto;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+    <div style="display:flex;gap:12px;">
+      <button onclick="laneStart()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">▶ Drive</button>
+      <button onclick="laneNudge()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">💥 Nudge!</button>
+      <button id="laneGyroBtn" onclick="laneToggle()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">gyro fix: OFF</button>
+    </div>
+    <div style="font-family:Consolas,monospace;font-size:21px;color:#1C355E;">heading: <span id="laneHdg" style="font-weight:800;color:#FF7A5C;">0</span>°</div>
+  </div>
+  <svg width="880" height="240" viewbox="0 0 880 240" style="display:block;">
+    <rect x="0" y="20" width="880" height="200" rx="14" fill="#eef3f8"></rect>
+    <line x1="20" y1="120" x2="860" y2="120" stroke="#c9d4e0" stroke-width="3" stroke-dasharray="16 12"></line>
+    <polyline id="laneTrace" points="" fill="none" stroke="#00C9A7" stroke-width="4" stroke-linecap="round"></polyline>
+    <g id="laneBot" transform="translate(40,120)">
+      <g transform="rotate(90) scale(0.45)">
+        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"></rect>
+        <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#101820"></rect>
+        <rect x="13" y="-21" width="6" height="14" rx="3" fill="#101820"></rect>
+        <rect x="-19" y="6" width="6" height="14" rx="3" fill="#101820"></rect>
+        <rect x="13" y="6" width="6" height="14" rx="3" fill="#101820"></rect>
+        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+        <circle cy="-30" r="4" fill="#FFD500"></circle>
+      </g>
+    </g>
+  </svg>
+</div>
+<script>
+(function(){
+  var x=40, y=120, h=0, on=false, running=false, raf=null, pts=[], last=null, frame=0;
+  var bot, trace, hdg;
+  function draw(){
+    bot.setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
+    hdg.textContent = Math.round(h);
+  }
+  function reset(){ x=40; y=120; h=0; pts=[]; trace.setAttribute('points',''); }
+  function step(now){
+    var dt = last ? Math.min((now-last)/1000, 0.05) : 0.016;
+    last = now;
+    var r = h*Math.PI/180;
+    x += 130*Math.cos(r)*dt;
+    y += 130*Math.sin(r)*dt;
+    if(on) h -= h*3.0*dt;                       // steer against the error
+    if(y < 34) y = 34; if(y > 206) y = 206;     // lane walls
+    if(++frame % 3 === 0){
+      pts.push(x.toFixed(0)+','+y.toFixed(0));
+      if(pts.length > 400) pts.shift();
+      trace.setAttribute('points', pts.join(' '));
+    }
+    if(x > 850) reset();
+    draw();
+    raf = requestAnimationFrame(step);
+  }
+  window.laneStart = function(){
+    bot = document.getElementById('laneBot');
+    trace = document.getElementById('laneTrace');
+    hdg = document.getElementById('laneHdg');
+    if(raf) cancelAnimationFrame(raf);
+    reset(); last = null;
+    raf = requestAnimationFrame(step);
+  };
+  window.laneNudge = function(){
+    h += (Math.random()<0.5 ? -1 : 1) * (10 + Math.random()*12);
+  };
+  window.laneToggle = function(){
+    on = !on;
+    var b = document.getElementById('laneGyroBtn');
+    b.textContent = 'gyro fix: ' + (on ? 'ON' : 'OFF');
+    b.style.background = on ? '#625D9C' : '#eef3f8';
+    b.style.color = on ? '#fff' : '#1C355E';
+    b.style.border = on ? 'none' : '2px solid #1C355E';
+  };
+})();
+</script>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>Gyro fix <strong>OFF</strong>: one nudge and it rides the wall forever. <strong>ON</strong>: every nudge gets steered right back out. Same robot — the only difference is <em>watching the error</em>.</p>
+</div>
+</div>
+<p>⏱️ <strong>Time: 15 minutes</strong></p>
+</section></section>
+<section>
+<section id="f.-competition-gate" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
+<h1>F. Competition &amp; Gate</h1>
+<p>Today’s showdown: <strong>Nudge Wars</strong> 💥</p>
+</section>
+<section id="nudge-wars" class="slide level2">
+<h2>Nudge Wars 💥</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The challenge</strong></p>
+</div>
+<div class="callout-content">
+<p>Drive 1.5 m straight while the judge nudges your robot <strong>twice</strong> mid-run. Score = closest final heading to 0° + straightest trace. 3 attempts, best counts.</p>
+</div>
+</div>
+</div>
+<ul>
+<li>Tune on the bench first — your straight’s <code>4</code> is a knob too: too soft and a shove sends you wandering; too hot and the trace zig-zags all the way down the lane.</li>
+<li>Watch one recovery closely: the harder the shove, the harder the fight-back. <strong>The shove <em>is</em> the error.</strong></li>
+</ul>
+<aside class="notes">
+<p>Format: a 1.5 m taped lane; the judge nudges at roughly the 0.5 m and 1.0 m marks with a consistent finger-push to the robot’s side. Final |heading| is the score; trace straightness (eyeball the wheel-path) breaks ties. Uses only today’s material: <code>error × gain</code> on the straight. This competition is the plan’s flagged talent signal — <strong>P-tuning instinct is the strongest predictor of robotics skill</strong>; note on the scorecard who re-tunes between attempts by feel (gain reasoning: lazy vs jittery), not by guessing.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="todays-gate" class="slide level2">
+<h2>Today’s gate</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>You’re done today when…</strong></p>
+</div>
+<div class="callout-content">
+<p>One gain turns your robot to <strong>any called angle</strong> — both directions — with your own <code>gyro_turn_p</code>; your 1.5 m straight <strong>fights back</strong> through two nudges; and you can say <em>“the bigger the error, the harder the push”</em> and predict what a too-small / too-big gain does <strong>before</strong> running it.</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up">
+<p>Tomorrow: put P in a <em>hurry</em> and watch it slam past the target — meet the letter that <strong>damps</strong> it. Then a lean P never quite kills — one more letter. Finish the acronym… and unwrap a professional surprise. 🎁</p>
+</div>
+<aside class="notes">
+<p>The gate is the plan’s D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the gain prediction in their own words — same formula, two applications today (turn + straight); the third is D7’s line. The teaser sets up D5 without naming D or I; the “surprise” is <code>DriveBase</code>, earned only after they’ve built its insides.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../slides_template/assets/sdaia.svg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
