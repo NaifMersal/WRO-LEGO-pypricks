@@ -1,0 +1,46 @@
+<svg viewBox="0 0 800 430" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <!-- ============ Row 1: run_time ============ -->
+  <text x="30" y="45" font-size="26" fill="#FF7A5C" font-weight="bold" font-family="Consolas, monospace">run_time(500, 2000)</text>
+  <text x="30" y="75" font-size="20" fill="#1C355E">&#8220;spin for 2 seconds&#8221; &#8212; distance depends on the battery!</text>
+
+  <!-- stopwatch icon -->
+  <g transform="translate(65,130)">
+    <circle cx="0" cy="0" r="26" fill="none" stroke="#FF7A5C" stroke-width="5"/>
+    <line x1="0" y1="0" x2="0" y2="-16" stroke="#FF7A5C" stroke-width="4" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="11" y2="7" stroke="#FF7A5C" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- two different outcomes -->
+  <line x1="120" y1="115" x2="560" y2="115" stroke="#FF7A5C" stroke-width="6" stroke-linecap="round"/>
+  <polygon points="560,103 585,115 560,127" fill="#FF7A5C"/>
+  <text x="640" y="122" font-size="20" fill="#1C355E">full battery &#8594; 77 cm</text>
+
+  <line x1="120" y1="160" x2="470" y2="160" stroke="#FF7A5C" stroke-width="6" stroke-linecap="round" stroke-dasharray="14 8"/>
+  <polygon points="470,148 495,160 470,172" fill="#FF7A5C"/>
+  <text x="530" y="167" font-size="20" fill="#1C355E">low battery &#8594; 68 cm 😬</text>
+
+  <!-- divider -->
+  <line x1="30" y1="205" x2="770" y2="205" stroke="#1C355E" stroke-width="2" stroke-dasharray="6 8" opacity="0.4"/>
+
+  <!-- ============ Row 2: run_angle ============ -->
+  <text x="30" y="250" font-size="26" fill="#00C9A7" font-weight="bold" font-family="Consolas, monospace">run_angle(500, 1004)</text>
+  <text x="30" y="280" font-size="20" fill="#1C355E">&#8220;turn the wheel exactly 1004&#176;&#8221; &#8212; the motor counts every degree</text>
+
+  <!-- encoder icon -->
+  <g transform="translate(65,340)">
+    <circle cx="0" cy="0" r="26" fill="none" stroke="#00C9A7" stroke-width="5"/>
+    <path d="M 0 -26 A 26 26 0 0 1 26 0" fill="none" stroke="#1C355E" stroke-width="5"/>
+    <line x1="0" y1="0" x2="18" y2="-18" stroke="#00C9A7" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- one crisp outcome, twice -->
+  <line x1="120" y1="325" x2="530" y2="325" stroke="#00C9A7" stroke-width="6" stroke-linecap="round"/>
+  <polygon points="530,313 555,325 530,337" fill="#00C9A7"/>
+  <text x="610" y="332" font-size="20" fill="#1C355E">full battery &#8594; 77 cm</text>
+
+  <line x1="120" y1="370" x2="530" y2="370" stroke="#00C9A7" stroke-width="6" stroke-linecap="round"/>
+  <polygon points="530,358 555,370 530,382" fill="#00C9A7"/>
+  <text x="610" y="377" font-size="20" fill="#1C355E">low battery &#8594; 77 cm ✅</text>
+
+  <text x="400" y="418" text-anchor="middle" font-size="21" fill="#625D9C" font-weight="bold">counting degrees beats counting seconds &#8212; but neither knows which WAY you face&#8230;</text>
+</svg>

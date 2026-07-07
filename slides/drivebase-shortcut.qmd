@@ -1,0 +1,143 @@
+---
+title: "The Earned Shortcut"
+subtitle: "Day 5 · Robot Rockstars · SPIKE Prime + Pybricks"
+date: today
+format: revealjs
+---
+
+<!-- DRAFT STUB (2026-07-06) — D5: finish the PID story (D damps, I as felt
+     demo — never gated), then reveal DriveBase as the professional version of
+     what the students built on D3–D4. Sections C–E below were moved verbatim
+     from drive-a-square.qmd when D3 was split (references retargeted).
+     See plan decision log #14. -->
+
+# A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Two days, one formula: `error × gain`. Today: what P *can't* do — and the letters that finish the word.
+
+# B. Finish the Word: D and I {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+## Break it: P in a hurry
+
+<!-- TODO: crank the P gain + speed on gyro_turn_p → visible overshoot/
+     oscillation around the target. Elicit the fix: "slow down when the error
+     is CHANGING fast" → D (damping) — error's speed, not just its size.
+     Show PD calming the same turn. -->
+
+## The last letter: I
+
+<!-- TODO: felt demo only, never gated: a steady lean (weight on one side /
+     mat slope) leaves a small error P never quite kills — I accumulates
+     leftover error over time and pushes it out. Coach demo; the payoff barely
+     appears in short mission segments (plan: I stays a stretch). Close the
+     acronym: P·I·D — now they own all three letters. -->
+
+# C. The Reveal — Let DriveBase Drive {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+You built gyro turns and self-healing straights from raw motors. Now meet the pro version.
+
+## You just built a robot driver 🏆
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**You wrote this week**
+
+- `gyro_turn(target)` — a turn that watches itself and lands true
+- the self-healing straight — steer against the error, every 10 ms
+:::
+
+::: {.column width="50%"}
+**Every WRO robot needs**
+
+- turns that are *true*, not "about right"
+- straights that survive bumps, seams, and battery moods
+:::
+
+::::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Pybricks ships both moves — polished, tuned, tested — inside one tool: **`DriveBase`**. It runs a professional **PID** on every move. You'll understand everything it does… *because you spent two days building one.*
+:::
+:::
+
+## Measure your robot first
+
+::: {.qbox}
+[`DriveBase` asks for two numbers: **wheel diameter** and **axle track** (tire-center to tire-center). Why does it need the *second* one?]{.qtitle}
+
+Hint: you already *used* it once — on Day 3…
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+It's your **turn-circle**! You ran that math by hand once to get 148 — DriveBase runs *your* derivation for **any** angle. The shortcut is math you already own.
+:::
+:::
+
+## Build your DriveBase
+
+```{.python code-line-numbers="|1|3-4|6|7"}
+from pybricks.robotics import DriveBase   # the shortcut, now earned
+
+WHEEL_DIAMETER = 88   # mm — π × 88 ≈ 276 mm = 27.6 cm. Sound familiar? 😏
+AXLE_TRACK = 145      # mm — tire center to tire center. MEASURE yours!
+
+drive = DriveBase(left, right, WHEEL_DIAMETER, AXLE_TRACK)
+drive.use_gyro(True)  # ← your gyro moves, built in and switched on
+```
+
+::: {.cardbox .teal}
+`DriveBase` speaks **mm and robot-degrees** — `drive.straight(300)`, `drive.turn(90)` — and with `use_gyro(True)` every move is *watched*, exactly like yours were.
+:::
+
+::: {.notes}
+Both numbers are measured, not copied: roll the wheel 5 turns, divide by 5 and π for diameter (they'll land near 88); the track they measured on Day 3 for the 148 derivation (≈145 mm on our build; the stock ADB is ≈114) — have them re-check it, squads with mods will differ. Wrong track → every turn systematically over- or under-shoots: that's today's tuning conversation (`drive.settings()`). If asked *why* the track matters: a spin-in-place drives the wheels around a circle as wide as the axle track — wider track = more wheel-degrees per robot-degree.
+:::
+
+## The square, in one function
+
+```{.python code-line-numbers="|1-4|6"}
+def drive_square(side_mm):
+    for side in range(4):
+        drive.straight(side_mm)   # gyro-healed straight, in mm
+        drive.turn(90)            # your watched turn, factory-tuned
+
+drive_square(300)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+Run it. **The square snaps shut.** Same square as Day 3 — but every line is gyro-watched. Now show off: `drive_square(200)`, `drive_square(400)`… one function, any square.
+:::
+:::
+
+::: {.notes}
+Close the loop hard: put Day 3's taped drift-square next to this one. Everything converged — `for` repeats the corner, `def` names the move, PID watches every line. The constants block on top becomes `RobotConfig` at D10.
+:::
+
+# D. Competition & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Today's showdown: **Bullseye** 🎯
+
+## Bullseye 🎯
+
+::: {.callout-important}
+## The challenge
+Drive forward **exactly 1 metre** and stop as close to the mark as you can. 3 attempts, best counts.
+:::
+
+- `drive.straight(1000)` + a wheel diameter *you measured*. Predict, then prove.
+- Pro move: does your run survive a **battery swap**? A **judge's evil nudge** mid-run? (It should now. 😏)
+
+## Today's gate
+
+::: {.callout-important}
+## You're done today when…
+Your robot drives a **closed square** with `DriveBase` + `use_gyro`, you can walk through **your own** P-turn and self-healing straight line by line and say what **D** and **I** add, and you've **measured** wheel diameter + axle track and can say why `DriveBase` needs each.
+:::
+
+::: {.fragment .fade-up}
+Next week: *Stop at the Wall* — the motor becomes a **sensor**, and your robot learns to **react** to the world instead of just replaying a plan.
+:::

@@ -1,0 +1,51 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <!-- Compass ring -->
+  <g transform="translate(260,200)">
+    <circle cx="0" cy="0" r="150" fill="none" stroke="#1C355E" stroke-width="4" opacity="0.5"/>
+    <!-- tick labels -->
+    <text x="0" y="-165" text-anchor="middle" font-size="24" fill="#1C355E" font-weight="bold">0&#176;</text>
+    <text x="178" y="8" text-anchor="middle" font-size="24" fill="#1C355E" font-weight="bold">90&#176;</text>
+    <text x="0" y="192" text-anchor="middle" font-size="24" fill="#1C355E" font-weight="bold">180&#176;</text>
+    <text x="-180" y="8" text-anchor="middle" font-size="24" fill="#1C355E" font-weight="bold">-90&#176;</text>
+    <!-- ticks -->
+    <line x1="0" y1="-150" x2="0" y2="-135" stroke="#1C355E" stroke-width="4"/>
+    <line x1="150" y1="0" x2="135" y2="0" stroke="#1C355E" stroke-width="4"/>
+    <line x1="0" y1="150" x2="0" y2="135" stroke="#1C355E" stroke-width="4"/>
+    <line x1="-150" y1="0" x2="-135" y2="0" stroke="#1C355E" stroke-width="4"/>
+
+    <!-- Robot top view (slightly rotated toward 90) -->
+    <g transform="rotate(35)">
+      <rect x="-45" y="-55" width="90" height="110" rx="14" fill="#1C355E"/>
+      <rect x="-57" y="-45" width="12" height="34" rx="5" fill="#333"/>
+      <rect x="-57" y="11" width="12" height="34" rx="5" fill="#333"/>
+      <rect x="45" y="-45" width="12" height="34" rx="5" fill="#333"/>
+      <rect x="45" y="11" width="12" height="34" rx="5" fill="#333"/>
+      <rect x="-25" y="-30" width="50" height="46" rx="6" fill="#FFD500"/>
+      <polygon points="0,-78 -14,-58 14,-58" fill="#00C9A7"/>
+    </g>
+
+    <!-- heading arrows -->
+    <line x1="0" y1="0" x2="0" y2="-118" stroke="#625D9C" stroke-width="5" stroke-dasharray="10 7"/>
+    <line x1="0" y1="0" x2="68" y2="-97" stroke="#FF7A5C" stroke-width="6" stroke-linecap="round"/>
+    <polygon points="60,-112 82,-92 52,-86" fill="#FF7A5C"/>
+    <!-- arc from 0 to 35 -->
+    <path d="M 0 -75 A 75 75 0 0 1 43 -61" fill="none" stroke="#FF7A5C" stroke-width="4"/>
+    <text x="34" y="-125" font-size="22" fill="#FF7A5C" font-weight="bold">35&#176;</text>
+  </g>
+
+  <!-- Terminal readout -->
+  <g transform="translate(500,80)">
+    <rect x="0" y="0" width="270" height="240" rx="14" fill="#1C355E"/>
+    <circle cx="24" cy="24" r="7" fill="#FF7A5C"/>
+    <circle cx="46" cy="24" r="7" fill="#FFD500"/>
+    <circle cx="68" cy="24" r="7" fill="#00C9A7"/>
+    <text x="20" y="70" font-size="19" fill="#9FE8DB" font-family="Consolas, monospace">hub.imu.heading()</text>
+    <text x="20" y="105" font-size="20" fill="#FFFFFF" font-family="Consolas, monospace">0</text>
+    <text x="20" y="135" font-size="20" fill="#FFFFFF" font-family="Consolas, monospace">12</text>
+    <text x="20" y="165" font-size="20" fill="#FFFFFF" font-family="Consolas, monospace">35   &#8592; twist it!</text>
+    <text x="20" y="195" font-size="20" fill="#FFFFFF" font-family="Consolas, monospace">61</text>
+    <text x="20" y="225" font-size="20" fill="#FFFFFF" font-family="Consolas, monospace">90   &#8592; quarter turn</text>
+  </g>
+
+  <text x="400" y="375" text-anchor="middle" font-size="22" fill="#1C355E" font-weight="bold">The gyro always knows which way the robot faces &#8212; even when YOU turn it by hand.</text>
+</svg>

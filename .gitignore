@@ -1,0 +1,8 @@
+/.quarto/
+**/*.quarto_ipynb
+__pycache__/
+output/
+code/
+docs/
+/CLAUDE.md
+/.claude/
