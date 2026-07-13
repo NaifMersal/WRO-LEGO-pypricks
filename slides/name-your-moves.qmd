@@ -1,0 +1,781 @@
+---
+title: "Name Your Moves"
+subtitle: "Day 5 · Robot Rockstars · SPIKE Prime + Pybricks"
+date: today
+format: revealjs
+---
+
+```{=html}
+<!-- Shared assets for every sim in this deck: one car (two sizes), one helper kit. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="nmCar">
+      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="var(--car,#1C355E)"/>
+      <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
+      <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
+      <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
+      <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
+      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
+      <circle cy="-30" r="4" fill="#FFD500"/>
+    </g>
+    <g id="nmCarMini">
+      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="var(--car,#1C355E)"/>
+      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
+      <circle cy="-30" r="4" fill="#FFD500"/>
+    </g>
+  </defs>
+</svg>
+<script>
+window.NM = {
+  el: function(id){ return document.getElementById(id); },
+  pt: function(a,R){ var r=a*Math.PI/180; return (R*Math.sin(r)).toFixed(1)+' '+(-R*Math.cos(r)).toFixed(1); },
+  arcD: function(a1,a2,R){ if(a2-a1<0.5) return ''; return 'M '+NM.pt(a1,R)+' A '+R+' '+R+' 0 '+((a2-a1)>180?1:0)+' 1 '+NM.pt(a2,R); },
+  // one 5 ms tick of the turn-to-90 sim (kd = 0 → pure P), shared by both PID sims
+  step: function(s, kd){
+    var sd=0.005, err=90-s.h, change=err-s.lastErr; s.lastErr=err;
+    var cmd=12*err + kd*(change/sd);
+    if(cmd>450)cmd=450; if(cmd<-450)cmd=-450;
+    s.v += (cmd-s.v)*Math.min(5*sd,1);
+    s.h += s.v*0.5*sd; s.t+=sd;
+  }
+};
+</script>
+```
+
+# A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Yesterday you *named* **P** — `error × gain`. Today: the two letters that fix what P alone can't — and then your moves get **names of their own**. 📦
+
+## Where we left off
+
+| Yesterday | The trick |
+|---|---|
+| 📈 **P, named** | `speed = error × gain` — far → fast, close → gentle, there → zero |
+| 🔁 **one formula, two jobs** | the **watched turn** *and* the **self-healing straight** — same line, two uses |
+| 🔥 **crack #1** | `gain = 20` flew **past** the target and zig-zagged back |
+| 😴 **crack #2** | `gain = 1` **parked a hair short** — a leftover P never quite killed |
+
+::: {.fragment .fade-up}
+- Both cracks survived yesterday's gain quiz — each one is a **letter** we collect this morning
+- Then every move you own gets a **name** in **your own library**
+:::
+
+⏱️ **Time: 10 minutes**
+
+::: {.notes}
+Recap by asking, not telling: "walk me through `gyro_turn_p` — what does gain do at a big error vs a tiny one?" Then surface the two cracks *they already saw* on the D4 quiz: the hot gain overshot and rang; the lazy gain parked short. Don't fix anything yet — name that the morning's job is those two leftovers, which turn out to be the last two letters of PID, and the afternoon's job is turning everything they've hand-built into named library functions. Keep P as the hero they built; D and I are its finishing touches, not a new subject.
+:::
+
+# B. Finish the Word: D and I {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+- P knows **how far** is left
+- P ignores **how fast** it's closing — or that a lean is stealing from it
+- Two letters fix that
+
+## Break it: P in a hurry 🔥
+
+```{=html}
+<div style="width:780px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:6px;">
+    <button onclick="phRun()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">▶ gyro_turn_p(90) — gain cranked 🔥</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:44px;">
+    <svg width="200" height="200" viewBox="-105 -105 210 210" style="display:block;">
+      <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
+      <g id="phTick"><line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/></g>
+      <path id="phArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"/>
+      <g id="phNeedle"><use href="#nmCar" style="--car:#FF7A5C"/></g>
+    </svg>
+    <div style="font-family:Consolas,monospace;font-size:20px;color:#1C355E;min-width:300px;">
+      <div style="margin-bottom:6px;">heading = <span id="phHdg" style="font-weight:800;color:#FF7A5C;">0</span>° &nbsp;<span style="opacity:.6;font-size:15px;">target 90°</span></div>
+      <div style="height:20px;background:#eef3f8;border-radius:6px;overflow:hidden;margin-bottom:12px;position:relative;">
+        <div style="position:absolute;left:calc(90/110*100%);top:0;width:2px;height:100%;background:#00AE8D;"></div>
+        <div id="phHdgBar" style="height:100%;width:0%;background:#FF7A5C;opacity:.55;"></div>
+      </div>
+      <div id="phMsg" style="font-size:17px;color:#625D9C;font-weight:700;min-height:52px;">P sprints in… and slams the door. 🚪</div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, el=NM.el;
+  function run(){
+    var s={h:0,v:0,lastErr:90,t:0}, peak=0, done=false;
+    el('phMsg').textContent='P sprints in… watch it ring. 🔔';
+    el('phMsg').style.color='#625D9C';
+    el('phArc').setAttribute('d',''); el('phArc').setAttribute('opacity','0');
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var n=Math.max(1,Math.round(dt/0.005));
+      for(var i=0;i<n && !done;i++){
+        NM.step(s, 0);                        // hot gain, D=0
+        if(s.h>peak)peak=s.h;
+        if(s.t>4){ done=true; }
+      }
+      el('phNeedle').setAttribute('transform','rotate('+s.h.toFixed(1)+')');
+      el('phHdg').textContent=s.h.toFixed(0);
+      el('phHdgBar').style.width=Math.max(0,Math.min(s.h/110*100,100))+'%';
+      if(peak>90){ el('phArc').setAttribute('d',NM.arcD(90,peak,94)); el('phArc').setAttribute('opacity','1'); }
+      if(!done){ raf=requestAnimationFrame(frame); }
+      else{
+        raf=null;
+        el('phMsg').innerHTML='shot to <b>'+peak.toFixed(0)+'°</b> — the red arc it painted past the tick — swung back, rang, <b>then</b> settled. 😬';
+        el('phMsg').style.color='#E96852';
+      }
+    }
+    if(raf)cancelAnimationFrame(raf); last=null; raf=requestAnimationFrame(frame);
+  }
+  window.phRun=run;
+})();
+</script>
+```
+
+::: {.fragment .fade-up .incremental}
+- The push only knows *how far* is left — **not how fast it's closing**
+- It arrives at 90 flat-out, blows past, over-corrects, and **rings** before it settles
+- A bigger gain rings *harder*
+:::
+
+::: {.notes}
+Run it before the fragment. The red arc painted past the tick is the overshoot made physical — point at it. Elicit the diagnosis in their words: "the number hit 90 — why didn't it stop?" Because the wheels were still spinning fast; P read error 0 and cut power, but momentum carried it past, then P yanked it back, and round it goes. This is exactly the D3 coast — but now P can't two-speed its way out, because a hot gain is what won the race yesterday. Set up the need: we want something that notices the error is *dropping fast* and eases off early. Don't name D yet.
+:::
+
+## Name it: D damps 🛑 {.code-shrink}
+
+```{.python code-line-numbers="|1|3|4|5|6-7|8|10"}
+def gyro_turn_pd(target, gain=4, kd=0.5):
+    hub.imu.reset_heading(0)
+    last_error = target
+    while abs(target - hub.imu.heading()) > 1:
+        error = target - hub.imu.heading()   # how FAR → P
+        change = (error - last_error) / 0.005 # how FAST → D (°/s)
+        last_error = error
+        left.run(gain * error + kd * change) # ease off early
+        right.run(-(gain * error + kd * change))
+        wait(5)
+    left.stop(); right.stop()
+```
+
+::: {.fragment .fade-up .incremental}
+- P reads where you ARE. D reads how fast you're closing
+- Watch `error` fall `90 → 55 → 30`: each tick `change` is *negative* (`−35`, then `−25`) — the gap is closing fast
+- D catches that and **eases off early — it taps the brake *before* you arrive**, so the turn glides in instead of ringing. That's **D — derivative**, the second letter of **PID**
+:::
+
+::: {.notes}
+Anticipation is the whole idea — say it that way: P only knows the gap's *size* right now; D knows the gap is *shrinking* and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick's error, subtract to get the *change* (a speed, °/s), feed it in. Sign check out loud on the card's numbers — as the robot closes, `error` shrinks each tick, so `change` is negative, so it trims the command down → gentle arrival. `kd` is a new knob, same as `gain` was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They'll feel both on the next slide. `gyro_turn_pd` stays on `run()` (see the D4 proportional-turn note on `run()` vs `motor.dc()`); worth knowing for coaches — and it pays off again at the D10 reveal, where the pro controller actuates one layer *deeper*, by torque/effort.
+:::
+
+## Feel it: same turn, calmed 🎢
+
+```{=html}
+<div style="width:880px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:6px;">
+    <button onclick="fdRun()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:7px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ race P vs PD to 90°</button>
+    <span style="font-size:18px;color:#1C355E;font-weight:700;margin-left:10px;">kd: <b><span id="fdKdV">0.5</span></b></span>
+    <input type="range" min="0" max="1.6" step="0.1" value="0.5" oninput="fdKd(this.value)" style="width:200px;accent-color:#00AE8D;">
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;">
+    <div style="text-align:center;">
+      <svg width="200" height="200" viewBox="-105 -105 210 210" style="display:block;margin:0 auto;">
+        <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
+        <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/>
+        <path id="fdArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"/>
+        <g id="fdCarP"><use href="#nmCar" style="--car:#E96852"/></g>
+        <g id="fdCarPD"><g transform="scale(0.62)"><use href="#nmCar" style="--car:#00C9A7"/></g></g>
+      </svg>
+      <div style="font-size:14px;color:#1C355E;font-weight:700;">🔴 P — big car · 🟢 PD — small car</div>
+    </div>
+    <svg width="590" height="255" viewBox="0 0 590 255" style="display:block;">
+      <line x1="50" y1="215" x2="570" y2="215" stroke="#1C355E" stroke-width="3"/>
+      <line x1="50" y1="215" x2="50" y2="25" stroke="#1C355E" stroke-width="3"/>
+      <text x="22" y="125" font-size="15" fill="#1C355E" font-weight="700" transform="rotate(-90 22 125)" text-anchor="middle">heading</text>
+      <text x="518" y="238" font-size="15" fill="#1C355E" font-weight="700" text-anchor="middle">time →</text>
+      <line id="fdTgt" x1="50" y1="78" x2="570" y2="78" stroke="#00AE8D" stroke-width="2" stroke-dasharray="8 8"/>
+      <text x="562" y="72" font-size="14" fill="#00AE8D" font-weight="700" text-anchor="end">target 90°</text>
+      <polyline id="fdPtrace" points="" fill="none" stroke="#E96852" stroke-width="4"/>
+      <polyline id="fdPDtrace" points="" fill="none" stroke="#00C9A7" stroke-width="4"/>
+      <text x="115" y="44" font-size="17" fill="#E96852" font-weight="800">🔴 P alone — rings</text>
+      <text x="115" y="66" font-size="17" fill="#00AE8D" font-weight="800">🟢 PD — glides in</text>
+      <circle id="fdDotP" r="7" fill="#FFD500" stroke="#1C355E" stroke-width="2.5" opacity="0"/>
+      <circle id="fdDotPD" r="7" fill="#FFD500" stroke="#1C355E" stroke-width="2.5" opacity="0"/>
+      <text id="fdHere" font-size="14" fill="#1C355E" font-weight="800" opacity="0">you are HERE</text>
+    </svg>
+  </div>
+  <div style="text-align:center;font-family:Consolas,monospace;font-size:18px;color:#1C355E;">
+    P landed <span id="fdLandP" style="font-weight:800;color:#E96852;">–</span>° · PD landed <span id="fdLandPD" style="font-weight:800;color:#00AE8D;">–</span>°
+  </div>
+</div>
+<script>
+(function(){
+  var kd=0.5, raf=null, last=null, el=NM.el;
+  var X0=50, X1=570, TSPAN=4.0, YB=215, HMAX=115;
+  function yOf(h){ return YB - (h/HMAX)*(YB-40); }
+  function fresh(){ return {h:0,v:0,lastErr:90,t:0,done:false,pts:[],lx:X0,ly:YB}; }
+  function stepc(s, useD){
+    NM.step(s, useD? kd : 0);   // D = kd × closing speed (°/s) → damps, same as the code
+    if(s.t>TSPAN) s.done=true;
+  }
+  function push(s){
+    var x=X0+(s.t/TSPAN)*(X1-X0), y=yOf(s.h);
+    s.lx=x; s.ly=y;
+    s.pts.push(x.toFixed(1)+','+y.toFixed(1));
+  }
+  window.fdRun=function(){
+    var P=fresh(), PD=fresh(), peak=0; last=null;
+    el('fdLandP').textContent='–'; el('fdLandPD').textContent='–';
+    el('fdPtrace').setAttribute('points',''); el('fdPDtrace').setAttribute('points','');
+    el('fdArc').setAttribute('d',''); el('fdArc').setAttribute('opacity','0');
+    el('fdCarP').setAttribute('transform','rotate(0)'); el('fdCarPD').setAttribute('transform','rotate(0)');
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var n=Math.max(1,Math.round(dt/0.005));
+      for(var i=0;i<n;i++){ if(!P.done){stepc(P,false);push(P);} if(!PD.done){stepc(PD,true);push(PD);} }
+      el('fdPtrace').setAttribute('points',P.pts.join(' '));
+      el('fdPDtrace').setAttribute('points',PD.pts.join(' '));
+      el('fdCarP').setAttribute('transform','rotate('+P.h.toFixed(1)+')');
+      el('fdCarPD').setAttribute('transform','rotate('+PD.h.toFixed(1)+')');
+      if(P.h>peak)peak=P.h;
+      if(peak>90){ el('fdArc').setAttribute('d',NM.arcD(90,peak,94)); el('fdArc').setAttribute('opacity','1'); }
+      el('fdDotP').setAttribute('cx',P.lx.toFixed(1)); el('fdDotP').setAttribute('cy',P.ly.toFixed(1)); el('fdDotP').setAttribute('opacity','1');
+      el('fdDotPD').setAttribute('cx',PD.lx.toFixed(1)); el('fdDotPD').setAttribute('cy',PD.ly.toFixed(1)); el('fdDotPD').setAttribute('opacity','1');
+      var hx=Math.max(P.lx,PD.lx), hy=Math.max(20,Math.min(P.ly,PD.ly)-14);
+      el('fdHere').setAttribute('x',(hx>460?hx-14:hx+14).toFixed(1)); el('fdHere').setAttribute('y',hy.toFixed(1));
+      el('fdHere').setAttribute('text-anchor', hx>460?'end':'start'); el('fdHere').setAttribute('opacity','1');
+      if(P.done&&PD.done){ raf=null; el('fdLandP').textContent=P.h.toFixed(0); el('fdLandPD').textContent=PD.h.toFixed(0); }
+      else raf=requestAnimationFrame(frame);
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+  window.fdKd=function(v){ kd=parseFloat(v); el('fdKdV').textContent=v; };
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+- Same hot gain, same target. **P** reads only the error's *size* and rings — watch the red car paint its wobble past the tick
+- **PD** also reads its *speed* and eases off early — one clean glide *(the graph is the cars' **diary**; the yellow dot is now)*
+- Slide `kd` to **0** and the green curve rings too; too high and it crawls in. **Fast when far, gentle as it arrives.**
+:::
+
+::: {.notes}
+Reading ritual first, same as yesterday's dot-and-car slides: the two cars on the dial ARE the robots (big red = P, small green = PD); the graph is their diary, written left to right while they turn; the yellow dot at each trace's tip is *now* — car and dot move together, same robot, two views. Run at kd=0.5 — narrate the dial ("red blows past the tick, paints the arc, swings back; green glides on") *then* point at the diary telling the identical story. Drag kd to 0 live: the green curve collapses onto the red one — *proof* that D is the only difference. Nudge kd up to ~1.5: green now approaches sluggishly and arrives late. The sweet spot is theirs to feel, exactly like the gain knob yesterday. The sim is illustrative, not gospel — on the real robot they'll tune kd by eye, same habit.
+:::
+
+## The last letter: I — *(coach demo)* 🧲
+
+::: {.qbox}
+[Rest a thumb of weight on one side. Now the P-turn stops **a hair short** — 88°, not 90 — and **stays there, forever.** Why can't P finish the job?]{.qtitle}
+:::
+
+```{=html}
+<div style="width:860px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:6px;">
+    <button onclick="itRun()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:7px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive into the lean</button>
+    <button id="itBtn" onclick="itToggle()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:7px 20px;font-size:19px;font-weight:700;cursor:pointer;">I-term: OFF</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;">
+    <div style="text-align:center;">
+      <svg width="160" height="160" viewBox="-105 -105 210 210" style="display:block;margin:0 auto;">
+        <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
+        <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/>
+        <path id="itGapArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"/>
+        <g id="itCar"><use href="#nmCar" style="--car:#625D9C"/><text x="17" y="4" font-size="15">🧲</text></g>
+      </svg>
+      <div style="font-size:13px;color:#1C355E;font-weight:700;">🧲 = the lean, riding the car</div>
+    </div>
+    <svg width="545" height="189" viewBox="0 0 590 205" style="display:block;">
+      <line x1="50" y1="175" x2="570" y2="175" stroke="#1C355E" stroke-width="3"/>
+      <line x1="50" y1="175" x2="50" y2="20" stroke="#1C355E" stroke-width="3"/>
+      <text x="22" y="100" font-size="15" fill="#1C355E" font-weight="700" transform="rotate(-90 22 100)" text-anchor="middle">heading</text>
+      <text x="518" y="198" font-size="15" fill="#1C355E" font-weight="700" text-anchor="middle">time →</text>
+      <line x1="50" y1="40" x2="570" y2="40" stroke="#00AE8D" stroke-width="2" stroke-dasharray="8 8"/>
+      <text x="562" y="34" font-size="14" fill="#00AE8D" font-weight="700" text-anchor="end">target 90°</text>
+      <polyline id="itTrace" points="" fill="none" stroke="#625D9C" stroke-width="4"/>
+      <text id="itGap" x="420" y="78" font-size="15" fill="#E96852" font-weight="700" opacity="0">stuck 5° short 😤</text>
+      <circle id="itDot" r="7" fill="#FFD500" stroke="#1C355E" stroke-width="2.5" opacity="0"/>
+      <text id="itHere" font-size="14" fill="#1C355E" font-weight="800" opacity="0">you are HERE</text>
+    </svg>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;font-size:15px;color:#1C355E;">
+    <span>the <b>leftover</b> P can't push out, piling up in <b>I</b>'s memory:</span>
+    <div style="width:220px;height:16px;background:#eef3f8;border-radius:6px;overflow:hidden;"><div id="itAcc" style="height:100%;width:0%;background:#625D9C;"></div></div>
+  </div>
+</div>
+<script>
+(function(){
+  var useI=false, raf=null, last=null, el=NM.el;
+  var X0=50, X1=570, TSPAN=8.0, YB=175, HMAX=100;
+  function yOf(h){ return YB - (h/HMAX)*(YB-25); }
+  window.itRun=function(){
+    var T=90, h=0, acc=0, t=0, done=false, pts=[]; last=null;
+    var LEAN=16;                                  // constant load the wheels must overcome
+    el('itTrace').setAttribute('points',''); el('itGap').setAttribute('opacity','0');
+    el('itGapArc').setAttribute('d',''); el('itGapArc').setAttribute('opacity','0');
+    el('itCar').setAttribute('transform','rotate(0)');
+    el('itAcc').style.width='0%';
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var n=Math.max(1,Math.round(dt/0.005));
+      for(var i=0;i<n && !done;i++){
+        var sd=0.005, err=T-h;
+        acc += err*sd;
+        var push = 3*err + (useI? 0.3*acc : 0) - LEAN;   // P + (I) fighting the lean
+        h += push*0.5*sd; t+=sd;
+        if(t>TSPAN) done=true;
+      }
+      var x=X0+(t/TSPAN)*(X1-X0), y=yOf(h);
+      pts.push(x.toFixed(1)+','+y.toFixed(1));
+      el('itTrace').setAttribute('points',pts.join(' '));
+      el('itCar').setAttribute('transform','rotate('+h.toFixed(1)+')');
+      el('itDot').setAttribute('cx',x.toFixed(1)); el('itDot').setAttribute('cy',y.toFixed(1)); el('itDot').setAttribute('opacity','1');
+      el('itHere').setAttribute('x',(x>460?x-14:x+14).toFixed(1)); el('itHere').setAttribute('y',Math.max(16,y-14).toFixed(1));
+      el('itHere').setAttribute('text-anchor', x>460?'end':'start'); el('itHere').setAttribute('opacity','1');
+      el('itAcc').style.width=Math.min(0.3*acc/LEAN*100, 100)+'%';
+      if(!done){ raf=requestAnimationFrame(frame); }
+      else{
+        raf=null;
+        if(!useI && h<T-1){
+          el('itGap').setAttribute('opacity','1');
+          el('itGapArc').setAttribute('d',NM.arcD(h,T,94)); el('itGapArc').setAttribute('opacity','1');
+        }
+      }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+  window.itToggle=function(){
+    useI=!useI;
+    var b=el('itBtn');
+    b.textContent='I-term: '+(useI?'ON':'OFF');
+    b.style.background=useI?'#625D9C':'#eef3f8';
+    b.style.color=useI?'#fff':'#1C355E';
+    b.style.border=useI?'none':'2px solid #1C355E';
+  };
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+- P's push (`gain × error`) can't beat the lean, so it **parks a hair short forever** — that's yesterday's `gain = 1`, now explained
+- Turn **I ON**: each tick piles the leftover onto a **running total** (the purple bar) until the sum beats the lean. **I — integral**
+:::
+
+::: {.notes}
+This is a **coach demo — never gated.** Show it, don't assign it. Point at the dial first: the car (🧲 riding its side — that's the thumb of weight) climbs and sticks short of the tick, and the red sliver between nose and tick IS the flatline gap on the diary next to it — same robot, two views, yellow dot = now. Toggle I OFF first: the purple curve rises then flatlines short, the "stuck 5° short" tag appears — that's yesterday's `gain=1` parks-short, now explained. Toggle I ON and rerun: the accumulator bar fills, the car creeps the last sliver onto the tick, and the curve creeps up to 90. Say plainly why it barely matters for us: our mission moves are short — a 30 cm straight or a 90° turn ends before the accumulator fills — so I earns its seat on long steady offsets, not here. They now *own* the whole acronym; that's the win, not a tuned I.
+:::
+
+## You own all three letters 🏆
+
+```{=html}
+<div style="text-align:center;margin:10px 0 4px 0;">
+  <div style="font-size:64px;font-weight:800;letter-spacing:6px;">
+    <span style="color:#00AE8D;">P</span> · <span style="color:#625D9C;">I</span> · <span style="color:#E96852;">D</span>
+  </div>
+</div>
+<div style="display:flex;justify-content:center;gap:26px;margin-top:8px;">
+  <div style="background:#eef3f8;border-radius:12px;border-top:5px solid #00AE8D;padding:12px 20px;text-align:center;width:200px;">
+    <div style="font-size:26px;font-weight:800;color:#00AE8D;">P</div>
+    <div style="font-size:16px;color:#1C355E;">the error's <b>size</b><br>far → hard push</div>
+  </div>
+  <div style="background:#eef3f8;border-radius:12px;border-top:5px solid #625D9C;padding:12px 20px;text-align:center;width:200px;">
+    <div style="font-size:26px;font-weight:800;color:#625D9C;">I</div>
+    <div style="font-size:16px;color:#1C355E;">the error's <b>history</b><br>kills a steady lean</div>
+  </div>
+  <div style="background:#eef3f8;border-radius:12px;border-top:5px solid #E96852;padding:12px 20px;text-align:center;width:200px;">
+    <div style="font-size:26px;font-weight:800;color:#E96852;">D</div>
+    <div style="font-size:16px;color:#1C355E;">the error's <b>speed</b><br>brakes before arrival</div>
+  </div>
+</div>
+```
+
+::: {.fragment .fade-up}
+- Size, history, speed — three readings of one number, the error
+- This exact trio runs inside every drone, thermostat, and Mars rover
+- You didn't learn a LEGO trick; you **finished the most-used formula in robotics.** Now give your moves **names.** 📦
+:::
+
+::: {.notes}
+Let the acronym land with a beat of silence — this is the payoff of two days. Say it in one breath: P built yesterday, D and I today, all three read the same error different ways. Then pivot: every one of those moves still lives as a loose pasted loop in one file. The afternoon turns them into a **library** — named functions they'll carry all the way to the competition table.
+:::
+
+# C. The Library Begins {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+Every move you own is still a *pasted loop*. Name each one **once**, and a mission becomes a sentence.
+
+## Break it: the copy-paste swamp 🔥
+
+::: {.qbox}
+[The judge calls: *turn to 90 · drive 40 cm · turn to 45 · drive 30 cm.* With yesterday's file, how many lines do you paste — and when a bug turns up in the turn loop, in how many places do you fix it?]{.qtitle}
+:::
+
+```{=html}
+<div style="display:flex;justify-content:center;gap:16px;margin-top:10px;">
+  <div style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
+    <div style="font-weight:800;color:#E96852;">turn to 90</div>
+    <div>while abs(90 - …) &gt; 1:</div>
+    <div>&nbsp;&nbsp;error = 90 - …</div>
+    <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(4*error + …)</span></div>
+    <div>&nbsp;&nbsp;… 5 more lines …</div>
+    <div style="color:#E96852;font-weight:700;">🐛 fix here…</div>
+  </div>
+  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
+    <div style="font-weight:800;color:#E96852;">drive 40 cm</div>
+    <div>while left.angle() &lt; …:</div>
+    <div>&nbsp;&nbsp;error = heading()</div>
+    <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(500 - 4*error)</span></div>
+    <div>&nbsp;&nbsp;… 5 more lines …</div>
+    <div style="color:#E96852;font-weight:700;">…and here…</div>
+  </div>
+  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
+    <div style="font-weight:800;color:#E96852;">turn to 45</div>
+    <div>while abs(45 - …) &gt; 1:</div>
+    <div>&nbsp;&nbsp;error = 45 - …</div>
+    <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(4*error + …)</span></div>
+    <div>&nbsp;&nbsp;… 5 more lines …</div>
+    <div style="color:#E96852;font-weight:700;">…and here…</div>
+  </div>
+  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
+    <div style="font-weight:800;color:#E96852;">drive 30 cm</div>
+    <div>while left.angle() &lt; …:</div>
+    <div>&nbsp;&nbsp;error = heading()</div>
+    <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(500 - 4*error)</span></div>
+    <div>&nbsp;&nbsp;… 5 more lines …</div>
+    <div style="color:#E96852;font-weight:700;">…and here. 😵</div>
+  </div>
+</div>
+```
+
+::: {.fragment .fade-up}
+- Four moves ≈ **30 pasted lines**, and one bug means **four fixes** — miss one and the robot lies to you
+- A real mission has a *dozen* moves. The cure isn't more pasting — it's **naming**: write each move once, call it forever
+:::
+
+::: {.notes}
+Let them actually start pasting for the judge's call — a minute of real pasting sells the swamp better than any slide. Then freeze: "you already know the cure — you used it yesterday." `def gyro_turn` was the first named move; today every move gets a name, in a file of its own. Vocabulary to land: a **library** = a file of named moves; your mission file *imports* the verbs. This is the same trick `run_angle` plays — someone at LEGO named a move so you wouldn't have to paste motor physics.
+:::
+
+## Fix it: a file of your own — `my_lib.py` 📦 {.code-shrink}
+
+```{.python code-line-numbers="|1|2-9|11-13"}
+# my_lib.py — YOUR moves: written once, named forever
+from pybricks.hubs import PrimeHub
+from pybricks.pupdevices import Motor
+from pybricks.parameters import Port, Direction
+from pybricks.tools import wait
+
+hub = PrimeHub()
+left = Motor(Port.A, Direction.COUNTERCLOCKWISE)
+right = Motor(Port.E)
+
+KP = 4                                # named constants — tune HERE,
+WHEEL_MM = 88                         # nowhere else
+DEG_PER_MM = 360 / (3.14 * WHEEL_MM)  # Day 2's wheel math, bottled
+```
+
+::: {.fragment .fade-up}
+- One new file. The top holds the robot's **facts** (ports, gains, wheel math); below it live the **verbs**
+- Your mission file just says `from my_lib import drive_straight, turn_to` — and reads like a story instead of a swamp
+:::
+
+::: {.notes}
+Make the file for real, together — everyone creates `my_lib.py` next to their mission file. The constants block is the same discipline from the square day, now promoted to the library's front door: facts at the top, verbs below, missions elsewhere. `DEG_PER_MM` bottles the D2 rope-unroll math (360° per wheel-turn ÷ circumference) so distance-in-mm is a multiply away. Two verbs move in today; the library keeps growing all week — wall verbs next session, line verbs after — same file, more names.
+:::
+
+## Verb #1: `turn_to` — the PD turn, named
+
+```{.python code-line-numbers="|1|2|3|4-5"}
+def turn_to(target, gain=4, kd=0.5):
+    """PD gyro turn to a heading ON THE MAT — no reset."""
+    # hub.imu.reset_heading(0)   ← DELETED. That's the whole diff.
+    last_error = target - hub.imu.heading()
+    ...   # the rest IS gyro_turn_pd, line for line
+```
+
+::: {.fragment .fade-up}
+- Copy `gyro_turn_pd` into `my_lib.py`, rename it, **delete the reset** — that's the whole edit
+- `turn_to(90)` now means *face 90 on the mat* — not "turn 90 more"
+- Arrive at a corner 1° hot? The **next** `turn_to` absorbs it. **Errors stop stacking.**
+:::
+
+::: {.notes}
+The dropped reset is the day's sneakiest upgrade — walk it slowly. With reset, every turn measures from wherever the robot happens to point, so corner errors *add up* (the D3 square never closed for exactly this reason). Without reset, the gyro keeps one map-wide heading and every `turn_to` is an absolute appointment: 90 is 90, whatever mess came before. Quiz it: "you're at heading 92 after a bumped corner — what does `turn_to(180)` do?" (turns 88, not 90 — it *fixes* the bump for free). The gyro heading keeps counting past 360, which the square slide uses. Defaults (`gain=4, kd=0.5`) are their tuned D4/D5 values — theirs may differ; that's the point of owning the knobs. Don't unpack the `=` in the def line yet — *default* gets named and drilled two slides on.
+:::
+
+## Verb #2: `drive_straight` — a straight with a finish line {.code-shrink}
+
+```{.python code-line-numbers="|1|3|5|6-8|9"}
+def drive_straight(distance_mm, speed=400):
+    """Drive distance_mm, healing the heading the whole way."""
+    heading = hub.imu.heading()                    # lock THIS heading
+    finish = left.angle() + distance_mm * DEG_PER_MM
+    while left.angle() < finish:                   # encoder finish line
+        error = hub.imu.heading() - heading        # one heartbeat
+        left.run(speed - KP * error)
+        right.run(speed + KP * error)
+        wait(5)
+    left.stop(); right.stop()
+```
+
+::: {.fragment .fade-up}
+- Day 2's wheel math sets the **finish line in degrees**; Day 4's healing loop steers every heartbeat on the way there
+- A verb calling a verb would stack — here it's inlined for simplicity, same idea: **libraries grow by stacking, not pasting**
+:::
+
+::: {.notes}
+Single function now: `drive_straight` handles both the finish line (encoder degrees) and the healing loop (P steering each tick). `finish` is measured from wherever the wheel already is (no encoder reset), same absolute-not-relative discipline as `turn_to`. Backwards moves (a negative `distance_mm`) need the comparison flipped — park it as a challenge today; it becomes urgent at the wall session's measured back-off, and the coach exemplar handles it. Benchmarks come at the gate: 1 m within ±2 cm is very reachable with a measured wheel. The `speed=400` in the def line gets its name — *default* — on the very next slide.
+:::
+
+## Knobs with defaults 🎛️ {.smaller}
+
+```{.python code-line-numbers="|1|2"}
+def turn_to(target, gain=4, kd=0.5):         # two knobs, factory-set
+def drive_straight(distance_mm, speed=400):  # one knob, factory-set
+```
+
+- Every `=` in a `def` line is a **default** — a factory setting. Skip the knob, the factory value runs; name it — a **keyword argument** like `kd=0` — and you turn *that one knob*, nothing else
+
+::: {.qbox}
+[Predict — what runs? ① `turn_to(90)` · ② `turn_to(90, kd=0)` · ③ `drive_straight(300, speed=150)` · ④ `drive_straight(speed=150)`]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+① all factory settings — **your** tuned `gain=4, kd=0.5` run unasked · ② brake knob to zero — **yesterday's ringing P is back, on demand** 🔔
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+③ one careful straight at 150 — every *other* call still fast · ④ 💥 `TypeError` — `distance_mm` has **no** default. Some knobs *must* be turned
+:::
+:::
+
+::: {.notes}
+Name the vocabulary plainly, once: the names in the parentheses are **parameters**; a parameter with `=` carries a **default**; naming a knob at the call site (`kd=0`) is a **keyword argument**. They've used all three since `gyro_turn_p(target, gain=4)` — this slide only hangs names on habits. Quiz cadence: read a call, every squad commits out loud, *then* reveal the card — ② is the fun one (one keyword resurrects yesterday's ringing bug, proof the default was doing real work), ④ is the confidence move: run it live, read the `TypeError` together — the interpreter is *telling you which knob you forgot*, not scolding you. Forward hook for coaches: at the D10 reveal, `RobotConfig` gathers all these factory settings into one dataclass — same idea, bigger box.
+:::
+
+## Two homes for a name 🗺️ {.smaller .code-shrink}
+
+```{.python code-line-numbers="|1-3|5-7"}
+# top of my_lib.py — GLOBALS: born once, every verb reads them
+hub = PrimeHub()
+KP = 4
+
+def drive_straight(distance_mm, speed=400):
+    heading = hub.imu.heading()              # LOCALS: born at the call…
+    error = hub.imu.heading() - heading      # …gone the moment it ends
+```
+
+::: {.qbox}
+[The run just ended — what does `print(error)` print? And: change `KP = 4` → `6` at the top — how many verbs feel it?]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+`print(error)` → **NameError** — `error` is a **local**: born at the call, dead at the end. A *feature* — every verb gets private scratch names that never collide
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+`KP` is a **global** — one edit, **every** verb feels it. The file's whole shape: **facts up top (global) · verbs below · scratch inside (local)**
+:::
+:::
+
+::: {.notes}
+Two words, two homes — point at the actual file while saying it: a name born at the **top of the file** is a **global** (born once, when the file loads; every verb below can read it — `hub`, `left`, `KP`, `DEG_PER_MM`); a name born **inside a def** is a **local** (born fresh at every call, gone at the end — `heading`, `finish`, `error`). Run the `print(error)` NameError live if a laptop's handy; kids expect the number to still be there, and the error landing is the lesson. Then sell dying-locals as a feature: `turn_to` and `drive_straight` *both* use `error` and never trip over each other, and every call starts with a clean slate. The KP question is the payoff of the "tune HERE, nowhere else" comment they already wrote — one global, read by everyone, edited in one place. Don't mention the `global` keyword; the next slide handles the one trap without it.
+:::
+
+## Break it: the tune that didn't stick 🔥
+
+```{.python code-line-numbers="|1-2|4-5"}
+def make_it_sharper():
+    KP = 12          # crank steering for the whole library… right?
+
+make_it_sharper()
+drive_straight(300)  # …still lazy. Nothing changed. 😤
+```
+
+::: {.fragment .fade-up .incremental}
+- **Assigning** a name inside a `def` births a brand-new **local** — even when a global already owns that name. This `KP` lived inside `make_it_sharper`… and **died at the end of the call**. The top-of-file `KP` never moved
+- The fix is zero new code — it's the rule the file already taught you: **read a global from anywhere; *change* it only at the top.** `KP = 12` belongs in exactly ONE place — the constants block
+:::
+
+::: {.notes}
+Act it out before explaining: type `make_it_sharper` live, run the straight, watch nothing change — let the 😤 be theirs. Then the one-sentence rule: the moment you *assign* a name inside a def, Python births a new local, even if a global already wears that name — the global is untouched, and the local evaporates at return. (Inside `make_it_sharper` the new `KP` even *hides* the global — same name, different box.) Do **not** teach the `global` keyword as the escape hatch — the library discipline is strictly better and it's already on the slide: constants change at the top, nowhere else. Coach's radar for Weeks 2–3: when a squad swears "I tuned it and it didn't stick," the first question is *"where did you assign it?"* — this slide is that bug, met safely in advance.
+:::
+
+## The square, in four names
+
+```{.python code-line-numbers="|1|3-6|8"}
+from my_lib import drive_straight, turn_to
+
+def drive_square(side_mm):
+    for corner in [90, 180, 270, 360]:
+        drive_straight(side_mm)
+        turn_to(corner)
+
+drive_square(300)
+```
+
+::: {.fragment .fade-up}
+- Run it. **The square snaps shut.**
+- Each corner is an *appointment on the mat* — 90, 180, 270, 360 — so a hot corner can't poison the next one
+- Day 3's drift didn't get patched; it became **impossible**. (And notice what the mission just turned into: *a list.* 😉)
+:::
+
+::: {.notes}
+Close the loop hard: put Day 3's taped drift-square next to this one. Everything converged — `for` repeats the move, the library names it, PD watches it, and absolute headings stop the corner errors stacking (the heading counts past 360, which is why the last appointment is 360 and not 0). The `[90, 180, 270, 360]` list is a deliberate wink — the mission-runner session turns whole missions into exactly this shape; don't teach lists now, just let the shape sit there. Show off with `drive_square(200)`, `drive_square(400)`.
+:::
+
+## Watch the square snap shut 🔲
+
+```{=html}
+<div style="width:820px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
+    <button onclick="sqDrive('drift')" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ Day 3: guessed turns</button>
+    <button onclick="sqDrive('heal')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight + turn_to</button>
+  </div>
+  <svg width="420" height="360" viewBox="0 0 420 360" style="display:block;margin:0 auto;background:#eef3f8;border-radius:14px;">
+    <circle id="sqStart" cx="140" cy="250" r="7" fill="#1C355E"/>
+    <text x="140" y="278" font-size="13" fill="#1C355E" text-anchor="middle" font-weight="700">start / finish</text>
+    <polyline id="sqTrace" points="" fill="none" stroke="#00C9A7" stroke-width="4" stroke-linejoin="round"/>
+    <g id="sqBot" transform="translate(140,250)"><g transform="scale(0.5)"><use href="#nmCarMini"/></g></g>
+    <text id="sqMsg" x="210" y="30" font-size="17" fill="#1C355E" font-weight="800" text-anchor="middle"></text>
+  </svg>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, el=NM.el;
+  window.sqDrive=function(mode){
+    var side=110, x=140, y=250, h=-90, seg=0, prog=0, pts=['140,250'];
+    var drift = mode==='drift' ? 7 : 0;           // degrees of error added per corner
+    var col = mode==='drift' ? '#E96852' : '#00C9A7';
+    el('sqTrace').setAttribute('stroke',col);
+    el('sqTrace').setAttribute('points','140,250');
+    el('sqMsg').textContent=''; el('sqMsg').setAttribute('fill','#1C355E');
+    last=null;
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var r=h*Math.PI/180, sp=150;
+      x+=sp*Math.cos(r)*dt; y+=sp*Math.sin(r)*dt; prog+=sp*dt;
+      pts.push(x.toFixed(1)+','+y.toFixed(1));
+      el('sqTrace').setAttribute('points',pts.join(' '));
+      el('sqBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(h+90).toFixed(1)+')');
+      if(prog>=side){ prog=0; seg++; h+=90+drift; if(seg>=4){ raf=null; finish(x,y); return; } }
+      raf=requestAnimationFrame(frame);
+    }
+    function finish(fx,fy){
+      var gap=Math.hypot(fx-140,fy-250);
+      if(mode==='drift'){ el('sqMsg').setAttribute('fill','#E96852'); el('sqMsg').textContent='never closes — gap of '+gap.toFixed(0)+' 😬'; }
+      else { el('sqMsg').setAttribute('fill','#00AE8D'); el('sqMsg').textContent='snaps shut 🎯'; }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+- Same four sides, same four corners
+- Day 3's guessed turns spiral **open**; your library's watched corners land the nose back on the **start dot** — every line of the cure is code **you wrote**
+:::
+
+::: {.notes}
+Run drift first, then the library version — the old red spiral vs the closed green square is the whole two-day arc in one picture. Emphasize ownership: unlike a black-box shortcut, there is nothing hidden here — if the square doesn't close on a real robot, they can open `my_lib.py` and *see* every line that could be wrong (gain, kd, DEG_PER_MM, the heading appointments). Debuggability is the library's superpower, and it's the skill Week 3's mission work leans on.
+:::
+
+## Your turn: own the knobs 🏋️ {.smaller}
+
+| challenge | prove it |
+|---|---|
+| 1️⃣ **Ring it on purpose** — `turn_to(90)`, then `turn_to(90, kd=0)` | say which knob you turned — and what came back 🔔 |
+| 2️⃣ **One slow straight** — one `drive_straight` call at half speed, *without opening `my_lib.py`* | every *other* call still fast |
+| 3️⃣ **Factory-set your square** — make bare `drive_square()` draw a 300 mm square | one `=` in one def line |
+| 4️⃣ **Detective** 🔎 — slow *every* straight forever vs slow *one* call | point at each edit spot *before* typing |
+
+::: {.fragment .fade-up}
+- ⏱️ **10 minutes, robots out.** Pass = your squad says all four: *default = factory setting · keyword = one-call override · top of file = global · inside a def = local*
+- Fast squads: invent `wiggle(times=3)` — a new verb with a factory setting of its own 🐍
+:::
+
+::: {.notes}
+Squads at their robots, ~10 minutes, coach roams. Answers: 1️⃣ the `kd` knob — the ring comes back (defaults were doing real work); 2️⃣ `drive_straight(1000, speed=200)` — keyword argument, library untouched; 3️⃣ `def drive_square(side_mm=300):` — their first *authored* default, prove it with a bare `drive_square()`; 4️⃣ every-straight-forever = the `speed=400` in the def line (or a top constant), one-call = a keyword at the call site. The pass is **verbal, not gated** — each squad says the four sentences on the slide in their own words; the Day-5 gate in the next section stays the motion benchmarks, unchanged. The finger-first rule on 4️⃣ matters: deciding *where* an edit belongs is the whole global/local/default lesson compressed into one gesture. Fast-squad `wiggle(times=3)`: a for-loop of two quick opposite `turn_to`s is plenty — the point is authoring a def line with a default of their own.
+:::
+
+# D. Compete & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Today's showdown: **Bullseye** 🎯
+
+## Bullseye 🎯
+
+::: {.callout-important}
+## The challenge
+Drive forward **exactly 1 metre** *with your own `drive_straight`* and stop as close to the mark as you can. 3 attempts, best counts. *(Fast squads: **Sniper** — 3 mat targets, score = total distance error.)*
+:::
+
+```{=html}
+<div style="width:840px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
+    <button onclick="beRun()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight(1000)</button>
+    <button id="beBtn" onclick="beNudge()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">😈 evil nudge</button>
+  </div>
+  <svg width="820" height="180" viewBox="0 0 820 180" style="display:block;margin:0 auto;">
+    <rect x="0" y="30" width="820" height="120" rx="14" fill="#eef3f8"/>
+    <line x1="60" y1="90" x2="760" y2="90" stroke="#c9d4e0" stroke-width="3" stroke-dasharray="14 10"/>
+    <line x1="720" y1="40" x2="720" y2="140" stroke="#00AE8D" stroke-width="4"/>
+    <text x="720" y="30" font-size="14" fill="#00AE8D" font-weight="800" text-anchor="middle">1 m 🎯</text>
+    <g id="beGhost" transform="translate(650,90)" opacity="0.4"><circle r="8" fill="#E96852"/><text y="26" font-size="12" fill="#E96852" text-anchor="middle" font-weight="700">guessed Ø</text></g>
+    <polyline id="beTrace" points="" fill="none" stroke="#00C9A7" stroke-width="3"/>
+    <g id="beBot" transform="translate(60,90)"><g transform="rotate(90) scale(0.5)"><use href="#nmCarMini"/></g></g>
+  </svg>
+  <div style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;">landed <span id="beOut" style="font-weight:800;">–</span></div>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, nudgeReq=false, el=NM.el;
+  window.beRun=function(){
+    var x=60, y=90, h=0, t=0, done=false, pts=['60,90'], nudged=false; last=null; nudgeReq=false;
+    el('beTrace').setAttribute('points','60,90'); el('beOut').textContent='–'; el('beOut').style.color='#1C355E';
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var sp=(720-x)*2.4+8;                        // eases to a stop at the 1 m line
+      if(sp>320)sp=320;
+      if(nudgeReq && !nudged && x>320){ h=22; nudged=true; nudgeReq=false; }
+      h -= h*3.2*dt;                               // the healing loop steers the heading back to 0
+      var r=h*Math.PI/180;
+      x+=sp*Math.cos(r)*dt; y+=sp*Math.sin(r)*dt; t+=dt;
+      pts.push(x.toFixed(1)+','+y.toFixed(1)); el('beTrace').setAttribute('points',pts.join(' '));
+      el('beBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
+      if(x>=719 || t>6){ done=true; }
+      if(!done){ raf=requestAnimationFrame(frame); }
+      else{ raf=null; el('beOut').innerHTML='<b>0.0 cm</b> off — measured Ø + your healing loop 🎯'; el('beOut').style.color='#00AE8D'; }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+  window.beNudge=function(){ nudgeReq=true; };
+})();
+</script>
+```
+
+- `drive_straight(1000)` + a wheel diameter *you measured* into `DEG_PER_MM`. Predict, then prove.
+- Pro move: does your run survive a **battery swap**? A **judge's evil nudge** mid-run? (It should — the healing loop is *yours*. 😏) The red ghost is where a *guessed* diameter would stop.
+
+::: {.notes}
+The competition proves *their* code, not a shortcut — that's the day's whole point, so say it: the button reads `drive_straight`, the function they wrote an hour ago. Battery swap and nudge are the two classic fakes that expose open-loop code; their encoder finish line shrugs off the battery (degrees are degrees at any voltage) and their P-loop shrugs off the nudge. The ghost dot is the D2 lesson refusing to die: a guessed 90 mm wheel on an 88 mm robot misses by ~2 cm — exactly the gate tolerance. Squads that miss: check DEG_PER_MM first, gain second.
+:::
+
+## Today's gate
+
+::: {.callout-important}
+## You're done today when…
+Your own `drive_straight(1000)` lands **1.0 m within ±2 cm** and `turn_to` lands **within ±2°**, across 10 trials — on code you wrote line by line — your `drive_square()` (four library calls) **closes the Day-3 square**, and you can say what **D** and **I** each add to P.
+:::
+
+::: {.fragment .fade-up}
+Next: *Stop at the Wall* — the motor becomes a **sensor**, and your library grows its first *sensing* verbs.
+:::
+
+::: {.notes}
+The benchmarks are the plan's Week-1 gate verbatim: drive_straight 1.0 m ±2 cm, turn_to ±2° over 10 trials, square closed, D and I explained in their own words (I is never gated as a build — it was a coach demo). Log each student's pass in the scorecard; these same benchmarks are re-run at the end-of-week-2 gate, so a shaky pass today is a flag, not a fail. Teaser stays topic-only: next session the motor itself becomes a touch sensor (stall detection) and `drive_to_wall`/`wall_square` join the library.
+:::

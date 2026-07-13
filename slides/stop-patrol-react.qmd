@@ -1,0 +1,602 @@
+---
+title: "Stop at the Wall"
+subtitle: "Day 6 · Robot Rockstars · SPIKE Prime + Pybricks"
+date: today
+format: revealjs
+---
+
+# A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Last week your robot replayed a flawless plan — and never once looked up. Today it opens its eyes and starts **reacting**. 👀
+
+## Where we left off
+
+| Last week | What you own |
+|---|---|
+| 📦 **`my_lib.py` begins** | `drive_straight` · `turn_to` — every move watched by *your* PD loop |
+| 📏 **measured, not guessed** | `DEG_PER_MM` from a wheel you rolled and measured yourself |
+| 🔁 **replay a plan** | `drive_square(300)` — four library calls, snaps shut every time |
+
+::: {.fragment .fade-up}
+🤔 But a script is **blind.** It can't feel a wall, notice a line, or know it arrived. Today the robot gets a new job: **sense → decide → act.**
+:::
+
+⏱️ **Time: 10 minutes**
+
+::: {.notes}
+Recap by asking, not telling: "what does `drive_straight(300)` know about the world?" Nothing — it counts wheel-degrees (healing its heading on the way) and stops. That's replay. Today's whole arc is the opposite: the robot reads something *live*, then chooses what to do. Three new powers land today — the motor as a sensor (stall = touch), the color eye (reflection = the echo of its own light), and `if/else` (the first real decision) — then we wrap them in a loop so one decision becomes a patrol, and the library gains its first *sensing* verbs. Keep it framed as the natural next step after the library began, not a new subject.
+:::
+
+# B. The Motor Is a Sensor {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+Six ports, all six full — **no port left for a distance sensor.** So how does a blind robot find a wall? It already knows how to *feel*. 🧱
+
+## Feel it: see the invisible 📉
+
+```{.python}
+# Run this ALONE first — block the wheels and watch.
+while True:
+    print("wheel speed:", left.speed())
+    wait(100)
+```
+
+```{=html}
+<div style="width:820px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:6px;">
+    <button onclick="wsRun()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive the robot into the wall</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;">
+    <svg width="200" height="120" viewBox="0 0 230 150">
+      <rect x="8" y="40" width="180" height="70" rx="8" fill="#eef3f8"/>
+      <rect id="wsWall" x="188" y="24" width="18" height="100" rx="4" fill="#625D9C"/>
+      <g id="wsBot" transform="translate(30,75)"><g transform="rotate(90) scale(0.5)">
+        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
+        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
+        <circle cy="-30" r="4" fill="#FFD500"/>
+      </g></g>
+      <text x="197" y="18" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">wall</text>
+    </svg>
+    <svg width="560" height="165" viewBox="0 0 560 200">
+      <line x1="50" y1="165" x2="540" y2="165" stroke="#1C355E" stroke-width="3"/>
+      <line x1="50" y1="165" x2="50" y2="20" stroke="#1C355E" stroke-width="3"/>
+      <text x="22" y="95" font-size="14" fill="#1C355E" font-weight="700" transform="rotate(-90 22 95)" text-anchor="middle">wheel speed</text>
+      <text x="500" y="188" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">time →</text>
+      <line x1="50" y1="150" x2="540" y2="150" stroke="#E96852" stroke-width="2" stroke-dasharray="7 6"/>
+      <text x="536" y="145" font-size="13" fill="#E96852" font-weight="700" text-anchor="end">stall level</text>
+      <polyline id="wsTrace" points="" fill="none" stroke="#00AE8D" stroke-width="4"/>
+      <text id="wsFlag" x="300" y="45" font-size="18" fill="#E96852" font-weight="800" text-anchor="middle" opacity="0">🧱 speed hit 0 → the motor felt the wall</text>
+    </svg>
+  </div>
+</div>
+<script>
+(function(){
+  var raf=null, last=null;
+  var X0=50, X1=540, YB=165, TSPAN=3.2, VMAX=180, WALLX=150;
+  function el(id){return document.getElementById(id);}
+  function yOf(v){ return YB - (v/VMAX)*(YB-25); }
+  window.wsRun=function(){
+    var t=0, v=0, botx=30, pts=[], done=false, hit=false; last=null;
+    el('wsTrace').setAttribute('points',''); el('wsFlag').setAttribute('opacity','0');
+    el('wsBot').setAttribute('transform','translate(30,75)');
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var sd=0.008, n=Math.max(1,Math.round(dt/sd));
+      for(var i=0;i<n && !done;i++){
+        if(botx < WALLX){ v += (150-v)*0.12; botx += v*0.02; }   // rolling toward the wall
+        else { hit=true; v *= 0.72; }                            // wheels jammed → speed collapses
+        t += sd;
+        if(hit && v < 12) done=true;
+        if(t > TSPAN) done=true;
+      }
+      var x=X0+(t/TSPAN)*(X1-X0);
+      pts.push(x.toFixed(1)+','+yOf(v).toFixed(1));
+      el('wsTrace').setAttribute('points',pts.join(' '));
+      var bx=30 + (Math.min(botx,WALLX)/WALLX)*143;
+      el('wsBot').setAttribute('transform','translate('+bx.toFixed(1)+',75)');
+      if(!done){ raf=requestAnimationFrame(frame); }
+      else if(hit){ raf=null; el('wsFlag').setAttribute('opacity','1'); }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Block the wheels and **speed dives to 0** — that dive *is* the wall. The drive motor is already a touch sensor; Pybricks gives every motor a **`stalled()`** question and a **`run_until_stalled()`** move.
+:::
+:::
+
+::: {.notes}
+"Make the invisible visible" — same habit as the gyro heading in Week 1. Run the print loop on a real robot first and read the numbers aloud; then block the wheels by hand and watch speed crash. Only *after* they've seen the crash do you name the stall tools: `left.stalled()` asks "are you jammed *right now*?", `left.run_until_stalled()` is "roll until you jam" in one call. Point out why this beats an ultrasonic sensor even if we had a free port: a touch via stall is repeatable to the millimetre and never lies about a wall it can "see through." The sim's stall-level line is the idea, not a tuned number — the motor judges it for you.
+:::
+
+## Fix it: stall = touch, then back off 🧱
+
+```{.python code-line-numbers="|1|2|3-4|5|6|7"}
+APPROACH_SPEED = 150         # deg/s — gentle, not a crash
+right.run(APPROACH_SPEED)    # right rolls along…
+left.run_until_stalled(APPROACH_SPEED,
+                       duty_limit=50)   # …until LEFT jams
+right.stop()
+hub.speaker.beep()           # "I arrived"
+drive_straight(-BACKOFF_MM)         # measured, repeatable
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+Drive **slowly** (a gentle touch reads cleaner than a crash), let `run_until_stalled` wait for the jam, back off a **measured** `BACKOFF_MM` — with your own `drive_straight`. That's today's competition in seven lines.
+:::
+:::
+
+::: {.notes}
+Stress the gentleness knobs: a low approach speed (≈150 deg/s) and `duty_limit=50` — the duty limit caps how hard the motor is *allowed* to push, so the reading is crisp and the LEGO survives. Driving straight into a wall jams both wheels, so watching ONE motor is enough — `run_until_stalled` blocks on the left while the right just rolls. Line 6 calls their own `drive_straight` with a *negative* distance — the challenge parked at the library day is now urgent: flip the `while` comparison (or mirror it for negatives) in `my_lib.py`, two-minute fix, big payoff. Back-off is measured, not guessed — `BACKOFF_MM = 50` ends exactly 5 cm off the wall, every run. (The pro equivalent, `DriveBase.stalled()`, arrives with the D10 reveal.)
+:::
+
+# C. The Robot Opens Its Eyes {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+Touch found the wall. Now **light**: the two color sensors your robot has carried all week finally switch on. 👀
+
+## Meet the eye 🔦
+
+Each color sensor is a **flashlight and a light meter** in one brick — it sends its own light down and measures how much comes back.
+
+```{=html}
+<div style="width:780px;margin:0 auto;">
+  <svg width="740" height="200" viewBox="0 0 740 200" style="display:block;margin:0 auto;">
+    <defs>
+      <marker id="meY" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#FFD500"/></marker>
+      <marker id="meFaint" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#9B8EC0"/></marker>
+      <marker id="meStrong" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#00AE8D"/></marker>
+    </defs>
+    <!-- readings -->
+    <text x="175" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#1C355E" text-anchor="middle">reflection() → 10</text>
+    <text x="565" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#00AE8D" text-anchor="middle">reflection() → 88</text>
+    <!-- sensors -->
+    <g transform="translate(175,0)">
+      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"/>
+      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"/>
+    </g>
+    <g transform="translate(565,0)">
+      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"/>
+      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"/>
+    </g>
+    <!-- light down -->
+    <line x1="160" y1="78" x2="150" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"/>
+    <line x1="550" y1="78" x2="540" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"/>
+    <!-- echo back up: faint from black, strong from white -->
+    <line x1="196" y1="140" x2="189" y2="84" stroke="#9B8EC0" stroke-width="2" stroke-dasharray="4 6" marker-end="url(#meFaint)"/>
+    <line x1="590" y1="140" x2="583" y2="84" stroke="#00AE8D" stroke-width="6" marker-end="url(#meStrong)"/>
+    <!-- surfaces -->
+    <rect x="55" y="150" width="240" height="22" rx="4" fill="#101820"/>
+    <rect x="445" y="150" width="240" height="22" rx="4" fill="#f7f9fc" stroke="#dbe2ea"/>
+    <text x="175" y="166" font-size="13" fill="#ffffff" font-weight="800" text-anchor="middle">black line — echo swallowed</text>
+    <text x="565" y="166" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat — echo bounces back</text>
+    <text x="370" y="112" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">same flashlight —</text>
+    <text x="370" y="132" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">different echo</text>
+  </svg>
+</div>
+```
+
+```{.python}
+left_eye.reflection()   # 0-100: % of its OWN light echoing back
+left_eye.color()        # a name: Color.RED... (Week 4's tool)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+It reads its own flashlight's **echo** — anything that changes the echo changes the number: ✨ gloss · 💡 room light · 📏 sensor height.
+:::
+:::
+
+::: {.notes}
+The live demo beats the diagram: run a `print(left_eye.reflection())` loop, hold the robot, and let students slide surfaces under the eye, tilt it, lift it — the number dances. Establish the active-sensor idea: it brings its own LED, so it mostly ignores the room, but gloss, sensor height, and strong ambient light still shift the echo — which is exactly why every surface gets its own calibration (next slide). `reflection()` vs `color()`: today reflection does all the work; `color()` names colors and gets one cameo (the RED beep) — its real job is Week 4's notes. Two eyes fill ports B and F; today one eye is plenty — D7 explains why we carry two.
+:::
+
+## Break it: the threshold you guessed 🔥
+
+::: {.qbox}
+[This morning you split the practice line at **50** (white 88, black 10). The competition table is **glossy**. Predict: does `reflection < 50` still mean "on the line"?]{.qtitle}
+:::
+
+```{=html}
+<div style="width:860px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px;">
+    <span style="font-size:16px;color:#1C355E;font-weight:700;">surface:</span>
+    <button id="rmHome" onclick="rmSurf('home')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">📄 practice paper</button>
+    <button id="rmGloss" onclick="rmSurf('gloss')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">🏆 glossy table</button>
+    <span style="font-size:16px;color:#1C355E;font-weight:700;margin-left:12px;">threshold: <b><span id="rmThV">50</span></b></span>
+    <input id="rmTh" type="range" min="0" max="100" step="1" value="50" oninput="rmTh(this.value)" style="width:170px;accent-color:#E96852;">
+  </div>
+  <svg width="820" height="150" viewBox="0 0 820 150" style="display:block;margin:0 auto;">
+    <rect x="60" y="58" width="700" height="26" rx="13" fill="#101820"/>
+    <rect x="60" y="58" width="700" height="26" rx="13" fill="url(#rmGrad)"/>
+    <defs><linearGradient id="rmGrad" x1="0" x2="1"><stop offset="0" stop-color="#101820"/><stop offset="1" stop-color="#ffffff"/></linearGradient></defs>
+    <text x="60" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">0 · dark</text>
+    <text x="760" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">100 · bright</text>
+    <!-- threshold line -->
+    <line id="rmThLine" x1="410" y1="44" x2="410" y2="98" stroke="#E96852" stroke-width="3" stroke-dasharray="6 5"/>
+    <text id="rmThTxt" x="410" y="38" font-size="13" fill="#E96852" font-weight="800" text-anchor="middle">50</text>
+    <!-- markers -->
+    <g id="rmBlack"><circle cy="71" r="11" fill="#1C355E" stroke="#fff" stroke-width="2"/><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">black line</text></g>
+    <g id="rmWhite"><circle cy="71" r="11" fill="#FFD500" stroke="#1C355E" stroke-width="2"/><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat</text></g>
+  </svg>
+  <div id="rmVerdict" style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;font-weight:700;min-height:28px;">pick a surface — read what the eye actually sees</div>
+</div>
+<script>
+(function(){
+  var X0=60, X1=760, thr=50, surf=null;
+  var S={ home:{white:88, black:10}, gloss:{white:95, black:60} };
+  function el(id){return document.getElementById(id);}
+  function xOf(v){ return X0 + v/100*(X1-X0); }
+  function draw(){
+    el('rmThLine').setAttribute('x1',xOf(thr)); el('rmThLine').setAttribute('x2',xOf(thr));
+    el('rmThTxt').setAttribute('x',xOf(thr)); el('rmThTxt').textContent=thr;
+    if(!surf) return;
+    var s=S[surf];
+    el('rmBlack').setAttribute('transform','translate('+xOf(s.black).toFixed(1)+',0)');
+    el('rmWhite').setAttribute('transform','translate('+xOf(s.white).toFixed(1)+',0)');
+    var blackOK = s.black < thr;   // robot must call the dark line "line"
+    var whiteOK = s.white > thr;   // and the bright mat "clear"
+    var v=el('rmVerdict');
+    if(blackOK && whiteOK){
+      v.style.color='#00AE8D';
+      v.innerHTML='black '+s.black+' &lt; '+thr+' → <b>LINE ✓</b> &nbsp;·&nbsp; white '+s.white+' &gt; '+thr+' → <b>clear ✓</b> &nbsp; 🎯';
+    } else {
+      v.style.color='#E96852';
+      var msg = !blackOK ? ('black reads '+s.black+' — <b>above '+thr+'</b>, so the robot calls the line "clear" and drives right over it. 😬')
+                         : ('white reads '+s.white+' — <b>below '+thr+'</b>, so the robot brakes on empty mat. 😬');
+      v.innerHTML=msg;
+    }
+  }
+  window.rmSurf=function(k){
+    surf=k;
+    el('rmHome').style.background = k==='home' ? '#00C9A7':'#eef3f8';
+    el('rmHome').style.color = k==='home' ? '#fff':'#1C355E';
+    el('rmHome').style.border = k==='home' ? 'none':'2px solid #1C355E';
+    el('rmGloss').style.background = k==='gloss' ? '#00C9A7':'#eef3f8';
+    el('rmGloss').style.color = k==='gloss' ? '#fff':'#1C355E';
+    el('rmGloss').style.border = k==='gloss' ? 'none':'2px solid #1C355E';
+    draw();
+  };
+  window.rmTh=function(v){ thr=parseInt(v,10); el('rmThV').textContent=v; draw(); };
+  window.rmSurf('home');
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+On glossy, black bounces **60** — `< 50` calls the line "clear" and drives over it. A threshold is a guess about a *surface*: look first, then split what you actually see (~77 here).
+:::
+:::
+
+::: {.notes}
+Let a squad member predict before touching it. Start on 📄 practice / threshold 50 — both ✓, "the rule they wrote works... on this paper." Switch to 🏆 glossy, still threshold 50 — it breaks, and it breaks the *wrong* way (misses the line, doesn't false-trigger). Ask "why is black suddenly 60?" — they just saw the echo model: gloss bounces the flashlight back even where the surface is dark. Now drag the threshold live to ~77 and both snap back to ✓. That drag IS calibration: white number, black number, threshold = the midpoint between them. The takeaway is a habit, not a number: never carry a threshold between surfaces — re-read and re-split.
+:::
+
+## Fix it: calibrate, then decide — `if / else` 🎚️
+
+```{.python code-line-numbers="|1-2|3|4|5-6"}
+# Calibrate FIRST — measure, never guess
+REFLECT_THRESHOLD = 50              # for THIS surface
+while True:
+    if left_eye.color() == Color.RED:
+        hub.speaker.beep(frequency=880)     # high beep on red
+    elif left_eye.reflection() < REFLECT_THRESHOLD:
+        hub.speaker.beep(frequency=220)     # low beep on a line
+    wait(50)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+`if … elif` is the robot **choosing** — each test a plain yes/no **boolean**. New surface → **re-calibrate the threshold, never the code.**
+:::
+:::
+
+::: {.notes}
+This is the just-in-time concept for the day: `if/elif` + booleans. Keep it concrete — a boolean is the answer to a yes/no question the robot asks the world (`color() == RED`, `reflection() < 50`). `elif` = "otherwise, check this next." Tie it straight back to the meter widget: the threshold is data you recalibrate per surface; the `if/elif` structure never changes. If a squad is flying, mention `else` for the catch-all case, but don't gate on it.
+:::
+
+# D. Patrol & React {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+One wall is a fluke. A real run is a **patrol** — wall after wall, decision after decision. One `if` won't survive that. 🔁
+
+## Break it: the one-shot miss 😴
+
+::: {.qbox}
+[Your sense→act runs **once** — drive, back off, done, the program ends. What happens at the **second** wall?]{.qtitle}
+:::
+
+```{=html}
+<div style="width:820px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
+    <button onclick="ptRun('once')" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ one-shot <code style="color:#fff;">if</code></button>
+    <button onclick="ptRun('loop')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ patrol loop</button>
+  </div>
+  <svg width="270" height="270" viewBox="0 0 360 360" style="display:block;margin:0 auto;background:#eef3f8;border-radius:14px;">
+    <rect x="40" y="40" width="280" height="280" fill="none" stroke="#625D9C" stroke-width="8"/>
+    <text id="ptW1" x="180" y="30" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle">wall 1</text>
+    <text id="ptW2" x="336" y="184" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle" transform="rotate(90 336 184)">wall 2</text>
+    <text id="ptW3" x="180" y="344" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle">wall 3</text>
+    <text id="ptW4" x="24" y="184" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle" transform="rotate(-90 24 184)">wall 4</text>
+    <polyline id="ptTrace" points="" fill="none" stroke="#00C9A7" stroke-width="3" stroke-linejoin="round"/>
+    <g id="ptBot" transform="translate(180,300)"><g transform="scale(0.55)">
+      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
+      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
+      <circle cy="-30" r="4" fill="#FFD500"/>
+    </g></g>
+    <text id="ptMsg" x="180" y="185" font-size="17" font-weight="800" text-anchor="middle" fill="#1C355E"></text>
+  </svg>
+</div>
+<script>
+(function(){
+  var raf=null, last=null;
+  var NOSE=16.5, LO=44, HI=316;      // wall inner edges; the nose leads by 16.5px
+  function el(id){return document.getElementById(id);}
+  // corner heading pattern: start bottom-center facing up (-90)
+  window.ptRun=function(mode){
+    var laps = mode==='loop' ? 4 : 1;
+    var x=180, y=300, h=-90, pts=['180,300'];
+    var leg=0, phase='drive', prog=0;
+    var col = mode==='loop' ? '#00C9A7' : '#E96852';
+    el('ptTrace').setAttribute('stroke',col); el('ptTrace').setAttribute('points','180,300');
+    el('ptMsg').textContent=''; last=null;
+    ['ptW1','ptW2','ptW3','ptW4'].forEach(function(id){ el(id).setAttribute('fill','#9B8EC0'); });
+    var wallIds=['ptW1','ptW2','ptW3','ptW4'];
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var r=h*Math.PI/180, sp=150;
+      if(phase==='drive'){
+        x+=sp*Math.cos(r)*dt; y+=sp*Math.sin(r)*dt;
+        var nx=x+Math.cos(r)*NOSE, ny=y+Math.sin(r)*NOSE;   // where the nose is
+        if(nx<LO||nx>HI||ny<LO||ny>HI){                     // nose met a wall → stall
+          if(nx<LO)x=LO+NOSE; if(nx>HI)x=HI-NOSE;
+          if(ny<LO)y=LO+NOSE; if(ny>HI)y=HI-NOSE;
+          el(wallIds[leg]).setAttribute('fill','#E96852'); phase='back'; prog=0;
+        }
+        pts.push(x.toFixed(1)+','+y.toFixed(1)); el('ptTrace').setAttribute('points',pts.join(' '));
+      } else if(phase==='back'){
+        x-=sp*Math.cos(r)*dt; y-=sp*Math.sin(r)*dt; prog+=sp*dt;
+        pts.push(x.toFixed(1)+','+y.toFixed(1)); el('ptTrace').setAttribute('points',pts.join(' '));
+        if(prog>=32){ leg++; phase='turn'; }
+      } else if(phase==='turn'){
+        if(leg>=laps){ raf=null; finish(mode); return; }
+        h+=90; phase='drive';
+      }
+      el('ptBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(h+90).toFixed(1)+')');
+      raf=requestAnimationFrame(frame);
+    }
+    function finish(m){
+      if(m==='once'){ el('ptMsg').setAttribute('fill','#E96852'); el('ptMsg').textContent='program ended 💤 — walls 2–4 never happen'; }
+      else { el('ptMsg').setAttribute('fill','#00AE8D'); el('ptMsg').textContent='4 walls patrolled ✓'; }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+The `if` fired **once**, then the program ended — wall 2 never gets a decision. We need it to happen **again, and again.** That's a loop.
+:::
+:::
+
+::: {.notes}
+Run one-shot first: the bot handles wall 1 perfectly, then dies — perfection that only lasts one event. Then run the patrol loop and watch the identical move repeat around the box. The point is emotional before it's technical: "your code was *right* — it just stopped too soon." Loops are not a new trick from scratch; they already met `while` and `for` on Day 3's square. Today those loops wrap a *sensed* decision instead of a fixed count of sides.
+:::
+
+## Name it: the patrol loop 🔁
+
+```{.python code-line-numbers="|1|2|3|4-6|7|8|9-10"}
+hub.imu.reset_heading(0)
+for lap in range(PATROL_LAPS):          # counted repeat = laps
+    left.run(PATROL_SPEED); right.run(PATROL_SPEED)
+    while not left.stalled():           # repeat until the wall
+        if left_eye.color() == Color.RED:
+            hub.speaker.beep(880)       # react, don't stop
+        wait(10)
+    left.stop(); right.stop()
+    drive_straight(-BACKOFF_MM)                # measured back-off
+    turn_to(90 * (lap + 1))             # absolute appointment
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Two loops you already own, **nested**: `for` counts the laps, `while` waits for each wall — and the `if` inside reacts to color **on the move**, no stopping.
+:::
+:::
+
+::: {.notes}
+Read the shape aloud: outer `for` = "do this lap N times," inner `while not left.stalled()` = "keep rolling until you feel the wall," inner `if` = "and if you spot red on the way, sing out." The `if` living *inside* the `while` is the subtle win — reaction happens continuously during motion, not as a stop-and-check. (That's also why this loop uses `left.stalled()` rather than the blocking `run_until_stalled` from this morning — the robot needs to keep *checking things* while it rolls.) `turn_to(90 * (lap + 1))` is the library day's absolute-appointment trick doing its job silently: corner 1 aims at 90, corner 2 at 180 — a bumped corner can't poison the next one. This program is the literal answer key for Gentle Giant's loop bonus.
+:::
+
+# E. Bottle It: Two New Verbs {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+Today's tricks are too good to leave as loose lines. Bottle them into `my_lib.py` — then read the scoresheet like a pro. 📦
+
+## `drive_to_wall` and `wall_square` join the library 📦 {.code-shrink}
+
+```{.python code-line-numbers="|1-5|7-9|10-11|12|13|14"}
+def drive_to_wall(speed=150):
+    """Roll gently until the wheels feel the wall."""
+    right.run(speed)
+    left.run_until_stalled(speed, duty_limit=50)
+    right.stop()
+
+def wall_square(heading=0):
+    """Press BOTH wheels flat on the wall → truth restored."""
+    left.run(120); right.run(120)
+    while not (left.stalled() and right.stalled()):
+        wait(10)
+    left.stop(); right.stop()
+    hub.imu.reset_heading(heading)   # the wall never lies
+    drive_straight(-BACKOFF_MM)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+`wall_square` is the sneaky one: press flat until **both** wheels jam and your nose is *flush with the wall* — so your heading is **known again**, whatever drift crept in. The wall is a free ruler. **This is how a competition run erases its own errors.**
+:::
+:::
+
+::: {.notes}
+Same promotion ritual as the library day: the morning's loose fix-it lines get names and move into `my_lib.py`, right under `drive_straight` and `turn_to`. Walk `wall_square` slowly — it's the first verb whose *output* is trust, not motion: waiting for BOTH motors to stall means the bumper is flat on the wall, so the physical world just told you your heading exactly; `reset_heading(heading)` writes that truth back into the gyro, and the measured back-off leaves you at a known distance too. Gyro drift accumulates over a 2-minute run — squaring is how Weeks 3–4 missions reset it between tasks, which is why this humble verb outlives almost everything else. Demo: spin the robot a few times by hand (drift injected), wall_square, then a `turn_to(90)` — still true.
+:::
+
+## Read the scoresheet: anchor first 🗺️
+
+```{=html}
+<div style="width:840px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:8px;">
+    <button onclick="scStep()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:18px;font-weight:700;cursor:pointer;">▶ build the score, layer by layer</button>
+    <button onclick="scReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 16px;font-size:16px;font-weight:700;cursor:pointer;">reset</button>
+  </div>
+  <svg width="820" height="150" viewBox="0 0 820 150" style="display:block;margin:0 auto;">
+    <rect x="30" y="46" width="760" height="46" rx="8" fill="#eef3f8" stroke="#dbe2ea"/>
+    <!-- segments: scaled so 255 -> 760px, x start 30 -->
+    <g id="scSegs"></g>
+    <line x1="432.4" y1="34" x2="432.4" y2="104" stroke="#625D9C" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="432.4" y="28" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">~135 anchor</text>
+    <line x1="551.6" y1="104" x2="551.6" y2="120" stroke="#E96852" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="551.6" y="134" font-size="12" fill="#E96852" font-weight="800" text-anchor="middle">~175 gated</text>
+    <text x="790" y="134" font-size="12" fill="#1C355E" font-weight="800" text-anchor="end">255 max</text>
+  </svg>
+  <div id="scMsg" style="text-align:center;font-size:17px;color:#1C355E;font-weight:700;min-height:26px;">the anchor run scores <b>~135 with NO color sensor</b> — that's what we build first.</div>
+</div>
+<script>
+(function(){
+  var X0=30, W=760, TOT=255, step=0;
+  var segs=[
+    {n:'Instruments', pts:45, c:'#00AE8D', tier:0},
+    {n:'Cables',      pts:30, c:'#00C9A7', tier:0},
+    {n:'Avoidance',   pts:40, c:'#625D9C', tier:0},
+    {n:'Microphone',  pts:20, c:'#9B8EC0', tier:0},
+    {n:'Fixed notes', pts:40, c:'#E96852', tier:1},
+    {n:'Random notes',pts:80, c:'#FFB548', tier:2}
+  ];
+  var msgs=[
+    'the anchor run scores <b>~135 with NO color sensor</b> — that\'s what we build first.',
+    '<b>Anchor ~135</b>: Instruments 45 · Cables 30 · Avoidance 40 · Microphone 20 — zero color needed. 🧱',
+    '<b>+40 fixed notes</b> (green/red) → <b>~175</b>: the gated 5-week deliverable. 🎶',
+    '<b>+80 randomized notes</b> → <b>255</b>: the Week-5 stretch. Anchor first, always. 🌈'
+  ];
+  function el(id){return document.getElementById(id);}
+  function xw(pts){ return pts/TOT*W; }
+  function render(){
+    var g=el('scSegs'), html='', x=X0;
+    // tier 0 shown at step>=1, tier1 at step>=2, tier2 at step>=3
+    for(var i=0;i<segs.length;i++){
+      var s=segs[i], w=xw(s.pts);
+      var on = s.tier < step;
+      html += '<rect x="'+x.toFixed(1)+'" y="46" width="'+(on?w:0).toFixed(1)+'" height="46" fill="'+s.c+'" opacity="'+(on?1:0)+'">'+
+              '</rect>';
+      if(on && w>34) html += '<text x="'+(x+w/2).toFixed(1)+'" y="75" font-size="12" fill="#fff" font-weight="800" text-anchor="middle">'+s.pts+'</text>';
+      x += on ? w : 0;
+    }
+    g.innerHTML=html;
+    el('scMsg').innerHTML=msgs[Math.min(step,3)];
+  }
+  window.scStep=function(){ if(step<3){ step++; render(); } };
+  window.scReset=function(){ step=0; render(); };
+  render();
+})();
+</script>
+```
+
+::: {.cardbox .teal}
+**135 points need zero color sensing** — pure driving, stalls, and mechanisms. Never trade a reliable anchor for a shaky full run.
+:::
+
+::: {.notes}
+This slide connects the whole bootcamp to the scoresheet. Click through the tiers slowly. The load-bearing idea: color is *risk* (lighting, calibration — they just saw the echo shift on gloss), so we defer every point that needs it. Everything the anchor needs lives color-free: the precise driving and wall verbs this week builds, then the Week-3 team mechanisms — cables, instruments, microphone, avoidance. Fixed notes (+40) arrive Week 4 only after the anchor is locked; randomized notes (+80) are a Week-5 stretch. If a parent asks "why not go for 255 now?": a reliable 175 beats a heroic 255 you land one time in ten — this is a WRO scoring truth, not a confidence thing.
+:::
+
+# F. Compete & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+Today's showdown: **Gentle Giant** 🐘 — the calmest, most precise robot wins.
+
+## Gentle Giant 🐘
+
+::: {.callout-important}
+## The challenge
+Drive to the wall, detect the stall, and back off to stop **exactly 5 cm** away. Closest wins — **loop bonus** for repeating it on a second wall without re-running.
+:::
+
+```{=html}
+<div style="width:840px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px;">
+    <button onclick="ggRun()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ stall &amp; back off</button>
+    <span style="font-size:16px;color:#1C355E;font-weight:700;">BACKOFF_MM: <b><span id="ggV">50</span></b></span>
+    <input type="range" min="0" max="110" step="1" value="50" oninput="ggSet(this.value)" style="width:200px;accent-color:#00AE8D;">
+  </div>
+  <svg width="820" height="150" viewBox="0 0 820 150" style="display:block;margin:0 auto;">
+    <rect x="20" y="48" width="770" height="66" rx="10" fill="#eef3f8"/>
+    <rect x="762" y="34" width="20" height="94" rx="4" fill="#625D9C"/>
+    <text x="772" y="26" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">wall</text>
+    <!-- 5 cm target zone: 50 mm before the wall. scale 4 px/mm -> 200px -->
+    <line x1="562" y1="40" x2="562" y2="122" stroke="#00AE8D" stroke-width="3" stroke-dasharray="6 5"/>
+    <text x="562" y="140" font-size="12" fill="#00AE8D" font-weight="800" text-anchor="middle">5 cm mark 🎯</text>
+    <g id="ggBot" transform="translate(60,81)"><g transform="rotate(90) scale(0.5)">
+      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
+      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
+      <circle cy="-30" r="4" fill="#FFD500"/>
+    </g></g>
+  </svg>
+  <div id="ggMsg" style="text-align:center;font-family:Consolas,monospace;font-size:18px;color:#1C355E;font-weight:700;min-height:26px;">set your back-off, then run — 50 mm lands you on the mark.</div>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, backoff=50;
+  var WALLX=762, PXMM=4, NOSE=15;        // 4 px per mm; wall face at x=762; nose leads by 15px
+  function el(id){return document.getElementById(id);}
+  window.ggSet=function(v){ backoff=parseInt(v,10); el('ggV').textContent=v; };
+  window.ggRun=function(){
+    var x=60, phase='fwd', bo=backoff; last=null;
+    el('ggMsg').style.color='#1C355E'; el('ggMsg').textContent='rolling in…';
+    var touchX = WALLX - NOSE;           // nose touches wall
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      if(phase==='fwd'){
+        x += 320*dt;
+        if(x>=touchX){ x=touchX; phase='stall'; el('ggMsg').textContent='🧱 stalled — backing off '+bo+' mm'; }
+      } else if(phase==='back'){
+        x -= 260*dt;
+        if(x <= touchX - bo*PXMM){ x=touchX - bo*PXMM; phase='done'; }
+      } else if(phase==='stall'){ phase='back'; }
+      el('ggBot').setAttribute('transform','translate('+x.toFixed(1)+',81) rotate(90)');
+      if(phase==='done'){
+        raf=null;
+        var gapMm = Math.round((WALLX - (x+NOSE))/PXMM);   // distance nose→wall
+        var err = Math.abs(gapMm-50);
+        if(err<=1){ el('ggMsg').style.color='#00AE8D'; el('ggMsg').innerHTML='landed <b>'+gapMm+' mm</b> off the wall — bullseye on 5 cm 🎯'; }
+        else { el('ggMsg').style.color='#E96852'; el('ggMsg').innerHTML='landed <b>'+gapMm+' mm</b> off — <b>'+err+' mm</b> from the 5 cm mark. Re-tune BACKOFF_MM.'; }
+        return;
+      }
+      raf=requestAnimationFrame(frame);
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+```
+
+- Predict your `BACKOFF_MM`, then prove it. Slide it off 50 and watch the score suffer.
+- Pro move: does your run survive a **second wall** without re-running? (Your patrol loop already does. 😏)
+
+## Today's gate
+
+::: {.callout-important}
+## You're done today when…
+Your **calibrated stall + back-off patrol** works on **two walls** in one run · **`drive_to_wall()` and `wall_square()` live in your `my_lib.py`** (and you can say what `duty_limit` protects) · and you can say **why the anchor run needs no color sensor.**
+:::
+
+::: {.fragment .fade-up}
+Next: *Follow the Line* — your robot grows an **eye**, and learns to trace a path at speed with a formula you **already own.** 🛣️
+:::
+
+::: {.notes}
+The gate has three legs: the reactive patrol (stall + calibrated back-off + loop across two walls), the two new library verbs demonstrated from `my_lib.py`, and the scoring understanding (anchor-first). All three are observable at the bench in under 20 minutes with five robots. Optional ½-block if time allows — the plan's "Good Practices" beat gets its full day at the consolidation session, but a taste here is cheap insurance: pseudocode the patrol in plain words first, comment the threshold with its calibration numbers, and back the working file up before the line day. Then tease D7: same `error × gain` they built for the gyro, now steering an eye down a line.
+:::

@@ -1,0 +1,308 @@
+---
+title: "The Setlist"
+subtitle: "Day 9 · Robot Rockstars · SPIKE Prime + Pybricks"
+date: today
+format: revealjs
+---
+
+# A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Your library is one clean module and it survived the gauntlet. Today the *mission itself* becomes a thing you can hold, reorder, and grow. 🎵
+
+## Where we left off
+
+| You have | What it does |
+|---|---|
+| 📦 **one `my_lib.py`** | every verb in one module — one constants block tunes them all |
+| 🚗 **moving verbs** | `drive_straight` · `turn_to` — watched by *your* PD loop |
+| 🧱 **wall verbs** | `drive_to_wall` · `wall_square` — the motor as a touch sensor |
+| 👀 **line verbs** | `follow_line` · `square_on_line` — the mat as a map |
+
+::: {.fragment .fade-up}
+🤔 The gauntlet proved every verb works *alone*. A competition run is verbs **in a row** — and the row keeps changing. Today: how pros hold a plan that has to change in seconds.
+:::
+
+⏱️ **Time: 10 minutes**
+
+::: {.notes}
+Recap by asking: name the verbs, who tuned what, which constant fixes which move. The framing sentence for the day: your library is the *vocabulary*; today you get the *sentence*. Foreshadow the pain honestly — the judge at the end of today will call a mission and then change it, and squads whose plan is a pasted block will lose minutes where a list squad loses seconds. That's the break-it, and it's also exactly what the Surprise Rule does at a real WRO table.
+:::
+
+# B. The Plan That Couldn't Change {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+Your verbs work. Now the judge calls a *sequence* — and then changes it. 😈
+
+## Unplugged: the pigeonholes 📮
+
+::: {.qbox}
+[Six numbered boxes on the bench, a pile of colored bricks. "Red into box 0. Blue into box 2. What's in box 1? Swap 0 and 3. Add a green one at the end — which box did it land in?"]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+You just used every list skill: a **numbered row of slots**, filled in order, **counting from 0** — read a slot by its number (**index**), walk the row front to back (**iterate**), grow it at the end (**append**). Python calls this row a **list**. No laptop needed — you already think this way.
+:::
+:::
+
+::: {.notes}
+Run it physically before any code — 5 minutes, real boxes (or taped squares) and real bricks, quick-fire calls. The two stumbles to engineer on purpose: (1) "box 1" when they expect counting from 1 — let someone grab the wrong brick, then name the rule: robots count from 0; (2) append lands at the *end*, position = old length. Keep the boxes on the bench all day — every list question later gets answered by pointing at them. This is WRO-Learn's arrays intro compressed into a game.
+:::
+
+## Break it: the pasted plan 🔥 {.code-shrink}
+
+::: {.qbox}
+[The judge calls: *cross the stage · face the band · square on the wall.* You paste it as one block. Then: **"Actually — wall square FIRST."** How long does the edit take?]{.qtitle}
+:::
+
+```{.python code-line-numbers="|1-5|6-7"}
+# mission_friday.py — one pasted block 😬
+drive_straight(400)          # cross the stage
+turn_to(90)           # face the band
+drive_to_wall()
+wall_square()         # reset at the wall
+# judge: "wall square FIRST, then cross"…
+# select lines… which? cut… paste… 🐛
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+The plan is **trapped in the code**. Reordering means surgery — select, cut, paste, and pray you moved *all* the lines of each step. Under a 5-minute clock, surgery loses. The plan needs to be a **thing** you can shuffle — like cards in a deck.
+:::
+:::
+
+::: {.notes}
+Let a squad actually attempt the live edit under a visible countdown — the fumble is the lesson. Diagnose together: the *steps* are clear in their heads ("cross", "face", "square") but the code has no such boundaries; a step is 1–3 loose lines with nothing holding them together. Two missing ideas, teased in order: give each step a **name** (they own `def` — this is a two-minute step), then put the names **in a row that can be shuffled** — the pigeonholes from the warm-up. Don't show the fix yet.
+:::
+
+# C. The Mission Is a List {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+Name the steps. Put the names in a row. Play the row.
+
+## Lists in sixty seconds
+
+```{.python code-line-numbers="|1|2|3|4|5-6"}
+setlist = ["intro", "solo", "finale"]   # a numbered row of slots
+setlist[0]                # "intro" — count from 0, like the boxes!
+setlist.append("encore")  # grows at the end → slot 3
+setlist[1] = "duet"       # swap what a slot holds
+for song in setlist:      # visit every slot, front to back
+    print(song)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Index · append · iterate — the three moves from the pigeonhole game, now in Python. A list holds **anything**: strings, numbers… and (next slide) something sneakier. 😏
+:::
+:::
+
+::: {.notes}
+Type it live in the REPL, mirroring each line back to the physical boxes on the bench ("slot 0… that box"). Off-by-one and negative index (`setlist[-1]` = last box) are fun 30-second asides if the room is quick. Don't linger — the payoff slide is next, and lists only get interesting once functions go inside them.
+:::
+
+## Steps are just functions — hold the name, don't play it
+
+```{.python code-line-numbers="|1-2|4-5|7-8|10-11"}
+def cross_stage():
+    drive_straight(400)
+
+def face_band():
+    turn_to(90)
+
+def reset_at_wall():
+    drive_to_wall(); wall_square()
+
+mission = [reset_at_wall, cross_stage, face_band]
+#          ^ no parentheses — cards in a deck, not moves happening
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+`cross_stage()` **plays** the move. `cross_stage` — no parentheses — is the **recipe card itself**, a thing you can hold, hand around… and drop into a list. A list of names is a **setlist**: the whole show, and it hasn't started yet.
+:::
+:::
+
+::: {.notes}
+This is the day's one genuinely new idea — a function is a *value*. Land it with the recipe-card metaphor from the first `def` day: the card vs cooking the dish. Common bug to demo on purpose: write `mission = [cross_stage(), face_band()]` — the robot drives *while the list is being built* (the moves happen at line 10!) and the list ends up holding three `None`s. Let them see that, then delete the parentheses. Note the judge's reorder is now already solved on line 10 — `reset_at_wall` simply moved to slot 0.
+:::
+
+## The runner — the whole thing
+
+```{.python code-line-numbers="|1|2|3|5"}
+def run_mission(steps):
+    for step in steps:   # take the next card…
+        step()           # …now play it
+run_mission(mission)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Three lines, and they **never change again**. Reorder the show → edit the *list*. Insert a step → `append` or slot it in. The judge changes the mission; you change **data**, not code. That's the split the pros live by.
+:::
+:::
+
+::: {.notes}
+Read it aloud in pigeonhole language: for each box front to back, take the card out, play it. The deep point — worth saying explicitly, once: the runner is *control* and the mission is *data*, and everything that changes lives in the data. This exact runner drives the anchor run in Week 3; per-step timeouts and a transition log are its stretch upgrade (the exemplar's `run_mission_logged`) — offer to fast squads at the gate, never gate on it. A non-blocking state machine is continuation-season material; RoboMission runs are sequential, blocking is right.
+:::
+
+## Feel it: shuffle the setlist 🔀
+
+```{=html}
+<div style="width:860px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;gap:12px;margin-bottom:8px;">
+    <button onclick="mlRun()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ run_mission(mission)</button>
+    <button onclick="mlSwap()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">🔀 judge: wall square FIRST</button>
+    <button onclick="mlAppend()" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">➕ append(face_crowd)</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:flex-start;gap:22px;">
+    <div style="min-width:280px;">
+      <div style="font-family:Consolas,monospace;font-size:16px;color:#1C355E;font-weight:800;margin-bottom:6px;">mission = [</div>
+      <div id="mlList"></div>
+      <div style="font-family:Consolas,monospace;font-size:16px;color:#1C355E;font-weight:800;margin-top:6px;">]</div>
+    </div>
+    <svg width="430" height="330" viewBox="0 0 430 330" style="display:block;background:#eef3f8;border-radius:14px;">
+      <rect x="40" y="18" width="350" height="16" rx="4" fill="#625D9C"/>
+      <text x="215" y="14" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">wall</text>
+      <circle cx="120" cy="270" r="7" fill="#1C355E"/>
+      <text x="120" y="296" font-size="13" fill="#1C355E" text-anchor="middle" font-weight="700">start</text>
+      <polyline id="mlTrace" points="" fill="none" stroke="#00C9A7" stroke-width="4" stroke-linejoin="round"/>
+      <g id="mlBot" transform="translate(120,270) rotate(0)"><g transform="scale(0.55)">
+        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
+        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
+        <circle cy="-30" r="4" fill="#FFD500"/>
+      </g></g>
+      <text id="mlMsg" x="215" y="322" font-size="15" fill="#1C355E" font-weight="800" text-anchor="middle"></text>
+    </svg>
+  </div>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, running=false;
+  var WALL_Y=52, BACK_Y=80;  // wall contact line and post-back-off line
+  // step catalog: each named step expands into primitive phases
+  // rot = turn to absolute heading (0 = up, 90 = right, 180 = down)
+  // fwd = drive dist px along current heading · toY/backToY = drive straight up/down to a y line
+  var STEPS={
+    cross_stage:  {label:'cross_stage',   phases:function(){ return [{k:'fwd',d:130}]; }},
+    face_band:    {label:'face_band',     phases:function(){ return [{k:'rot',h:90}]; }},
+    reset_at_wall:{label:'reset_at_wall', phases:function(){ return [{k:'rot',h:0},{k:'toY',y:WALL_Y},{k:'pause',s:0.5},{k:'backToY',y:BACK_Y},{k:'rot',h:180}]; }},
+    face_crowd:   {label:'face_crowd',    phases:function(){ return [{k:'rot',h:270}]; }}
+  };
+  var mission=['cross_stage','face_band','reset_at_wall'];
+  var appended=false;
+  function el(id){return document.getElementById(id);}
+  function render(hi){
+    var html='';
+    for(var i=0;i<mission.length;i++){
+      var on = i===hi;
+      html+='<div style="font-family:Consolas,monospace;font-size:17px;padding:7px 14px;margin:4px 0 4px 18px;border-radius:10px;border-left:5px solid '+(on?'#00AE8D':'#c9d4e0')+';background:'+(on?'#00AE8D22':'#eef3f8')+';color:#1C355E;font-weight:'+(on?'800':'600')+';">'
+        + i + ': ' + STEPS[mission[i]].label + (on?' ▶':'') + '</div>';
+    }
+    el('mlList').innerHTML=html;
+  }
+  render(-1);
+  function animate(idx, phases, done){
+    // robot state persists on the g transform; parse it back
+    var m=/translate\(([-\d.]+),([-\d.]+)\) rotate\(([-\d.]+)\)/.exec(el('mlBot').getAttribute('transform'));
+    var x=+m[1], y=+m[2], h=+m[3];
+    render(idx);
+    var pi=0, t=0; last=null;
+    function trace(){ el('mlTrace').setAttribute('points', el('mlTrace').getAttribute('points')+' '+x.toFixed(1)+','+y.toFixed(1)); }
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now; t+=dt;
+      var p=phases[pi], fin=false, sp=150;
+      if(p.k==='rot'){
+        var diff=p.h-h;
+        if(Math.abs(diff)<0.5){ h=p.h; fin=true; }
+        else h+=Math.sign(diff)*Math.min(Math.abs(diff),200*dt);
+      } else if(p.k==='fwd'){
+        if(p.left===undefined) p.left=p.d;
+        var step=Math.min(sp*dt,p.left), r=(h-90)*Math.PI/180;
+        x+=step*Math.cos(r); y+=step*Math.sin(r); p.left-=step; trace();
+        if(p.left<=0.1) fin=true;
+      } else if(p.k==='toY'){
+        y=Math.max(p.y, y-sp*dt); trace();
+        if(y<=p.y+0.1) fin=true;
+      } else if(p.k==='backToY'){
+        y=Math.min(p.y, y+sp*dt); trace();
+        if(y>=p.y-0.1) fin=true;
+      } else { // pause (the squaring wiggle moment)
+        if(p.done===undefined){ p.done=t+p.s; }
+        if(t>=p.done) fin=true;
+      }
+      el('mlBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
+      if(fin){ pi++; t=0; }
+      if(pi<phases.length){ raf=requestAnimationFrame(frame); }
+      else { raf=null; done(); }
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  window.mlRun=function(){
+    if(running) return; running=true;
+    el('mlBot').setAttribute('transform','translate(120,270) rotate(0)');
+    el('mlTrace').setAttribute('points','120,270');
+    el('mlMsg').textContent='';
+    var i=0;
+    function next(){
+      if(i>=mission.length){ running=false; render(-1); el('mlMsg').textContent='show complete 🎉 — same runner, whatever the list says'; return; }
+      animate(i, STEPS[mission[i]].phases(), function(){ i++; next(); });
+    }
+    next();
+  };
+  window.mlSwap=function(){
+    if(running) return;
+    var i=mission.indexOf('reset_at_wall');
+    if(i>0){ mission.splice(i,1); mission.unshift('reset_at_wall'); }
+    render(-1); el('mlMsg').textContent='one edit to the LIST — the runner never changed 😎';
+  };
+  window.mlAppend=function(){
+    if(running || appended) return; appended=true;
+    mission.push('face_crowd');
+    render(-1); el('mlMsg').textContent='mission.append(face_crowd) → new slot '+(mission.length-1);
+  };
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+The judge's reorder is **one edit to the list** — watch slot 0 change hands, then run the *same* three-line runner. Append a step: a new slot appears at the end, exactly like the pigeonholes. **The plan is data now.**
+:::
+:::
+
+::: {.notes}
+Ritual: run the original show first so they see list-highlighting track the robot (the ▶ walks down the slots as the robot moves — index made visible). Then hit the judge button *without* running: only the list changes, code untouched — say it out loud. Run again: wall square happens first. Append, run a third time. Connect each button to the pigeonhole verbs: swap = re-slotting cards, append = new box at the end. Then send them to the real mat to do the identical thing with their own verbs — the sim is the storyboard, the mat is the exam.
+:::
+
+# D. Compete & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Today's showdown: **Setlist** 🎵
+
+## Setlist 🎵
+
+::: {.callout-important}
+## The challenge
+The judge calls a **3-step mini-mission** — you have **5 minutes** to encode it as a mission list over your own library and run it. Score = steps completed; tiebreak = time.
+:::
+
+- Hear the mission → say it as **verbs** (*"that's a `drive_straight`, a `turn_to`, a `wall_square`"*) → wrap, list, run.
+- The judge **will** change the order on round two. 😈 Your surgery-free edit is the whole advantage.
+- Fast squads: swap in `run_mission_logged` — per-step stopwatch + a printed transition log.
+
+::: {.notes}
+Score decomposition, not typing speed: the squads to praise are the ones who translate the judge's sentence into library verbs *before* touching a keyboard. Round two's reorder is the day's thesis under pressure — a list squad edits one line; watch for anyone still cutting and pasting blocks and coach them on the spot. The logged runner is the exemplar's stretch (timeouts + transition log) — offer it, never gate it. Coach's private scorecard today: list fluency, decomposition into verbs, debugging a *sequence* (which step failed? the log says).
+:::
+
+## Today's gate
+
+::: {.callout-important}
+## You're done today when…
+You can **read and build a list** (index from 0, iterate, append), your steps are **named functions over your own library**, and the three-line runner walks a judge-called **3-step mission** — with a reorder costing you **one edit**, not surgery.
+:::
+
+::: {.fragment .fade-up}
+Next: **Draft Day** — teams form, each team picks its competition robot… and a surprise you've spent two weeks earning. 🎁
+:::
+
+::: {.notes}
+The gate is the plan's D9 outcome verbatim. This is the last solo-robot day — tomorrow's session opens with the *Mini Mission* finale and the draft, so make sure every student's library + runner are saved and named (they carry into the team merge, which is exactly what motivates the config lesson there). Keep the teaser vague on purpose: the "surprise" is the DriveBase reveal, and it lands best unspoiled.
+:::

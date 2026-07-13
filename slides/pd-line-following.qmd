@@ -1,0 +1,421 @@
+---
+title: "Line King"
+subtitle: "Day 7 · Robot Rockstars · SPIKE Prime + Pybricks"
+date: today
+format: revealjs
+---
+
+# A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+You already own the **most-used formula in robotics** — `error × gain`. Today you point it at a brand-new sensor. Same formula, new eye. 🛣️
+
+## Where we left off
+
+| You own | Built on |
+|---|---|
+| 📈 **`error × gain`** | the gyro turn *and* the self-healing straight (Week 1) |
+| 🛑 **D — damping** | brakes before overshoot (the library day) |
+| 👀 **the eye, calibrated** | its own light's echo, 0–100 — threshold *re-measured* per surface (yesterday) |
+
+::: {.fragment .fade-up}
+Today: aim that eye at a **line** and let `error × gain` steer. This is the **third time** you've used this formula — the turn, the straight, and now the line.
+:::
+
+::: {.callout-note}
+## One thing up front
+Line-following reads **brightness** (`reflection`), **not** color names. Telling green notes from red is a *Week-4* job — today the eye only asks *"dark or bright?"*
+:::
+
+::: {.notes}
+Anchor today in what they already own, or it feels like a brand-new mountain (it isn't — the plan flags D7 as the longest day precisely because the *old* material was video-paced; live, it's one formula applied a third time). Recap `error × gain` from the gyro out loud. Flag the reflection-vs-color point early and firmly — kids will want to "detect the green line"; stop that now, it's brightness only until Week 4. The day is bang-bang → P on the line, then junction squaring — **that pair is the gate** (it's what the anchor run actually uses); the PD upgrade is the stretch for squads that tune P early. If the cohort is still behind on programming, the afternoon flexes to library-consolidation practice instead of pushing PD.
+:::
+
+# B. One Eye, One Edge {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+A line is just a **border** between dark and bright. Park **one** eye right on that border and read how far off you've drifted. One sensor, one edge. 👁️
+
+## Meet the eye: ride the edge
+
+```{.python}
+# Watch it live FIRST — before any steering. Just read the number.
+while True:
+    print("reflection:", left_eye.reflection())   # 0=black, 100=white
+    wait(100)
+```
+
+```{=html}
+<div style="width:820px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:6px;">
+    <span style="font-size:16px;color:#1C355E;font-weight:700;">slide the eye across the edge:</span>
+    <input type="range" min="0" max="100" step="1" value="20" oninput="edMove(this.value)" style="width:280px;accent-color:#E96852;vertical-align:middle;">
+  </div>
+  <svg width="760" height="150" viewBox="0 0 760 150" style="display:block;margin:0 auto;">
+    <rect x="30" y="30" width="350" height="90" fill="#f2f5f9" stroke="#dbe2ea"/>
+    <rect x="380" y="30" width="350" height="90" fill="#101820"/>
+    <text x="205" y="140" font-size="14" fill="#1C355E" font-weight="800" text-anchor="middle">white mat</text>
+    <text x="555" y="140" font-size="14" fill="#625D9C" font-weight="800" text-anchor="middle">black line</text>
+    <line x1="380" y1="20" x2="380" y2="122" stroke="#00AE8D" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="380" y="16" font-size="12" fill="#00AE8D" font-weight="800" text-anchor="middle">the edge = threshold 50</text>
+    <circle id="edEye" cx="130" cy="75" r="15" fill="#FFD500" stroke="#1C355E" stroke-width="3"/>
+  </svg>
+  <div id="edMsg" style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;font-weight:700;min-height:26px;">reflection 88 → error +38 · far onto white, steer hard toward the line</div>
+</div>
+<script>
+(function(){
+  var X0=45, X1=715, EDGE=380;
+  function el(id){return document.getElementById(id);}
+  function reflAt(cx){
+    // smooth transition across the edge at x=380 (± 40px)
+    var t=(cx-(EDGE-40))/80;               // 0 on white side, 1 on black side
+    t=Math.max(0,Math.min(1,t));
+    return Math.round(88 - t*(88-10));     // 88 on white → 10 on black
+  }
+  window.edMove=function(v){
+    var cx=X0 + (parseInt(v,10)/100)*(X1-X0);
+    el('edEye').setAttribute('cx',cx.toFixed(1));
+    var r=reflAt(cx), err=r-50, m=el('edMsg');
+    if(Math.abs(err)<=6){ m.style.color='#00AE8D'; m.innerHTML='reflection <b>'+r+'</b> → error <b>'+(err>=0?'+':'')+err+'</b> · riding the edge — go straight ✓ 🎯'; }
+    else if(err>0){ m.style.color='#1C355E'; m.innerHTML='reflection <b>'+r+'</b> → error <b>+'+err+'</b> · out on white — steer toward the line'; }
+    else { m.style.color='#625D9C'; m.innerHTML='reflection <b>'+r+'</b> → error <b>'+err+'</b> · buried in black — steer back out'; }
+  };
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+White ~88, black ~10 — the **edge is the midpoint** (~50). `error = reflection − 50`: **+ on white · − on black · 0 dead-on.**
+:::
+:::
+
+::: {.notes}
+Watch reflection live on a real robot first, over white then over black — read the two numbers aloud, split them, that's the threshold (re-do on the actual mat; venue lighting shifts it). Then the widget: drag the eye and narrate the single signed number. The key mental model is *edge*-following, not *line*-centering — one eye rides the boundary, half on black. Positive error = drifted onto white, negative = drifted onto black. This is deliberately the same shape as the gyro's `error = target − heading`. Don't mention P yet; just establish that one eye yields one clean error.
+:::
+
+## Break it: only two answers 🔥
+
+::: {.qbox}
+[Give the robot just **two** moves — *hard left* or *hard right*, nothing in between. It can never simply go straight. Predict the path it traces down the line.]{.qtitle}
+:::
+
+```{.python code-line-numbers="|1|2|3-4|5-7"}
+while True:
+    if left_eye.reflection() < THRESHOLD:
+        left.run(LINE_SPEED + TURN_HARD)       # on black → yank right
+        right.run(LINE_SPEED - TURN_HARD)
+    else:
+        left.run(LINE_SPEED - TURN_HARD)       # on white → yank left
+        right.run(LINE_SPEED + TURN_HARD)
+    wait(10)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+Two answers means it can **never** point straight — it slams left-right forever: slow, wobbly, and it flies off fast curves.
+:::
+:::
+
+::: {.notes}
+This is **bang-bang** — the naïve controller. Let them predict, then confirm with the sim two slides on. The diagnosis you want in their words: "it only knows left or right, so it's always turning." The bridge to P is exactly the gain quiz from Day 4: what if the correction were *proportional* to how far off we are, instead of always full-tilt? Keep bang-bang short — it exists only to make P feel like the rescue.
+:::
+
+## Name it: P — proportional steering 📈
+
+```{.python code-line-numbers="|1|2-3"}
+error = left_eye.reflection() - THRESHOLD    # signed: how far off the edge?
+left.run(LINE_SPEED + KP * error)            # far → hard steer,
+right.run(LINE_SPEED - KP * error)           # near → gentle
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+`error × gain` **again** — far → hard steer, near → nudge, on the edge → straight. Tune **`KP`**: too small = lazy on curves, too big = the wobble is back.
+:::
+:::
+
+::: {.notes}
+The "aha" is that they've written this line before — twice. It's *literally* the D4 self-healing straight with a new error source: swap `hub.imu.heading()` for the eye's reflection and the two `run` lines are identical. Same `error × gain`, different sensor feeding it. Two failure modes to name so they recognize them on the bench: sluggish (KP too low) drifts wide on curves; twitchy (KP too high) reintroduces the wobble. Start small and adjust. This alone wins "Line King" on gentle lines — but push the speed up on a curve and it starts to overshoot, which is the doorway to the PD stretch. If a student raises the "use `motor.dc()`" advice here: same answer as the D4 proportional-turn coach note — `run()` keeps "speed" meaning speed, so `KP * error` stays a correction in deg/s they can reason about.
+:::
+
+# C. P → PD, and Squaring {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+P glides — until you get greedy with speed. Push it fast into a curve and an old ghost comes back. You've already met its cure. 🛑
+
+## Feel it: race all three 🎢
+
+::: {.qbox}
+[Run your smooth **P** **fast** into a curve — it knows *how far* off, not *how fast* it's slipping. Predict the moment it crosses the edge.]{.qtitle}
+:::
+
+```{=html}
+<div style="width:900px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
+    <button id="lfBB" onclick="lfMode('bb')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">bang-bang</button>
+    <button id="lfP" onclick="lfMode('p')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">P</button>
+    <button id="lfPD" onclick="lfMode('pd')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">PD</button>
+    <button onclick="lfGo()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:6px 18px;font-size:16px;font-weight:700;cursor:pointer;">▶ run</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:22px;font-size:15px;color:#1C355E;font-weight:700;margin-bottom:4px;">
+    <span>speed <input type="range" min="80" max="320" step="10" value="200" oninput="lfSet('v',this.value)" style="width:120px;accent-color:#1C355E;"> <span id="lfVv">200</span></span>
+    <span>KP <input type="range" min="0.2" max="3" step="0.1" value="1.2" oninput="lfSet('kp',this.value)" style="width:120px;accent-color:#00AE8D;"> <span id="lfKpv">1.2</span></span>
+    <span>KD <input type="range" min="0" max="8" step="0.2" value="4" oninput="lfSet('kd',this.value)" style="width:120px;accent-color:#E96852;"> <span id="lfKdv">4.0</span></span>
+  </div>
+  <svg width="880" height="178" viewBox="0 0 880 240" style="display:block;margin:0 auto;background:#f2f5f9;border-radius:14px;">
+    <path id="lfLine" d="" fill="none" stroke="#101820" stroke-width="10" stroke-linecap="round"/>
+    <polyline id="lfPath" points="" fill="none" stroke="#00C9A7" stroke-width="3"/>
+    <g id="lfBot" transform="translate(40,120) rotate(90)"><g transform="scale(0.5)">
+      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
+      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
+      <circle cy="-30" r="4" fill="#FFD500"/>
+    </g></g>
+    <text id="lfTag" x="440" y="28" font-size="17" font-weight="800" text-anchor="middle" fill="#625D9C">PD — reads far AND fast</text>
+  </svg>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, mode='pd', V=200, KP=1.2, KD=4.0;
+  var X0=40, X1=840, midY=120, G=0.6;
+  function el(id){return document.getElementById(id);}
+  // the line the bot must follow: straight lead-in, then an S-curve
+  function edgeY(x){
+    if(x<300) return midY;
+    return midY + 70*Math.sin((x-300)/90);
+  }
+  function drawLine(){
+    var d='M '+X0+' '+edgeY(X0).toFixed(1);
+    for(var x=X0+6;x<=X1;x+=6) d+=' L '+x.toFixed(1)+' '+edgeY(x).toFixed(1);
+    el('lfLine').setAttribute('d',d);
+  }
+  var TAGS={bb:['bang-bang — only two answers','#E96852'],p:['P — reads how FAR off','#00AE8D'],pd:['PD — reads far AND fast','#625D9C']};
+  function setBtns(){
+    [['bb','lfBB'],['p','lfP'],['pd','lfPD']].forEach(function(pair){
+      var on=mode===pair[0], b=el(pair[1]);
+      b.style.background=on?'#00C9A7':'#eef3f8'; b.style.color=on?'#fff':'#1C355E'; b.style.border=on?'none':'2px solid #1C355E';
+    });
+    el('lfTag').textContent=TAGS[mode][0]; el('lfTag').setAttribute('fill',TAGS[mode][1]);
+  }
+  window.lfMode=function(m){ mode=m; setBtns(); };
+  window.lfSet=function(k,v){
+    if(k==='v'){ V=parseInt(v,10); el('lfVv').textContent=v; }
+    if(k==='kp'){ KP=parseFloat(v); el('lfKpv').textContent=parseFloat(v).toFixed(1); }
+    if(k==='kd'){ KD=parseFloat(v); el('lfKdv').textContent=parseFloat(v).toFixed(1); }
+  };
+  window.lfGo=function(){
+    var x=X0, y=edgeY(X0), th=0, lastErr=0, wApplied=0, pts=[]; last=null;
+    el('lfPath').setAttribute('points','');
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.04):0.016; last=now;
+      var sd=0.006, n=Math.max(1,Math.round(dt/sd));
+      for(var i=0;i<n && x<X1;i++){
+        var e=(edgeY(x)-y)*G;                 // + when bot is above the line (on white)
+        if(e>50)e=50; if(e<-50)e=-50;
+        var wDesired;
+        if(mode==='bb'){ wDesired=(e>0?1:-1)*3.2; }
+        else if(mode==='p'){ wDesired=KP*e*0.09; }
+        else { wDesired=KP*e*0.09 + KD*(e-lastErr)*0.09; }
+        lastErr=e;
+        wApplied += (wDesired-wApplied)*0.30;  // steering/motor lag — a real robot can't flip direction instantly
+        th += wApplied*sd*6;
+        if(th>1.2)th=1.2; if(th<-1.2)th=-1.2;
+        y += V*Math.tan(th)*sd;
+        x += V*sd;
+        if(y<20)y=20; if(y>220)y=220;
+      }
+      pts.push(x.toFixed(1)+','+y.toFixed(1));
+      el('lfPath').setAttribute('points',pts.join(' '));
+      el('lfPath').setAttribute('stroke', mode==='bb'?'#E96852':(mode==='p'?'#00AE8D':'#00C9A7'));
+      el('lfBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(90+th*57.3).toFixed(1)+')');
+      if(x<X1){ raf=requestAnimationFrame(frame); } else raf=null;
+    }
+    if(raf)cancelAnimationFrame(raf); drawLine(); raf=requestAnimationFrame(frame);
+  };
+  drawLine(); setBtns();
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+**bang-bang** ping-pongs · **P** overshoots the curve (worse with speed) · **PD** eases off early and holds it. Drag **KD → 0** — PD rings like P: D is the only difference.
+:::
+:::
+
+::: {.notes}
+Run bang-bang first (big zigzag), then P at speed 200 (fine on the straight, overshoots into the S), then PD (clean). The money move is live: with PD selected, drag KD to 0 — the green curve starts ringing exactly like P; nudge it back up and it settles. That's the same demonstration as Day 5's kd slider on the gyro, now on the line — same D, same job, new sensor. Crank the speed slider to show P's overshoot grows with speed while PD holds. Sim is illustrative; on the real robot they tune the P gain first, and only squads chasing the stretch touch kd.
+:::
+
+## Name it: `follow_line` joins the library 📦 {.code-shrink}
+
+```{.python code-line-numbers="|1|3|4|5-6|7|8-9|12"}
+def follow_line(distance_mm, speed=250, kd=0):
+    """P follow on the LEFT eye — kd > 0 is the PD stretch."""
+    finish = left.angle() + distance_mm * DEG_PER_MM
+    last_error = 0
+    while left.angle() < finish:
+        error = left_eye.reflection() - THRESHOLD
+        steer = KP_LINE * error + kd * (error - last_error)
+        left.run(speed + steer)
+        right.run(speed - steer)
+        last_error = error
+        wait(10)
+    left.stop(); right.stop()
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+The morning's P loop, bottled: a **finish line** in degrees (the `drive_straight` trick) makes it a *segment*. The `kd` knob is the **stretch** — the **D** from the library day, reading how *fast* the error closes to **brake early**. **I stays a coach demo, never gated.**
+:::
+:::
+
+::: {.notes}
+Same promotion ritual as every day this week: the loose P loop gets a name and moves into `my_lib.py` (the gain becomes `KP_LINE` — the library's constants block already owns `KP` for the gyro). Map every part back to what they own: `error` = P on the eye, the `finish` line = `drive_straight`'s DEG_PER_MM trick (follow *for a distance* — that's how missions call it), `kd * (error - last_error)` = the D from the library-day gyro turn, with `last_error` the one-line memory that makes D possible. The gate is the P version — `follow_line(600)` with kd=0; the stretch is sliding kd up until the fast curve stops overshooting, which is what wins Speed Demon. State the I-policy plainly and move on: integral fixes a *steady* offset over a *long* run; our segments are short, so I is a demo they can watch but never something the gate depends on.
+:::
+
+## The two-eye job: square up 📐 {.code-shrink}
+
+Line-following uses **one** eye. The **second** eye's moment is *here*: you hit a junction **crooked** and must sit square before the next move.
+
+```{.python code-line-numbers="|1|3|4|5|6-7|8-9|10"}
+def square_on_line(speed=160):
+    """Stop each wheel as ITS OWN eye reaches the line."""
+    left_done = right_done = False
+    left.run(speed); right.run(speed)
+    while not (left_done and right_done):
+        if not left_done and left_eye.reflection() < THRESHOLD:
+            left.hold(); left_done = True      # park left wheel
+        if not right_done and right_eye.reflection() < THRESHOLD:
+            right.hold(); right_done = True    # park right wheel
+        wait(5)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+Each eye stops **its own** wheel, so the robot **pivots square** — heading *and* sideways drift erased at every crossing. *This* is why it carries two eyes.
+:::
+:::
+
+::: {.notes}
+Answer the port question head-on: two color sensors fill two of the six hub ports (B and F), and following needs only one — so the second eye earns its seat here, squaring. On the real mat this kills accumulated drift in a fraction of a second, gold going into the chained runs of Week 3. (The same right eye later reads note colors in Week 4 — but never steers.)
+:::
+
+## Watch it snap square 📐
+
+```{=html}
+<div style="width:760px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:6px;">
+    <button onclick="sqGo()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ creep onto the junction</button>
+  </div>
+  <svg width="420" height="272" viewBox="0 0 420 272" style="display:block;margin:0 auto;background:#f2f5f9;border-radius:14px;">
+    <rect x="0" y="60" width="420" height="14" fill="#101820"/>
+    <text x="380" y="52" font-size="13" fill="#625D9C" font-weight="800" text-anchor="middle">junction</text>
+    <g id="sqBot" transform="translate(210,178) rotate(-16)">
+      <rect x="-26" y="-30" width="52" height="70" rx="8" fill="#1C355E"/>
+      <circle id="sqLE" cx="-16" cy="-30" r="6" fill="#FFD500" stroke="#fff" stroke-width="2"/>
+      <circle id="sqRE" cx="16" cy="-30" r="6" fill="#FFD500" stroke="#fff" stroke-width="2"/>
+    </g>
+    <text id="sqMsg" x="210" y="262" font-size="16" font-weight="800" text-anchor="middle" fill="#1C355E">arrives crooked — each eye stops its own wheel</text>
+  </svg>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, LINEY=67;
+  function el(id){return document.getElementById(id);}
+  window.sqGo=function(){
+    var cx=210, cy=178, th=-0.28;            // start below, skewed
+    var phase='drive', px=0, py=0, sgn=1; last=null;
+    el('sqMsg').setAttribute('fill','#1C355E'); el('sqMsg').textContent='creeping up — skewed…';
+    // eye local coords: left (-16,-30), right (16,-30) → world
+    function eyeWorld(lx,ly){ return {x: cx+lx*Math.cos(th)-ly*Math.sin(th), y: cy+lx*Math.sin(th)+ly*Math.cos(th)}; }
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.04):0.016; last=now;
+      if(phase==='drive'){
+        cy -= 70*Math.cos(th)*dt; cx += 70*Math.sin(th)*dt;   // both wheels rolling
+        var le=eyeWorld(-16,-30), re=eyeWorld(16,-30);
+        if(le.y<=LINEY || re.y<=LINEY){                       // leading eye reaches the line
+          var leftLeads = le.y<=LINEY;
+          px=(leftLeads?le:re).x; py=LINEY;                   // that wheel parks — pivot here
+          sgn = th<0 ? 1 : -1;                                // trailing wheel swings body square
+          phase='pivot';
+          el('sqMsg').textContent=(leftLeads?'left':'right')+' eye on the line — its wheel parks, the other creeps on';
+        }
+      } else if(phase==='pivot'){
+        var dth=sgn*0.9*dt;
+        if((sgn>0 && th+dth>=0) || (sgn<0 && th+dth<=0)){ dth=-th; phase='done'; }
+        var ox=cx-px, oy=cy-py, c=Math.cos(dth), s=Math.sin(dth);
+        cx=px+ox*c-oy*s; cy=py+ox*s+oy*c; th+=dth;            // rotate body about the parked eye
+      }
+      el('sqBot').setAttribute('transform','translate('+cx.toFixed(1)+','+cy.toFixed(1)+') rotate('+(th*57.3).toFixed(1)+')');
+      if(phase==='done'){
+        raf=null; el('sqMsg').setAttribute('fill','#00AE8D');
+        el('sqMsg').textContent='squared ✓ — heading reset to 0°, position error gone';
+        return;
+      }
+      raf=requestAnimationFrame(frame);
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+The leading eye's wheel parks first; the trailing wheel swings the body until *its* eye lands too — square, drift gone. 🎯
+:::
+:::
+
+::: {.notes}
+Run it live: the bot arrives crooked, one wheel stops on the line first, the other pivots the body until its eye lands too — square. This is exactly `square_on_line()` from the previous slide. On the mat it erases accumulated drift in a fraction of a second, right before the next move — cheap, automatic insurance the chained runs of Week 3 lean on.
+:::
+
+# D. Compete & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Today's showdown: **Line King** 👑 — and for the fast squads, **Speed Demon.** 🏁
+
+## Line King 👑 / Speed Demon 🏁
+
+::: {.callout-important}
+## The challenge
+**Line King** — follow a curved line for **30 seconds**: score = on-line accuracy + speed held. **Speed Demon** (fast squads) — a straight + one curve, **fastest time without ever leaving the line.**
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**The winning recipe**
+
+- Calibrate the threshold **on the mat you'll run on**
+- Tune **`KP_LINE`** until it holds the line
+- *(stretch)* add **`kd`** until the curve stops overshooting
+- **Square** at the junction to reset before the sprint
+:::
+
+::: {.column width="50%"}
+**Where squads lose it**
+
+- Threshold from *yesterday's* surface 😬
+- `KP` so high the straight wobbles
+- Chasing speed before the tune is clean
+- Skipping the square → drift compounds
+:::
+
+::::
+
+::: {.notes}
+Line King rewards a clean, honest tune over raw speed; Speed Demon is the stretch for squads whose P was solid early and who took the kd upgrade. Coach's eye is on the *tuning conversation*, not the trophy: can they explain what the error means, what KP_LINE did, and why the threshold had to be re-measured on this mat? That explanation IS the gate (kd talk is stretch credit, not a requirement). Keep the taped junction handy so squaring gets used under pressure, not just demoed.
+:::
+
+## Today's gate
+
+::: {.callout-important}
+## You're done today when…
+Every student can **build, tune, and explain a P line-follower** — what the error means, what `KP` does — the robot **follows a curve and squares on a junction reliably**, and **`follow_line` + `square_on_line` live in your `my_lib.py`.** *(Stretch: the `kd` upgrade that wins Speed Demon.)*
+:::
+
+::: {.fragment .fade-up}
+Next: *one library to rule them all* — five files become **one clean `my_lib.py`**, and a challenge gauntlet only **library calls** can beat. 📦
+:::
+
+::: {.notes}
+The gate is the plan's D7 outcome: build, tune, and *explain* a P follower + reliable junction squaring — what the anchor run actually uses; PD is explicitly the stretch, never the gate. A student who can narrate why each term is there owns the concept and can debug it in Week 3 when the follower serves the run. Two eyes, one job each: one follows, both square. Close by pointing forward: next is the consolidation day — one module, one constants block, the challenge gauntlet — then missions become *lists*; the point-scoring mechanisms arrive with the Week-3 team builds, feeding the anchor-first 255 map they read yesterday.
+:::
