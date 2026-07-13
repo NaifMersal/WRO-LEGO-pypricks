@@ -1,25 +1,9 @@
 # Robot Rockstars 🎸🤖
 
-Welcome to the **Robot Rockstars** repository! This is a complete, project-based curriculum and gold-reference implementation for a **5-week youth robotics bootcamp**. The bootcamp is designed to take beginners from a box of LEGO SPIKE Prime components to a competition-ready robot for the **WRO 2026 RoboMission Elementary** season (*"Robot Rockstars"*).
+Welcome to the **Robot Rockstars** repository! The bootcamp is designed to take beginners from a box of LEGO SPIKE Prime components to a competition-ready robot for the **WRO 2026 RoboMission Elementary** season (*"Robot Rockstars"*).
 
 All programming is written in **Python using the Pybricks firmware/API**, offering professional-grade motor and gyro control out of the box.
 
----
-
-## 📂 Repository Structure
-
-*   [docs/](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/docs) — Strategic and structural documentation.
-    *   [Robot_Rockstars_Bootcamp_Plan.md](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/docs/Robot_Rockstars_Bootcamp_Plan.md) — The **single master planning document**. Contains day-by-day lesson outlines (D1–D25), parts lists, scoring grids, pedagogy guidelines, and decision logs.
-    *   [WRO_RoboMission_General_Rules_2026.md](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/docs/WRO_RoboMission_General_Rules_2026.md) — Reference for the binding WRO 2026 General Rules.
-    *   [WRO-2026-RoboMission-Elementary-Game-Rules.pdf](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/docs/WRO-2026-RoboMission-Elementary-Game-Rules.pdf) — Official WRO Elementary game rules and scoring details.
-*   [code/](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/code) — Gold-reference runnable Python code (curriculum answer key).
-    *   [robot_config.py](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/code/robot_config.py) — Standardized `@dataclass` configuration for the Advanced Driving Base.
-    *   [motions.py](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/code/motions.py) — Reusable motion primitives (gyro-straight, line-following, stall-based wall squaring).
-    *   [week1/](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/code/week1) to [week5/](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/code/week5) — Progressive challenge implementations mapped to the 25-day syllabus.
-*   [slides/](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/slides) — Quarto/reveal.js stakeholder slide decks for presentations.
-*   [handouts/](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/handouts) — Class resources, including the robot curling score sheet.
-
----
 
 ## 🛠️ Technology Stack & Requirements
 
@@ -46,9 +30,9 @@ When modifying the code or curriculum planning documents, keep the following har
 
 ## 🚀 Getting Started
 
-1.  Read the master plan: [Robot_Rockstars_Bootcamp_Plan.md](file:///c:/Users/nayef/Desktop/LEGO-WRO-Robotics/docs/Robot_Rockstars_Bootcamp_Plan.md).
-2.  To view the course portal locally, compile the Quarto index:
+-  To view the course portal locally, compile the Quarto index:
     ```bash
     quarto preview index.qmd
     ```
-3.  To run code on a SPIKE Prime, flash Pybricks firmware onto your hub, open the [Pybricks Code Editor](https://code.pybricks.com/), and import files from the `code/` directory.
+
+-  To run code on a SPIKE Prime, flash Pybricks firmware onto your hub, open the [Pybricks Code Editor](https://code.pybricks.com/).
