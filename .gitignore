@@ -4,5 +4,6 @@ __pycache__/
 output/
 code/
 docs/
+tools/
 /CLAUDE.md
 /.claude/
