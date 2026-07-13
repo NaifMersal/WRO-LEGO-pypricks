@@ -5,6 +5,10 @@ date: today
 format: revealjs
 ---
 
+# A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Yesterday you *named* **P** — `error × gain`. Today: the two letters that fix what P alone can't — and then your moves get **names of their own**. 📦
+
 ```{=html}
 <!-- Shared assets for every sim in this deck: one car (two sizes), one helper kit. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -42,9 +46,6 @@ window.NM = {
 </script>
 ```
 
-# A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
-
-Yesterday you *named* **P** — `error × gain`. Today: the two letters that fix what P alone can't — and then your moves get **names of their own**. 📦
 
 ## Where we left off
 
@@ -554,7 +555,7 @@ def drive_straight(distance_mm, speed=400):  # one knob, factory-set
 Name the vocabulary plainly, once: the names in the parentheses are **parameters**; a parameter with `=` carries a **default**; naming a knob at the call site (`kd=0`) is a **keyword argument**. They've used all three since `gyro_turn_p(target, gain=4)` — this slide only hangs names on habits. Quiz cadence: read a call, every squad commits out loud, *then* reveal the card — ② is the fun one (one keyword resurrects yesterday's ringing bug, proof the default was doing real work), ④ is the confidence move: run it live, read the `TypeError` together — the interpreter is *telling you which knob you forgot*, not scolding you. Forward hook for coaches: at the D10 reveal, `RobotConfig` gathers all these factory settings into one dataclass — same idea, bigger box.
 :::
 
-## Two homes for a name 🗺️ {.smaller .code-shrink}
+## Two homes for a name 🗺️ {.smaller}
 
 ```{.python code-line-numbers="|1-3|5-7"}
 # top of my_lib.py — GLOBALS: born once, every verb reads them
