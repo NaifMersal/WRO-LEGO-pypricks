@@ -286,31 +286,46 @@ The most instructive bug of the week — no error to read, so the robot's stilln
 
 The judge adds a **stopwatch**. Suddenly your crawl zone has a price tag.
 
-## Three calls, one tuning 🎯⏱️
+## Three calls, one sticky note ⏱️
 
 ::: {.qbox}
-[The judge calls **45° → 90° → 180°**, back-to-back, same `gyro_turn` — and today the clock counts too. Predict: which call comes out *sleepy*? Which one *blows past* — and what would make it?]{.qtitle}
+[The judge calls **45° → 90° → 180°** — same `gyro_turn`, same sticky note, and today the **clock counts too**. Two predictions with your partner:]{.qtitle}
 
-Hint: sketch where the crawl zone **starts** for each call.
+🐢 **Sleepy check:** the crawl always covers the **last 30°**. Which call spends the biggest *slice* of its turn crawling — what does that do to its time?
+
+🚀 **Fly-past check:** you crank the fast speed to beat the clock. Which call now risks blowing past its tick — and why *that* one?
 :::
 
+```{=html}
+<div style="width:920px;margin:6px auto 0 auto;">
+  <div style="font-size:16px;color:#5b6678;text-align:center;margin-bottom:4px;">Hint: each bar is one turn, start → 🎯. Mark where the crawl <b>starts</b> (target − 30) on each.</div>
+  <div style="display:flex;flex-direction:column;gap:6px;font-family:Consolas,monospace;font-size:16px;color:#1C355E;">
+    <div style="display:flex;align-items:center;gap:10px;"><span style="width:52px;text-align:right;font-weight:700;">45°</span><div style="height:16px;width:130px;background:#eef3f8;border:2.5px solid #1C355E;border-radius:6px;"></div><span>🎯</span><span style="color:#8a97a8;">crawl starts at __°</span></div>
+    <div style="display:flex;align-items:center;gap:10px;"><span style="width:52px;text-align:right;font-weight:700;">90°</span><div style="height:16px;width:260px;background:#eef3f8;border:2.5px solid #1C355E;border-radius:6px;"></div><span>🎯</span><span style="color:#8a97a8;">crawl starts at 60°</span></div>
+    <div style="display:flex;align-items:center;gap:10px;"><span style="width:52px;text-align:right;font-weight:700;">180°</span><div style="height:16px;width:520px;background:#eef3f8;border:2.5px solid #1C355E;border-radius:6px;"></div><span>🎯</span><span style="color:#8a97a8;">crawl starts at __°</span></div>
+  </div>
+</div>
+```
+
 ::: {.fragment .fade-up}
-Do the sketch with your partner and **write both predictions down** — the stopwatch is about to grade them. 👀
+Sketch it, then **write both predictions down** — the stopwatch grades them. 👀
 :::
 
 ::: {.notes}
-Pure prediction, nothing revealed. The sketch gives it away for 45: the crawl zone starts at 15°, so **two-thirds of the turn is crawl** — sleepy. For 180 the zone is proportionally tiny — fine at 200 deg/s, but the moment someone chases the clock by cranking the speed, the robot arrives at the zone hot and 30° isn't enough braking distance. Don't say any of that — collect predictions on the board and let the race lab answer.
+Pure prediction, nothing revealed — the bars are deliberately unshaded; 90° is pre-filled as the worked example, squads fill 15 and 150 themselves. The sketch gives it away for 45: crawl from 15° means **two-thirds of the turn is crawl** — sleepy. For 180 the zone is proportionally tiny — fine at 200 deg/s, but crank the speed and the robot arrives at the zone hot: 30° isn't enough braking distance. Don't say any of that — take answers to both checks on the board and let the race lab grade them.
 :::
 
 ## Lab: race your own turn 🏁
 
-```{.python code-line-numbers="|1|3-7|8"}
+```{.python code-line-numbers="|1|3-5|6-8|9"}
 timer = StopWatch()                 # a stopwatch, in code
 
 for target in [45, 90, 180]:
     timer.reset()
     gyro_turn(target)
-    print(target, "->", timer.time(), "ms, landed", hub.imu.heading())
+    elapsed = timer.time()
+    wait(1000)                      # let the coast settle before you trust heading()
+    print(target, "->", elapsed, "ms, landed", hub.imu.heading())
     wait(3000)                      # set the robot straight again
 ```
 
@@ -350,10 +365,10 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
 ```{=html}
 <div style="width:880px;margin:0 auto;">
   <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:6px;">
-    <span style="font-size:18px;color:#1C355E;font-weight:700;">your fixes:</span>
-    <button onclick="stFix('wider')" style="background:#00C9A7;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">wider zone</button>
-    <button onclick="stFix('speed')" style="background:#625D9C;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">+ a speed</button>
-    <button onclick="stFix('table')" style="background:#FF7A5C;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">table per angle</button>
+    <span style="font-size:18px;color:#1C355E;font-weight:700;">the fixes you boarded:</span>
+    <button onclick="stFix('wider')" style="background:#00C9A7;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">wider crawl zone</button>
+    <button onclick="stFix('speed')" style="background:#625D9C;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">add a 3rd speed</button>
+    <button onclick="stFix('table')" style="background:#FF7A5C;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">a tuning per angle</button>
     <button onclick="stReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">reset</button>
     <button onclick="stDrive()" style="background:#1C355E;color:#fff;border:none;border-radius:9px;padding:6px 18px;font-size:17px;font-weight:700;cursor:pointer;">▶ drive it</button>
   </div>
@@ -365,6 +380,7 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
       <text x="62" y="50" font-size="16" text-anchor="end">🚀</text>
       <text x="62" y="232" font-size="16" text-anchor="end">🐢</text>
       <text x="370" y="276" font-size="15" fill="#1C355E" font-weight="700" text-anchor="middle">degrees still to go</text>
+      <text x="70" y="258" font-size="14" fill="#1C355E" text-anchor="middle">90</text>
       <text x="668" y="258" font-size="14" fill="#1C355E" text-anchor="middle">0 🎯</text>
       <g id="stGhosts"></g>
       <polyline id="stStair" points="" fill="none" stroke="#FF7A5C" stroke-width="6" stroke-linejoin="round"/>
@@ -402,12 +418,25 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
   var steps=2, ghosts=0, sleepy=0, raf=null;
   var X0=70, X1=610, BOT=210;
   function el(id){return document.getElementById(id);}
-  function topY(){ var t=70+sleepy*28; return t>BOT-20 ? BOT-20 : t; }
-  function segY(i,n){ var t=topY(); return t + (BOT-t)*i/(n-1||1); }
+  function segY(i,n){ return 70 + (BOT-70)*i/(n-1||1); }
+  function crawlFrac(){ return Math.min(1/steps + sleepy*0.18, 0.85); }   // widen clicks stretch the last (crawl) step
+  function segBounds(i,n){
+    var f = crawlFrac();
+    if(i === n-1) return [1-f, 1];
+    var w = (1-f)/(n-1||1);
+    return [i*w, (i+1)*w];
+  }
+  function segIndex(p){
+    var f = crawlFrac();
+    if(p >= 1-f) return steps-1;
+    var w = (1-f)/(steps-1||1);
+    return Math.min(steps-2, Math.floor(p/w));
+  }
   function build(n){
     var pts=[];
     for(var i=0;i<n;i++){
-      var xa = X0 + (X1-X0)*i/n, xb = X0 + (X1-X0)*(i+1)/n;
+      var b = segBounds(i,n);
+      var xa = X0 + (X1-X0)*b[0], xb = X0 + (X1-X0)*b[1];
       var y = segY(i,n);
       pts.push(xa+','+y, xb+','+y);
     }
@@ -436,7 +465,7 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
     function frame(now){
       var dt = last ? Math.min((now-last)/1000,0.05) : 0.016; last=now;
       if(!coastPhase){
-        var i = Math.min(steps-1, Math.floor((90-e)/90*steps));
+        var i = segIndex((90-e)/90);
         var y = segY(i,steps);
         var sp = (240-y)*1.5;                       // px → deg/s
         e -= sp*dt; t += dt;
@@ -470,7 +499,7 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
   };
   window.stFix=function(k){
     clearRun();
-    if(k==='wider'){ sleepy++; el('stMsg').textContent='wider zone → the whole turn goes sleepy'; el('stMsg').style.color='#00AE8D'; }
+    if(k==='wider'){ sleepy++; el('stMsg').textContent='wider zone → the crawl eats more of the turn: sleepy'; el('stMsg').style.color='#00AE8D'; }
     else if(k==='speed'){ steps++; el('stMsg').textContent='another speed → now it begs for a fourth…'; el('stMsg').style.color='#625D9C'; }
     else if(k==='table'){
       ghosts++;
@@ -679,7 +708,7 @@ Elicit the multiplication — don't reveal it. Most squads propose "speed = dist
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Every staircase fix added a step. The ramp has **no steps to tune** — it touches zero exactly at the target, so there's never anything left to coast.
+Every staircase fix added a step. The ramp has **no steps to tune** — it re-measures the error **200×/second** and touches zero exactly at the target, so there's never anything left to coast.
 :::
 :::
 
@@ -710,81 +739,8 @@ Line 10: a **negative** target flips the sign, the wheels swap — **left turns 
 
 ::: {.notes}
 Walk the highlight stops: `gain` arrives as a *parameter with a default* — new syntax, teach it in one breath ("a knob you can leave alone"). Line 3's `abs()` is what makes negative targets work. Demo on the next slide.
-:::
 
-## Watch it ride the error down 🎢
-
-```{=html}
-<div style="width:800px;margin:0 auto;">
-  <div style="display:flex;justify-content:center;gap:12px;margin-bottom:8px;">
-    <button onclick="ptRun(90)" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ gyro_turn_p(90)</button>
-    <button onclick="ptRun(-90)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">◀ gyro_turn_p(−90)</button>
-  </div>
-  <div style="display:flex;justify-content:center;align-items:center;gap:40px;">
-    <svg width="190" height="190" viewBox="-100 -100 200 200" style="display:block;">
-      <circle r="84" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
-      <g id="ptTick" opacity="0"><line x1="0" y1="-84" x2="0" y2="-100" stroke="#00AE8D" stroke-width="6"/></g>
-      <g id="ptNeedle">
-        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00C9A7"/>
-        <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-        <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-        <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-        <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-        <circle cy="-30" r="4" fill="#FFD500"/>
-      </g>
-    </svg>
-    <div style="font-family:Consolas,monospace;font-size:19px;color:#1C355E;min-width:320px;">
-      <div style="margin-bottom:6px;">error = <span id="ptErr" style="font-weight:800;color:#E96852;">0</span>° &nbsp;<span style="opacity:.6;font-size:15px;">degrees still to go</span></div>
-      <div style="height:20px;background:#eef3f8;border-radius:6px;overflow:hidden;margin-bottom:12px;">
-        <div id="ptErrBar" style="height:100%;width:0%;background:#E96852;"></div>
-      </div>
-      <div>speed = 4 × error = <span id="ptSpd" style="font-weight:800;color:#00AE8D;">0</span></div>
-      <div style="height:20px;background:#eef3f8;border-radius:6px;overflow:hidden;margin-top:6px;">
-        <div id="ptSpdBar" style="height:100%;width:0%;background:#00AE8D;"></div>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-(function(){
-  var T=0, h=0, raf=null, last=null, gain=4;
-  function el(id){return document.getElementById(id);}
-  function frame(now){
-    var dt = last ? Math.min((now-last)/1000,0.05) : 0.016; last=now;
-    var err = T - h;
-    var spd = gain*err;
-    if(spd>364) spd=364; if(spd<-364) spd=-364;
-    h += spd*0.9*dt;
-    var ae=Math.abs(err);
-    el('ptErr').textContent = err.toFixed(0);
-    el('ptSpd').textContent = (gain*err).toFixed(0);
-    el('ptErrBar').style.width = Math.min(ae/90*100,100)+'%';
-    el('ptSpdBar').style.width = Math.min(Math.abs(gain*err)/364*100,100)+'%';
-    el('ptNeedle').setAttribute('transform','rotate('+h.toFixed(1)+')');
-    if(ae>1){ raf=requestAnimationFrame(frame); }
-    else { el('ptErr').textContent='0'; el('ptErr').style.color='#00AE8D'; el('ptSpd').textContent='0'; el('ptSpdBar').style.width='0%'; el('ptErrBar').style.width='0%'; raf=null; }
-  }
-  window.ptRun=function(t){
-    T=t; h=0; last=null;
-    el('ptErr').style.color='#E96852';
-    el('ptTick').setAttribute('transform','rotate('+T+')');
-    el('ptTick').setAttribute('opacity','1');
-    if(raf) cancelAnimationFrame(raf);
-    raf=requestAnimationFrame(frame);
-  };
-})();
-</script>
-```
-
-::: {.fragment .fade-up}
-::: {.cardbox .teal}
-The two bars are the graph's two axes, **live**: error bar shrinks → speed bar shrinks with it, re-measured **200×/second**. No crawl zone, no second `while` — and the 🚗 parks itself, both directions.
-:::
-:::
-
-::: {.notes}
-Run both buttons before the fragment — narrate the bars in the wall-walk sentence: "fast… slower… slower… stop." Two honest subtleties, keep them in your pocket for the quiz: at tiny errors the push (`4 × 2 = 8` deg/s) can be too weak to break friction — it may park a hair short; and at silly gains it can leap right over the ±1° window between checks and zig-zag back. Both are *felt* in the lab, and the leftover gets its name (and fix) tomorrow.
+**Coach aside — "why `run()` and not `motor.dc()`?"** (for the sharp student who's read ahead). Honest truth: `run()` is *itself* a closed-loop **speed** controller inside Pybricks — so this hand-written P sits *on top* of it, a controller-on-a-controller. Your `gain` sets a speed *target*; Pybricks' own loop chases it. A pro writing a controller from scratch often reaches for `motor.dc()` instead — raw power/duty — so their formula is the *whole* controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep `run()` on purpose for two reasons: it's **smoother and battery-proof** (a fresh vs. tired hub turns the same — priceless with five robots on the bench), and it speaks the same **"speed"** language as `drive.drive(speed, turn)` and `DriveBase` — so `speed = error × gain` stays literally true all the way from this turn, through the self-healing straight, to D7's line-follower. `dc()` is the right tool the day you build a controller with no help underneath; that day isn't this bootcamp.
 :::
 
 ## Playground: one knob, every angle 🎛️
@@ -945,57 +901,6 @@ This is the payoff of yesterday's "it has a name every roboticist on Earth knows
 [Before you touch the robot: **gain = 1** — what will the turn *feel* like? **gain = 20**? Predict both.]{.qtitle}
 :::
 
-```{=html}
-<div style="width:720px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:4px;">
-    <button onclick="qgPlay()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 22px;font-size:19px;font-weight:700;cursor:pointer;">▶ now run both</button>
-  </div>
-  <div style="display:flex;justify-content:center;gap:70px;">
-    <div style="text-align:center;">
-      <div style="font-weight:800;color:#00AE8D;font-size:20px;">gain = 1 · lazy</div>
-      <svg width="160" height="160" viewBox="-100 -100 200 200" style="display:block;margin:2px auto;"><circle r="82" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/><line x1="0" y1="-82" x2="0" y2="-99" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/><g id="qgN1"><rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00C9A7"/><rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/><rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/><rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/><rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/><path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/><circle cy="-30" r="4" fill="#FFD500"/></g></svg>
-      <div style="font-family:Consolas,monospace;font-size:18px;color:#1C355E;">landed <span id="qgL1" style="font-weight:800;">–</span>° <span id="qgT1" style="font-weight:700;"></span></div>
-    </div>
-    <div style="text-align:center;">
-      <div style="font-weight:800;color:#E96852;font-size:20px;">gain = 20 · hot</div>
-      <svg width="160" height="160" viewBox="-100 -100 200 200" style="display:block;margin:2px auto;"><circle r="82" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/><line x1="0" y1="-82" x2="0" y2="-99" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/><g id="qgN2"><rect x="-14" y="-30" width="28" height="54" rx="8" fill="#FF7A5C"/><rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/><rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/><rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/><rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/><path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/><circle cy="-30" r="4" fill="#FFD500"/></g></svg>
-      <div style="font-family:Consolas,monospace;font-size:18px;color:#1C355E;">landed <span id="qgL2" style="font-weight:800;">–</span>° <span id="qgT2" style="font-weight:700;"></span></div>
-    </div>
-  </div>
-</div>
-<script>
-(function(){
-  var T=90, raf=null, last=null;
-  var A, B;
-  function el(id){return document.getElementById(id);}
-  function frame(now){
-    var dt=last?Math.min((now-last)/1000,0.04):0.016; last=now;
-    A.t+=dt; B.t+=dt;
-    if(!A.done){
-      var e=T-A.h, spd=1*e;
-      if(Math.abs(spd)<12 && A.h<T-2){ A.done=true; el('qgL1').textContent=A.h.toFixed(0); el('qgL1').style.color='#E96852'; el('qgT1').textContent='parks short ✗'; el('qgT1').style.color='#E96852'; }
-      else { A.h += spd*0.9*dt; if(A.h>=T-0.5){A.h=T;A.done=true; el('qgL1').textContent='90'; el('qgL1').style.color='#00AE8D';} }
-      el('qgN1').setAttribute('transform','rotate('+A.h.toFixed(1)+')');
-    }
-    if(!B.done){
-      var e2=T-B.h, cmd=20*e2;
-      if(cmd>500)cmd=500; if(cmd<-500)cmd=-500;
-      B.v += (cmd - B.v)*Math.min(11*dt,1); B.h += B.v*0.55*dt;
-      if((Math.abs(e2)<0.8 && Math.abs(B.v)<10) || B.t>1.8){ B.h=T; B.done=true; el('qgL2').textContent='90'; el('qgL2').style.color='#00AE8D'; el('qgT2').textContent='overshot, settled'; el('qgT2').style.color='#E96852'; }
-      el('qgN2').setAttribute('transform','rotate('+B.h.toFixed(1)+')');
-    }
-    if(!A.done || !B.done){ raf=requestAnimationFrame(frame); } else raf=null;
-  }
-  window.qgPlay=function(){
-    A={h:0,t:0,done:false}; B={h:0,v:0,t:0,done:false}; last=null;
-    el('qgL1').textContent='–'; el('qgL1').style.color='#1C355E'; el('qgT1').textContent='';
-    el('qgL2').textContent='–'; el('qgL2').style.color='#1C355E'; el('qgT2').textContent='';
-    if(raf) cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
-  };
-})();
-</script>
-```
-
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
 **1 = lazy** — near the target it pushes too weakly to beat friction and **parks short.** **20 = hot** — it flies past and zig-zags back. Tuning is the middle: hard enough to *arrive*, soft enough to arrive *calm*. That lazy leftover it parks on gets a name tomorrow. 😏
@@ -1003,7 +908,7 @@ This is the payoff of yesterday's "it has a name every roboticist on Earth knows
 :::
 
 ::: {.notes}
-The prediction is the day's real gate: "the bigger the error, the harder the push" plus what too-small/too-big does. Per the plan, tuning this by feel *without prompting* is the strongest robotics-instinct signal on the scorecard — watch for who reaches for the knob before you suggest it.
+The prediction is the day's real gate: "the bigger the error, the harder the push" plus what too-small/too-big does. Collect predictions out loud, then *feel* the answers — flick back to the playground and drag the gain slider to 1 and 20, or better, straight onto the bench robot in the lab. Per the plan, tuning this by feel *without prompting* is the strongest robotics-instinct signal on the scorecard — watch for who reaches for the knob before you suggest it.
 :::
 
 ## Lab: your gain, your rematch 🎛️
@@ -1131,7 +1036,7 @@ Run it — and **nudge it again.** 😈
 :::
 
 ::: {.notes}
-Check the signs with them, don't just assert: error +8 → left runs 468, right runs 532 → right faster → robot swings left → error shrinks. Negative error works out symmetrically. The `4` is a strength knob — let one squad try 1 (lazy) and 20 (jittery zig-zag). Name it out loud: **the same P-controller as this morning's turn** — one formula, second application; the third is D7's line-follower.
+Check the signs with them, don't just assert: error +8 → left runs 468, right runs 532 → right faster → robot swings left → error shrinks. Negative error works out symmetrically. The `4` is a strength knob — let one squad try 1 (lazy) and 20 (jittery zig-zag). Name it out loud: **the same P-controller as this morning's turn** — one formula, second application; the third is D7's line-follower. Same `run()`-is-a-speed-controller caveat as the proportional-turn note applies here — the `500 ± 4*error` is a base speed plus a proportional trim, and it stays on `run()` for the same reasons (smooth, battery-proof, speaks DriveBase's "speed" language).
 :::
 
 ## Watch it heal 🩹
@@ -1246,9 +1151,9 @@ One gain turns your robot to **any called angle** — both directions — with y
 :::
 
 ::: {.fragment .fade-up}
-Tomorrow: put P in a *hurry* and watch it slam past the target — meet the letter that **damps** it. Then a lean P never quite kills — one more letter. Finish the acronym… and unwrap a professional surprise. 🎁
+Tomorrow: put P in a *hurry* and watch it slam past the target — meet the letter that **damps** it. Then a lean P never quite kills — one more letter. Finish the acronym… and start naming moves in a library of your **own**. 📦
 :::
 
 ::: {.notes}
-The gate is the plan's D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the gain prediction in their own words — same formula, two applications today (turn + straight); the third is D7's line. The teaser sets up D5 without naming D or I; the "surprise" is `DriveBase`, earned only after they've built its insides.
+The gate is the plan's D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the gain prediction in their own words — same formula, two applications today (turn + straight); the third is D7's line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins `my_lib.py` (`drive_straight`/`turn_to`) — the `DriveBase` surprise now waits at the D10 reveal (decision #20), earned only after the whole library is theirs.
 :::

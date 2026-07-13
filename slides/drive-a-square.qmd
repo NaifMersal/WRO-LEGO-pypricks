@@ -36,7 +36,7 @@ right = Motor(Port.E)
 ```
 
 ::: {.notes}
-Everyone types this once at the top and keeps it for the whole day. Raw motors only, on purpose — today through D5 the students *build* the driver by hand; the polished shortcut (`DriveBase`) arrives on Day 5 as a reward they'll have earned piece by piece.
+Everyone types this once at the top and keeps it for the whole day. Raw motors only, on purpose — through D9 the students *build* the whole driver and library by hand; the polished shortcut (`DriveBase`) waits until the D10 reveal (decision #20), a reward earned piece by piece.
 :::
 
 # B. Break It {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
@@ -525,7 +525,7 @@ The program *parks* on the `while` until the check turns false. "Stare until it'
 
 ## The watched turn — your first gyro move
 
-```{.python code-line-numbers="|1|3-4|5-6|7-9"}
+```{.python code-line-numbers="|1|3-4|5-6|7-10"}
 hub.imu.reset_heading(0)
 
 left.run(200)                   # left wheel forward…
@@ -534,13 +534,14 @@ while hub.imu.heading() < 90:   # watch the gyro…
     wait(5)
 left.stop()                     # …and stop AT 90. Not "about" 90.
 right.stop()
+wait(1000)                      # let the coast settle — read too soon and you'll catch it mid-motion
 print(hub.imu.heading())        # moment of truth 👀
 ```
 
 Run it. **What did it print?**
 
 ::: {.notes}
-Everyone runs it and reports their printed number. Nobody gets exactly 90 — expect 92–96 depending on speed and battery. Don't explain yet; collect the numbers on the board and let the next slide interrogate them.
+Everyone runs it and reports their printed number. Nobody gets exactly 90 — expect 92–96 depending on speed and battery. Don't explain yet; collect the numbers on the board and let the next slide interrogate them. The `wait(1000)` before the print is load-bearing, not filler: the robot keeps coasting for a beat after `stop()`, and reading `heading()` the instant you call it can catch that motion mid-flight and under-report the overshoot — the settle-wait is what makes the printed number (and the "it printed 94" quiz on the next slide) trustworthy.
 :::
 
 ## Quiz: it printed 94. Who's guilty? 🚨
@@ -559,7 +560,7 @@ Hint: try to freeze *yourself* mid-spin.
 
 
 ::: {.notes}
-Deliberate cliffhanger: the squad leaves with the thief *named* (momentum) but not yet arrested — the diagnosis is today's property, the cure is D4's opening act. If a squad proposes "just ask for 86", park it with "would 86 survive a battery swap?" and move on; fudge factors are exactly what tomorrow's fix makes unnecessary.
+Deliberate cliffhanger: the squad leaves with the thief *named* (momentum) but not yet arrested — the diagnosis is today's property, the cure is D4's opening act. If a squad proposes "just ask for 86", park it with "would 86 survive a battery swap?" and move on; fudge factors are exactly what tomorrow's fix makes unnecessary. If someone asks why this turn feels *jerkier* than yesterday's `run_angle` glide, it's the same culprit: no easing off + coast-on-`stop()` produces **both** the overshoot number and the lurch — `run_angle` decelerated into its target, which is why it felt smoother (and still drifted). Fuller version lands on the watched-square slide.
 :::
 
 ⏱️ **Time: 20 minutes**
@@ -593,8 +594,16 @@ Tape your start. Run 3× beside the blind square: closer — and off by the **sa
 :::
 :::
 
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+Watch the *motion*, though: yesterday's counted square **glided** — this one **lurches** to each stop. That's not the gyro — it's us flooring it, then cutting power. **Smooth ≠ right:** the smooth one *drifted*. Tomorrow — smooth **and** right. 😏
+:::
+:::
+
 ::: {.notes}
 The day's two loops, nested — say it out loud: `for` repeats a known count, `while` repeats while a check is true, and a real robot program is almost always one inside the other. The comparison is the point: the blind square missed by a *different* amount each run (scrub and slip), the watched square misses by the *same* ~4° coast every corner. Consistency is the gyro's gift — it converts a random bug into a predictable one, which is exactly what D4 exploits.
+
+Field the "but yesterday's turn was *smoother*" objection with the purple card, don't dodge it: `run_angle` eased off the gas into its target (smooth ride, but slip-blind — it drifted), while this `while`/`stop()` turn runs flat-out then coasts (honest heading, rough ride). If a squad says "the calculation looked nicer," agree — then point at where each square *finished*: smooth lost on accuracy. The lurch is a *driving* problem D4 cures (arrive slowly, then a controller), not a gyro problem — do NOT preview the fix, just name that it's coming.
 :::
 
 ## Pro move: targets that climb 🧗 {.smaller}
@@ -757,16 +766,18 @@ A new shape in the code is just **two edits**: the `range(...)` count and that c
 :::
 
 ::: {.notes}
-Elicit the 360 with bodies first, not algebra: one student walks a triangle on the mat and ends facing the way they started — however many corners, the *turning* always totals one full spin. Then drive the demo from their guesses: pick **Triangle**, each corner flashes its **120°** turn right on the shape while the dial climbs 120 → 240 → 360 and closes; pick **Octagon**, eight skinny 45s stack to the *same* 360. That "always lands on 360" is the whole proof — corner = 360 ÷ n falls out of it. The contrast with the morning is worth a beat: same octagon, but the gyro eats robot-degrees directly, so the gap ÷ wheel translation retires (it returns on Day 5 inside `DriveBase`). Every squad edits their own file to a triangle and runs it before Shape Shifter.
+Elicit the 360 with bodies first, not algebra: one student walks a triangle on the mat and ends facing the way they started — however many corners, the *turning* always totals one full spin. Then drive the demo from their guesses: pick **Triangle**, each corner flashes its **120°** turn right on the shape while the dial climbs 120 → 240 → 360 and closes; pick **Octagon**, eight skinny 45s stack to the *same* 360. That "always lands on 360" is the whole proof — corner = 360 ÷ n falls out of it. The contrast with the morning is worth a beat: same octagon, but the gyro eats robot-degrees directly, so the gap ÷ wheel translation retires (it returns at the D10 reveal inside `DriveBase`). Every squad edits their own file to a triangle and runs it before Shape Shifter.
 :::
 
 ⏱️ **Time: 20 minutes**
 
 <!-- SECTIONS E (self-healing straight) and F (DriveBase) moved out on 2026-07-06:
-     E → slides/pid-on-the-gyro.qmd (D4) · F + Bullseye → slides/drivebase-shortcut.qmd (D5).
+     E → slides/pid-on-the-gyro.qmd (D4). Re-split on 2026-07-12 per decision #20:
+     D/I + the library + Bullseye → slides/name-your-moves.qmd (D5); the DriveBase
+     reveal → slides/drivebase-shortcut.qmd (re-targeted to D10, Draft Day).
      Later the same day: the coast fix ("Feel the fix" dials + two-speed def gyro_turn) and
      Perfect Pivot also moved → slides/pid-on-the-gyro.qmd (D4). D3 now ends at the momentum
-     quiz + loop shapes (competition: Shape Shifter); see decision log #14–15 in the plan. -->
+     quiz + loop shapes (competition: Shape Shifter); see decision log #14–15, #20 in the plan. -->
 
 # F. Competition & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
