@@ -7,23 +7,21 @@ format: revealjs
 
 # A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-You already own the **most-used formula in robotics** — `error × gain`. Today you point it at a brand-new sensor. Same formula, new eye. 🛣️
+`error × gain`, **third time** — today it steers the **eye**. 🛣️
 
 ## Where we left off
 
 | You own | Built on |
 |---|---|
-| 📈 **`error × gain`** | the gyro turn *and* the self-healing straight (Week 1) |
-| 🛑 **D — damping** | brakes before overshoot (the library day) |
-| 👀 **the eye, calibrated** | its own light's echo, 0–100 — threshold *re-measured* per surface (yesterday) |
+| 📈 **`error × gain`** | the turn · the straight |
+| 🛑 **D — damping** | brakes before overshoot |
+| 👀 **the eye, calibrated** | echo 0–100 · threshold per surface |
 
 ::: {.fragment .fade-up}
-Today: aim that eye at a **line** and let `error × gain` steer. This is the **third time** you've used this formula — the turn, the straight, and now the line.
-:::
-
 ::: {.callout-note}
 ## One thing up front
-Line-following reads **brightness** (`reflection`), **not** color names. Telling green notes from red is a *Week-4* job — today the eye only asks *"dark or bright?"*
+Today reads **brightness**, not color names — colors are **Week 4**.
+:::
 :::
 
 ::: {.notes}
@@ -32,7 +30,7 @@ Anchor today in what they already own, or it feels like a brand-new mountain (it
 
 # B. One Eye, One Edge {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
 
-A line is just a **border** between dark and bright. Park **one** eye right on that border and read how far off you've drifted. One sensor, one edge. 👁️
+A line is a **border** — park one eye right on it. One sensor, one edge. 👁️
 
 ## Meet the eye: ride the edge
 
@@ -84,7 +82,7 @@ while True:
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-White ~88, black ~10 — the **edge is the midpoint** (~50). `error = reflection − 50`: **+ on white · − on black · 0 dead-on.**
+`error = reflection − 50` — **+ on white · − on black · 0 on the edge.**
 :::
 :::
 
@@ -95,7 +93,7 @@ Watch reflection live on a real robot first, over white then over black — read
 ## Break it: only two answers 🔥
 
 ::: {.qbox}
-[Give the robot just **two** moves — *hard left* or *hard right*, nothing in between. It can never simply go straight. Predict the path it traces down the line.]{.qtitle}
+[Two moves only — *hard left* or *hard right*. Predict the path.]{.qtitle}
 :::
 
 ```{.python code-line-numbers="|1|2|3-4|5-7"}
@@ -111,7 +109,7 @@ while True:
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-Two answers means it can **never** point straight — it slams left-right forever: slow, wobbly, and it flies off fast curves.
+Two answers = it can **never** go straight — it slams left-right forever.
 :::
 :::
 
@@ -129,7 +127,7 @@ right.run(LINE_SPEED - KP * error)           # near → gentle
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-`error × gain` **again** — far → hard steer, near → nudge, on the edge → straight. Tune **`KP`**: too small = lazy on curves, too big = the wobble is back.
+`error × gain` **again** — tune **`KP`**: too small = lazy, too big = the wobble is back.
 :::
 :::
 
@@ -139,12 +137,12 @@ The "aha" is that they've written this line before — twice. It's *literally* t
 
 # C. P → PD, and Squaring {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
 
-P glides — until you get greedy with speed. Push it fast into a curve and an old ghost comes back. You've already met its cure. 🛑
+Push P fast into a curve — an old ghost comes back. 🛑
 
 ## Feel it: race all three 🎢
 
 ::: {.qbox}
-[Run your smooth **P** **fast** into a curve — it knows *how far* off, not *how fast* it's slipping. Predict the moment it crosses the edge.]{.qtitle}
+[Run **P** *fast* into a curve — predict the moment it lets go.]{.qtitle}
 :::
 
 ```{=html}
@@ -236,7 +234,7 @@ P glides — until you get greedy with speed. Push it fast into a curve and an o
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-**bang-bang** ping-pongs · **P** overshoots the curve (worse with speed) · **PD** eases off early and holds it. Drag **KD → 0** — PD rings like P: D is the only difference.
+**bang-bang** ping-pongs · **P** overshoots · **PD** holds. Drag **KD → 0** — **D is the only difference.**
 :::
 :::
 
@@ -263,7 +261,7 @@ def follow_line(distance_mm, speed=250, kd=0):
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-The morning's P loop, bottled: a **finish line** in degrees (the `drive_straight` trick) makes it a *segment*. The `kd` knob is the **stretch** — the **D** from the library day, reading how *fast* the error closes to **brake early**. **I stays a coach demo, never gated.**
+The P loop, **bottled** — a finish line in degrees makes it a *segment*. **`kd`** is the stretch knob.
 :::
 :::
 
@@ -273,7 +271,7 @@ Same promotion ritual as every day this week: the loose P loop gets a name and m
 
 ## The two-eye job: square up 📐 {.code-shrink}
 
-Line-following uses **one** eye. The **second** eye's moment is *here*: you hit a junction **crooked** and must sit square before the next move.
+The **second** eye's moment: you hit a junction **crooked** — sit square before the next move.
 
 ```{.python code-line-numbers="|1|3|4|5|6-7|8-9|10"}
 def square_on_line(speed=160):
@@ -290,7 +288,7 @@ def square_on_line(speed=160):
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Each eye stops **its own** wheel, so the robot **pivots square** — heading *and* sideways drift erased at every crossing. *This* is why it carries two eyes.
+Each eye stops **its own** wheel — the robot **pivots square**. *That's* why it carries two.
 :::
 :::
 
@@ -360,7 +358,7 @@ Answer the port question head-on: two color sensors fill two of the six hub port
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-The leading eye's wheel parks first; the trailing wheel swings the body until *its* eye lands too — square, drift gone. 🎯
+Leading wheel parks first · trailing wheel swings square — **drift gone.** 🎯
 :::
 :::
 
@@ -376,7 +374,8 @@ Today's showdown: **Line King** 👑 — and for the fast squads, **Speed Demon.
 
 ::: {.callout-important}
 ## The challenge
-**Line King** — follow a curved line for **30 seconds**: score = on-line accuracy + speed held. **Speed Demon** (fast squads) — a straight + one curve, **fastest time without ever leaving the line.**
+**Line King** — hold the curved line for **30 s**: accuracy + speed.
+**Speed Demon** *(fast squads)* — fastest run that **never leaves the line.**
 :::
 
 :::: {.columns}
@@ -384,10 +383,10 @@ Today's showdown: **Line King** 👑 — and for the fast squads, **Speed Demon.
 ::: {.column width="50%"}
 **The winning recipe**
 
-- Calibrate the threshold **on the mat you'll run on**
-- Tune **`KP_LINE`** until it holds the line
-- *(stretch)* add **`kd`** until the curve stops overshooting
-- **Square** at the junction to reset before the sprint
+- Calibrate **on the mat you run on**
+- Tune **`KP_LINE`**, *then* chase speed
+- **Square** at the junction to reset
+- *(stretch)* **`kd`** kills the curve overshoot
 :::
 
 ::: {.column width="50%"}
@@ -395,7 +394,6 @@ Today's showdown: **Line King** 👑 — and for the fast squads, **Speed Demon.
 
 - Threshold from *yesterday's* surface 😬
 - `KP` so high the straight wobbles
-- Chasing speed before the tune is clean
 - Skipping the square → drift compounds
 :::
 
@@ -409,11 +407,13 @@ Line King rewards a clean, honest tune over raw speed; Speed Demon is the stretc
 
 ::: {.callout-important}
 ## You're done today when…
-Every student can **build, tune, and explain a P line-follower** — what the error means, what `KP` does — the robot **follows a curve and squares on a junction reliably**, and **`follow_line` + `square_on_line` live in your `my_lib.py`.** *(Stretch: the `kd` upgrade that wins Speed Demon.)*
+- You can **build, tune, and explain** a P line-follower
+- It **follows a curve and squares on a junction** reliably
+- **`follow_line` + `square_on_line`** live in your `my_lib.py` — *(stretch: the `kd` upgrade)*
 :::
 
 ::: {.fragment .fade-up}
-Next: *one library to rule them all* — five files become **one clean `my_lib.py`**, and a challenge gauntlet only **library calls** can beat. 📦
+Next: five files become **one clean `my_lib.py`** — a gauntlet only **library calls** can beat. 📦
 :::
 
 ::: {.notes}
