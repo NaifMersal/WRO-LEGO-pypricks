@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="dcterms.date" content="2026-07-14">
-  <title>The Earned Shortcut</title>
+  <title>The Setlist</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -200,8 +200,8 @@
     <div class="slides">
 
 <section id="title-slide" data-background-image="../slides_template/assets/anim.svg" data-background-opacity="0.15" data-background-size="cover" class="quarto-title-block center">
-  <h1 class="title">The Earned Shortcut</h1>
-  <p class="subtitle">Day 10 · Robot Rockstars · SPIKE Prime + Pybricks</p>
+  <h1 class="title">The Setlist</h1>
+  <p class="subtitle">Day 9 · Robot Rockstars · SPIKE Prime + Pybricks</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -211,7 +211,7 @@
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>A. Warm-Up</h1>
-<p>Two weeks, one library — every verb hand-built, proven, and played from a list. Today teams form, one robot gets chosen… and you collect a surprise you’ve been earning since the square wouldn’t close. 🎁</p>
+<p>Your library is one clean module and it survived the gauntlet. Today the <em>mission itself</em> becomes a thing you can hold, reorder, and grow. 🎵</p>
 </section>
 <section id="where-we-left-off" class="slide level2">
 <h2>Where we left off</h2>
@@ -222,31 +222,35 @@
 </colgroup>
 <thead>
 <tr class="header">
-<th>You own</th>
+<th>You have</th>
 <th>What it does</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>📦 <strong><code>my_lib.py</code></strong></td>
-<td><code>drive_straight</code> · <code>turn_to</code> · <code>drive_to_wall</code> · <code>wall_square</code> · <code>follow_line</code> · <code>square_on_line</code> — one module, one constants block</td>
+<td>📦 <strong>one <code>my_lib.py</code></strong></td>
+<td>every verb in one module — one constants block tunes them all</td>
 </tr>
 <tr class="even">
-<td>🎵 <strong>the runner</strong></td>
-<td>a mission is a <em>list</em>; three lines walk it</td>
+<td>🚗 <strong>moving verbs</strong></td>
+<td><code>drive_straight</code> · <code>turn_to</code> — watched by <em>your</em> PD loop</td>
 </tr>
 <tr class="odd">
-<td>🏁 <strong>gauntlet + setlist</strong></td>
-<td>every verb proven alone <em>and</em> in sequence, under a judge’s clock</td>
+<td>🧱 <strong>wall verbs</strong></td>
+<td><code>drive_to_wall</code> · <code>wall_square</code> — the motor as a touch sensor</td>
+</tr>
+<tr class="even">
+<td>👀 <strong>line verbs</strong></td>
+<td><code>follow_line</code> · <code>square_on_line</code> — the mat as a map</td>
 </tr>
 </tbody>
 </table>
 <div class="fragment fade-up">
-<p>🤔 Everything above was built by <strong>one student, for one robot</strong>. Today five students become <strong>two teams</strong> — and each team keeps just <strong>one</strong> robot. What happens to four robots’ worth of carefully tuned code?</p>
+<p>🤔 The gauntlet proved every verb works <em>alone</em>. A competition run is verbs <strong>in a row</strong> — and the row keeps changing. Today: how pros hold a plan that has to change in seconds.</p>
 </div>
 <p>⏱️ <strong>Time: 10 minutes</strong></p>
 <aside class="notes">
-<p>Recap fast — the room already owns all of it; the table is there to make the <em>inventory</em> visible because today it gets audited. The warm-up question is the day’s whole arc: the merge (code from several authors onto one robot) is the break-it that motivates RobotConfig, and the reveal + draft close the two-week chapter. Structure of the day: Mini Mission finale runs in the competition window as usual; the draft itself lands after the gate. Keep the DriveBase surprise unspoiled until Act C.</p>
+<p>Recap by asking: name the verbs, who tuned what, which constant fixes which move. The framing sentence for the day: your library is the <em>vocabulary</em>; today you get the <em>sentence</em>. Foreshadow the pain honestly — the judge at the end of today will call a mission and then change it, and squads whose plan is a pasted block will lose minutes where a list squad loses seconds. That’s the break-it, and it’s also exactly what the Surprise Rule does at a real WRO table.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -260,106 +264,53 @@
       }</style></aside>
 </section></section>
 <section>
-<section id="b.-one-robot-many-files" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
-<h1>B. One Robot, Many Files</h1>
-<p>Your new team keeps <strong>one</strong> robot. Everyone’s code was tuned for a <em>different</em> one. 😬</p>
+<section id="b.-the-plan-that-couldnt-change" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
+<h1>B. The Plan That Couldn’t Change</h1>
+<p>Your verbs work. Now the judge calls a <em>sequence</em> — and then changes it. 😈</p>
 </section>
-<section id="break-it-the-merge" class="slide level2">
-<h2>Break it: the merge 🔥</h2>
+<section id="unplugged-the-pigeonholes" class="slide level2">
+<h2>Unplugged: the pigeonholes 📮</h2>
 <div class="qbox">
-<p><span class="qtitle">Your team just picked its robot — and it’s <strong>not yours</strong>. Your <code>my_lib.py</code> thinks the wheels are 88 mm; the chosen robot’s are 87. Your teammate’s turn gain is tuned hotter. A motor sits on a different port. How many edits until <em>your</em> mission runs on <em>this</em> robot?</span></p>
+<p><span class="qtitle">Six numbered boxes on the bench, a pile of colored bricks. “Red into box 0. Blue into box 2. What’s in box 1? Swap 0 and 3. Add a green one at the end — which box did it land in?”</span></p>
 </div>
-<div style="display:flex;justify-content:center;align-items:center;gap:18px;margin-top:10px;">
-  <div style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
-    <div style="font-weight:800;color:#E96852;">sara/my_lib.py</div>
-    <div>WHEEL_MM = <span style="background:#FFD50055;font-weight:800;">88</span></div>
-    <div>KP = <span style="background:#FFD50055;font-weight:800;">4</span></div>
-    <div>left = Motor(Port.<span style="background:#FFD50055;font-weight:800;">A</span>)</div>
-  </div>
-  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
-    <div style="font-weight:800;color:#E96852;">omar/my_lib.py</div>
-    <div>WHEEL_MM = <span style="background:#FFD50055;font-weight:800;">87</span></div>
-    <div>KP = <span style="background:#FFD50055;font-weight:800;">6</span></div>
-    <div>left = Motor(Port.<span style="background:#FFD50055;font-weight:800;">B</span>)</div>
-  </div>
-  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
-    <div style="font-weight:800;color:#E96852;">lena/my_lib.py</div>
-    <div>WHEEL_MM = <span style="background:#FFD50055;font-weight:800;">90</span> 😱</div>
-    <div>KP = <span style="background:#FFD50055;font-weight:800;">3.5</span></div>
-    <div>left = Motor(Port.<span style="background:#FFD50055;font-weight:800;">A</span>)</div>
-  </div>
-  <div class="fragment" style="font-size:44px;">🤖<div style="font-size:14px;font-weight:800;color:#1C355E;text-align:center;">ONE robot</div></div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>You just used every list skill: a <strong>numbered row of slots</strong>, filled in order, <strong>counting from 0</strong> — read a slot by its number (<strong>index</strong>), walk the row front to back (<strong>iterate</strong>), grow it at the end (<strong>append</strong>). Python calls this row a <strong>list</strong>. No laptop needed — you already think this way.</p>
 </div>
+</div>
+<aside class="notes">
+<p>Run it physically before any code — 5 minutes, real boxes (or taped squares) and real bricks, quick-fire calls. The two stumbles to engineer on purpose: (1) “box 1” when they expect counting from 1 — let someone grab the wrong brick, then name the rule: robots count from 0; (2) append lands at the <em>end</em>, position = old length. Keep the boxes on the bench all day — every list question later gets answered by pointing at them. This is WRO-Learn’s arrays intro compressed into a game.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="break-it-the-pasted-plan" class="slide level2 code-shrink">
+<h2>Break it: the pasted plan 🔥</h2>
+<div class="qbox">
+<p><span class="qtitle">The judge calls: <em>cross the stage · face the band · square on the wall.</em> You paste it as one block. Then: <strong>“Actually — wall square FIRST.”</strong> How long does the edit take?</span></p>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-5|6-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="co"># mission_friday.py — one pasted block 😬</span></span>
+<span id="cb1-2"><a></a>drive_straight(<span class="dv">400</span>)          <span class="co"># cross the stage</span></span>
+<span id="cb1-3"><a></a>turn_to(<span class="dv">90</span>)           <span class="co"># face the band</span></span>
+<span id="cb1-4"><a></a>drive_to_wall()</span>
+<span id="cb1-5"><a></a>wall_square()         <span class="co"># reset at the wall</span></span>
+<span id="cb1-6"><a></a><span class="co"># judge: "wall square FIRST, then cross"…</span></span>
+<span id="cb1-7"><a></a><span class="co"># select lines… which? cut… paste… 🐛</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>Every file was tuned for a robot that just became a <strong>parts donor</strong>. The facts — wheels, ports, gains, speeds — are <em>scattered</em> across files and functions: a robot swap means <strong>twenty hunted edits</strong>, and missing one means the robot <strong>lies quietly</strong>. The facts need <strong>one home</strong>.</p>
+<p>The plan is <strong>trapped in the code</strong>. Reordering means surgery — select, cut, paste, and pray you moved <em>all</em> the lines of each step. Under a 5-minute clock, surgery loses. The plan needs to be a <strong>thing</strong> you can shuffle — like cards in a deck.</p>
 </div>
 </div>
 <aside class="notes">
-<p>Make it concrete with the team’s actual files if the draft order allows — three real constants blocks on screen beats the mock-up. Sharpen the sting: it’s not just today’s merge. The donor pool means a swap can happen <em>again</em> mid-season (a cracked chassis at Week 4 pace), and next time there’s no afternoon to spare. Elicit the shape of the fix before naming it — they’ve done this twice: constants block (square day), library module (consolidation day). Same instinct, one level up: promote the constants to a single shared <em>object</em> the whole team’s code reads.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="fix-it-robotconfig-the-robot-in-one-place" class="slide level2 code-shrink">
-<h2>Fix it: <code>RobotConfig</code> — the robot in one place</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-2|3-4|5-6|7-9|11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="at">@dataclass</span></span>
-<span id="cb1-2"><a></a><span class="kw">class</span> RobotConfig:</span>
-<span id="cb1-3"><a></a>    wheel_diameter: <span class="bu">int</span> <span class="op">=</span> <span class="dv">88</span>    <span class="co"># mm — MEASURE the team robot</span></span>
-<span id="cb1-4"><a></a>    axle_track: <span class="bu">int</span> <span class="op">=</span> <span class="dv">145</span>       <span class="co"># mm — wheel center to center</span></span>
-<span id="cb1-5"><a></a>    left_port: Port <span class="op">=</span> Port.A    <span class="co"># re-port a motor = one edit</span></span>
-<span id="cb1-6"><a></a>    right_port: Port <span class="op">=</span> Port.E</span>
-<span id="cb1-7"><a></a>    turn_gain: <span class="bu">float</span> <span class="op">=</span> <span class="fl">4.0</span>      <span class="co"># the tuned knobs live here too</span></span>
-<span id="cb1-8"><a></a>    straight_speed: <span class="bu">int</span> <span class="op">=</span> <span class="dv">300</span>   <span class="co"># mm/s</span></span>
-<span id="cb1-9"><a></a>    backoff_mm: <span class="bu">int</span> <span class="op">=</span> <span class="dv">50</span>        <span class="co"># the measured back-off</span></span>
-<span id="cb1-10"><a></a></span>
-<span id="cb1-11"><a></a>CFG <span class="op">=</span> RobotConfig()             <span class="co"># the ONE copy everyone reads</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment fade-up">
-<div class="cardbox teal">
-<p>A <code>@dataclass</code> is a <strong>labeled box for facts</strong> — every physical truth about the robot, in one file (<code>robot_config.py</code>), with a name on each line. Nothing else in the team’s code is allowed to <em>know</em> a number about the robot; it has to <strong>ask <code>CFG</code></strong>.</p>
-</div>
-</div>
-<aside class="notes">
-<p><code>@dataclass</code> is presented as “a class whose whole job is holding named facts” — no OOP lecture; it’s a form they fill in, and the decorator writes the boring plumbing. (Coach note: Pybricks MicroPython has no <code>dataclasses</code> module — the exemplar <code>robot_config.py</code> ships a 3-line try/except shim so the same syntax runs on the hub; hand it out rather than typing it.) Walk the categories: geometry, ports, tuned knobs — point out these are exactly the numbers that differed across the three files on the last slide. The full gold-reference config (all 6 ports, line thresholds, stall limits) is in the root exemplar; teams copy it and edit <em>their</em> measured values.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="every-verb-now-asks-the-config" class="slide level2">
-<h2>Every verb now asks the config</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1-3|5-7|9-11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># my_lib.py — the verbs READ the config, they don't know numbers</span></span>
-<span id="cb2-2"><a></a>left  <span class="op">=</span> Motor(CFG.left_port, Direction.COUNTERCLOCKWISE)</span>
-<span id="cb2-3"><a></a>right <span class="op">=</span> Motor(CFG.right_port)</span>
-<span id="cb2-4"><a></a></span>
-<span id="cb2-5"><a></a>DEG_PER_MM <span class="op">=</span> <span class="dv">360</span> <span class="op">/</span> (<span class="fl">3.14</span> <span class="op">*</span> CFG.wheel_diameter)</span>
-<span id="cb2-6"><a></a></span>
-<span id="cb2-7"><a></a><span class="kw">def</span> turn_to(target, gain<span class="op">=</span><span class="va">None</span>, kd<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb2-8"><a></a>    gain <span class="op">=</span> gain <span class="kw">or</span> CFG.turn_gain</span>
-<span id="cb2-9"><a></a>    kd <span class="op">=</span> kd <span class="kw">or</span> CFG.turn_kd</span>
-<span id="cb2-10"><a></a>    <span class="co"># …the same PD loop as ever…</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment fade-up">
-<div class="cardbox purple">
-<p>New robot? <strong>Measure it, edit <code>robot_config.py</code>, done</strong> — the library and every mission file never change. The donor pool just became a <em>one-line insurance policy</em>. 🛡️</p>
-</div>
-</div>
-<aside class="notes">
-<p>The team exercise that proves it (from the exemplar): run the merged code with teammate A’s old constants on the chosen robot — watch the square miss; then fix ONLY robot_config.py and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap.</p>
+<p>Let a squad actually attempt the live edit under a visible countdown — the fumble is the lesson. Diagnose together: the <em>steps</em> are clear in their heads (“cross”, “face”, “square”) but the code has no such boundaries; a step is 1–3 loose lines with nothing holding them together. Two missing ideas, teased in order: give each step a <strong>name</strong> (they own <code>def</code> — this is a two-minute step), then put the names <strong>in a row that can be shuffled</strong> — the pigeonholes from the warm-up. Don’t show the fix yet.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -373,33 +324,25 @@
       }</style></aside>
 </section></section>
 <section>
-<section id="c.-the-reveal-let-drivebase-drive" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
-<h1>C. The Reveal — Let DriveBase Drive</h1>
-<p>You built gyro turns, self-healing straights, and all three letters of P·I·D — by hand, from raw motors. Now meet the pro version that’s been in the box all along. 🎁</p>
+<section id="c.-the-mission-is-a-list" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
+<h1>C. The Mission Is a List</h1>
+<p>Name the steps. Put the names in a row. Play the row.</p>
 </section>
-<section id="you-built-a-robot-driver" class="slide level2">
-<h2>You built a robot driver 🏆</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>You wrote, these two weeks</strong></p>
-<ul>
-<li><code>turn_to(target)</code> — a PD turn that watches itself, <strong>brakes before it arrives</strong>, and lands true</li>
-<li><code>drive_straight(distance)</code> — a self-healing straight with a finish line in degrees</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Every WRO robot needs</strong></p>
-<ul>
-<li>turns that are <em>true</em>, not “about right”</li>
-<li>straights that survive bumps, seams, and battery moods</li>
-</ul>
-</div></div>
+<section id="lists-in-sixty-seconds" class="slide level2">
+<h2>Lists in sixty seconds</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1|2|3|4|5-6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>setlist <span class="op">=</span> [<span class="st">"intro"</span>, <span class="st">"solo"</span>, <span class="st">"finale"</span>]   <span class="co"># a numbered row of slots</span></span>
+<span id="cb2-2"><a></a>setlist[<span class="dv">0</span>]                <span class="co"># "intro" — count from 0, like the boxes!</span></span>
+<span id="cb2-3"><a></a>setlist.append(<span class="st">"encore"</span>)  <span class="co"># grows at the end → slot 3</span></span>
+<span id="cb2-4"><a></a>setlist[<span class="dv">1</span>] <span class="op">=</span> <span class="st">"duet"</span>       <span class="co"># swap what a slot holds</span></span>
+<span id="cb2-5"><a></a><span class="cf">for</span> song <span class="kw">in</span> setlist:      <span class="co"># visit every slot, front to back</span></span>
+<span id="cb2-6"><a></a>    <span class="bu">print</span>(song)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Pybricks ships both moves — polished, tuned, tested — inside one tool: <strong><code>DriveBase</code></strong>. It runs a professional <strong>P·I·D</strong> on every move. You’ll understand <em>every letter</em> it does… <em>because you spent two weeks building all three.</em></p>
+<p>Index · append · iterate — the three moves from the pigeonhole game, now in Python. A list holds <strong>anything</strong>: strings, numbers… and (next slide) something sneakier. 😏</p>
 </div>
 </div>
 <aside class="notes">
-<p>This is the payoff the whole fortnight has been walking toward — let it feel like a gift, not a rug-pull. The frame that keeps their work dignified: professionals don’t hand-roll what a trusted library ships, but they can only <em>trust</em> it because they know what’s inside — and this room now does. If anyone asks “why didn’t we start here?”: because then DriveBase would be magic, and magic can’t be debugged at a competition table. Nothing they built was wasted — the next slides show exactly which verbs survive.</p>
+<p>Type it live in the REPL, mirroring each line back to the physical boxes on the bench (“slot 0… that box”). Off-by-one and negative index (<code>setlist[-1]</code> = last box) are fun 30-second asides if the room is quick. Don’t linger — the payoff slide is next, and lists only get interesting once functions go inside them.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -412,19 +355,26 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="measure-your-robot-first" class="slide level2">
-<h2>Measure your robot first</h2>
-<div class="qbox">
-<p><span class="qtitle"><code>DriveBase</code> asks for two numbers: <strong>wheel diameter</strong> and <strong>axle track</strong> (tire-center to tire-center). Why does it need the <em>second</em> one?</span></p>
-<p>Hint: you already <em>used</em> it once — on Day 3…</p>
-</div>
+<section id="steps-are-just-functions-hold-the-name-dont-play-it" class="slide level2">
+<h2>Steps are just functions — hold the name, don’t play it</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1-2|4-5|7-8|10-11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> cross_stage():</span>
+<span id="cb3-2"><a></a>    drive_straight(<span class="dv">400</span>)</span>
+<span id="cb3-3"><a></a></span>
+<span id="cb3-4"><a></a><span class="kw">def</span> face_band():</span>
+<span id="cb3-5"><a></a>    turn_to(<span class="dv">90</span>)</span>
+<span id="cb3-6"><a></a></span>
+<span id="cb3-7"><a></a><span class="kw">def</span> reset_at_wall():</span>
+<span id="cb3-8"><a></a>    drive_to_wall()<span class="op">;</span> wall_square()</span>
+<span id="cb3-9"><a></a></span>
+<span id="cb3-10"><a></a>mission <span class="op">=</span> [reset_at_wall, cross_stage, face_band]</span>
+<span id="cb3-11"><a></a><span class="co">#          ^ no parentheses — cards in a deck, not moves happening</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>It’s your <strong>turn-circle</strong>! You ran that math by hand once to get 148 — DriveBase runs <em>your</em> derivation for <strong>any</strong> angle. The shortcut is math you already own.</p>
+<p><code>cross_stage()</code> <strong>plays</strong> the move. <code>cross_stage</code> — no parentheses — is the <strong>recipe card itself</strong>, a thing you can hold, hand around… and drop into a list. A list of names is a <strong>setlist</strong>: the whole show, and it hasn’t started yet.</p>
 </div>
 </div>
 <aside class="notes">
-<p>Both numbers are measured, not copied: roll the wheel 5 turns, divide by 5 and π for diameter (they’ll land near 88); the track they measured on Day 3 for the 148 derivation (≈145 mm on our build; the stock ADB is ≈114) — have each <em>team</em> re-measure its chosen robot now, since that’s the number going into its config. Wrong track → every turn systematically over- or under-shoots: that’s the afternoon’s tuning conversation (<code>drive.settings()</code>). If asked <em>why</em> the track matters: a spin-in-place drives the wheels around a circle as wide as the axle track — wider track = more wheel-degrees per robot-degree.</p>
+<p>This is the day’s one genuinely new idea — a function is a <em>value</em>. Land it with the recipe-card metaphor from the first <code>def</code> day: the card vs cooking the dish. Common bug to demo on purpose: write <code>mission = [cross_stage(), face_band()]</code> — the robot drives <em>while the list is being built</em> (the moves happen at line 10!) and the list ends up holding three <code>None</code>s. Let them see that, then delete the parentheses. Note the judge’s reorder is now already solved on line 10 — <code>reset_at_wall</code> simply moved to slot 0.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -437,20 +387,19 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="build-your-drivebase-from-the-config" class="slide level2">
-<h2>Build your DriveBase — from the config</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|3-4|5|6-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> pybricks.robotics <span class="im">import</span> DriveBase   <span class="co"># now earned</span></span>
-<span id="cb3-2"><a></a></span>
-<span id="cb3-3"><a></a>drive <span class="op">=</span> DriveBase(left, right,</span>
-<span id="cb3-4"><a></a>                  CFG.wheel_diameter, CFG.axle_track)</span>
-<span id="cb3-5"><a></a>drive.use_gyro(<span class="va">True</span>)  <span class="co"># your gyro + full PID, switched on</span></span>
-<span id="cb3-6"><a></a>drive.settings(straight_speed<span class="op">=</span>CFG.straight_speed,</span>
-<span id="cb3-7"><a></a>               turn_rate<span class="op">=</span><span class="dv">150</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="the-runner-the-whole-thing" class="slide level2">
+<h2>The runner — the whole thing</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers="|1|2|3|5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> run_mission(steps):</span>
+<span id="cb4-2"><a></a>    <span class="cf">for</span> step <span class="kw">in</span> steps:   <span class="co"># take the next card…</span></span>
+<span id="cb4-3"><a></a>        step()           <span class="co"># …now play it</span></span>
+<span id="cb4-4"><a></a>run_mission(mission)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
 <div class="cardbox teal">
-<p><code>DriveBase</code> speaks <strong>mm and robot-degrees</strong> — <code>drive.straight(300)</code>, <code>drive.turn(90)</code> — and with <code>use_gyro(True)</code> every move is <em>watched</em> and <em>PID-corrected</em>, exactly like yours were. And it reads its facts from <strong><code>CFG</code></strong>, so it survives a robot swap like everything else.</p>
+<p>Three lines, and they <strong>never change again</strong>. Reorder the show → edit the <em>list</em>. Insert a step → <code>append</code> or slot it in. The judge changes the mission; you change <strong>data</strong>, not code. That’s the split the pros live by.</p>
+</div>
 </div>
 <aside class="notes">
-<p>Two acts of the day snap together here: the reveal is wired straight into the config, so the shortcut is born team-proof. <code>drive.settings()</code> is the pro version of their tuned constants — speeds and accelerations, adjustable per robot, stored in the config. Also worth naming: <code>drive.stalled()</code> now replaces the per-motor stall trick from the wall day <em>inside DriveBase moves</em>, and <code>drive.distance()</code> is a free odometer. Don’t tour the whole API — the duel is next; let the tool prove itself.</p>
+<p>Read it aloud in pigeonhole language: for each box front to back, take the card out, play it. The deep point — worth saying explicitly, once: the runner is <em>control</em> and the mission is <em>data</em>, and everything that changes lives in the data. This exact runner drives the anchor run in Week 3; per-step timeouts and a transition log are its stretch upgrade (the exemplar’s <code>run_mission_logged</code>) — offer to fast squads at the gate, never gate on it. A non-blocking state machine is continuation-season material; RoboMission runs are sequential, blocking is right.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -463,118 +412,129 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-duel-your-verb-vs-the-pros" class="slide level2">
-<h2>The duel: your verb vs the pro’s 🥊</h2>
-<div style="width:840px;margin:0 auto;">
-  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
-    <button onclick="duRun()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight(1000) vs drive.straight(1000)</button>
-    <button onclick="duNudge()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">😈 nudge them BOTH</button>
+<section id="feel-it-shuffle-the-setlist" class="slide level2">
+<h2>Feel it: shuffle the setlist 🔀</h2>
+<div style="width:860px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;gap:12px;margin-bottom:8px;">
+    <button onclick="mlRun()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ run_mission(mission)</button>
+    <button onclick="mlSwap()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">🔀 judge: wall square FIRST</button>
+    <button onclick="mlAppend()" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">➕ append(face_crowd)</button>
   </div>
-  <svg width="820" height="240" viewbox="0 0 820 240" style="display:block;margin:0 auto;">
-    <rect x="0" y="20" width="820" height="95" rx="12" fill="#eef3f8"></rect>
-    <rect x="0" y="125" width="820" height="95" rx="12" fill="#eef3f8"></rect>
-    <text x="14" y="44" font-size="14" font-weight="800" fill="#625D9C">YOURS — drive_straight</text>
-    <text x="14" y="149" font-size="14" font-weight="800" fill="#00AE8D">PRO — drive.straight</text>
-    <line x1="720" y1="28" x2="720" y2="108" stroke="#00AE8D" stroke-width="4"></line>
-    <line x1="720" y1="133" x2="720" y2="213" stroke="#00AE8D" stroke-width="4"></line>
-    <text x="720" y="16" font-size="13" fill="#00AE8D" font-weight="800" text-anchor="middle">1 m 🎯</text>
-    <polyline id="duT1" points="" fill="none" stroke="#625D9C" stroke-width="3"></polyline>
-    <polyline id="duT2" points="" fill="none" stroke="#00C9A7" stroke-width="3"></polyline>
-    <g id="duB1" transform="translate(60,68)"><g transform="rotate(90) scale(0.45)">
-      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#625D9C"></rect>
-      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
-      <circle cy="-30" r="4" fill="#FFD500"></circle>
-    </g></g>
-    <g id="duB2" transform="translate(60,173)"><g transform="rotate(90) scale(0.45)">
-      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00AE8D"></rect>
-      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
-      <circle cy="-30" r="4" fill="#FFD500"></circle>
-    </g></g>
-  </svg>
-  <div style="text-align:center;font-family:Consolas,monospace;font-size:18px;color:#1C355E;">yours landed <span id="duO1" style="font-weight:800;color:#625D9C;">–</span> · pro landed <span id="duO2" style="font-weight:800;color:#00AE8D;">–</span></div>
+  <div style="display:flex;justify-content:center;align-items:flex-start;gap:22px;">
+    <div style="min-width:280px;">
+      <div style="font-family:Consolas,monospace;font-size:16px;color:#1C355E;font-weight:800;margin-bottom:6px;">mission = [</div>
+      <div id="mlList"></div>
+      <div style="font-family:Consolas,monospace;font-size:16px;color:#1C355E;font-weight:800;margin-top:6px;">]</div>
+    </div>
+    <svg width="430" height="330" viewbox="0 0 430 330" style="display:block;background:#eef3f8;border-radius:14px;">
+      <rect x="40" y="18" width="350" height="16" rx="4" fill="#625D9C"></rect>
+      <text x="215" y="14" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">wall</text>
+      <circle cx="120" cy="270" r="7" fill="#1C355E"></circle>
+      <text x="120" y="296" font-size="13" fill="#1C355E" text-anchor="middle" font-weight="700">start</text>
+      <polyline id="mlTrace" points="" fill="none" stroke="#00C9A7" stroke-width="4" stroke-linejoin="round"></polyline>
+      <g id="mlBot" transform="translate(120,270) rotate(0)"><g transform="scale(0.55)">
+        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"></rect>
+        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+        <circle cy="-30" r="4" fill="#FFD500"></circle>
+      </g></g>
+      <text id="mlMsg" x="215" y="322" font-size="15" fill="#1C355E" font-weight="800" text-anchor="middle"></text>
+    </svg>
+  </div>
 </div>
 <script>
 (function(){
-  var raf=null, last=null, nudgeReq=false;
+  var raf=null, last=null, running=false;
+  var WALL_Y=52, BACK_Y=80;  // wall contact line and post-back-off line
+  // step catalog: each named step expands into primitive phases
+  // rot = turn to absolute heading (0 = up, 90 = right, 180 = down)
+  // fwd = drive dist px along current heading · toY/backToY = drive straight up/down to a y line
+  var STEPS={
+    cross_stage:  {label:'cross_stage',   phases:function(){ return [{k:'fwd',d:130}]; }},
+    face_band:    {label:'face_band',     phases:function(){ return [{k:'rot',h:90}]; }},
+    reset_at_wall:{label:'reset_at_wall', phases:function(){ return [{k:'rot',h:0},{k:'toY',y:WALL_Y},{k:'pause',s:0.5},{k:'backToY',y:BACK_Y},{k:'rot',h:180}]; }},
+    face_crowd:   {label:'face_crowd',    phases:function(){ return [{k:'rot',h:270}]; }}
+  };
+  var mission=['cross_stage','face_band','reset_at_wall'];
+  var appended=false;
   function el(id){return document.getElementById(id);}
-  function fresh(y){ return {x:60,y:y,h:0,done:false,pts:['60,'+y],nudged:false}; }
-  window.duRun=function(){
-    var A=fresh(68), B=fresh(173), t=0; last=null; nudgeReq=false;
-    el('duT1').setAttribute('points',A.pts[0]); el('duT2').setAttribute('points',B.pts[0]);
-    el('duO1').textContent='–'; el('duO2').textContent='–';
-    function step(s,dt,heal,laneY){
-      if(s.done) return;
-      var sp=(720-s.x)*2.4+8; if(sp>300)sp=300;
-      if(nudgeReq && !s.nudged && s.x>300){ s.h=(laneY<100?22:-22); s.nudged=true; }
-      s.h -= s.h*heal*dt;                       // both heal — same three letters inside
-      var r=s.h*Math.PI/180;
-      s.x+=sp*Math.cos(r)*dt; s.y+=sp*Math.sin(r)*dt;
-      // stay in lane visually
-      s.pts.push(s.x.toFixed(1)+','+s.y.toFixed(1));
-      if(s.x>=719) s.done=true;
+  function render(hi){
+    var html='';
+    for(var i=0;i<mission.length;i++){
+      var on = i===hi;
+      html+='<div style="font-family:Consolas,monospace;font-size:17px;padding:7px 14px;margin:4px 0 4px 18px;border-radius:10px;border-left:5px solid '+(on?'#00AE8D':'#c9d4e0')+';background:'+(on?'#00AE8D22':'#eef3f8')+';color:#1C355E;font-weight:'+(on?'800':'600')+';">'
+        + i + ': ' + STEPS[mission[i]].label + (on?' ▶':'') + '</div>';
     }
+    el('mlList').innerHTML=html;
+  }
+  render(-1);
+  function animate(idx, phases, done){
+    // robot state persists on the g transform; parse it back
+    var m=/translate\(([-\d.]+),([-\d.]+)\) rotate\(([-\d.]+)\)/.exec(el('mlBot').getAttribute('transform'));
+    var x=+m[1], y=+m[2], h=+m[3];
+    render(idx);
+    var pi=0, t=0; last=null;
+    function trace(){ el('mlTrace').setAttribute('points', el('mlTrace').getAttribute('points')+' '+x.toFixed(1)+','+y.toFixed(1)); }
     function frame(now){
       var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now; t+=dt;
-      step(A,dt,3.0,68); step(B,dt,3.6,173);
-      if(A.nudged&&B.nudged) nudgeReq=false;
-      el('duT1').setAttribute('points',A.pts.join(' '));
-      el('duT2').setAttribute('points',B.pts.join(' '));
-      el('duB1').setAttribute('transform','translate('+A.x.toFixed(1)+','+A.y.toFixed(1)+') rotate('+A.h.toFixed(1)+')');
-      el('duB2').setAttribute('transform','translate('+B.x.toFixed(1)+','+B.y.toFixed(1)+') rotate('+B.h.toFixed(1)+')');
-      if(A.done&&B.done||t>8){
-        raf=null;
-        el('duO1').textContent='1.5 cm off 👏'; el('duO2').textContent='0.5 cm off 🤝';
-      } else raf=requestAnimationFrame(frame);
+      var p=phases[pi], fin=false, sp=150;
+      if(p.k==='rot'){
+        var diff=p.h-h;
+        if(Math.abs(diff)<0.5){ h=p.h; fin=true; }
+        else h+=Math.sign(diff)*Math.min(Math.abs(diff),200*dt);
+      } else if(p.k==='fwd'){
+        if(p.left===undefined) p.left=p.d;
+        var step=Math.min(sp*dt,p.left), r=(h-90)*Math.PI/180;
+        x+=step*Math.cos(r); y+=step*Math.sin(r); p.left-=step; trace();
+        if(p.left<=0.1) fin=true;
+      } else if(p.k==='toY'){
+        y=Math.max(p.y, y-sp*dt); trace();
+        if(y<=p.y+0.1) fin=true;
+      } else if(p.k==='backToY'){
+        y=Math.min(p.y, y+sp*dt); trace();
+        if(y>=p.y-0.1) fin=true;
+      } else { // pause (the squaring wiggle moment)
+        if(p.done===undefined){ p.done=t+p.s; }
+        if(t>=p.done) fin=true;
+      }
+      el('mlBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
+      if(fin){ pi++; t=0; }
+      if(pi<phases.length){ raf=requestAnimationFrame(frame); }
+      else { raf=null; done(); }
     }
-    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+    raf=requestAnimationFrame(frame);
+  }
+  window.mlRun=function(){
+    if(running) return; running=true;
+    el('mlBot').setAttribute('transform','translate(120,270) rotate(0)');
+    el('mlTrace').setAttribute('points','120,270');
+    el('mlMsg').textContent='';
+    var i=0;
+    function next(){
+      if(i>=mission.length){ running=false; render(-1); el('mlMsg').textContent='show complete 🎉 — same runner, whatever the list says'; return; }
+      animate(i, STEPS[mission[i]].phases(), function(){ i++; next(); });
+    }
+    next();
   };
-  window.duNudge=function(){ nudgeReq=true; };
+  window.mlSwap=function(){
+    if(running) return;
+    var i=mission.indexOf('reset_at_wall');
+    if(i>0){ mission.splice(i,1); mission.unshift('reset_at_wall'); }
+    render(-1); el('mlMsg').textContent='one edit to the LIST — the runner never changed 😎';
+  };
+  window.mlAppend=function(){
+    if(running || appended) return; appended=true;
+    mission.push('face_crowd');
+    render(-1); el('mlMsg').textContent='mission.append(face_crowd) → new slot '+(mission.length-1);
+  };
 })();
 </script>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Nudge them both: <strong>both heal</strong> — same three letters inside. The pro edges ahead on polish (smooth speed ramps, factory-tuned gains, years of testing), not on magic. <strong>You didn’t get replaced — you hired a chauffeur for the part you already mastered.</strong></p>
+<p>The judge’s reorder is <strong>one edit to the list</strong> — watch slot 0 change hands, then run the <em>same</em> three-line runner. Append a step: a new slot appears at the end, exactly like the pigeonholes. <strong>The plan is data now.</strong></p>
 </div>
 </div>
 <aside class="notes">
-<p>Run the duel on the real robots too — their drive_straight next to drive.straight under a nudge and a battery swap; the sim just makes the point projectable. Expected honest outcome: both survive, DriveBase is a bit crisper on arrival (its speed ramps are S-curves, its gains factory-tuned per motor model). The verdict to speak: hand-rolled took two weeks to build and would take another season to polish; the pro one is <em>free</em> and made of math they own. That’s why the reveal waited — a shortcut is only a shortcut if you know the long way.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-retires-what-stays-yours" class="slide level2">
-<h2>What retires, what stays yours</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Retires today</strong> 🪦</p>
-<ul>
-<li><code>drive_straight(d)</code> → <code>drive.straight(d)</code></li>
-<li><code>turn_to(a)</code> → <code>drive.turn(…)</code> <em>(gyro-watched)</em></li>
-<li>hand-tuned <code>KP</code>/<code>kd</code> → <code>drive.settings()</code></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Stays in <code>my_lib.py</code></strong> 💪</p>
-<ul>
-<li><code>drive_to_wall()</code> · <code>wall_square()</code> — the <em>feel</em> verbs</li>
-<li><code>follow_line()</code> · <code>square_on_line()</code> — the <em>eyes</em> verbs</li>
-<li>every mechanism verb Week 3 will add</li>
-</ul>
-</div></div>
-<div class="fragment fade-up">
-<div class="cardbox teal">
-<p><code>DriveBase</code> replaces exactly <strong>two internals</strong> — the moving. It has no idea how to <em>feel a wall</em>, <em>ride a line’s edge</em>, or <em>work a mechanism</em>. The library keeps every verb the pro tool doesn’t have — which is most of them. <strong>Missions from here on: <code>DriveBase</code> drives, your library does everything else.</strong></p>
-</div>
-</div>
-<aside class="notes">
-<p>This boundary slide is the anti-demoralizer — put numbers on it: two verbs retire, four survive today, and every mechanism verb from Week 3 joins the surviving side. Mechanically the retirement is gentle: inside my_lib, drive_straight/turn_to can simply <em>become</em> one-line wrappers over drive.straight/drive.turn, so every mission list and runner from the setlist day works unchanged — nothing downstream even notices. (That’s the payoff of naming moves: swap the engine, keep the verbs.) drive.stalled() similarly upgrades the inside of drive_to_wall without changing its name.</p>
+<p>Ritual: run the original show first so they see list-highlighting track the robot (the ▶ walks down the slots as the robot moves — index made visible). Then hit the judge button <em>without</em> running: only the list changes, code untouched — say it out loud. Run again: wall square happens first. Append, run a third time. Connect each button to the pigeonhole verbs: swap = re-slotting cards, append = new box at the end. Then send them to the real mat to do the identical thing with their own verbs — the sim is the storyboard, the mat is the exam.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -588,12 +548,12 @@
       }</style></aside>
 </section></section>
 <section>
-<section id="d.-draft-day" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
-<h1>D. Draft Day</h1>
-<p>Today’s showdown: <strong>Mini Mission</strong> 🎤 — the finale. Then the draft.</p>
+<section id="d.-compete-gate" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
+<h1>D. Compete &amp; Gate</h1>
+<p>Today’s showdown: <strong>Setlist</strong> 🎵</p>
 </section>
-<section id="mini-mission" class="slide level2">
-<h2>Mini Mission 🎤</h2>
+<section id="setlist" class="slide level2">
+<h2>Setlist 🎵</h2>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -603,43 +563,17 @@
 <p><strong>The challenge</strong></p>
 </div>
 <div class="callout-content">
-<p>A <strong>3-task run</strong> — drive, turn, push an object home — in <strong>60 seconds</strong>. Everything from two weeks, on one clock: integration, time management, nerve.</p>
+<p>The judge calls a <strong>3-step mini-mission</strong> — you have <strong>5 minutes</strong> to encode it as a mission list over your own library and run it. Score = steps completed; tiebreak = time.</p>
 </div>
 </div>
 </div>
 <ul>
-<li>Plan it as a <strong>mission list</strong> over your verbs — you have a runner for exactly this.</li>
-<li>Budget the clock: a clean 2-task run beats a chaotic 3-task attempt. <em>(Sound familiar? It’s the anchor-first rule, in miniature.)</em></li>
+<li>Hear the mission → say it as <strong>verbs</strong> (<em>“that’s a <code>drive_straight</code>, a <code>turn_to</code>, a <code>wall_square</code>”</em>) → wrap, list, run.</li>
+<li>The judge <strong>will</strong> change the order on round two. 😈 Your surgery-free edit is the whole advantage.</li>
+<li>Fast squads: swap in <code>run_mission_logged</code> — per-step stopwatch + a printed transition log.</li>
 </ul>
 <aside class="notes">
-<p>Template is Competition Ready Lesson 8 “Mission Ready.” This is the last solo competition and the scorecard’s final data point — watch integration and composure, not just score. Call out anyone who deliberately drops to two tasks to bank clean points: that’s competition maturity, praise it loudly — it’s the exact instinct the anchor-first strategy needs from them in Week 4. After scores are recorded, close the leaderboard era warmly: from tomorrow the competition is team vs team.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="the-draft" class="slide level2">
-<h2>The draft 🤝</h2>
-<ul>
-<li>Teams are formed on <strong>who works well together and what each team needs</strong> — complementary skills beat matching skills.</li>
-<li>Each team reviews its members’ robots and <strong>selects one</strong> as its competition robot.</li>
-<li>The unselected robots become the <strong>parts donor pool</strong> — your insurance, one config edit away. 🛡️</li>
-<li>From tomorrow: <strong>team vs team, every day</strong> — double the mat time, twice the fun.</li>
-</ul>
-<div class="fragment fade-up">
-<div class="cardbox teal">
-<p>Your robot may retire to the donor pool — <strong>your code and your skills don’t.</strong> Everything merges onto the team robot through <code>robot_config.py</code>, and both of the team’s cross-trained roles need every verb you built. The draft picks a <em>chassis</em>, not a <em>coder</em>.</p>
-</div>
-</div>
-<aside class="notes">
-<p>Say the framing line exactly as planned and nothing more: “I’m teaming you based on who works well together and what each team needs” — never rank, never “you scored lowest.” The pairings are already decided from the private scorecard + library benchmarks; announce, don’t debate. Give the selection its dignity: each team physically inspects its candidate robots (the four quality checks from Day 1 make a nice ritual return) before choosing. Handle the sting of an unselected robot with the card’s line — the donor pool is genuinely valuable, not a consolation. Set up team build areas after the announcement.</p>
+<p>Score decomposition, not typing speed: the squads to praise are the ones who translate the judge’s sentence into library verbs <em>before</em> touching a keyboard. Round two’s reorder is the day’s thesis under pressure — a list squad edits one line; watch for anyone still cutting and pasting blocks and coach them on the spot. The logged runner is the exemplar’s stretch (timeouts + transition log) — offer it, never gate it. Coach’s private scorecard today: list fluency, decomposition into verbs, debugging a <em>sequence</em> (which step failed? the log says).</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -663,15 +597,15 @@
 <p><strong>You’re done today when…</strong></p>
 </div>
 <div class="callout-content">
-<p>Your library passes its benchmarks one last time <strong>solo</strong> (<code>drive_straight</code> ±2 cm · <code>turn_to</code> ±2° · wall and line verbs demonstrated · the runner walks a called mission) — and your <strong>team</strong> leaves with one chosen robot, a donor pool, and a single <code>robot_config.py</code> that drives it with the merged code.</p>
+<p>You can <strong>read and build a list</strong> (index from 0, iterate, append), your steps are <strong>named functions over your own library</strong>, and the three-line runner walks a judge-called <strong>3-step mission</strong> — with a reorder costing you <strong>one edit</strong>, not surgery.</p>
 </div>
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Next week: your robot grows <strong>hands</strong> — the mechanisms that start turning driving skill into <strong>scored points</strong>, and the runner starts chaining them into the anchor run. 🔌🎤</p>
+<p>Next: <strong>Draft Day</strong> — teams form, each team picks its competition robot… and a surprise you’ve spent two weeks earning. 🎁</p>
 </div>
 <aside class="notes">
-<p>The student-facing end-of-week-2 gate: individual benchmarks (they’re part of the draft evidence) plus the team artifacts — chosen robot, donor pool, one working config. The coach’s own checklist for today (gold-reference validation against the same gate, dimensions/weight/wireless-off, CAD capture in BrickLink Studio) runs off-stage and isn’t student material. Teaser lands on Week 3: mechanisms first — cables and microphone, instruments and avoidance — then the mission runner chains the ~135 anchor.</p>
+<p>The gate is the plan’s D9 outcome verbatim. This is the last solo-robot day — tomorrow’s session opens with the <em>Mini Mission</em> finale and the draft, so make sure every student’s library + runner are saved and named (they carry into the team merge, which is exactly what motivates the config lesson there). Keep the teaser vague on purpose: the “surprise” is the DriveBase reveal, and it lands best unspoiled.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

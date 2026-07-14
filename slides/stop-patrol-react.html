@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
+
+  <meta name="dcterms.date" content="2026-07-14">
+  <title>Stop at the Wall</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-05b633aaffd58596cc6573a610a4b559.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+DQogIDxkZWZzPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYSIgeDE9Ii0xLjkxMSIgeDI9IjIuOTg1IiB5MT0iLS44NDEiIHkyPSIxLjQxNCIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjOTlkNjMzIi8+DQogICAgICA8c3RvcCBvZmZzZXQ9Ii41IiBzdG9wLWNvbG9yPSIjM2M5Ii8+DQogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyNzM0NzAiLz4NCiAgICA8L2xpbmVhckdyYWRpZW50Pg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYSIgaWQ9ImQiIHgxPSItMy41NjkiIHgyPSIxLjMyOCIgeTE9Ii0xLjYwNSIgeTI9Ii42NTEiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJlIiB4MT0iLTMuMDQ3IiB4Mj0iMS44NDkiIHkxPSItLjkwNCIgeTI9IjEuMzUyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iZiIgeDE9Ii0yLjg5IiB4Mj0iMi4wMDciIHkxPSItMS4yOTIiIHkyPSIuOTY0Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iZyIgeDE9Ii0yLjQiIHgyPSIyLjQ5NyIgeTE9Ii0xLjA2NiIgeTI9IjEuMTg5Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iaCIgeDE9Ii0uOTkyIiB4Mj0iMi42NzkiIHkxPSItLjQxOCIgeTI9IjEuMjczIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iaSIgeDE9Ii0xLjUxMiIgeDI9IjIuMTU5IiB5MT0iLS4xOTciIHkyPSIxLjQ5NSIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYSIgaWQ9ImoiIHgxPSItLjkxNCIgeDI9IjIuNzU4IiB5MT0iLjA3OSIgeTI9IjEuNzcxIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iayIgeDE9Ii0zLjQwNSIgeDI9IjEuNDkzIiB5MT0iLTEuMDY4IiB5Mj0iMS4xODciLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJsIiB4MT0iLjM0NyIgeDI9IjMuMjg1IiB5MT0iLjE5OSIgeTI9IjEuNTUyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0ibSIgeDE9Ii0uOTA1IiB4Mj0iMi43NjciIHkxPSIuMDgzIiB5Mj0iMS43NzUiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJuIiB4MT0iLTIuMTE5IiB4Mj0iMi43NzgiIHkxPSItLjQ3NiIgeTI9IjEuNzc5Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0ibyIgeDE9Ii01LjY0NCIgeDI9Ii40ODYiIHkxPSItMi45OTgiIHkyPSIuNzQxIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0icCIgeDE9Ii0zLjQ5NSIgeDI9IjIuNjM2IiB5MT0iLTEuNjg3IiB5Mj0iMi4wNTMiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJxIiB4MT0iLTEuNDIyIiB4Mj0iMy4xNzUiIHkxPSItLjkyMyIgeTI9IjEuODgyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iciIgeDE9Ii0zLjMwNiIgeDI9IjIuODI1IiB5MT0iLTIuMDcyIiB5Mj0iMS42NjgiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJzIiB4MT0iLTEuNjgzIiB4Mj0iMi45MTQiIHkxPSItMS4wODEiIHkyPSIxLjcyMyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYSIgaWQ9InQiIHgxPSItMS4xNTgiIHgyPSIyLjUyMSIgeTE9Ii0uMjYxIiB5Mj0iMS45ODMiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSIuMjYxIiB4Mj0iLjYyNCIgeTE9IjMuNTYiIHkyPSItMS40NjkiIGdyYWRpZW50VW5pdHM9Im9iamVjdEJvdW5kaW5nQm94Ij4NCiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzZjZiIvPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIuNSIgc3RvcC1jb2xvcj0iIzYyNThhNiIvPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMjczNDcwIi8+DQogICAgPC9saW5lYXJHcmFkaWVudD4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ1IiB4MT0iLjE2MyIgeDI9Ii41MjYiIHkxPSI0LjkyNCIgeTI9Ii0uMTAzIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0idiIgeDE9Ii4zODYiIHgyPSIuNjU4IiB5MT0iMS44MjUiIHkyPSItMS45NDUiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ3IiB4MT0iLjI1MiIgeDI9Ii42MTUiIHkxPSI0LjE4MiIgeTI9Ii0uODQ1Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0ieCIgeDE9Ii40MTciIHgyPSIuNjg5IiB5MT0iMS45IiB5Mj0iLTEuODciLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ5IiB4MT0iLjQ4NSIgeDI9Ii43MDMiIHkxPSIuOTU2IiB5Mj0iLTIuMDYiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ6IiB4MT0iLjM3NyIgeDI9Ii42NDkiIHkxPSIyLjQ1NSIgeTI9Ii0xLjMxNCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkEiIHgxPSIuMTk5IiB4Mj0iLjU2MiIgeTE9IjQuOTIyIiB5Mj0iLS4xMDUiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJCIiB4MT0iLjQzNyIgeDI9Ii43MDkiIHkxPSIxLjYyNSIgeTI9Ii0yLjE0NSIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkMiIHgxPSIuMjYxIiB4Mj0iLjYyNCIgeTE9IjQuMDU1IiB5Mj0iLS45NzIiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJEIiB4MT0iLjUiIHgyPSIuNSIgeTE9IjMuMDQ1IiB5Mj0iLTEuOTI3Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iRSIgeDE9Ii41IiB4Mj0iLjUiIHkxPSI0LjkwMSIgeTI9Ii0uMDcyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iRiIgeDE9Ii41IiB4Mj0iLjUiIHkxPSIyLjQzNSIgeTI9Ii0xLjI5NiIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkciIHgxPSIuNSIgeDI9Ii41IiB5MT0iLjkzNCIgeTI9Ii0yLjA1Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iSCIgeDE9Ii41IiB4Mj0iLjUiIHkxPSIzLjc4NSIgeTI9Ii0xLjE4NyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkkiIHgxPSIuNSIgeDI9Ii41IiB5MT0iMS44MDkiIHkyPSItMS45MjEiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJKIiB4MT0iLjUiIHgyPSIuNSIgeTE9IjMuMDQ2IiB5Mj0iLTEuOTI4Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iSyIgeDE9Ii41IiB4Mj0iLjUiIHkxPSIyLjc5NCIgeTI9Ii0yLjE3NyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYyIgeDE9IjUuMDEiIHgyPSItMi4yNzciIHkxPSItMS4zODMiIHkyPSIyLjAzOSIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmRiZDRkIi8+DQogICAgICA8c3RvcCBvZmZzZXQ9Ii41IiBzdG9wLWNvbG9yPSIjZjYzIi8+DQogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyNzM0NzAiLz4NCiAgICA8L2xpbmVhckdyYWRpZW50Pg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IkwiIHgxPSIyLjIzOSIgeDI9Ii0yLjEzNCIgeTE9Ii0uMDgyIiB5Mj0iMS45NzEiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJNIiB4MT0iNi4wOTgiIHgyPSItMS4xOTEiIHkxPSItMS44OTMiIHkyPSIxLjUyOCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9Ik4iIHgxPSIzLjM4NCIgeDI9Ii0yLjA4MSIgeTE9Ii0xLjA4OCIgeTI9IjEuNDc3Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iTyIgeDE9IjIuNzgiIHgyPSItMi42ODYiIHkxPSItLjgwNSIgeTI9IjEuNzYxIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iUCIgeDE9IjcuMDc0IiB4Mj0iLS4yMTIiIHkxPSItMi4zNTMiIHkyPSIxLjA2OSIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlEiIHgxPSI1LjA3NSIgeDI9Ii0yLjIxMSIgeTE9Ii0xLjQxNCIgeTI9IjIuMDA4Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iUiIgeDE9IjUuNzM2IiB4Mj0iLTEuNTUiIHkxPSItMi4xOTQiIHkyPSIxLjIyOCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlMiIHgxPSIyLjA4MSIgeDI9Ii0xLjc4MSIgeTE9Ii0uMDQ3IiB5Mj0iMS45Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iVCIgeDE9Ii43MjkiIHgyPSItMi4zNjEiIHkxPSIuMTM1IiB5Mj0iMS42OTIiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJVIiB4MT0iMi43MTciIHgyPSItMi40MzMiIHkxPSItLjg2OCIgeTI9IjEuNzI4Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iViIgeDE9IjEuNTE3IiB4Mj0iLTIuMzQ3IiB5MT0iLS4yNjIiIHkyPSIxLjY4NCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlciIHgxPSIzLjU0NCIgeDI9Ii0xLjYwNiIgeTE9Ii0xLjI4NCIgeTI9IjEuMzEyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iWCIgeDE9IjIuNjMxIiB4Mj0iLTEuMjMzIiB5MT0iLS4zMjQiIHkyPSIxLjYyMyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlkiIHgxPSIyLjAwMyIgeDI9Ii0xLjg2IiB5MT0iLS4wMDciIHkyPSIxLjk0Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iWiIgeDE9IjQuMTI1IiB4Mj0iLTEuMDI1IiB5MT0iLTEuMDc3IiB5Mj0iMS41MTgiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJhYSIgeDE9IjMuMDIyIiB4Mj0iLTIuMTI3IiB5MT0iLTEuMDIxIiB5Mj0iMS41NzQiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJhYiIgeDE9IjQuNjgxIiB4Mj0iLS40NjkiIHkxPSItMS44NTciIHkyPSIuNzM4Ii8+DQogIDwvZGVmcz4NCiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMy44IDEpIj4NCiAgPHBhdGggZmlsbD0iIzNjOSIgZD0ibTM2LjA0MSAyNi41My0xMS40NDggNi42MTF2MTMuMjJsMTEuNDQ4IDYuNjEyIDExLjQ0Ni02LjYwOFYzMy4xNDFaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjYSkiIGQ9Ik03MS40NjQgMjAuOTF2Ny45MzJsLTYuODctMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjZCkiIGQ9Ik02NC4yNDkgNTIuOTdsNi44NjkgMy45NjV2LTcuOTNaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjZSkiIGQ9Im02OC4xIDQ2LjM1OSAtNi44NjkgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2YpIiBkPSJNNzIuMzkyIDM1LjM3djcuOTMybC02Ljg2OSAtMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjZykiIGQ9Ik01Ni42NTEgNTYuODQ3djcuOTMybC02Ljg2OSAtMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjaCkiIGQ9Im01Ny43OTQgNTEuNjQzIC05LjE2IC01LjI4NiA5LjE2IC01LjI5WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2kpIiBkPSJtNTcuNzk1IDUyLjk3IC05LjE2IDUuMjlWNDcuNjg0WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2opIiBkPSJtNTcuNzkyIDM5Ljc0OSAtOS4xNTggNS4yODZ2LTEwLjU3MloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNrKSIgZD0ibTU4LjUgNzAuMzE4IC02Ljg2OCAzLjk2N3YtNy45MzJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjbCkiIGQ9Im00Ny40ODcgNDYuMzYxIC0xMS40NDYgLTYuNjEyIDExLjQ0NiAtNi42MTFaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjbSkiIGQ9Im00Ni4zNDQgNjEuMDc3IC05LjE1OCA1LjI4NnYtMTAuNTcyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI24pIiBkPSJtNDUuMTk5IDc0LjAzNSAtNi44NjggMy45NjV2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI28pIiBkPSJtNzAuMDIxIDYxLjc3NSAtNi44NjkgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3ApIiBkPSJtNjguMSAzMy4xNDIgLTYuODY5IDMuOTY3di03LjkzMloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNxKSIgZD0iTTU3Ljc5NCAyNy44NTJ2MTAuNTc2bC05LjE2IC01LjI5WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3IpIiBkPSJNNDUuMjAyIDYyLjg5MXY3LjkzMmwtNi44NjkgLTMuOTY3WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3MpIiBkPSJtNDYuMzQzIDU5Ljc1NiAtOS4xNTcgLTUuMjg2IDkuMTU3IC01LjI5WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3QpIiBkPSJtMzYuMDQxIDM5Ljc1IDExLjQ0NiA2LjYxMiAtMTEuNDQ2IDYuNjA4WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJtNjkuMzM0IDE3LjAzMSAtNi44NjkgMy45NjV2LTcuOTNaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjdSkiIGQ9Im01OC4wODIgNS40NiAtNi44NzEgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3YpIiBkPSJtNTcuNzk2IDI2LjUyOSAtOS4xNjIgNS4yODZWMjEuMjQxWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3cpIiBkPSJtNDUuMiAxNC41NDUgLTYuODY5IC0zLjk2NSA2Ljg2OSAtMy45NjdaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjeCkiIGQ9Ik00Ni4zNDQgMTkuNzQ0VjMwLjMxOWwtOS4xNTggLTUuMjg2WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3kpIiBkPSJNMzYuMDQxIDI2LjUzdjEzLjIyTDI0LjU5MyAzMy4xNDFaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjeikiIGQ9Im0zNC44OTcgMjMuNzA5IC05LjE1OCAtNS4yODYgOS4xNTggLTUuMjlaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjQSkiIGQ9Im0zMy43NSA3LjkzMiAtNi44NyAtMy45NjUgNi44NyAtMy45NjdaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjQikiIGQ9Im0yMy40NDkgMzEuODE2IC05LjE1OCAtNS4yOSA5LjE1OCAtNS4yODVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjQykiIGQ9Ik0xOS43NiA2LjAzOXY3LjkzMmwtNi44NjkgLTMuOTY1WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0QpIiBkPSJtNTYuNjQ3IDIyLjY1MSAtNi44NzEgLTMuOTY3IDYuODcxIC0zLjk2N1oiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNFKSIgZD0ibTQ1LjIgMy45NjcgLTYuODY5IDMuOTY1di03LjkzMloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNGKSIgZD0ibTQ2LjM0NCAxOC40MTcgLTkuMTU4IDUuMjg2di0xMC41NjhaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjRykiIGQ9Im00Ny40ODcgMzMuMTQxIC0xMS40NDYgNi42MTF2LTEzLjIyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0gpIiBkPSJtMzMuNzUzIDEyLjgxNCAtNi44NzEgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0kpIiBkPSJtMzQuODk2IDI1LjAzMyAtOS4xNTggNS4yODZ2LTEwLjU3NVoiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNKKSIgZD0ibTIyLjMgMTguNjg0IC02Ljg3IDMuOTY1di03LjkzWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0spIiBkPSJtNy41NTYgMjQuNjM3IC02Ljg3IC0zLjk2NSA2Ljg3IC0zLjk2N1oiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNjKSIgZD0ibTMzLjc1MSA3OC4wMDEgLTYuODcxIC0zLjk2NSA2Ljg3MSAtMy45NjdaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjTCkiIGQ9Ik0zNi4wNDEgMzkuNzV2MTMuMjJsLTExLjQ0OCAtNi42MTJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjTSkiIGQ9Ik0yMi4zIDY2Ljc2M3Y3LjkzMmwtNi44NyAtMy45NjZaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjTikiIGQ9Im0yMy40NDkgNDYuMzYyIC05LjE1OCA1LjI4NnYtMTAuNTc2WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI08pIiBkPSJtMjMuNDQ5IDMzLjE0MiAtOS4xNTggNS4yOXYtMTAuNThaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjUCkiIGQ9Ik05LjYxNiA1OS40MDF2Ny45M2wtNi44NzEgLTMuOTY1WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI1EpIiBkPSJNMTAuODUxIDI4Ljg5OXY3LjkzMmwtNi44NzEgLTMuOTY1WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI1IpIiBkPSJtNi44NzEgNDAuMDkzIC02Ljg3MSAzLjk2NXYtNy45M1oiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNTKSIgZD0ibTM0Ljg5NCA2Ni4zNjcgLTkuMTYgLTUuMjg2IDkuMTYgLTUuMjlaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjVCkiIGQ9Im0zNi4wNDEgMzkuNzUgLTExLjQ0OCA2LjYwOHYtMTMuMjJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjVSkiIGQ9Im0zMy43NSA2Ny40MjUgLTYuODcxIDMuOTY3di03LjkzMloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNWKSIgZD0ibTM0Ljg5MiA1NC40NjcgLTkuMTU3IDUuMjl2LTEwLjU4MloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNXKSIgZD0ibTIyLjI5OSA2MC44MTQgLTYuODY5IDMuOTY1di03LjkzWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI1gpIiBkPSJNMjMuNDQ5IDQ3LjY4M3YxMC41NzNsLTkuMTU4IC01LjI4NloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNZKSIgZD0iTTIzLjQ0OSAzNC40NTl2MTAuNTczbC05LjE1OCAtNS4yODNaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjWikiIGQ9Im0xMC44NSA1MC4zMjYgLTYuODcxIC0zLjk2NyA2Ljg3MSAtMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjYWEpIiBkPSJtNy4xNDUgMjYuNTMxIC02Ljg2OSAzLjk2NXYtNy45MzJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjYWIpIiBkPSJtNy41NTYgNTMuNDUyIC02Ljg3MSAzLjk2NXYtNy45MzVaIi8+DQogIDwvZz4NCjwvc3ZnPg0K">
+
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="../slides_template/assets/anim.svg" data-background-opacity="0.15" data-background-size="cover" class="quarto-title-block center">
+  <h1 class="title">Stop at the Wall</h1>
+  <p class="subtitle">Day 6 · Robot Rockstars · SPIKE Prime + Pybricks</p>
+
+<div class="quarto-title-authors">
+</div>
+
+  <p class="date">2026-07-14</p>
+</section>
+<section>
+<section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
+<h1>A. Warm-Up</h1>
+<p>Last week: replay a plan, blind. Today the robot starts <strong>reacting</strong>. 👀</p>
+</section>
+<section id="where-we-left-off" class="slide level2">
+<h2>Where we left off</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Last week</th>
+<th>What you own</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>📦 <strong><code>my_lib.py</code> begins</strong></td>
+<td><code>drive_straight</code> · <code>turn_to</code></td>
+</tr>
+<tr class="even">
+<td>📏 <strong>measured, not guessed</strong></td>
+<td><code>DEG_PER_MM</code>, rolled &amp; measured</td>
+</tr>
+<tr class="odd">
+<td>🔁 <strong>replay a plan</strong></td>
+<td><code>drive_square(300)</code> snaps shut</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up">
+<p>🤔 But a script is <strong>blind</strong> — today’s new job: <strong>sense → decide → act.</strong></p>
+</div>
+<p>⏱️ <strong>Time: 5 minutes — then a bug hunt</strong></p>
+<aside class="notes">
+<p>Recap by asking, not telling: “what does <code>drive_straight(300)</code> know about the world?” Nothing — it counts wheel-degrees (healing its heading on the way) and stops. That’s replay. Today’s whole arc is the opposite: the robot reads something <em>live</em>, then chooses what to do. Three new powers land today — the motor as a sensor (stall = touch), the color eye (reflection = the echo of its own light), and <code>if/else</code> (the first real decision) — then we wrap them in a loop so one decision becomes a patrol, and the library gains its first <em>sensing</em> verbs. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15, so the recap is a springboard, not a lecture.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bug-hunt-the-tune-that-didnt-stick" class="slide level2">
+<h2>🔎 Bug hunt: the tune that didn’t stick</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-2|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="kw">def</span> make_it_sharper():</span>
+<span id="cb1-2"><a></a>    KP <span class="op">=</span> <span class="dv">12</span>          <span class="co"># crank steering for the whole library… right?</span></span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a>make_it_sharper()</span>
+<span id="cb1-5"><a></a>drive_straight(<span class="dv">300</span>)  <span class="co"># …still lazy. Nothing changed. 😤</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="qbox">
+<p><span class="qtitle">Watch it stay lazy — find the bug. Where <em>should</em> <code>KP = 12</code> live?</span></p>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p>Inside a <code>def</code> you made a <strong>local</strong> — dead the moment it returned. <strong>Change globals only at the top.</strong></p>
+</div>
+</div>
+<aside class="notes">
+<p>This closes Day 5’s leftover (globals/shadowing), delivered as a live hunt instead of slides — decision #22. Run the planted bug on the coach robot and let squads diagnose for ~5 minutes before any reveal; the 😤 must be theirs. Two live moments: (1) the fix — move <code>KP = 12</code> to the constants block, rerun, the straight sharpens; (2) <code>print(error)</code> after a run → NameError, proof that locals evaporate (and that’s a <em>feature</em>: every verb gets private scratch names). Close with the D5 verbal pass, squad by squad, in their own words: <em>default = factory setting · keyword = one-call override · top of file = global · inside a def = local</em>. Do NOT teach the <code>global</code> keyword — the constants-block discipline is strictly better. Coach’s radar for W2–3: “I tuned it and it didn’t stick” → first question is <em>where did you assign it?</em></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="robots-out-bullseye-on-the-real-mat" class="slide level2">
+<h2>🤖 Robots out: Bullseye on the real mat 🎯</h2>
+<ul>
+<li>🎯 <code>drive_straight(1000)</code> on the <strong>real mat</strong> — one attempt, <strong>±2 cm</strong> passes</li>
+<li>📦 <code>drive_square(300)</code> — watch it snap shut where it started</li>
+<li>⏱️ <strong>15 minutes</strong>, then the robot gets its sense of touch</li>
+</ul>
+<aside class="notes">
+<p>Pure energy burner with a hidden agenda: it closes the remaining D5 gate legs (<code>drive_straight</code> 1.0 m ±2 cm, square closed) on the real surface, and it front-loads the session with driving instead of sitting — the drill-first rhythm (decision #22). Logistics: mat on the ground, no table yet (decision #23) — the wall board goes at the mat edge for the stall work later; nothing today needs borders at true positions. Watch for surprises vs the tape field: the print’s friction and colour differ — if someone’s 1 m lands long/short vs last week, that’s the calibration-transfer checkpoint doing its job (re-measure, don’t panic). Keep it to 15 minutes; the leaderboard can wait for Gentle Giant.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="b.-the-motor-is-a-sensor" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
+<h1>B. The Motor Is a Sensor</h1>
+<p>Six ports, all full — but the robot already knows how to <strong>feel</strong>. 🧱</p>
+</section>
+<section id="feel-it-see-the-invisible" class="slide level2">
+<h2>Feel it: see the invisible 📉</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># Run this ALONE first — watch the number, not the robot.</span></span>
+<span id="cb2-2"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb2-3"><a></a>    <span class="bu">print</span>(<span class="st">"wheel speed:"</span>, left.speed())</span>
+<span id="cb2-4"><a></a>    wait(<span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>🤖 <strong>Robots out.</strong> Run the loop, <strong>grab the wheels</strong> — watch it dive. Then the wall board: same dive, no hand.</p>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>The speed dive <strong>is</strong> the wall — every motor has <strong><code>stalled()</code></strong> and <strong><code>run_until_stalled()</code></strong>.</p>
+</div>
+</div>
+<aside class="notes">
+<p>“Make the invisible visible” — same habit as the gyro heading in Week 1, and this one happens on the real robot, not a slide (the animated version lives in the 🏠 appendix for home replay). Sequence: print loop running → student hand-blocks the wheels → speed crashes → then the same crash against the wall board. Only <em>after</em> they’ve seen the crash do you name the stall tools: <code>left.stalled()</code> asks “are you jammed <em>right now</em>?”, <code>left.run_until_stalled()</code> is “roll until you jam” in one call. Point out why this beats an ultrasonic sensor even if we had a free port: a touch via stall is repeatable to the millimetre and never lies about a wall it can “see through.”</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="fix-it-stall-touch-then-back-off" class="slide level2">
+<h2>Fix it: stall = touch, then back off 🧱</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|2|3-4|5|6|7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>APPROACH_SPEED <span class="op">=</span> <span class="dv">150</span>         <span class="co"># deg/s — gentle, not a crash</span></span>
+<span id="cb3-2"><a></a>right.run(APPROACH_SPEED)    <span class="co"># right rolls along…</span></span>
+<span id="cb3-3"><a></a>left.run_until_stalled(APPROACH_SPEED,</span>
+<span id="cb3-4"><a></a>                       duty_limit<span class="op">=</span><span class="dv">50</span>)   <span class="co"># …until LEFT jams</span></span>
+<span id="cb3-5"><a></a>right.stop()</span>
+<span id="cb3-6"><a></a>hub.speaker.beep()           <span class="co"># "I arrived"</span></span>
+<span id="cb3-7"><a></a>drive_straight(<span class="op">-</span>BACKOFF_MM)         <span class="co"># measured, repeatable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>🤖 <strong>Robots out.</strong> Build it, tune <code>BACKOFF_MM</code> against the board — this is today’s competition in seven lines.</p>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p>Gentle touch · wait for the jam · back off a <strong>measured</strong> <code>BACKOFF_MM</code>.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Stress the gentleness knobs: a low approach speed (≈150 deg/s) and <code>duty_limit=50</code> — the duty limit caps how hard the motor is <em>allowed</em> to push, so the reading is crisp and the LEGO survives. Driving straight into a wall jams both wheels, so watching ONE motor is enough — <code>run_until_stalled</code> blocks on the left while the right just rolls. Line 6 calls their own <code>drive_straight</code> with a <em>negative</em> distance — the challenge parked at the library day is now urgent: flip the <code>while</code> comparison (or mirror it for negatives) in <code>my_lib.py</code>, two-minute fix, big payoff. Back-off is measured, not guessed — <code>BACKOFF_MM = 50</code> ends exactly 5 cm off the wall, every run. (The pro equivalent, <code>DriveBase.stalled()</code>, arrives with the D10 reveal.)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="c.-the-robot-opens-its-eyes" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
+<h1>C. The Robot Opens Its Eyes</h1>
+<p>Touch found the wall. Now <strong>light</strong> — the sensors switch on. 👀</p>
+</section>
+<section id="meet-the-eye" class="slide level2">
+<h2>Meet the eye 🔦</h2>
+<p>A <strong>flashlight + light meter</strong> in one brick — it measures its own echo.</p>
+<div style="width:780px;margin:0 auto;">
+  <svg width="740" height="200" viewbox="0 0 740 200" style="display:block;margin:0 auto;">
+    <defs>
+      <marker id="meY" markerunits="userSpaceOnUse" markerwidth="14" markerheight="14" refx="7" refy="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#FFD500"></path></marker>
+      <marker id="meFaint" markerunits="userSpaceOnUse" markerwidth="12" markerheight="12" refx="6" refy="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#9B8EC0"></path></marker>
+      <marker id="meStrong" markerunits="userSpaceOnUse" markerwidth="14" markerheight="14" refx="7" refy="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#00AE8D"></path></marker>
+    </defs>
+    <!-- readings -->
+    <text x="175" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#1C355E" text-anchor="middle">reflection() → 10</text>
+    <text x="565" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#00AE8D" text-anchor="middle">reflection() → 88</text>
+    <!-- sensors -->
+    <g transform="translate(175,0)">
+      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"></rect>
+      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"></circle>
+    </g>
+    <g transform="translate(565,0)">
+      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"></rect>
+      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"></circle>
+    </g>
+    <!-- light down -->
+    <line x1="160" y1="78" x2="150" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"></line>
+    <line x1="550" y1="78" x2="540" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"></line>
+    <!-- echo back up: faint from black, strong from white -->
+    <line x1="196" y1="140" x2="189" y2="84" stroke="#9B8EC0" stroke-width="2" stroke-dasharray="4 6" marker-end="url(#meFaint)"></line>
+    <line x1="590" y1="140" x2="583" y2="84" stroke="#00AE8D" stroke-width="6" marker-end="url(#meStrong)"></line>
+    <!-- surfaces -->
+    <rect x="55" y="150" width="240" height="22" rx="4" fill="#101820"></rect>
+    <rect x="445" y="150" width="240" height="22" rx="4" fill="#f7f9fc" stroke="#dbe2ea"></rect>
+    <text x="175" y="166" font-size="13" fill="#ffffff" font-weight="800" text-anchor="middle">black line — echo swallowed</text>
+    <text x="565" y="166" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat — echo bounces back</text>
+    <text x="370" y="112" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">same flashlight —</text>
+    <text x="370" y="132" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">different echo</text>
+  </svg>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>left_eye.reflection()   <span class="co"># 0-100: % of its OWN light echoing back</span></span>
+<span id="cb4-2"><a></a>left_eye.color()        <span class="co"># a name: Color.RED... (Week 4's tool)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>Anything that changes the <strong>echo</strong> changes the number — ✨ gloss · 💡 light · 📏 height.</p>
+</div>
+</div>
+<aside class="notes">
+<p>The live demo beats the diagram: run a <code>print(left_eye.reflection())</code> loop, hold the robot, and let students slide surfaces under the eye, tilt it, lift it — the number dances. Establish the active-sensor idea: it brings its own LED, so it mostly ignores the room, but gloss, sensor height, and strong ambient light still shift the echo — which is exactly why every surface gets its own calibration (next slide). <code>reflection()</code> vs <code>color()</code>: today reflection does all the work; <code>color()</code> names colors and gets one cameo (the RED beep) — its real job is Week 4’s notes. Two eyes fill ports B and F; today one eye is plenty — D7 explains why we carry two.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="break-it-the-threshold-you-guessed" class="slide level2">
+<h2>Break it: the threshold you guessed 🔥</h2>
+<div class="qbox">
+<p><span class="qtitle">Last week the tape split at <strong>50</strong> (white 88, black 10). Does 50 still work on the <strong>mat</strong>? The <strong>floor</strong>?</span></p>
+</div>
+<p>🤖 <strong>Robots out.</strong> Print <code>reflection()</code> across <strong>three surfaces</strong> — tape · mat · floor. Log white &amp; black for each.</p>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p>A threshold is a fact about a <strong>surface</strong> — read white · read black · <strong>split the middle.</strong></p>
+</div>
+</div>
+<aside class="notes">
+<p>Let each squad predict <em>before</em> measuring — commitments make the surprise land. The printed mat just arrived (decision #23), so this is also the real calibration-transfer checkpoint from the plan: the numbers they log here ARE the re-logged thresholds. Expected outcome: the mat’s white and the tape-field’s white read differently (print ink vs paper, matte tarp vs tape), the split point moves, and the habit lands — look first, then split what you actually see. The glossy-table failure (black reading 60, <code>&lt; 50</code> calling the line “clear” and driving over it) is the venue-day version of the same lesson; it lives as an interactive sim in the 🏠 appendix since we don’t have a glossy table in the room — mention it, don’t show it. The takeaway is a habit, not a number: re-read and re-split, every surface.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="fix-it-calibrate-then-decide-if-else" class="slide level2">
+<h2>Fix it: calibrate, then decide — <code>if / else</code> 🎚️</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1-2|3|4|5-6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Calibrate FIRST — measure, never guess</span></span>
+<span id="cb5-2"><a></a>REFLECT_THRESHOLD <span class="op">=</span> <span class="dv">50</span>              <span class="co"># for THIS surface</span></span>
+<span id="cb5-3"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb5-4"><a></a>    <span class="cf">if</span> left_eye.color() <span class="op">==</span> Color.RED:</span>
+<span id="cb5-5"><a></a>        hub.speaker.beep(frequency<span class="op">=</span><span class="dv">880</span>)     <span class="co"># high beep on red</span></span>
+<span id="cb5-6"><a></a>    <span class="cf">elif</span> left_eye.reflection() <span class="op">&lt;</span> REFLECT_THRESHOLD:</span>
+<span id="cb5-7"><a></a>        hub.speaker.beep(frequency<span class="op">=</span><span class="dv">220</span>)     <span class="co"># low beep on a line</span></span>
+<span id="cb5-8"><a></a>    wait(<span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>🤖 <strong>Robots out.</strong> Threshold from <em>your</em> mat numbers — low beep on lines, high beep on red.</p>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p><code>if … elif</code> is the robot <strong>choosing</strong> — new surface → <strong>re-calibrate the threshold, never the code.</strong></p>
+</div>
+</div>
+<aside class="notes">
+<p>This is the just-in-time concept for the day: <code>if/elif</code> + booleans. Keep it concrete — a boolean is the answer to a yes/no question the robot asks the world (<code>color() == RED</code>, <code>reflection() &lt; 50</code>). <code>elif</code> = “otherwise, check this next.” Tie it straight back to the three-surface ritual: the threshold is data you recalibrate per surface; the <code>if/elif</code> structure never changes. The mat’s printed staff lines make the beeper test real mission geography — they’re the same lines D7 follows and squares on. If a squad is flying, mention <code>else</code> for the catch-all case, but don’t gate on it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="d.-patrol-react" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
+<h1>D. Patrol &amp; React</h1>
+<p>One wall is a fluke. A real run is a <strong>patrol</strong>. 🔁</p>
+</section>
+<section id="break-it-the-one-shot-miss" class="slide level2">
+<h2>Break it: the one-shot miss 😴</h2>
+<div class="qbox">
+<p><span class="qtitle">Your sense→act runs <strong>once</strong>. What happens at the <strong>second</strong> wall?</span></p>
+</div>
+<p>🤖 <strong>Robots out.</strong> Run it, aim it at a second wall by hand. Nothing.</p>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p>Your code was <em>right</em> — it just <strong>stopped too soon.</strong> That’s a <strong>loop’s</strong> job.</p>
+</div>
+</div>
+<aside class="notes">
+<p>Let them run the one-shot to death on the real robot: it handles wall 1 perfectly, then dies — perfection that only lasts one event. The point is emotional before it’s technical: “your code was <em>right</em> — it just stopped too soon.” Loops are not a new trick from scratch; they already met <code>while</code> and <code>for</code> on Day 3’s square. Today those loops wrap a <em>sensed</em> decision instead of a fixed count of sides. (The animated one-shot-vs-patrol comparison lives in the 🏠 appendix.)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="name-it-the-patrol-loop" class="slide level2">
+<h2>Name it: the patrol loop 🔁</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="|1|2|3|4-6|7|8|9-10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>hub.imu.reset_heading(<span class="dv">0</span>)</span>
+<span id="cb6-2"><a></a><span class="cf">for</span> lap <span class="kw">in</span> <span class="bu">range</span>(PATROL_LAPS):          <span class="co"># counted repeat = laps</span></span>
+<span id="cb6-3"><a></a>    left.run(PATROL_SPEED)<span class="op">;</span> right.run(PATROL_SPEED)</span>
+<span id="cb6-4"><a></a>    <span class="cf">while</span> <span class="kw">not</span> left.stalled():           <span class="co"># repeat until the wall</span></span>
+<span id="cb6-5"><a></a>        <span class="cf">if</span> left_eye.color() <span class="op">==</span> Color.RED:</span>
+<span id="cb6-6"><a></a>            hub.speaker.beep(<span class="dv">880</span>)       <span class="co"># react, don't stop</span></span>
+<span id="cb6-7"><a></a>        wait(<span class="dv">10</span>)</span>
+<span id="cb6-8"><a></a>    left.stop()<span class="op">;</span> right.stop()</span>
+<span id="cb6-9"><a></a>    drive_straight(<span class="op">-</span>BACKOFF_MM)                <span class="co"># measured back-off</span></span>
+<span id="cb6-10"><a></a>    turn_to(<span class="dv">90</span> <span class="op">*</span> (lap <span class="op">+</span> <span class="dv">1</span>))             <span class="co"># absolute appointment</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>Two loops <strong>nested</strong> — <code>for</code> counts laps, <code>while</code> waits for the wall, the <code>if</code> reacts <strong>on the move.</strong></p>
+</div>
+</div>
+<aside class="notes">
+<p>Read the shape aloud: outer <code>for</code> = “do this lap N times,” inner <code>while not left.stalled()</code> = “keep rolling until you feel the wall,” inner <code>if</code> = “and if you spot red on the way, sing out.” The <code>if</code> living <em>inside</em> the <code>while</code> is the subtle win — reaction happens continuously during motion, not as a stop-and-check. (That’s also why this loop uses <code>left.stalled()</code> rather than the blocking <code>run_until_stalled</code> from this morning — the robot needs to keep <em>checking things</em> while it rolls.) <code>turn_to(90 * (lap + 1))</code> is the library day’s absolute-appointment trick doing its job silently: corner 1 aims at 90, corner 2 at 180 — a bumped corner can’t poison the next one. This program is the literal answer key for Gentle Giant’s loop bonus. With one board and no table borders yet, patrol two “walls” by moving the board between reps or using a wall + heavy box pair — the loop doesn’t care.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="e.-bottle-it-two-new-verbs" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
+<h1>E. Bottle It: Two New Verbs</h1>
+<p>Bottle today’s tricks into <code>my_lib.py</code> — then read the scoresheet like a pro. 📦</p>
+</section>
+<section id="drive_to_wall-and-wall_square-join-the-library" class="slide level2 code-shrink">
+<h2><code>drive_to_wall</code> and <code>wall_square</code> join the library 📦</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-code-line-numbers="|1-5|7-9|10-11|12|13|14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="kw">def</span> drive_to_wall(speed<span class="op">=</span><span class="dv">150</span>):</span>
+<span id="cb7-2"><a></a>    <span class="co">"""Roll gently until the wheels feel the wall."""</span></span>
+<span id="cb7-3"><a></a>    right.run(speed)</span>
+<span id="cb7-4"><a></a>    left.run_until_stalled(speed, duty_limit<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb7-5"><a></a>    right.stop()</span>
+<span id="cb7-6"><a></a></span>
+<span id="cb7-7"><a></a><span class="kw">def</span> wall_square(heading<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb7-8"><a></a>    <span class="co">"""Press BOTH wheels flat on the wall → truth restored."""</span></span>
+<span id="cb7-9"><a></a>    left.run(<span class="dv">120</span>)<span class="op">;</span> right.run(<span class="dv">120</span>)</span>
+<span id="cb7-10"><a></a>    <span class="cf">while</span> <span class="kw">not</span> (left.stalled() <span class="kw">and</span> right.stalled()):</span>
+<span id="cb7-11"><a></a>        wait(<span class="dv">10</span>)</span>
+<span id="cb7-12"><a></a>    left.stop()<span class="op">;</span> right.stop()</span>
+<span id="cb7-13"><a></a>    hub.imu.reset_heading(heading)   <span class="co"># the wall never lies</span></span>
+<span id="cb7-14"><a></a>    drive_straight(<span class="op">-</span>BACKOFF_MM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p>Both wheels flat on the wall → heading <strong>known again</strong>. <strong>The wall never lies.</strong></p>
+</div>
+</div>
+<aside class="notes">
+<p>Same promotion ritual as the library day: the morning’s loose fix-it lines get names and move into <code>my_lib.py</code>, right under <code>drive_straight</code> and <code>turn_to</code>. Walk <code>wall_square</code> slowly — it’s the first verb whose <em>output</em> is trust, not motion: waiting for BOTH motors to stall means the bumper is flat on the wall, so the physical world just told you your heading exactly; <code>reset_heading(heading)</code> writes that truth back into the gyro, and the measured back-off leaves you at a known distance too. Gyro drift accumulates over a 2-minute run — squaring is how Weeks 3–4 missions reset it between tasks, which is why this humble verb outlives almost everything else. Demo: spin the robot a few times by hand (drift injected), wall_square, then a <code>turn_to(90)</code> — still true. Table note (decision #23): until the bordered table exists, <code>wall_square</code> trains on the fixed board; when the table lands we re-validate it at the true border positions — that’s the table-arrival checkpoint.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="read-the-scoresheet-anchor-first" class="slide level2">
+<h2>Read the scoresheet: anchor first 🗺️</h2>
+<div style="width:840px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:8px;">
+    <button onclick="scStep()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:18px;font-weight:700;cursor:pointer;">▶ build the score, layer by layer</button>
+    <button onclick="scReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 16px;font-size:16px;font-weight:700;cursor:pointer;">reset</button>
+  </div>
+  <svg width="820" height="150" viewbox="0 0 820 150" style="display:block;margin:0 auto;">
+    <rect x="30" y="46" width="760" height="46" rx="8" fill="#eef3f8" stroke="#dbe2ea"></rect>
+    <!-- segments: scaled so 255 -> 760px, x start 30 -->
+    <g id="scSegs"></g>
+    <line x1="432.4" y1="34" x2="432.4" y2="104" stroke="#625D9C" stroke-width="2" stroke-dasharray="5 4"></line>
+    <text x="432.4" y="28" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">~135 anchor</text>
+    <line x1="551.6" y1="104" x2="551.6" y2="120" stroke="#E96852" stroke-width="2" stroke-dasharray="5 4"></line>
+    <text x="551.6" y="134" font-size="12" fill="#E96852" font-weight="800" text-anchor="middle">~175 gated</text>
+    <text x="790" y="134" font-size="12" fill="#1C355E" font-weight="800" text-anchor="end">255 max</text>
+  </svg>
+  <div id="scMsg" style="text-align:center;font-size:17px;color:#1C355E;font-weight:700;min-height:26px;">the anchor run scores <b>~135 with NO color sensor</b> — that's what we build first.</div>
+</div>
+<script>
+(function(){
+  var X0=30, W=760, TOT=255, step=0;
+  var segs=[
+    {n:'Instruments', pts:45, c:'#00AE8D', tier:0},
+    {n:'Cables',      pts:30, c:'#00C9A7', tier:0},
+    {n:'Avoidance',   pts:40, c:'#625D9C', tier:0},
+    {n:'Microphone',  pts:20, c:'#9B8EC0', tier:0},
+    {n:'Fixed notes', pts:40, c:'#E96852', tier:1},
+    {n:'Random notes',pts:80, c:'#FFB548', tier:2}
+  ];
+  var msgs=[
+    'the anchor run scores <b>~135 with NO color sensor</b> — that\'s what we build first.',
+    '<b>Anchor ~135</b>: Instruments 45 · Cables 30 · Avoidance 40 · Microphone 20 — zero color needed. 🧱',
+    '<b>+40 fixed notes</b> (green/red) → <b>~175</b>: the gated 5-week deliverable. 🎶',
+    '<b>+80 randomized notes</b> → <b>255</b>: the Week-5 stretch. Anchor first, always. 🌈'
+  ];
+  function el(id){return document.getElementById(id);}
+  function xw(pts){ return pts/TOT*W; }
+  function render(){
+    var g=el('scSegs'), html='', x=X0;
+    // tier 0 shown at step>=1, tier1 at step>=2, tier2 at step>=3
+    for(var i=0;i<segs.length;i++){
+      var s=segs[i], w=xw(s.pts);
+      var on = s.tier < step;
+      html += '<rect x="'+x.toFixed(1)+'" y="46" width="'+(on?w:0).toFixed(1)+'" height="46" fill="'+s.c+'" opacity="'+(on?1:0)+'">'+
+              '</rect>';
+      if(on && w>34) html += '<text x="'+(x+w/2).toFixed(1)+'" y="75" font-size="12" fill="#fff" font-weight="800" text-anchor="middle">'+s.pts+'</text>';
+      x += on ? w : 0;
+    }
+    g.innerHTML=html;
+    el('scMsg').innerHTML=msgs[Math.min(step,3)];
+  }
+  window.scStep=function(){ if(step<3){ step++; render(); } };
+  window.scReset=function(){ step=0; render(); };
+  render();
+})();
+</script>
+<div class="cardbox teal">
+<p><strong>135 points, zero color</strong> — never trade a reliable anchor for a shaky full run.</p>
+</div>
+<aside class="notes">
+<p>This slide connects the whole bootcamp to the scoresheet — and now the mat is physically in the room, point at the real zones while clicking through the tiers. The load-bearing idea: color is <em>risk</em> (lighting, calibration — they just saw the numbers move between surfaces), so we defer every point that needs it. Everything the anchor needs lives color-free: the precise driving and wall verbs this week builds, then the Week-3 team mechanisms — cables, instruments, microphone, avoidance. Fixed notes (+40) arrive Week 4 only after the anchor is locked; randomized notes (+80) are a Week-5 stretch. If a parent asks “why not go for 255 now?”: a reliable 175 beats a heroic 255 you land one time in ten — this is a WRO scoring truth, not a confidence thing.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="f.-compete-gate" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
+<h1>F. Compete &amp; Gate</h1>
+<p>Today’s showdown: <strong>Gentle Giant</strong> 🐘 — on the real mat, against the real wall board.</p>
+</section>
+<section id="gentle-giant-live-on-the-mat" class="slide level2">
+<h2>Gentle Giant 🐘 — live on the mat</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The challenge</strong></p>
+</div>
+<div class="callout-content">
+<p>Feel the wall, back off, stop <strong>exactly 5 cm</strong> away. Closest wins — <strong>loop bonus</strong> for a second wall in the same run.</p>
+</div>
+</div>
+</div>
+<ul>
+<li>Predict your <code>BACKOFF_MM</code> out loud, then prove it</li>
+<li>3 attempts, best counts — judge measures nose-to-board</li>
+<li>🎸 <strong>Roadie preview (fast squads):</strong> push a <strong>cable brick</strong> into the grey zone — library calls only</li>
+</ul>
+<aside class="notes">
+<p>The competition proves the day’s whole chain: stall detection, calibrated back-off, and (for the bonus) the patrol loop — all on the real mat with the board standing in for the missing border (decision #23). The Roadie preview is decision #22’s mission-preview pattern: the cable task is pure pushing, so the bare chassis can score it — squads discover that the <em>approach angle</em> decides whether the cable stays upright, which is exactly the W3 mechanism conversation, planted early for free. Keep the leaderboard warm but light: most-improved call-out as always. (A practice sim of Gentle Giant lives in the 🏠 appendix.)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="todays-gate" class="slide level2">
+<h2>Today’s gate</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>You’re done today when…</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>Your stall + back-off patrol works on <strong>two walls</strong> in one run</li>
+<li><strong><code>drive_to_wall</code></strong> and <strong><code>wall_square</code></strong> live in your <code>my_lib.py</code></li>
+<li>You can say <strong>why the anchor run needs no color sensor</strong></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fragment fade-up">
+<p>Next: <em>Follow the Line</em> — trace a path at speed with a formula you <strong>already own.</strong> 🛣️</p>
+</div>
+<aside class="notes">
+<p>The gate has three legs: the reactive patrol (stall + calibrated back-off + loop across two walls), the two new library verbs demonstrated from <code>my_lib.py</code> (plus the quick oral check: what does <code>duty_limit</code> protect?), and the scoring understanding (anchor-first). All three are observable at the bench in under 20 minutes with five robots. Optional ½-block if time allows — the plan’s “Good Practices” beat gets its full day at the consolidation session, but a taste here is cheap insurance: pseudocode the patrol in plain words first, comment the threshold with its calibration numbers, and back the working file up before the line day. Then tease D7: same <code>error × gain</code> they built for the gyro, now steering an eye down a line — on the mat’s printed staff lines.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="explore-at-home" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #9B8EC0)">
+<h1>🏠 Explore at Home</h1>
+<p>Optional replays — <strong>nothing tomorrow depends on these.</strong> 🎮</p>
+</section>
+<section id="watch-the-speed-die-sim" class="slide level2">
+<h2>🏠 Watch the speed die (sim) 📉</h2>
+<div style="width:820px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:6px;">
+    <button onclick="wsRun()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive the robot into the wall</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;">
+    <svg width="200" height="120" viewbox="0 0 230 150">
+      <rect x="8" y="40" width="180" height="70" rx="8" fill="#eef3f8"></rect>
+      <rect id="wsWall" x="188" y="24" width="18" height="100" rx="4" fill="#625D9C"></rect>
+      <g id="wsBot" transform="translate(30,75)"><g transform="rotate(90) scale(0.5)">
+        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"></rect>
+        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+        <circle cy="-30" r="4" fill="#FFD500"></circle>
+      </g></g>
+      <text x="197" y="18" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">wall</text>
+    </svg>
+    <svg width="560" height="165" viewbox="0 0 560 200">
+      <line x1="50" y1="165" x2="540" y2="165" stroke="#1C355E" stroke-width="3"></line>
+      <line x1="50" y1="165" x2="50" y2="20" stroke="#1C355E" stroke-width="3"></line>
+      <text x="22" y="95" font-size="14" fill="#1C355E" font-weight="700" transform="rotate(-90 22 95)" text-anchor="middle">wheel speed</text>
+      <text x="500" y="188" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">time →</text>
+      <line x1="50" y1="150" x2="540" y2="150" stroke="#E96852" stroke-width="2" stroke-dasharray="7 6"></line>
+      <text x="536" y="145" font-size="13" fill="#E96852" font-weight="700" text-anchor="end">stall level</text>
+      <polyline id="wsTrace" points="" fill="none" stroke="#00AE8D" stroke-width="4"></polyline>
+      <text id="wsFlag" x="300" y="45" font-size="18" fill="#E96852" font-weight="800" text-anchor="middle" opacity="0">🧱 speed hit 0 → the motor felt the wall</text>
+    </svg>
+  </div>
+</div>
+<script>
+(function(){
+  var raf=null, last=null;
+  var X0=50, X1=540, YB=165, TSPAN=3.2, VMAX=180, WALLX=150;
+  function el(id){return document.getElementById(id);}
+  function yOf(v){ return YB - (v/VMAX)*(YB-25); }
+  window.wsRun=function(){
+    var t=0, v=0, botx=30, pts=[], done=false, hit=false; last=null;
+    el('wsTrace').setAttribute('points',''); el('wsFlag').setAttribute('opacity','0');
+    el('wsBot').setAttribute('transform','translate(30,75)');
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var sd=0.008, n=Math.max(1,Math.round(dt/sd));
+      for(var i=0;i<n && !done;i++){
+        if(botx < WALLX){ v += (150-v)*0.12; botx += v*0.02; }   // rolling toward the wall
+        else { hit=true; v *= 0.72; }                            // wheels jammed → speed collapses
+        t += sd;
+        if(hit && v < 12) done=true;
+        if(t > TSPAN) done=true;
+      }
+      var x=X0+(t/TSPAN)*(X1-X0);
+      pts.push(x.toFixed(1)+','+yOf(v).toFixed(1));
+      el('wsTrace').setAttribute('points',pts.join(' '));
+      var bx=30 + (Math.min(botx,WALLX)/WALLX)*143;
+      el('wsBot').setAttribute('transform','translate('+bx.toFixed(1)+',75)');
+      if(!done){ raf=requestAnimationFrame(frame); }
+      else if(hit){ raf=null; el('wsFlag').setAttribute('opacity','1'); }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+<p>The same dive you saw on your real robot — the speed trace collapsing <em>is</em> the wall.</p>
+</section>
+<section id="the-threshold-that-broke-on-gloss-sim" class="slide level2">
+<h2>🏠 The threshold that broke on gloss (sim) 🔥</h2>
+<div style="width:860px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px;">
+    <span style="font-size:16px;color:#1C355E;font-weight:700;">surface:</span>
+    <button id="rmHome" onclick="rmSurf('home')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">📄 practice paper</button>
+    <button id="rmGloss" onclick="rmSurf('gloss')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">🏆 glossy table</button>
+    <span style="font-size:16px;color:#1C355E;font-weight:700;margin-left:12px;">threshold: <b><span id="rmThV">50</span></b></span>
+    <input id="rmTh" type="range" min="0" max="100" step="1" value="50" oninput="rmTh(this.value)" style="width:170px;accent-color:#E96852;">
+  </div>
+  <svg width="820" height="150" viewbox="0 0 820 150" style="display:block;margin:0 auto;">
+    <rect x="60" y="58" width="700" height="26" rx="13" fill="#101820"></rect>
+    <rect x="60" y="58" width="700" height="26" rx="13" fill="url(#rmGrad)"></rect>
+    <defs><lineargradient id="rmGrad" x1="0" x2="1"><stop offset="0" stop-color="#101820"></stop><stop offset="1" stop-color="#ffffff"></stop></lineargradient></defs>
+    <text x="60" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">0 · dark</text>
+    <text x="760" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">100 · bright</text>
+    <!-- threshold line -->
+    <line id="rmThLine" x1="410" y1="44" x2="410" y2="98" stroke="#E96852" stroke-width="3" stroke-dasharray="6 5"></line>
+    <text id="rmThTxt" x="410" y="38" font-size="13" fill="#E96852" font-weight="800" text-anchor="middle">50</text>
+    <!-- markers -->
+    <g id="rmBlack"><circle cy="71" r="11" fill="#1C355E" stroke="#fff" stroke-width="2"></circle><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">black line</text></g>
+    <g id="rmWhite"><circle cy="71" r="11" fill="#FFD500" stroke="#1C355E" stroke-width="2"></circle><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat</text></g>
+  </svg>
+  <div id="rmVerdict" style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;font-weight:700;min-height:28px;">pick a surface — read what the eye actually sees</div>
+</div>
+<script>
+(function(){
+  var X0=60, X1=760, thr=50, surf=null;
+  var S={ home:{white:88, black:10}, gloss:{white:95, black:60} };
+  function el(id){return document.getElementById(id);}
+  function xOf(v){ return X0 + v/100*(X1-X0); }
+  function draw(){
+    el('rmThLine').setAttribute('x1',xOf(thr)); el('rmThLine').setAttribute('x2',xOf(thr));
+    el('rmThTxt').setAttribute('x',xOf(thr)); el('rmThTxt').textContent=thr;
+    if(!surf) return;
+    var s=S[surf];
+    el('rmBlack').setAttribute('transform','translate('+xOf(s.black).toFixed(1)+',0)');
+    el('rmWhite').setAttribute('transform','translate('+xOf(s.white).toFixed(1)+',0)');
+    var blackOK = s.black < thr;   // robot must call the dark line "line"
+    var whiteOK = s.white > thr;   // and the bright mat "clear"
+    var v=el('rmVerdict');
+    if(blackOK && whiteOK){
+      v.style.color='#00AE8D';
+      v.innerHTML='black '+s.black+' &lt; '+thr+' → <b>LINE ✓</b> &nbsp;·&nbsp; white '+s.white+' &gt; '+thr+' → <b>clear ✓</b> &nbsp; 🎯';
+    } else {
+      v.style.color='#E96852';
+      var msg = !blackOK ? ('black reads '+s.black+' — <b>above '+thr+'</b>, so the robot calls the line "clear" and drives right over it. 😬')
+                         : ('white reads '+s.white+' — <b>below '+thr+'</b>, so the robot brakes on empty mat. 😬');
+      v.innerHTML=msg;
+    }
+  }
+  window.rmSurf=function(k){
+    surf=k;
+    el('rmHome').style.background = k==='home' ? '#00C9A7':'#eef3f8';
+    el('rmHome').style.color = k==='home' ? '#fff':'#1C355E';
+    el('rmHome').style.border = k==='home' ? 'none':'2px solid #1C355E';
+    el('rmGloss').style.background = k==='gloss' ? '#00C9A7':'#eef3f8';
+    el('rmGloss').style.color = k==='gloss' ? '#fff':'#1C355E';
+    el('rmGloss').style.border = k==='gloss' ? 'none':'2px solid #1C355E';
+    draw();
+  };
+  window.rmTh=function(v){ thr=parseInt(v,10); el('rmThV').textContent=v; draw(); };
+  window.rmSurf('home');
+})();
+</script>
+<p>On a glossy venue table, “black” can bounce back <strong>60</strong> — drag the threshold and rescue the robot.</p>
+</section>
+<section id="one-shot-vs-patrol-sim" class="slide level2">
+<h2>🏠 One-shot vs patrol (sim) 🔁</h2>
+<div style="width:820px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
+    <button onclick="ptRun('once')" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ one-shot <code style="color:#fff;">if</code></button>
+    <button onclick="ptRun('loop')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ patrol loop</button>
+  </div>
+  <svg width="270" height="270" viewbox="0 0 360 360" style="display:block;margin:0 auto;background:#eef3f8;border-radius:14px;">
+    <rect x="40" y="40" width="280" height="280" fill="none" stroke="#625D9C" stroke-width="8"></rect>
+    <text id="ptW1" x="180" y="30" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle">wall 1</text>
+    <text id="ptW2" x="336" y="184" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle" transform="rotate(90 336 184)">wall 2</text>
+    <text id="ptW3" x="180" y="344" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle">wall 3</text>
+    <text id="ptW4" x="24" y="184" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle" transform="rotate(-90 24 184)">wall 4</text>
+    <polyline id="ptTrace" points="" fill="none" stroke="#00C9A7" stroke-width="3" stroke-linejoin="round"></polyline>
+    <g id="ptBot" transform="translate(180,300)"><g transform="scale(0.55)">
+      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"></rect>
+      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+      <circle cy="-30" r="4" fill="#FFD500"></circle>
+    </g></g>
+    <text id="ptMsg" x="180" y="185" font-size="17" font-weight="800" text-anchor="middle" fill="#1C355E"></text>
+  </svg>
+</div>
+<script>
+(function(){
+  var raf=null, last=null;
+  var NOSE=16.5, LO=44, HI=316;      // wall inner edges; the nose leads by 16.5px
+  function el(id){return document.getElementById(id);}
+  // corner heading pattern: start bottom-center facing up (-90)
+  window.ptRun=function(mode){
+    var laps = mode==='loop' ? 4 : 1;
+    var x=180, y=300, h=-90, pts=['180,300'];
+    var leg=0, phase='drive', prog=0;
+    var col = mode==='loop' ? '#00C9A7' : '#E96852';
+    el('ptTrace').setAttribute('stroke',col); el('ptTrace').setAttribute('points','180,300');
+    el('ptMsg').textContent=''; last=null;
+    ['ptW1','ptW2','ptW3','ptW4'].forEach(function(id){ el(id).setAttribute('fill','#9B8EC0'); });
+    var wallIds=['ptW1','ptW2','ptW3','ptW4'];
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var r=h*Math.PI/180, sp=150;
+      if(phase==='drive'){
+        x+=sp*Math.cos(r)*dt; y+=sp*Math.sin(r)*dt;
+        var nx=x+Math.cos(r)*NOSE, ny=y+Math.sin(r)*NOSE;   // where the nose is
+        if(nx<LO||nx>HI||ny<LO||ny>HI){                     // nose met a wall → stall
+          if(nx<LO)x=LO+NOSE; if(nx>HI)x=HI-NOSE;
+          if(ny<LO)y=LO+NOSE; if(ny>HI)y=HI-NOSE;
+          el(wallIds[leg]).setAttribute('fill','#E96852'); phase='back'; prog=0;
+        }
+        pts.push(x.toFixed(1)+','+y.toFixed(1)); el('ptTrace').setAttribute('points',pts.join(' '));
+      } else if(phase==='back'){
+        x-=sp*Math.cos(r)*dt; y-=sp*Math.sin(r)*dt; prog+=sp*dt;
+        pts.push(x.toFixed(1)+','+y.toFixed(1)); el('ptTrace').setAttribute('points',pts.join(' '));
+        if(prog>=32){ leg++; phase='turn'; }
+      } else if(phase==='turn'){
+        if(leg>=laps){ raf=null; finish(mode); return; }
+        h+=90; phase='drive';
+      }
+      el('ptBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(h+90).toFixed(1)+')');
+      raf=requestAnimationFrame(frame);
+    }
+    function finish(m){
+      if(m==='once'){ el('ptMsg').setAttribute('fill','#E96852'); el('ptMsg').textContent='program ended 💤 — walls 2–4 never happen'; }
+      else { el('ptMsg').setAttribute('fill','#00AE8D'); el('ptMsg').textContent='4 walls patrolled ✓'; }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+<p>Your code was <em>right</em> — it just stopped too soon. Watch the loop keep the decision alive.</p>
+</section>
+<section id="gentle-giant-practice-sim" class="slide level2">
+<h2>🏠 Gentle Giant practice (sim) 🐘</h2>
+<div style="width:840px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px;">
+    <button onclick="ggRun()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ stall &amp; back off</button>
+    <span style="font-size:16px;color:#1C355E;font-weight:700;">BACKOFF_MM: <b><span id="ggV">50</span></b></span>
+    <input type="range" min="0" max="110" step="1" value="50" oninput="ggSet(this.value)" style="width:200px;accent-color:#00AE8D;">
+  </div>
+  <svg width="820" height="150" viewbox="0 0 820 150" style="display:block;margin:0 auto;">
+    <rect x="20" y="48" width="770" height="66" rx="10" fill="#eef3f8"></rect>
+    <rect x="762" y="34" width="20" height="94" rx="4" fill="#625D9C"></rect>
+    <text x="772" y="26" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">wall</text>
+    <!-- 5 cm target zone: 50 mm before the wall. scale 4 px/mm -> 200px -->
+    <line x1="562" y1="40" x2="562" y2="122" stroke="#00AE8D" stroke-width="3" stroke-dasharray="6 5"></line>
+    <text x="562" y="140" font-size="12" fill="#00AE8D" font-weight="800" text-anchor="middle">5 cm mark 🎯</text>
+    <g id="ggBot" transform="translate(60,81)"><g transform="rotate(90) scale(0.5)">
+      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"></rect>
+      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+      <circle cy="-30" r="4" fill="#FFD500"></circle>
+    </g></g>
+  </svg>
+  <div id="ggMsg" style="text-align:center;font-family:Consolas,monospace;font-size:18px;color:#1C355E;font-weight:700;min-height:26px;">set your back-off, then run — 50 mm lands you on the mark.</div>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, backoff=50;
+  var WALLX=762, PXMM=4, NOSE=15;        // 4 px per mm; wall face at x=762; nose leads by 15px
+  function el(id){return document.getElementById(id);}
+  window.ggSet=function(v){ backoff=parseInt(v,10); el('ggV').textContent=v; };
+  window.ggRun=function(){
+    var x=60, phase='fwd', bo=backoff; last=null;
+    el('ggMsg').style.color='#1C355E'; el('ggMsg').textContent='rolling in…';
+    var touchX = WALLX - NOSE;           // nose touches wall
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      if(phase==='fwd'){
+        x += 320*dt;
+        if(x>=touchX){ x=touchX; phase='stall'; el('ggMsg').textContent='🧱 stalled — backing off '+bo+' mm'; }
+      } else if(phase==='back'){
+        x -= 260*dt;
+        if(x <= touchX - bo*PXMM){ x=touchX - bo*PXMM; phase='done'; }
+      } else if(phase==='stall'){ phase='back'; }
+      el('ggBot').setAttribute('transform','translate('+x.toFixed(1)+',81) rotate(90)');
+      if(phase==='done'){
+        raf=null;
+        var gapMm = Math.round((WALLX - (x+NOSE))/PXMM);   // distance nose→wall
+        var err = Math.abs(gapMm-50);
+        if(err<=1){ el('ggMsg').style.color='#00AE8D'; el('ggMsg').innerHTML='landed <b>'+gapMm+' mm</b> off the wall — bullseye on 5 cm 🎯'; }
+        else { el('ggMsg').style.color='#E96852'; el('ggMsg').innerHTML='landed <b>'+gapMm+' mm</b> off — <b>'+err+' mm</b> from the 5 cm mark. Re-tune BACKOFF_MM.'; }
+        return;
+      }
+      raf=requestAnimationFrame(frame);
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+<p>Replay today’s competition — slide <code>BACKOFF_MM</code> off 50 and watch the score suffer.</p>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../slides_template/assets/sdaia.svg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/NaifMersal\.github\.io\/WRO-LEGO-pypricks\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

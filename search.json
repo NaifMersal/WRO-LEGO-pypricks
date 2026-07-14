@@ -1,248 +1,346 @@
 [
   {
-    "objectID": "slides/pid-on-the-gyro.html#where-we-left-off",
-    "href": "slides/pid-on-the-gyro.html#where-we-left-off",
-    "title": "The Drive That Heals Itself",
+    "objectID": "slides/stop-patrol-react.html#where-we-left-off",
+    "href": "slides/stop-patrol-react.html#where-we-left-off",
+    "title": "Stop at the Wall",
     "section": "Where we left off",
-    "text": "Where we left off\n\n\n\n\n\n\n\nYesterday\nThe trick\n\n\n\n\n🧭 heading\none number for “which way” — net turning since reset_heading(0)\n\n\n👀 the watched turn\nspin · watch heading() · stop at the target — while\n\n\n🔁 loops, nested\nfor draws the shape, while lands the corner — 360 ÷ sides\n\n\n🚨 the open case\nit printed 94 — guilty party: momentum. Diagnosed, not cured\n\n\n\n\n🤔 Shape Shifter’s traces told the same story: every corner a few degrees hot, and the octagon paid 8 times. Today the coast meets its cure.\n\n⏱️ Time: 10 minutes"
+    "text": "Where we left off\n\n\n\nLast week\nWhat you own\n\n\n\n\n📦 my_lib.py begins\ndrive_straight · turn_to\n\n\n📏 measured, not guessed\nDEG_PER_MM, rolled & measured\n\n\n🔁 replay a plan\ndrive_square(300) snaps shut\n\n\n\n\n🤔 But a script is blind — today’s new job: sense → decide → act.\n\n⏱️ Time: 5 minutes — then a bug hunt\n\nRecap by asking, not telling: “what does drive_straight(300) know about the world?” Nothing — it counts wheel-degrees (healing its heading on the way) and stops. That’s replay. Today’s whole arc is the opposite: the robot reads something live, then chooses what to do. Three new powers land today — the motor as a sensor (stall = touch), the color eye (reflection = the echo of its own light), and if/else (the first real decision) — then we wrap them in a loop so one decision becomes a patrol, and the library gains its first sensing verbs. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15, so the recap is a springboard, not a lecture."
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#setup-same-bench-one-new-import",
-    "href": "slides/pid-on-the-gyro.html#setup-same-bench-one-new-import",
-    "title": "The Drive That Heals Itself",
-    "section": "Setup — same bench, one new import",
-    "text": "Setup — same bench, one new import\nfrom pybricks.hubs import PrimeHub\nfrom pybricks.pupdevices import Motor\nfrom pybricks.parameters import Port, Direction\nfrom pybricks.tools import wait, StopWatch\n\nhub = PrimeHub()\nleft = Motor(Port.A, Direction.COUNTERCLOCKWISE)\nright = Motor(Port.E)\n\n# your watched turn from yesterday goes here — it still coasts to ~94. For now.\n\nEveryone starts from their own D3 file — imports plus their watched-turn lines. StopWatch sneaks into the imports here; it gets used (and explained in one breath) in the race lab. Recap by asking, not telling: “walk me through your watched turn line by line — and who was guilty for the 94?” — two or three students, one loop. Do NOT preview the fix; the next act builds it from the coast they already diagnosed."
+    "objectID": "slides/stop-patrol-react.html#bug-hunt-the-tune-that-didnt-stick",
+    "href": "slides/stop-patrol-react.html#bug-hunt-the-tune-that-didnt-stick",
+    "title": "Stop at the Wall",
+    "section": "🔎 Bug hunt: the tune that didn’t stick",
+    "text": "🔎 Bug hunt: the tune that didn’t stick\ndef make_it_sharper():\n    KP = 12          # crank steering for the whole library… right?\n\nmake_it_sharper()\ndrive_straight(300)  # …still lazy. Nothing changed. 😤\n\nWatch it stay lazy — find the bug. Where should KP = 12 live?\n\n\n\nInside a def you made a local — dead the moment it returned. Change globals only at the top.\n\n\n\nThis closes Day 5’s leftover (globals/shadowing), delivered as a live hunt instead of slides — decision #22. Run the planted bug on the coach robot and let squads diagnose for ~5 minutes before any reveal; the 😤 must be theirs. Two live moments: (1) the fix — move KP = 12 to the constants block, rerun, the straight sharpens; (2) print(error) after a run → NameError, proof that locals evaporate (and that’s a feature: every verb gets private scratch names). Close with the D5 verbal pass, squad by squad, in their own words: default = factory setting · keyword = one-call override · top of file = global · inside a def = local. Do NOT teach the global keyword — the constants-block discipline is strictly better. Coach’s radar for W2–3: “I tuned it and it didn’t stick” → first question is where did you assign it?"
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#feel-the-fix-arrive-slowly",
-    "href": "slides/pid-on-the-gyro.html#feel-the-fix-arrive-slowly",
-    "title": "The Drive That Heals Itself",
-    "section": "Feel the fix: arrive slowly",
-    "text": "Feel the fix: arrive slowly\n🚗 that's your robot seen from above — nose up = heading 0°. The judge calls: turn right to the 90° tick.\n\n  \n    🚀 Full speed all the way\n    \n      \n      \n      90°\n      \n      \n        \n        \n        \n        \n        \n        \n        \n      \n    \n    0° \n  \n  \n    ▶ Turn to 90°\n  \n  \n    🐢 Fast, then crawl\n    \n      \n      \n      90°\n      \n        \n        \n        \n        \n        \n        \n        \n      \n    \n    0° \n  \n\n\n\n\nSame target. Same gyro. The only difference: the 🐢 arrives slowly — so there’s nothing left to coast. Fast when far, slow when close."
+    "objectID": "slides/stop-patrol-react.html#robots-out-bullseye-on-the-real-mat",
+    "href": "slides/stop-patrol-react.html#robots-out-bullseye-on-the-real-mat",
+    "title": "Stop at the Wall",
+    "section": "🤖 Robots out: Bullseye on the real mat 🎯",
+    "text": "🤖 Robots out: Bullseye on the real mat 🎯\n\n🎯 drive_straight(1000) on the real mat — one attempt, ±2 cm passes\n📦 drive_square(300) — watch it snap shut where it started\n⏱️ 15 minutes, then the robot gets its sense of touch\n\n\nPure energy burner with a hidden agenda: it closes the remaining D5 gate legs (drive_straight 1.0 m ±2 cm, square closed) on the real surface, and it front-loads the session with driving instead of sitting — the drill-first rhythm (decision #22). Logistics: mat on the ground, no table yet (decision #23) — the wall board goes at the mat edge for the stall work later; nothing today needs borders at true positions. Watch for surprises vs the tape field: the print’s friction and colour differ — if someone’s 1 m lands long/short vs last week, that’s the calibration-transfer checkpoint doing its job (re-measure, don’t panic). Keep it to 15 minutes; the leaderboard can wait for Gentle Giant."
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#the-fix-in-code",
-    "href": "slides/pid-on-the-gyro.html#the-fix-in-code",
-    "title": "The Drive That Heals Itself",
-    "section": "The fix, in code",
-    "text": "The fix, in code\ndef gyro_turn(target):                        # def = name a move once, use it forever\n    hub.imu.reset_heading(0)\n    left.run(200); right.run(-200)            # fast for the long haul…\n    while hub.imu.heading() &lt; target - 30:\n        wait(5)\n    left.run(50); right.run(-50)              # …crawl the last 30°\n    while hub.imu.heading() &lt; target:\n        wait(5)\n    left.stop(); right.stop()\n\ngyro_turn(90)     # or gyro_turn(45), gyro_turn(180)…\n\n\nTwo speeds, two whiles: fast for the long haul, crawl the last 30° — momentum arrives with nothing left to steal. And line 1: def names the move once; every call replays it.\n\n\n\nFirst def of the bootcamp — land it hard: a function is a named move, exactly like run_angle is someone else’s named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two run signs and the &lt; to &gt;, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; RobotConfig at D10. Demo on the next slide — walk the highlights here first."
+    "objectID": "slides/stop-patrol-react.html#feel-it-see-the-invisible",
+    "href": "slides/stop-patrol-react.html#feel-it-see-the-invisible",
+    "title": "Stop at the Wall",
+    "section": "Feel it: see the invisible 📉",
+    "text": "Feel it: see the invisible 📉\n# Run this ALONE first — watch the number, not the robot.\nwhile True:\n    print(\"wheel speed:\", left.speed())\n    wait(100)\n🤖 Robots out. Run the loop, grab the wheels — watch it dive. Then the wall board: same dive, no hand.\n\n\nThe speed dive is the wall — every motor has stalled() and run_until_stalled().\n\n\n\n“Make the invisible visible” — same habit as the gyro heading in Week 1, and this one happens on the real robot, not a slide (the animated version lives in the 🏠 appendix for home replay). Sequence: print loop running → student hand-blocks the wheels → speed crashes → then the same crash against the wall board. Only after they’ve seen the crash do you name the stall tools: left.stalled() asks “are you jammed right now?”, left.run_until_stalled() is “roll until you jam” in one call. Point out why this beats an ultrasonic sensor even if we had a free port: a touch via stall is repeatable to the millimetre and never lies about a wall it can “see through.”"
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#one-recipe-card-many-calls",
-    "href": "slides/pid-on-the-gyro.html#one-recipe-card-many-calls",
-    "title": "The Drive That Heals Itself",
-    "section": "One recipe card, many calls 📝",
-    "text": "One recipe card, many calls 📝\n\n  \n    call the one recipe:\n    gyro_turn(45)\n    gyro_turn(90)\n    gyro_turn(180)\n  \n  \n    \n      📝 one recipe card\n      def gyro_turn(target):\n        fast … then crawl\n        stop at the target\n    \n    \n      \n        \n        \n        \n          \n          \n          \n          \n          \n          \n          \n        \n      \n      landed –°\n      calls made: 0 · recipes written: 1\n    \n  \n\n\n\n\nThe 94 is cured — and you just wrote your first robot move: one recipe card, any number of calls, and the 🚗 parks on every tick.\n\n\n\n\nCan you beat two speeds? Imagine speed shrinking as the degrees-left shrink. Hold that thought — it comes due before lunch. 😏\n\n\n\nRun the demo BEFORE any fragment: click all three calls, watch the same recipe card flash and the car park on three different ticks — that is the def/call story, animated. Only then reveal the cards. The teal teaser plants the smarter fix (push proportional to distance-left) — do NOT name it: it gets built and named before lunch as the start of the PID story."
+    "objectID": "slides/stop-patrol-react.html#fix-it-stall-touch-then-back-off",
+    "href": "slides/stop-patrol-react.html#fix-it-stall-touch-then-back-off",
+    "title": "Stop at the Wall",
+    "section": "Fix it: stall = touch, then back off 🧱",
+    "text": "Fix it: stall = touch, then back off 🧱\nAPPROACH_SPEED = 150         # deg/s — gentle, not a crash\nright.run(APPROACH_SPEED)    # right rolls along…\nleft.run_until_stalled(APPROACH_SPEED,\n                       duty_limit=50)   # …until LEFT jams\nright.stop()\nhub.speaker.beep()           # \"I arrived\"\ndrive_straight(-BACKOFF_MM)         # measured, repeatable\n🤖 Robots out. Build it, tune BACKOFF_MM against the board — this is today’s competition in seven lines.\n\n\nGentle touch · wait for the jam · back off a measured BACKOFF_MM.\n\n\n\nStress the gentleness knobs: a low approach speed (≈150 deg/s) and duty_limit=50 — the duty limit caps how hard the motor is allowed to push, so the reading is crisp and the LEGO survives. Driving straight into a wall jams both wheels, so watching ONE motor is enough — run_until_stalled blocks on the left while the right just rolls. Line 6 calls their own drive_straight with a negative distance — the challenge parked at the library day is now urgent: flip the while comparison (or mirror it for negatives) in my_lib.py, two-minute fix, big payoff. Back-off is measured, not guessed — BACKOFF_MM = 50 ends exactly 5 cm off the wall, every run. (The pro equivalent, DriveBase.stalled(), arrives with the D10 reveal.)"
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#bug-hunt-the-silent-robot",
-    "href": "slides/pid-on-the-gyro.html#bug-hunt-the-silent-robot",
-    "title": "The Drive That Heals Itself",
-    "section": "🐛 Bug hunt: the silent robot",
-    "text": "🐛 Bug hunt: the silent robot\n\nNo red error. No crash. The robot just… sits there. The code looks perfect. What did we forget?\n\ndef gyro_turn(target):\n    hub.imu.reset_heading(0)\n    left.run(200); right.run(-200)\n    while hub.imu.heading() &lt; target:\n        wait(5)\n    left.stop(); right.stop()\n\n\ndef only writes the recipe — it never cooks it. Nothing happens until you call the move by name: add gyro_turn(90) below. Defining a move and using a move are two separate steps.\n\n\n\nThe most instructive bug of the week — no error to read, so the robot’s stillness is the message. Elicit first: “if the code is right, why no movement?” Draw the split on the board — def …: writes the recipe card, gyro_turn(90) hands it to the cook. Leads straight into the bench lab, where they call it three times."
+    "objectID": "slides/stop-patrol-react.html#meet-the-eye",
+    "href": "slides/stop-patrol-react.html#meet-the-eye",
+    "title": "Stop at the Wall",
+    "section": "Meet the eye 🔦",
+    "text": "Meet the eye 🔦\nA flashlight + light meter in one brick — it measures its own echo.\n\n  \n    \n      \n      \n      \n    \n    \n    reflection() → 10\n    reflection() → 88\n    \n    \n      \n      \n    \n    \n      \n      \n    \n    \n    \n    \n    \n    \n    \n    \n    \n    \n    black line — echo swallowed\n    white mat — echo bounces back\n    same flashlight —\n    different echo\n  \n\nleft_eye.reflection()   # 0-100: % of its OWN light echoing back\nleft_eye.color()        # a name: Color.RED... (Week 4's tool)\n\n\nAnything that changes the echo changes the number — ✨ gloss · 💡 light · 📏 height.\n\n\n\nThe live demo beats the diagram: run a print(left_eye.reflection()) loop, hold the robot, and let students slide surfaces under the eye, tilt it, lift it — the number dances. Establish the active-sensor idea: it brings its own LED, so it mostly ignores the room, but gloss, sensor height, and strong ambient light still shift the echo — which is exactly why every surface gets its own calibration (next slide). reflection() vs color(): today reflection does all the work; color() names colors and gets one cameo (the RED beep) — its real job is Week 4’s notes. Two eyes fill ports B and F; today one eye is plenty — D7 explains why we carry two."
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#bench-check-tune-your-crawl",
-    "href": "slides/pid-on-the-gyro.html#bench-check-tune-your-crawl",
-    "title": "The Drive That Heals Itself",
-    "section": "Bench check: tune your crawl 🎯",
-    "text": "Bench check: tune your crawl 🎯\n\nBuild gyro_turn, then judge-call yourself: 90° · 45° · 180° — print the landing each time.\nTune 200 / 50 / 30 until 90° lands within a degree or two. Write your three numbers on a sticky note — they’re about to testify.\n\n⏱️ Time: 20 minutes\n\nPerfect Pivot, folded into a bench lab: the cure is verified on 90°, but nobody is asked (yet) whether one tuning serves all three calls — that tension is the next act’s job. Make every squad physically write their three numbers down; the race lab reads them straight back."
+    "objectID": "slides/stop-patrol-react.html#break-it-the-threshold-you-guessed",
+    "href": "slides/stop-patrol-react.html#break-it-the-threshold-you-guessed",
+    "title": "Stop at the Wall",
+    "section": "Break it: the threshold you guessed 🔥",
+    "text": "Break it: the threshold you guessed 🔥\n\nLast week the tape split at 50 (white 88, black 10). Does 50 still work on the mat? The floor?\n\n🤖 Robots out. Print reflection() across three surfaces — tape · mat · floor. Log white & black for each.\n\n\nA threshold is a fact about a surface — read white · read black · split the middle.\n\n\n\nLet each squad predict before measuring — commitments make the surprise land. The printed mat just arrived (decision #23), so this is also the real calibration-transfer checkpoint from the plan: the numbers they log here ARE the re-logged thresholds. Expected outcome: the mat’s white and the tape-field’s white read differently (print ink vs paper, matte tarp vs tape), the split point moves, and the habit lands — look first, then split what you actually see. The glossy-table failure (black reading 60, &lt; 50 calling the line “clear” and driving over it) is the venue-day version of the same lesson; it lives as an interactive sim in the 🏠 appendix since we don’t have a glossy table in the room — mention it, don’t show it. The takeaway is a habit, not a number: re-read and re-split, every surface."
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#three-calls-one-tuning",
-    "href": "slides/pid-on-the-gyro.html#three-calls-one-tuning",
-    "title": "The Drive That Heals Itself",
-    "section": "Three calls, one tuning 🎯⏱️",
-    "text": "Three calls, one tuning 🎯⏱️\n\nThe judge calls 45° → 90° → 180°, back-to-back, same gyro_turn — and today the clock counts too. Predict: which call comes out sleepy? Which one blows past — and what would make it?\nHint: sketch where the crawl zone starts for each call.\n\n\nDo the sketch with your partner and write both predictions down — the stopwatch is about to grade them. 👀\n\n\nPure prediction, nothing revealed. The sketch gives it away for 45: the crawl zone starts at 15°, so two-thirds of the turn is crawl — sleepy. For 180 the zone is proportionally tiny — fine at 200 deg/s, but the moment someone chases the clock by cranking the speed, the robot arrives at the zone hot and 30° isn’t enough braking distance. Don’t say any of that — collect predictions on the board and let the race lab answer."
+    "objectID": "slides/stop-patrol-react.html#fix-it-calibrate-then-decide-if-else",
+    "href": "slides/stop-patrol-react.html#fix-it-calibrate-then-decide-if-else",
+    "title": "Stop at the Wall",
+    "section": "Fix it: calibrate, then decide — if / else 🎚️",
+    "text": "Fix it: calibrate, then decide — if / else 🎚️\n# Calibrate FIRST — measure, never guess\nREFLECT_THRESHOLD = 50              # for THIS surface\nwhile True:\n    if left_eye.color() == Color.RED:\n        hub.speaker.beep(frequency=880)     # high beep on red\n    elif left_eye.reflection() &lt; REFLECT_THRESHOLD:\n        hub.speaker.beep(frequency=220)     # low beep on a line\n    wait(50)\n🤖 Robots out. Threshold from your mat numbers — low beep on lines, high beep on red.\n\n\nif … elif is the robot choosing — new surface → re-calibrate the threshold, never the code.\n\n\n\nThis is the just-in-time concept for the day: if/elif + booleans. Keep it concrete — a boolean is the answer to a yes/no question the robot asks the world (color() == RED, reflection() &lt; 50). elif = “otherwise, check this next.” Tie it straight back to the three-surface ritual: the threshold is data you recalibrate per surface; the if/elif structure never changes. The mat’s printed staff lines make the beeper test real mission geography — they’re the same lines D7 follows and squares on. If a squad is flying, mention else for the catch-all case, but don’t gate on it."
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#lab-race-your-own-turn",
-    "href": "slides/pid-on-the-gyro.html#lab-race-your-own-turn",
-    "title": "The Drive That Heals Itself",
-    "section": "Lab: race your own turn 🏁",
-    "text": "Lab: race your own turn 🏁\ntimer = StopWatch()                 # a stopwatch, in code\n\nfor target in [45, 90, 180]:\n    timer.reset()\n    gyro_turn(target)\n    print(target, \"-&gt;\", timer.time(), \"ms, landed\", hub.imu.heading())\n    wait(3000)                      # set the robot straight again\n\nRun it with your bench tuning — the sticky note. Look at 45°’s time. Sleepy? That’s the crawl lane eating two-thirds of a small turn.\nNow chase the clock: crank the fast speed 200 → 500 and rerun. Look at where 180° lands. 😬\n\n\n\nOne tuning, three calls: accurate but sleepy — or fast but flying past. The fixed crawl zone can’t serve every angle and every speed.\n\n\n\nBoard the results next to the predictions. Expected shape: at 200, everything lands within a few degrees but 45 feels absurdly slow for such a small turn and 180 takes ~2 s; at 500, the 180 blows through the 30° zone still hot and coasts well past (the 45 mostly survives — its crawl lane absorbs the speed). Battery level moves these numbers — that’s a feature, mention it. Squads that finish early: try 90 at 500 too."
+    "objectID": "slides/stop-patrol-react.html#break-it-the-one-shot-miss",
+    "href": "slides/stop-patrol-react.html#break-it-the-one-shot-miss",
+    "title": "Stop at the Wall",
+    "section": "Break it: the one-shot miss 😴",
+    "text": "Break it: the one-shot miss 😴\n\nYour sense→act runs once. What happens at the second wall?\n\n🤖 Robots out. Run it, aim it at a second wall by hand. Nothing.\n\n\nYour code was right — it just stopped too soon. That’s a loop’s job.\n\n\n\nLet them run the one-shot to death on the real robot: it handles wall 1 perfectly, then dies — perfection that only lasts one event. The point is emotional before it’s technical: “your code was right — it just stopped too soon.” Loops are not a new trick from scratch; they already met while and for on Day 3’s square. Today those loops wrap a sensed decision instead of a fixed count of sides. (The animated one-shot-vs-patrol comparison lives in the 🏠 appendix.)"
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#the-tuning-treadmill",
-    "href": "slides/pid-on-the-gyro.html#the-tuning-treadmill",
-    "title": "The Drive That Heals Itself",
-    "section": "The tuning treadmill 🎡",
-    "text": "The tuning treadmill 🎡\n\nFix it with yesterday’s toolbox: a wider crawl zone? A third speed? A different tuning per angle? — what does each one cost?\nTalk it out. Follow each fix two steps ahead.\n\n\nBoard your fixes — then we test-drive every single one. 🚗\n\n⏱️ Time: 20 minutes (discussion + test-drives)\n\nThis is the morning’s teal teaser (“imagine speed shrinking as the degrees-left shrink”) coming due. Let them propose the staircase fixes seriously — each is a real idea with a real cost; the point isn’t that they’re dumb, it’s that they don’t scale. Collect the fixes on the board first; the next slide drives them."
+    "objectID": "slides/stop-patrol-react.html#name-it-the-patrol-loop",
+    "href": "slides/stop-patrol-react.html#name-it-the-patrol-loop",
+    "title": "Stop at the Wall",
+    "section": "Name it: the patrol loop 🔁",
+    "text": "Name it: the patrol loop 🔁\nhub.imu.reset_heading(0)\nfor lap in range(PATROL_LAPS):          # counted repeat = laps\n    left.run(PATROL_SPEED); right.run(PATROL_SPEED)\n    while not left.stalled():           # repeat until the wall\n        if left_eye.color() == Color.RED:\n            hub.speaker.beep(880)       # react, don't stop\n        wait(10)\n    left.stop(); right.stop()\n    drive_straight(-BACKOFF_MM)                # measured back-off\n    turn_to(90 * (lap + 1))             # absolute appointment\n\n\nTwo loops nested — for counts laps, while waits for the wall, the if reacts on the move.\n\n\n\nRead the shape aloud: outer for = “do this lap N times,” inner while not left.stalled() = “keep rolling until you feel the wall,” inner if = “and if you spot red on the way, sing out.” The if living inside the while is the subtle win — reaction happens continuously during motion, not as a stop-and-check. (That’s also why this loop uses left.stalled() rather than the blocking run_until_stalled from this morning — the robot needs to keep checking things while it rolls.) turn_to(90 * (lap + 1)) is the library day’s absolute-appointment trick doing its job silently: corner 1 aims at 90, corner 2 at 180 — a bumped corner can’t poison the next one. This program is the literal answer key for Gentle Giant’s loop bonus. With one board and no table borders yet, patrol two “walls” by moving the board between reps or using a wall + heavy box pair — the loop doesn’t care."
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#test-drive-the-fixes",
-    "href": "slides/pid-on-the-gyro.html#test-drive-the-fixes",
-    "title": "The Drive That Heals Itself",
-    "section": "Test-drive the fixes 🚗",
-    "text": "Test-drive the fixes 🚗\n\n  \n    your fixes:\n    wider zone\n    + a speed\n    table per angle\n    reset\n    ▶ drive it\n  \n  \n    \n      \n      \n      wheel speed\n      🚀\n      🐢\n      degrees still to go\n      0 🎯\n      \n      \n      \n      cliff at 0: stop() while still moving 🤞\n      \n      \n      you are HERE\n    \n    \n      \n        \n        \n        \n          \n            \n            \n            \n            \n            \n            \n            \n          \n        \n      \n      landed –°in – s\n    \n  \n  \n    knobs to hand-tune: 2 · two speeds, one crawl zone — where we started\n  \n\n\n\n\nEvery fix adds a step and a knob — and every drive still ends the same: the 🚗 crosses the cliff still moving. What you actually want: speed that shrinks by itself as the degrees-left shrink.\n\n\n\nHow to read the picture — say it out loud, every time: the yellow dot is the robot’s moment: how far it walks right = degrees used up; how high it sits = how hard the wheels push. Apply a fix, hit ▶ drive it, and narrate the dot + car together: “far away → high up → car whips around… close → low → car creeps.” Wider zone: slower time, same coast. Extra speed: better time, same coast. Table: same staircase, ×10 retuning. The landing readout says ~92-and-something every single run — THAT’s the cliff no staircase removes. Someone usually says the magic sentence (“just make the speed depend on how far is left”) — hand them the chalk."
+    "objectID": "slides/stop-patrol-react.html#drive_to_wall-and-wall_square-join-the-library",
+    "href": "slides/stop-patrol-react.html#drive_to_wall-and-wall_square-join-the-library",
+    "title": "Stop at the Wall",
+    "section": "drive_to_wall and wall_square join the library 📦",
+    "text": "drive_to_wall and wall_square join the library 📦\ndef drive_to_wall(speed=150):\n    \"\"\"Roll gently until the wheels feel the wall.\"\"\"\n    right.run(speed)\n    left.run_until_stalled(speed, duty_limit=50)\n    right.stop()\n\ndef wall_square(heading=0):\n    \"\"\"Press BOTH wheels flat on the wall → truth restored.\"\"\"\n    left.run(120); right.run(120)\n    while not (left.stalled() and right.stalled()):\n        wait(10)\n    left.stop(); right.stop()\n    hub.imu.reset_heading(heading)   # the wall never lies\n    drive_straight(-BACKOFF_MM)\n\n\nBoth wheels flat on the wall → heading known again. The wall never lies.\n\n\n\nSame promotion ritual as the library day: the morning’s loose fix-it lines get names and move into my_lib.py, right under drive_straight and turn_to. Walk wall_square slowly — it’s the first verb whose output is trust, not motion: waiting for BOTH motors to stall means the bumper is flat on the wall, so the physical world just told you your heading exactly; reset_heading(heading) writes that truth back into the gyro, and the measured back-off leaves you at a known distance too. Gyro drift accumulates over a 2-minute run — squaring is how Weeks 3–4 missions reset it between tasks, which is why this humble verb outlives almost everything else. Demo: spin the robot a few times by hand (drift injected), wall_square, then a turn_to(90) — still true. Table note (decision #23): until the bordered table exists, wall_square trains on the fixed board; when the table lands we re-validate it at the true border positions — that’s the table-arrival checkpoint."
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#you-already-run-this-controller",
-    "href": "slides/pid-on-the-gyro.html#you-already-run-this-controller",
-    "title": "The Drive That Heals Itself",
-    "section": "You already run this controller 🚶",
-    "text": "You already run this controller 🚶\n\n\n\n\n\n\nThe game\n\n\nStand three big steps from the wall. Walk to it and stop with your toes exactly on the line. Round 1: normal. Round 2: robot style — full speed, then slam the brakes at the end. Round 3: crawl the entire way. Which round felt right — and what were your legs doing in it?\n\n\n\n\n\nYour legs already run the deal: far → fast · close → gentle · there → zero. No zones, no steps — your speed simply follows the distance left. Robots can sign the same deal.\n\n\n⏱️ Time: 5 minutes\n\nSame unplugged-first habit as the D3 inner-ear game. Round 2 reproduces the coast (they’ll lean past the line or stutter-brake); round 3 is the sleepy 45. Ask round-1 walkers to narrate their own speed out loud — “fast… slower… slower… stop” — that sentence is the controller."
+    "objectID": "slides/stop-patrol-react.html#read-the-scoresheet-anchor-first",
+    "href": "slides/stop-patrol-react.html#read-the-scoresheet-anchor-first",
+    "title": "Stop at the Wall",
+    "section": "Read the scoresheet: anchor first 🗺️",
+    "text": "Read the scoresheet: anchor first 🗺️\n\n  \n    ▶ build the score, layer by layer\n    reset\n  \n  \n    \n    \n    \n    \n    ~135 anchor\n    \n    ~175 gated\n    255 max\n  \n  the anchor run scores ~135 with NO color sensor — that's what we build first.\n\n\n\n135 points, zero color — never trade a reliable anchor for a shaky full run.\n\n\nThis slide connects the whole bootcamp to the scoresheet — and now the mat is physically in the room, point at the real zones while clicking through the tiers. The load-bearing idea: color is risk (lighting, calibration — they just saw the numbers move between surfaces), so we defer every point that needs it. Everything the anchor needs lives color-free: the precise driving and wall verbs this week builds, then the Week-3 team mechanisms — cables, instruments, microphone, avoidance. Fixed notes (+40) arrive Week 4 only after the anchor is locked; randomized notes (+80) are a Week-5 stretch. If a parent asks “why not go for 255 now?”: a reliable 175 beats a heroic 255 you land one time in ten — this is a WRO scoring truth, not a confidence thing."
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#say-the-deal-in-numbers",
-    "href": "slides/pid-on-the-gyro.html#say-the-deal-in-numbers",
-    "title": "The Drive That Heals Itself",
-    "section": "Say the deal in numbers",
-    "text": "Say the deal in numbers\n\nTarget 90°, heading reads 20°. Call the degrees-left the error — here, 70. Build the wheel speed from the error: you’re allowed one multiplication.\nWhat does your rule give at error 70? At 10? At 0?\n\n\n\n  speed = error × gain  (gain = 4)\n  error 70 → speed 280  flat out 🚀\n  error 10 → speed 40    tiptoe 🐢\n  error 0  → speed 0     parks itself 🎯\n\n\n\n\nspeed = error × gain — the whole staircase, in one line. gain is the slope: how hard to push per degree still to go. And at error 0 the speed is 0 — it doesn’t need to be told to stop.\n\n\n\nElicit the multiplication — don’t reveal it. Most squads propose “speed = distance left” first; ask “what if the wheels need bigger numbers?” and the × gain falls out. The three sample rows are the wall-walk in numbers: narrate them as “fast… slower… stop”, same sentence as the game."
+    "objectID": "slides/stop-patrol-react.html#gentle-giant-live-on-the-mat",
+    "href": "slides/stop-patrol-react.html#gentle-giant-live-on-the-mat",
+    "title": "Stop at the Wall",
+    "section": "Gentle Giant 🐘 — live on the mat",
+    "text": "Gentle Giant 🐘 — live on the mat\n\n\n\n\n\n\nThe challenge\n\n\nFeel the wall, back off, stop exactly 5 cm away. Closest wins — loop bonus for a second wall in the same run.\n\n\n\n\nPredict your BACKOFF_MM out loud, then prove it\n3 attempts, best counts — judge measures nose-to-board\n🎸 Roadie preview (fast squads): push a cable brick into the grey zone — library calls only\n\n\nThe competition proves the day’s whole chain: stall detection, calibrated back-off, and (for the bonus) the patrol loop — all on the real mat with the board standing in for the missing border (decision #23). The Roadie preview is decision #22’s mission-preview pattern: the cable task is pure pushing, so the bare chassis can score it — squads discover that the approach angle decides whether the cable stays upright, which is exactly the W3 mechanism conversation, planted early for free. Keep the leaderboard warm but light: most-improved call-out as always. (A practice sim of Gentle Giant lives in the 🏠 appendix.)"
   },
   {
-    "objectID": "slides/pid-on-the-gyro.html#one-picture-staircase-vs-ramp",
-    "href": "slides/pid-on-the-gyro.html#one-picture-staircase-vs-ramp",
-    "title": "The Drive That Heals Itself",
-    "section": "One picture: staircase vs ramp",
-    "text": "One picture: staircase vs ramp\n\n  \n    \n    \n    \n    wheel speed\n    🚀\n    🐢\n    degrees still to go (the error)\n    90\n    60\n    30\n    0 🎯\n    \n    \n    crawl zone starts\n    \n    \n    🪜 two speeds: 200\n    crawl: 50\n    \n    \n      \n      📈 speed = error × 4\n      slope = the gain\n      \n    \n    \n    \n    you are HERE\n  \n  \n    \n      ▶ 🪜 drive it\n      ▶ 📈 drive it\n    \n    \n      \n      \n      \n        \n          \n          \n          \n          \n          \n          \n          \n        \n      \n    \n    \n      degrees still to go: 90°\n      \n      wheel speed: 0\n      \n    \n    the dot and the 🚗 move together — same robot, two views\n  \n\n\n\n\nEvery staircase fix added a step. The ramp has no steps to tune — it touches zero exactly at the target, so there’s never anything left to coast.\n\n\n\nSame reading ritual as the test-drive slide — the kids already know it: dot walks right = degrees getting used up; dot height = wheel push; the 🚗 dial is the same robot in real life. Drive the staircase first and narrate; then drive the ramp. Freeze the comparison at error = 30: the ramp is still doing 120 where the staircase crawls at 50 — faster there, yet it parks softer, because it keeps shrinking all the way in. That resolves the “fast OR accurate” trade from the race lab. The bars under the dial are the two axes, live — point at bar ↔︎ axis once and the graph is decoded."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#the-proportional-turn",
-    "href": "slides/pid-on-the-gyro.html#the-proportional-turn",
-    "title": "The Drive That Heals Itself",
-    "section": "The proportional turn",
-    "text": "The proportional turn\ndef gyro_turn_p(target, gain=4):\n    hub.imu.reset_heading(0)\n    while abs(target - hub.imu.heading()) &gt; 1:   # until within 1°…\n        error = target - hub.imu.heading()       # degrees still to go\n        left.run(gain * error)                   # far → fast\n        right.run(-gain * error)                 # close → gentle\n        wait(5)\n    left.stop(); right.stop()\n\ngyro_turn_p(90)   # gyro_turn_p(45)… gyro_turn_p(180)… gyro_turn_p(-90)!\n\n\nLine 10: a negative target flips the sign, the wheels swap — left turns come free. Yesterday’s version needed surgery for that.\n\n\n\nWalk the highlight stops: gain arrives as a parameter with a default — new syntax, teach it in one breath (“a knob you can leave alone”). Line 3’s abs() is what makes negative targets work. Demo on the next slide."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#watch-it-ride-the-error-down",
-    "href": "slides/pid-on-the-gyro.html#watch-it-ride-the-error-down",
-    "title": "The Drive That Heals Itself",
-    "section": "Watch it ride the error down 🎢",
-    "text": "Watch it ride the error down 🎢\n\n  \n    ▶ gyro_turn_p(90)\n    ◀ gyro_turn_p(−90)\n  \n  \n    \n      \n      \n      \n        \n        \n        \n        \n        \n        \n        \n      \n    \n    \n      error = 0°  degrees still to go\n      \n        \n      \n      speed = 4 × error = 0\n      \n        \n      \n    \n  \n\n\n\n\nThe two bars are the graph’s two axes, live: error bar shrinks → speed bar shrinks with it, re-measured 200×/second. No crawl zone, no second while — and the 🚗 parks itself, both directions.\n\n\n\nRun both buttons before the fragment — narrate the bars in the wall-walk sentence: “fast… slower… slower… stop.” Two honest subtleties, keep them in your pocket for the quiz: at tiny errors the push (4 × 2 = 8 deg/s) can be too weak to break friction — it may park a hair short; and at silly gains it can leap right over the ±1° window between checks and zig-zag back. Both are felt in the lab, and the leftover gets its name (and fix) tomorrow."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#playground-one-knob-every-angle",
-    "href": "slides/pid-on-the-gyro.html#playground-one-knob-every-angle",
-    "title": "The Drive That Heals Itself",
-    "section": "Playground: one knob, every angle 🎛️",
-    "text": "Playground: one knob, every angle 🎛️\n\n  \n    judge calls:\n    ▶ 45°\n    ▶ 90°\n    ▶ 180°\n    the game: land within ±2° and under 1.3 s — on all three calls. Which side can?\n  \n  \n    \n      🪜 two speeds (yesterday)\n      \n        \n        \n        \n          \n          \n          \n          \n          \n          \n          \n        \n      \n      landed –° · – s\n      fast speed: 200 °/s\n      \n    \n    \n      📈 speed = error × gain\n      \n        \n        \n        \n          \n          \n          \n          \n          \n          \n          \n        \n      \n      landed –° · – s\n      gain: 4\n      \n    \n  \n\n\n\nDrive it from their hypotheses. Round 1: all three calls at fast = 200 — the staircase lands everything but watch 180’s clock (~2 s) and how long 45 spends in the crawl lane. Round 2: crank fast to 600 to beat the clock — 180 blows past by ~7°: the fixed zone can’t absorb the speed. Round 3: the P side at gain 4 — all three calls land within a degree, at staircase-500 pace, same knob. Then let them feel the failures: gain 1 parks short (friction beats a tiny push — tomorrow’s breadcrumb), gain 20 arrives hot and flies past. The sim is illustrative, not gospel — the real robot’s sweet spot is theirs to find in the lab."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#name-the-move",
-    "href": "slides/pid-on-the-gyro.html#name-the-move",
-    "title": "The Drive That Heals Itself",
-    "section": "Name the move 🏷️",
-    "text": "Name the move 🏷️\nYou just built: a controller whose push is proportional to the error.\n\nthe P-controller\nP = proportional — the first letter of PID\n\n\n\nThis exact line runs inside every drone, thermostat, cruise control, elevator, and Mars rover. You didn’t learn a LEGO trick today — you wrote the opening letter of the most-used formula in robotics. I and D? They earn their seats tomorrow.\n\n\n\nThis is the payoff of yesterday’s “it has a name every roboticist on Earth knows” — let it land with a beat of silence. Do NOT preview what I and D do; tomorrow each arrives as the rescue to a failure they’ll see (P in a hurry overshoots → D; a leftover P can’t kill → I)."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#quick-quiz-the-gain-knob",
-    "href": "slides/pid-on-the-gyro.html#quick-quiz-the-gain-knob",
-    "title": "The Drive That Heals Itself",
-    "section": "Quick quiz: the gain knob 🚨",
-    "text": "Quick quiz: the gain knob 🚨\n\nBefore you touch the robot: gain = 1 — what will the turn feel like? gain = 20? Predict both.\n\n\n  \n    ▶ now run both\n  \n  \n    \n      gain = 1 · lazy\n      \n      landed –° \n    \n    \n      gain = 20 · hot\n      \n      landed –° \n    \n  \n\n\n\n\n1 = lazy — near the target it pushes too weakly to beat friction and parks short. 20 = hot — it flies past and zig-zags back. Tuning is the middle: hard enough to arrive, soft enough to arrive calm. That lazy leftover it parks on gets a name tomorrow. 😏\n\n\n\nThe prediction is the day’s real gate: “the bigger the error, the harder the push” plus what too-small/too-big does. Per the plan, tuning this by feel without prompting is the strongest robotics-instinct signal on the scorecard — watch for who reaches for the knob before you suggest it."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#lab-your-gain-your-rematch",
-    "href": "slides/pid-on-the-gyro.html#lab-your-gain-your-rematch",
-    "title": "The Drive That Heals Itself",
-    "section": "Lab: your gain, your rematch 🎛️",
-    "text": "Lab: your gain, your rematch 🎛️\n\nBuild gyro_turn_p, then rerun the morning race — same three calls, one gain. Beat your two-speed times and landings?\nFind your gain: start at 4 → halve it, double it, feel both failures, close in from the middle.\nTry gyro_turn_p(-90). No surgery required. 😎\n\n⏱️ Time: 30 minutes\n\nEvery squad’s best gain is different (battery, tire wear, robot mass) — that’s the point of it being a knob, and why nobody copies a neighbor’s number. Log times + landings like the morning so the win over the staircase is on paper. Fast squads: call gyro_turn_p(360) — a full spin that parks where it started — or race 45 at gain 8 vs 4."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#break-it-the-nudge-test",
-    "href": "slides/pid-on-the-gyro.html#break-it-the-nudge-test",
-    "title": "The Drive That Heals Itself",
-    "section": "Break it: the nudge test 💥",
-    "text": "Break it: the nudge test 💥\nhub.imu.reset_heading(0)\nleft.reset_angle(0)              # zero the wheel's degree-counter\n\nleft.run(500); right.run(500)\nwhile left.angle() &lt; 1304:       # ≈ 100 cm — Day 2's number!\n    print(hub.imu.heading())\n    wait(100)\nleft.stop(); right.stop()\n\nleft.angle() = the same degree-counter run_angle uses — now you read it.\nWhile it drives, give the robot’s side a gentle nudge (or lay a pencil in its path). Watch the printout…\n\n\nLine-walk the code first; the sim of the nudge is on the next slide, then they do it for real on the bench."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#watch-the-printout",
-    "href": "slides/pid-on-the-gyro.html#watch-the-printout",
-    "title": "The Drive That Heals Itself",
-    "section": "Watch the printout 👀",
-    "text": "Watch the printout 👀\n\n  \n    \n      ▶ Drive\n      💥 Nudge\n    \n    printout: heading 0° \n  \n  \n    \n    \n    \n    \n  \n\n\n\n\nIt jumps to 8 — and stays at 8. run() spins the wheels equally; nobody keeps the robot pointing.\n\n\n\n\nBut the gyro knew — it read the 8 the whole time. 👀"
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#talk-it-out",
-    "href": "slides/pid-on-the-gyro.html#talk-it-out",
-    "title": "The Drive That Heals Itself",
-    "section": "Talk it out",
-    "text": "Talk it out\n\nHeading says +8 — nosed right. You command each wheel’s speed. What should the wheels do about it?\nAnd should a +2 error get the same medicine as a +20 error?\n\n\n\nSteer back left — right wheel faster, left slower — until heading reads 0. And the bigger the error, the harder the push."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#the-drive-that-heals-itself",
-    "href": "slides/pid-on-the-gyro.html#the-drive-that-heals-itself",
-    "title": "The Drive That Heals Itself",
-    "section": "The drive that heals itself",
-    "text": "The drive that heals itself\nhub.imu.reset_heading(0)\nleft.reset_angle(0)\n\nwhile left.angle() &lt; 1304:        # until ≈ 100 cm rolls by…\n    error = hub.imu.heading()     # +8 = nosed right · -5 = nosed left\n    left.run(500 - 4 * error)     # nosed right? left eases off…\n    right.run(500 + 4 * error)    # …right pushes harder → steers back left\n    wait(10)\nleft.stop(); right.stop()\nRun it — and nudge it again. 😈\n\n\nIt fights back. A hundred times a second: read the error, steer against it. Error 0 → wheels equal → dead straight. That tiny loop is the heart of every self-driving machine on Earth.\n\n\n\nCheck the signs with them, don’t just assert: error +8 → left runs 468, right runs 532 → right faster → robot swings left → error shrinks. Negative error works out symmetrically. The 4 is a strength knob — let one squad try 1 (lazy) and 20 (jittery zig-zag). Name it out loud: the same P-controller as this morning’s turn — one formula, second application; the third is D7’s line-follower."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#watch-it-heal",
-    "href": "slides/pid-on-the-gyro.html#watch-it-heal",
-    "title": "The Drive That Heals Itself",
-    "section": "Watch it heal 🩹",
-    "text": "Watch it heal 🩹\n\n  \n    \n      ▶ Drive\n      💥 Nudge!\n      gyro fix: OFF\n    \n    heading: 0°\n  \n  \n    \n    \n    \n    \n      \n        \n        \n        \n        \n        \n        \n        \n      \n    \n  \n\n\n\n\nGyro fix OFF: one nudge and it rides the wall forever. ON: every nudge gets steered right back out. Same robot — the only difference is watching the error.\n\n\n⏱️ Time: 15 minutes"
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#nudge-wars",
-    "href": "slides/pid-on-the-gyro.html#nudge-wars",
-    "title": "The Drive That Heals Itself",
-    "section": "Nudge Wars 💥",
-    "text": "Nudge Wars 💥\n\n\n\n\n\n\nThe challenge\n\n\nDrive 1.5 m straight while the judge nudges your robot twice mid-run. Score = closest final heading to 0° + straightest trace. 3 attempts, best counts.\n\n\n\n\nTune on the bench first — your straight’s 4 is a knob too: too soft and a shove sends you wandering; too hot and the trace zig-zags all the way down the lane.\nWatch one recovery closely: the harder the shove, the harder the fight-back. The shove is the error.\n\n\nFormat: a 1.5 m taped lane; the judge nudges at roughly the 0.5 m and 1.0 m marks with a consistent finger-push to the robot’s side. Final |heading| is the score; trace straightness (eyeball the wheel-path) breaks ties. Uses only today’s material: error × gain on the straight. This competition is the plan’s flagged talent signal — P-tuning instinct is the strongest predictor of robotics skill; note on the scorecard who re-tunes between attempts by feel (gain reasoning: lazy vs jittery), not by guessing."
-  },
-  {
-    "objectID": "slides/pid-on-the-gyro.html#todays-gate",
-    "href": "slides/pid-on-the-gyro.html#todays-gate",
-    "title": "The Drive That Heals Itself",
+    "objectID": "slides/stop-patrol-react.html#todays-gate",
+    "href": "slides/stop-patrol-react.html#todays-gate",
+    "title": "Stop at the Wall",
     "section": "Today’s gate",
-    "text": "Today’s gate\n\n\n\n\n\n\nYou’re done today when…\n\n\nOne gain turns your robot to any called angle — both directions — with your own gyro_turn_p; your 1.5 m straight fights back through two nudges; and you can say “the bigger the error, the harder the push” and predict what a too-small / too-big gain does before running it.\n\n\n\n\nTomorrow: put P in a hurry and watch it slam past the target — meet the letter that damps it. Then a lean P never quite kills — one more letter. Finish the acronym… and unwrap a professional surprise. 🎁\n\n\nThe gate is the plan’s D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the gain prediction in their own words — same formula, two applications today (turn + straight); the third is D7’s line. The teaser sets up D5 without naming D or I; the “surprise” is DriveBase, earned only after they’ve built its insides."
+    "text": "Today’s gate\n\n\n\n\n\n\nYou’re done today when…\n\n\n\nYour stall + back-off patrol works on two walls in one run\ndrive_to_wall and wall_square live in your my_lib.py\nYou can say why the anchor run needs no color sensor\n\n\n\n\n\nNext: Follow the Line — trace a path at speed with a formula you already own. 🛣️\n\n\nThe gate has three legs: the reactive patrol (stall + calibrated back-off + loop across two walls), the two new library verbs demonstrated from my_lib.py (plus the quick oral check: what does duty_limit protect?), and the scoring understanding (anchor-first). All three are observable at the bench in under 20 minutes with five robots. Optional ½-block if time allows — the plan’s “Good Practices” beat gets its full day at the consolidation session, but a taste here is cheap insurance: pseudocode the patrol in plain words first, comment the threshold with its calibration numbers, and back the working file up before the line day. Then tease D7: same error × gain they built for the gyro, now steering an eye down a line — on the mat’s printed staff lines."
   },
   {
-    "objectID": "slides/drivebase-shortcut.html#break-it-p-in-a-hurry",
-    "href": "slides/drivebase-shortcut.html#break-it-p-in-a-hurry",
-    "title": "The Earned Shortcut",
-    "section": "Break it: P in a hurry",
-    "text": "Break it: P in a hurry"
+    "objectID": "slides/stop-patrol-react.html#watch-the-speed-die-sim",
+    "href": "slides/stop-patrol-react.html#watch-the-speed-die-sim",
+    "title": "Stop at the Wall",
+    "section": "🏠 Watch the speed die (sim) 📉",
+    "text": "🏠 Watch the speed die (sim) 📉\n\n  \n    ▶ drive the robot into the wall\n  \n  \n    \n      \n      \n      \n        \n        \n        \n      \n      wall\n    \n    \n      \n      \n      wheel speed\n      time →\n      \n      stall level\n      \n      🧱 speed hit 0 → the motor felt the wall\n    \n  \n\n\nThe same dive you saw on your real robot — the speed trace collapsing is the wall."
   },
   {
-    "objectID": "slides/drivebase-shortcut.html#the-last-letter-i",
-    "href": "slides/drivebase-shortcut.html#the-last-letter-i",
-    "title": "The Earned Shortcut",
-    "section": "The last letter: I",
-    "text": "The last letter: I"
+    "objectID": "slides/stop-patrol-react.html#the-threshold-that-broke-on-gloss-sim",
+    "href": "slides/stop-patrol-react.html#the-threshold-that-broke-on-gloss-sim",
+    "title": "Stop at the Wall",
+    "section": "🏠 The threshold that broke on gloss (sim) 🔥",
+    "text": "🏠 The threshold that broke on gloss (sim) 🔥\n\n  \n    surface:\n    📄 practice paper\n    🏆 glossy table\n    threshold: 50\n    \n  \n  \n    \n    \n    \n    0 · dark\n    100 · bright\n    \n    \n    50\n    \n    black line\n    white mat\n  \n  pick a surface — read what the eye actually sees\n\n\nOn a glossy venue table, “black” can bounce back 60 — drag the threshold and rescue the robot."
   },
   {
-    "objectID": "slides/drivebase-shortcut.html#you-just-built-a-robot-driver",
-    "href": "slides/drivebase-shortcut.html#you-just-built-a-robot-driver",
+    "objectID": "slides/stop-patrol-react.html#one-shot-vs-patrol-sim",
+    "href": "slides/stop-patrol-react.html#one-shot-vs-patrol-sim",
+    "title": "Stop at the Wall",
+    "section": "🏠 One-shot vs patrol (sim) 🔁",
+    "text": "🏠 One-shot vs patrol (sim) 🔁\n\n  \n    ▶ one-shot if\n    ▶ patrol loop\n  \n  \n    \n    wall 1\n    wall 2\n    wall 3\n    wall 4\n    \n    \n      \n      \n      \n    \n    \n  \n\n\nYour code was right — it just stopped too soon. Watch the loop keep the decision alive."
+  },
+  {
+    "objectID": "slides/stop-patrol-react.html#gentle-giant-practice-sim",
+    "href": "slides/stop-patrol-react.html#gentle-giant-practice-sim",
+    "title": "Stop at the Wall",
+    "section": "🏠 Gentle Giant practice (sim) 🐘",
+    "text": "🏠 Gentle Giant practice (sim) 🐘\n\n  \n    ▶ stall & back off\n    BACKOFF_MM: 50\n    \n  \n  \n    \n    \n    wall\n    \n    \n    5 cm mark 🎯\n    \n      \n      \n      \n    \n  \n  set your back-off, then run — 50 mm lands you on the mark.\n\n\nReplay today’s competition — slide BACKOFF_MM off 50 and watch the score suffer."
+  },
+  {
+    "objectID": "slides/pd-line-following.html#where-we-left-off",
+    "href": "slides/pd-line-following.html#where-we-left-off",
+    "title": "Line King",
+    "section": "Where we left off",
+    "text": "Where we left off\n\n\n\nYou own\nBuilt on\n\n\n\n\n📈 error × gain\nthe turn · the straight\n\n\n🛑 D — damping\nbrakes before overshoot\n\n\n👀 the eye, calibrated\necho 0–100 · threshold per surface\n\n\n\n\n\n\n\n\n\n\nOne thing up front\n\n\nToday reads brightness, not color names — colors are Week 4.\n\n\n\n\n\nAnchor today in what they already own, or it feels like a brand-new mountain (it isn’t — the plan flags D7 as the longest day precisely because the old material was video-paced; live, it’s one formula applied a third time). Recap error × gain from the gyro out loud. Flag the reflection-vs-color point early and firmly — kids will want to “detect the green line”; stop that now, it’s brightness only until Week 4. The day is bang-bang → P on the line, then junction squaring — that pair is the gate (it’s what the anchor run actually uses); the PD upgrade is the stretch for squads that tune P early. If the cohort is still behind on programming, the afternoon flexes to library-consolidation practice instead of pushing PD."
+  },
+  {
+    "objectID": "slides/pd-line-following.html#meet-the-eye-ride-the-edge",
+    "href": "slides/pd-line-following.html#meet-the-eye-ride-the-edge",
+    "title": "Line King",
+    "section": "Meet the eye: ride the edge",
+    "text": "Meet the eye: ride the edge\n# Watch it live FIRST — before any steering. Just read the number.\nwhile True:\n    print(\"reflection:\", left_eye.reflection())   # 0=black, 100=white\n    wait(100)\n\n  \n    slide the eye across the edge:\n    \n  \n  \n    \n    \n    white mat\n    black line\n    \n    the edge = threshold 50\n    \n  \n  reflection 88 → error +38 · far onto white, steer hard toward the line\n\n\n\n\nerror = reflection − 50 — + on white · − on black · 0 on the edge.\n\n\n\nWatch reflection live on a real robot first, over white then over black — read the two numbers aloud, split them, that’s the threshold (re-do on the actual mat; venue lighting shifts it). Then the widget: drag the eye and narrate the single signed number. The key mental model is edge-following, not line-centering — one eye rides the boundary, half on black. Positive error = drifted onto white, negative = drifted onto black. This is deliberately the same shape as the gyro’s error = target − heading. Don’t mention P yet; just establish that one eye yields one clean error."
+  },
+  {
+    "objectID": "slides/pd-line-following.html#break-it-only-two-answers",
+    "href": "slides/pd-line-following.html#break-it-only-two-answers",
+    "title": "Line King",
+    "section": "Break it: only two answers 🔥",
+    "text": "Break it: only two answers 🔥\n\nTwo moves only — hard left or hard right. Predict the path.\n\nwhile True:\n    if left_eye.reflection() &lt; THRESHOLD:\n        left.run(LINE_SPEED + TURN_HARD)       # on black → yank right\n        right.run(LINE_SPEED - TURN_HARD)\n    else:\n        left.run(LINE_SPEED - TURN_HARD)       # on white → yank left\n        right.run(LINE_SPEED + TURN_HARD)\n    wait(10)\n\n\nTwo answers = it can never go straight — it slams left-right forever.\n\n\n\nThis is bang-bang — the naïve controller. Let them predict, then confirm with the sim two slides on. The diagnosis you want in their words: “it only knows left or right, so it’s always turning.” The bridge to P is exactly the gain quiz from Day 4: what if the correction were proportional to how far off we are, instead of always full-tilt? Keep bang-bang short — it exists only to make P feel like the rescue."
+  },
+  {
+    "objectID": "slides/pd-line-following.html#name-it-p-proportional-steering",
+    "href": "slides/pd-line-following.html#name-it-p-proportional-steering",
+    "title": "Line King",
+    "section": "Name it: P — proportional steering 📈",
+    "text": "Name it: P — proportional steering 📈\nerror = left_eye.reflection() - THRESHOLD    # signed: how far off the edge?\nleft.run(LINE_SPEED + KP * error)            # far → hard steer,\nright.run(LINE_SPEED - KP * error)           # near → gentle\n\n\nerror × gain again — tune KP: too small = lazy, too big = the wobble is back.\n\n\n\nThe “aha” is that they’ve written this line before — twice. It’s literally the D4 self-healing straight with a new error source: swap hub.imu.heading() for the eye’s reflection and the two run lines are identical. Same error × gain, different sensor feeding it. Two failure modes to name so they recognize them on the bench: sluggish (KP too low) drifts wide on curves; twitchy (KP too high) reintroduces the wobble. Start small and adjust. This alone wins “Line King” on gentle lines — but push the speed up on a curve and it starts to overshoot, which is the doorway to the PD stretch. If a student raises the “use motor.dc()” advice here: same answer as the D4 proportional-turn coach note — run() keeps “speed” meaning speed, so KP * error stays a correction in deg/s they can reason about."
+  },
+  {
+    "objectID": "slides/pd-line-following.html#feel-it-race-all-three",
+    "href": "slides/pd-line-following.html#feel-it-race-all-three",
+    "title": "Line King",
+    "section": "Feel it: race all three 🎢",
+    "text": "Feel it: race all three 🎢\n\nRun P fast into a curve — predict the moment it lets go.\n\n\n  \n    bang-bang\n    P\n    PD\n    ▶ run\n  \n  \n    speed  200\n    KP  1.2\n    KD  4.0\n  \n  \n    \n    \n    \n      \n      \n      \n    \n    PD — reads far AND fast\n  \n\n\n\n\nbang-bang ping-pongs · P overshoots · PD holds. Drag KD → 0 — D is the only difference.\n\n\n\nRun bang-bang first (big zigzag), then P at speed 200 (fine on the straight, overshoots into the S), then PD (clean). The money move is live: with PD selected, drag KD to 0 — the green curve starts ringing exactly like P; nudge it back up and it settles. That’s the same demonstration as Day 5’s kd slider on the gyro, now on the line — same D, same job, new sensor. Crank the speed slider to show P’s overshoot grows with speed while PD holds. Sim is illustrative; on the real robot they tune the P gain first, and only squads chasing the stretch touch kd."
+  },
+  {
+    "objectID": "slides/pd-line-following.html#name-it-follow_line-joins-the-library",
+    "href": "slides/pd-line-following.html#name-it-follow_line-joins-the-library",
+    "title": "Line King",
+    "section": "Name it: follow_line joins the library 📦",
+    "text": "Name it: follow_line joins the library 📦\ndef follow_line(distance_mm, speed=250, kd=0):\n    \"\"\"P follow on the LEFT eye — kd &gt; 0 is the PD stretch.\"\"\"\n    finish = left.angle() + distance_mm * DEG_PER_MM\n    last_error = 0\n    while left.angle() &lt; finish:\n        error = left_eye.reflection() - THRESHOLD\n        steer = KP_LINE * error + kd * (error - last_error)\n        left.run(speed + steer)\n        right.run(speed - steer)\n        last_error = error\n        wait(10)\n    left.stop(); right.stop()\n\n\nThe P loop, bottled — a finish line in degrees makes it a segment. kd is the stretch knob.\n\n\n\nSame promotion ritual as every day this week: the loose P loop gets a name and moves into my_lib.py (the gain becomes KP_LINE — the library’s constants block already owns KP for the gyro). Map every part back to what they own: error = P on the eye, the finish line = drive_straight’s DEG_PER_MM trick (follow for a distance — that’s how missions call it), kd * (error - last_error) = the D from the library-day gyro turn, with last_error the one-line memory that makes D possible. The gate is the P version — follow_line(600) with kd=0; the stretch is sliding kd up until the fast curve stops overshooting, which is what wins Speed Demon. State the I-policy plainly and move on: integral fixes a steady offset over a long run; our segments are short, so I is a demo they can watch but never something the gate depends on."
+  },
+  {
+    "objectID": "slides/pd-line-following.html#the-two-eye-job-square-up",
+    "href": "slides/pd-line-following.html#the-two-eye-job-square-up",
+    "title": "Line King",
+    "section": "The two-eye job: square up 📐",
+    "text": "The two-eye job: square up 📐\nThe second eye’s moment: you hit a junction crooked — sit square before the next move.\ndef square_on_line(speed=160):\n    \"\"\"Stop each wheel as ITS OWN eye reaches the line.\"\"\"\n    left_done = right_done = False\n    left.run(speed); right.run(speed)\n    while not (left_done and right_done):\n        if not left_done and left_eye.reflection() &lt; THRESHOLD:\n            left.hold(); left_done = True      # park left wheel\n        if not right_done and right_eye.reflection() &lt; THRESHOLD:\n            right.hold(); right_done = True    # park right wheel\n        wait(5)\n\n\nEach eye stops its own wheel — the robot pivots square. That’s why it carries two.\n\n\n\nAnswer the port question head-on: two color sensors fill two of the six hub ports (B and F), and following needs only one — so the second eye earns its seat here, squaring. On the real mat this kills accumulated drift in a fraction of a second, gold going into the chained runs of Week 3. (The same right eye later reads note colors in Week 4 — but never steers.)"
+  },
+  {
+    "objectID": "slides/pd-line-following.html#watch-it-snap-square",
+    "href": "slides/pd-line-following.html#watch-it-snap-square",
+    "title": "Line King",
+    "section": "Watch it snap square 📐",
+    "text": "Watch it snap square 📐\n\n  \n    ▶ creep onto the junction\n  \n  \n    \n    junction\n    \n      \n      \n      \n    \n    arrives crooked — each eye stops its own wheel\n  \n\n\n\n\nLeading wheel parks first · trailing wheel swings square — drift gone. 🎯\n\n\n\nRun it live: the bot arrives crooked, one wheel stops on the line first, the other pivots the body until its eye lands too — square. This is exactly square_on_line() from the previous slide. On the mat it erases accumulated drift in a fraction of a second, right before the next move — cheap, automatic insurance the chained runs of Week 3 lean on."
+  },
+  {
+    "objectID": "slides/pd-line-following.html#line-king-speed-demon",
+    "href": "slides/pd-line-following.html#line-king-speed-demon",
+    "title": "Line King",
+    "section": "Line King 👑 / Speed Demon 🏁",
+    "text": "Line King 👑 / Speed Demon 🏁\n\n\n\n\n\n\nThe challenge\n\n\nLine King — hold the curved line for 30 s: accuracy + speed. Speed Demon (fast squads) — fastest run that never leaves the line.\n\n\n\n\n\nThe winning recipe\n\nCalibrate on the mat you run on\nTune KP_LINE, then chase speed\nSquare at the junction to reset\n(stretch) kd kills the curve overshoot\n\n\nWhere squads lose it\n\nThreshold from yesterday’s surface 😬\nKP so high the straight wobbles\nSkipping the square → drift compounds\n\n\n\nLine King rewards a clean, honest tune over raw speed; Speed Demon is the stretch for squads whose P was solid early and who took the kd upgrade. Coach’s eye is on the tuning conversation, not the trophy: can they explain what the error means, what KP_LINE did, and why the threshold had to be re-measured on this mat? That explanation IS the gate (kd talk is stretch credit, not a requirement). Keep the taped junction handy so squaring gets used under pressure, not just demoed."
+  },
+  {
+    "objectID": "slides/pd-line-following.html#todays-gate",
+    "href": "slides/pd-line-following.html#todays-gate",
+    "title": "Line King",
+    "section": "Today’s gate",
+    "text": "Today’s gate\n\n\n\n\n\n\nYou’re done today when…\n\n\n\nYou can build, tune, and explain a P line-follower\nIt follows a curve and squares on a junction reliably\nfollow_line + square_on_line live in your my_lib.py — (stretch: the kd upgrade)\n\n\n\n\n\nNext: five files become one clean my_lib.py — a gauntlet only library calls can beat. 📦\n\n\nThe gate is the plan’s D7 outcome: build, tune, and explain a P follower + reliable junction squaring — what the anchor run actually uses; PD is explicitly the stretch, never the gate. A student who can narrate why each term is there owns the concept and can debug it in Week 3 when the follower serves the run. Two eyes, one job each: one follows, both square. Close by pointing forward: next is the consolidation day — one module, one constants block, the challenge gauntlet — then missions become lists; the point-scoring mechanisms arrive with the Week-3 team builds, feeding the anchor-first 255 map they read yesterday."
+  },
+  {
+    "objectID": "slides/mission-list.html#where-we-left-off",
+    "href": "slides/mission-list.html#where-we-left-off",
+    "title": "The Setlist",
+    "section": "Where we left off",
+    "text": "Where we left off\n\n\n\n\n\n\n\nYou have\nWhat it does\n\n\n\n\n📦 one my_lib.py\nevery verb in one module — one constants block tunes them all\n\n\n🚗 moving verbs\ndrive_straight · turn_to — watched by your PD loop\n\n\n🧱 wall verbs\ndrive_to_wall · wall_square — the motor as a touch sensor\n\n\n👀 line verbs\nfollow_line · square_on_line — the mat as a map\n\n\n\n\n🤔 The gauntlet proved every verb works alone. A competition run is verbs in a row — and the row keeps changing. Today: how pros hold a plan that has to change in seconds.\n\n⏱️ Time: 10 minutes\n\nRecap by asking: name the verbs, who tuned what, which constant fixes which move. The framing sentence for the day: your library is the vocabulary; today you get the sentence. Foreshadow the pain honestly — the judge at the end of today will call a mission and then change it, and squads whose plan is a pasted block will lose minutes where a list squad loses seconds. That’s the break-it, and it’s also exactly what the Surprise Rule does at a real WRO table."
+  },
+  {
+    "objectID": "slides/mission-list.html#unplugged-the-pigeonholes",
+    "href": "slides/mission-list.html#unplugged-the-pigeonholes",
+    "title": "The Setlist",
+    "section": "Unplugged: the pigeonholes 📮",
+    "text": "Unplugged: the pigeonholes 📮\n\nSix numbered boxes on the bench, a pile of colored bricks. “Red into box 0. Blue into box 2. What’s in box 1? Swap 0 and 3. Add a green one at the end — which box did it land in?”\n\n\n\nYou just used every list skill: a numbered row of slots, filled in order, counting from 0 — read a slot by its number (index), walk the row front to back (iterate), grow it at the end (append). Python calls this row a list. No laptop needed — you already think this way.\n\n\n\nRun it physically before any code — 5 minutes, real boxes (or taped squares) and real bricks, quick-fire calls. The two stumbles to engineer on purpose: (1) “box 1” when they expect counting from 1 — let someone grab the wrong brick, then name the rule: robots count from 0; (2) append lands at the end, position = old length. Keep the boxes on the bench all day — every list question later gets answered by pointing at them. This is WRO-Learn’s arrays intro compressed into a game."
+  },
+  {
+    "objectID": "slides/mission-list.html#break-it-the-pasted-plan",
+    "href": "slides/mission-list.html#break-it-the-pasted-plan",
+    "title": "The Setlist",
+    "section": "Break it: the pasted plan 🔥",
+    "text": "Break it: the pasted plan 🔥\n\nThe judge calls: cross the stage · face the band · square on the wall. You paste it as one block. Then: “Actually — wall square FIRST.” How long does the edit take?\n\n# mission_friday.py — one pasted block 😬\ndrive_straight(400)          # cross the stage\nturn_to(90)           # face the band\ndrive_to_wall()\nwall_square()         # reset at the wall\n# judge: \"wall square FIRST, then cross\"…\n# select lines… which? cut… paste… 🐛\n\n\nThe plan is trapped in the code. Reordering means surgery — select, cut, paste, and pray you moved all the lines of each step. Under a 5-minute clock, surgery loses. The plan needs to be a thing you can shuffle — like cards in a deck.\n\n\n\nLet a squad actually attempt the live edit under a visible countdown — the fumble is the lesson. Diagnose together: the steps are clear in their heads (“cross”, “face”, “square”) but the code has no such boundaries; a step is 1–3 loose lines with nothing holding them together. Two missing ideas, teased in order: give each step a name (they own def — this is a two-minute step), then put the names in a row that can be shuffled — the pigeonholes from the warm-up. Don’t show the fix yet."
+  },
+  {
+    "objectID": "slides/mission-list.html#lists-in-sixty-seconds",
+    "href": "slides/mission-list.html#lists-in-sixty-seconds",
+    "title": "The Setlist",
+    "section": "Lists in sixty seconds",
+    "text": "Lists in sixty seconds\nsetlist = [\"intro\", \"solo\", \"finale\"]   # a numbered row of slots\nsetlist[0]                # \"intro\" — count from 0, like the boxes!\nsetlist.append(\"encore\")  # grows at the end → slot 3\nsetlist[1] = \"duet\"       # swap what a slot holds\nfor song in setlist:      # visit every slot, front to back\n    print(song)\n\n\nIndex · append · iterate — the three moves from the pigeonhole game, now in Python. A list holds anything: strings, numbers… and (next slide) something sneakier. 😏\n\n\n\nType it live in the REPL, mirroring each line back to the physical boxes on the bench (“slot 0… that box”). Off-by-one and negative index (setlist[-1] = last box) are fun 30-second asides if the room is quick. Don’t linger — the payoff slide is next, and lists only get interesting once functions go inside them."
+  },
+  {
+    "objectID": "slides/mission-list.html#steps-are-just-functions-hold-the-name-dont-play-it",
+    "href": "slides/mission-list.html#steps-are-just-functions-hold-the-name-dont-play-it",
+    "title": "The Setlist",
+    "section": "Steps are just functions — hold the name, don’t play it",
+    "text": "Steps are just functions — hold the name, don’t play it\ndef cross_stage():\n    drive_straight(400)\n\ndef face_band():\n    turn_to(90)\n\ndef reset_at_wall():\n    drive_to_wall(); wall_square()\n\nmission = [reset_at_wall, cross_stage, face_band]\n#          ^ no parentheses — cards in a deck, not moves happening\n\n\ncross_stage() plays the move. cross_stage — no parentheses — is the recipe card itself, a thing you can hold, hand around… and drop into a list. A list of names is a setlist: the whole show, and it hasn’t started yet.\n\n\n\nThis is the day’s one genuinely new idea — a function is a value. Land it with the recipe-card metaphor from the first def day: the card vs cooking the dish. Common bug to demo on purpose: write mission = [cross_stage(), face_band()] — the robot drives while the list is being built (the moves happen at line 10!) and the list ends up holding three Nones. Let them see that, then delete the parentheses. Note the judge’s reorder is now already solved on line 10 — reset_at_wall simply moved to slot 0."
+  },
+  {
+    "objectID": "slides/mission-list.html#the-runner-the-whole-thing",
+    "href": "slides/mission-list.html#the-runner-the-whole-thing",
+    "title": "The Setlist",
+    "section": "The runner — the whole thing",
+    "text": "The runner — the whole thing\ndef run_mission(steps):\n    for step in steps:   # take the next card…\n        step()           # …now play it\nrun_mission(mission)\n\n\nThree lines, and they never change again. Reorder the show → edit the list. Insert a step → append or slot it in. The judge changes the mission; you change data, not code. That’s the split the pros live by.\n\n\n\nRead it aloud in pigeonhole language: for each box front to back, take the card out, play it. The deep point — worth saying explicitly, once: the runner is control and the mission is data, and everything that changes lives in the data. This exact runner drives the anchor run in Week 3; per-step timeouts and a transition log are its stretch upgrade (the exemplar’s run_mission_logged) — offer to fast squads at the gate, never gate on it. A non-blocking state machine is continuation-season material; RoboMission runs are sequential, blocking is right."
+  },
+  {
+    "objectID": "slides/mission-list.html#feel-it-shuffle-the-setlist",
+    "href": "slides/mission-list.html#feel-it-shuffle-the-setlist",
+    "title": "The Setlist",
+    "section": "Feel it: shuffle the setlist 🔀",
+    "text": "Feel it: shuffle the setlist 🔀\n\n  \n    ▶ run_mission(mission)\n    🔀 judge: wall square FIRST\n    ➕ append(face_crowd)\n  \n  \n    \n      mission = [\n      \n      ]\n    \n    \n      \n      wall\n      \n      start\n      \n      \n        \n        \n        \n      \n      \n    \n  \n\n\n\n\nThe judge’s reorder is one edit to the list — watch slot 0 change hands, then run the same three-line runner. Append a step: a new slot appears at the end, exactly like the pigeonholes. The plan is data now.\n\n\n\nRitual: run the original show first so they see list-highlighting track the robot (the ▶ walks down the slots as the robot moves — index made visible). Then hit the judge button without running: only the list changes, code untouched — say it out loud. Run again: wall square happens first. Append, run a third time. Connect each button to the pigeonhole verbs: swap = re-slotting cards, append = new box at the end. Then send them to the real mat to do the identical thing with their own verbs — the sim is the storyboard, the mat is the exam."
+  },
+  {
+    "objectID": "slides/mission-list.html#setlist",
+    "href": "slides/mission-list.html#setlist",
+    "title": "The Setlist",
+    "section": "Setlist 🎵",
+    "text": "Setlist 🎵\n\n\n\n\n\n\nThe challenge\n\n\nThe judge calls a 3-step mini-mission — you have 5 minutes to encode it as a mission list over your own library and run it. Score = steps completed; tiebreak = time.\n\n\n\n\nHear the mission → say it as verbs (“that’s a drive_straight, a turn_to, a wall_square”) → wrap, list, run.\nThe judge will change the order on round two. 😈 Your surgery-free edit is the whole advantage.\nFast squads: swap in run_mission_logged — per-step stopwatch + a printed transition log.\n\n\nScore decomposition, not typing speed: the squads to praise are the ones who translate the judge’s sentence into library verbs before touching a keyboard. Round two’s reorder is the day’s thesis under pressure — a list squad edits one line; watch for anyone still cutting and pasting blocks and coach them on the spot. The logged runner is the exemplar’s stretch (timeouts + transition log) — offer it, never gate it. Coach’s private scorecard today: list fluency, decomposition into verbs, debugging a sequence (which step failed? the log says)."
+  },
+  {
+    "objectID": "slides/mission-list.html#todays-gate",
+    "href": "slides/mission-list.html#todays-gate",
+    "title": "The Setlist",
+    "section": "Today’s gate",
+    "text": "Today’s gate\n\n\n\n\n\n\nYou’re done today when…\n\n\nYou can read and build a list (index from 0, iterate, append), your steps are named functions over your own library, and the three-line runner walks a judge-called 3-step mission — with a reorder costing you one edit, not surgery.\n\n\n\n\nNext: Draft Day — teams form, each team picks its competition robot… and a surprise you’ve spent two weeks earning. 🎁\n\n\nThe gate is the plan’s D9 outcome verbatim. This is the last solo-robot day — tomorrow’s session opens with the Mini Mission finale and the draft, so make sure every student’s library + runner are saved and named (they carry into the team merge, which is exactly what motivates the config lesson there). Keep the teaser vague on purpose: the “surprise” is the DriveBase reveal, and it lands best unspoiled."
+  },
+  {
+    "objectID": "slides/drivebase-shortcut.html#where-we-left-off",
+    "href": "slides/drivebase-shortcut.html#where-we-left-off",
     "title": "The Earned Shortcut",
-    "section": "You just built a robot driver 🏆",
-    "text": "You just built a robot driver 🏆\n\n\nYou wrote this week\n\ngyro_turn(target) — a turn that watches itself and lands true\nthe self-healing straight — steer against the error, every 10 ms\n\n\nEvery WRO robot needs\n\nturns that are true, not “about right”\nstraights that survive bumps, seams, and battery moods\n\n\n\n\nPybricks ships both moves — polished, tuned, tested — inside one tool: DriveBase. It runs a professional PID on every move. You’ll understand everything it does… because you spent two days building one."
+    "section": "Where we left off",
+    "text": "Where we left off\n\n\n\n\n\n\n\nYou own\nWhat it does\n\n\n\n\n📦 my_lib.py\ndrive_straight · turn_to · drive_to_wall · wall_square · follow_line · square_on_line — one module, one constants block\n\n\n🎵 the runner\na mission is a list; three lines walk it\n\n\n🏁 gauntlet + setlist\nevery verb proven alone and in sequence, under a judge’s clock\n\n\n\n\n🤔 Everything above was built by one student, for one robot. Today five students become two teams — and each team keeps just one robot. What happens to four robots’ worth of carefully tuned code?\n\n⏱️ Time: 10 minutes\n\nRecap fast — the room already owns all of it; the table is there to make the inventory visible because today it gets audited. The warm-up question is the day’s whole arc: the merge (code from several authors onto one robot) is the break-it that motivates RobotConfig, and the reveal + draft close the two-week chapter. Structure of the day: Mini Mission finale runs in the competition window as usual; the draft itself lands after the gate. Keep the DriveBase surprise unspoiled until Act C."
+  },
+  {
+    "objectID": "slides/drivebase-shortcut.html#break-it-the-merge",
+    "href": "slides/drivebase-shortcut.html#break-it-the-merge",
+    "title": "The Earned Shortcut",
+    "section": "Break it: the merge 🔥",
+    "text": "Break it: the merge 🔥\n\nYour team just picked its robot — and it’s not yours. Your my_lib.py thinks the wheels are 88 mm; the chosen robot’s are 87. Your teammate’s turn gain is tuned hotter. A motor sits on a different port. How many edits until your mission runs on this robot?\n\n\n  \n    sara/my_lib.py\n    WHEEL_MM = 88\n    KP = 4\n    left = Motor(Port.A)\n  \n  \n    omar/my_lib.py\n    WHEEL_MM = 87\n    KP = 6\n    left = Motor(Port.B)\n  \n  \n    lena/my_lib.py\n    WHEEL_MM = 90 😱\n    KP = 3.5\n    left = Motor(Port.A)\n  \n  🤖ONE robot\n\n\n\nEvery file was tuned for a robot that just became a parts donor. The facts — wheels, ports, gains, speeds — are scattered across files and functions: a robot swap means twenty hunted edits, and missing one means the robot lies quietly. The facts need one home.\n\n\n\nMake it concrete with the team’s actual files if the draft order allows — three real constants blocks on screen beats the mock-up. Sharpen the sting: it’s not just today’s merge. The donor pool means a swap can happen again mid-season (a cracked chassis at Week 4 pace), and next time there’s no afternoon to spare. Elicit the shape of the fix before naming it — they’ve done this twice: constants block (square day), library module (consolidation day). Same instinct, one level up: promote the constants to a single shared object the whole team’s code reads."
+  },
+  {
+    "objectID": "slides/drivebase-shortcut.html#fix-it-robotconfig-the-robot-in-one-place",
+    "href": "slides/drivebase-shortcut.html#fix-it-robotconfig-the-robot-in-one-place",
+    "title": "The Earned Shortcut",
+    "section": "Fix it: RobotConfig — the robot in one place",
+    "text": "Fix it: RobotConfig — the robot in one place\n@dataclass\nclass RobotConfig:\n    wheel_diameter: int = 88    # mm — MEASURE the team robot\n    axle_track: int = 145       # mm — wheel center to center\n    left_port: Port = Port.A    # re-port a motor = one edit\n    right_port: Port = Port.E\n    turn_gain: float = 4.0      # the tuned knobs live here too\n    straight_speed: int = 300   # mm/s\n    backoff_mm: int = 50        # the measured back-off\n\nCFG = RobotConfig()             # the ONE copy everyone reads\n\n\nA @dataclass is a labeled box for facts — every physical truth about the robot, in one file (robot_config.py), with a name on each line. Nothing else in the team’s code is allowed to know a number about the robot; it has to ask CFG.\n\n\n\n@dataclass is presented as “a class whose whole job is holding named facts” — no OOP lecture; it’s a form they fill in, and the decorator writes the boring plumbing. (Coach note: Pybricks MicroPython has no dataclasses module — the exemplar robot_config.py ships a 3-line try/except shim so the same syntax runs on the hub; hand it out rather than typing it.) Walk the categories: geometry, ports, tuned knobs — point out these are exactly the numbers that differed across the three files on the last slide. The full gold-reference config (all 6 ports, line thresholds, stall limits) is in the root exemplar; teams copy it and edit their measured values."
+  },
+  {
+    "objectID": "slides/drivebase-shortcut.html#every-verb-now-asks-the-config",
+    "href": "slides/drivebase-shortcut.html#every-verb-now-asks-the-config",
+    "title": "The Earned Shortcut",
+    "section": "Every verb now asks the config",
+    "text": "Every verb now asks the config\n# my_lib.py — the verbs READ the config, they don't know numbers\nleft  = Motor(CFG.left_port, Direction.COUNTERCLOCKWISE)\nright = Motor(CFG.right_port)\n\nDEG_PER_MM = 360 / (3.14 * CFG.wheel_diameter)\n\ndef turn_to(target, gain=None, kd=None):\n    gain = gain or CFG.turn_gain\n    kd = kd or CFG.turn_kd\n    # …the same PD loop as ever…\n\n\nNew robot? Measure it, edit robot_config.py, done — the library and every mission file never change. The donor pool just became a one-line insurance policy. 🛡️\n\n\n\nThe team exercise that proves it (from the exemplar): run the merged code with teammate A’s old constants on the chosen robot — watch the square miss; then fix ONLY robot_config.py and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap."
+  },
+  {
+    "objectID": "slides/drivebase-shortcut.html#you-built-a-robot-driver",
+    "href": "slides/drivebase-shortcut.html#you-built-a-robot-driver",
+    "title": "The Earned Shortcut",
+    "section": "You built a robot driver 🏆",
+    "text": "You built a robot driver 🏆\n\n\nYou wrote, these two weeks\n\nturn_to(target) — a PD turn that watches itself, brakes before it arrives, and lands true\ndrive_straight(distance) — a self-healing straight with a finish line in degrees\n\n\nEvery WRO robot needs\n\nturns that are true, not “about right”\nstraights that survive bumps, seams, and battery moods\n\n\n\n\nPybricks ships both moves — polished, tuned, tested — inside one tool: DriveBase. It runs a professional P·I·D on every move. You’ll understand every letter it does… because you spent two weeks building all three.\n\n\n\nThis is the payoff the whole fortnight has been walking toward — let it feel like a gift, not a rug-pull. The frame that keeps their work dignified: professionals don’t hand-roll what a trusted library ships, but they can only trust it because they know what’s inside — and this room now does. If anyone asks “why didn’t we start here?”: because then DriveBase would be magic, and magic can’t be debugged at a competition table. Nothing they built was wasted — the next slides show exactly which verbs survive."
   },
   {
     "objectID": "slides/drivebase-shortcut.html#measure-your-robot-first",
     "href": "slides/drivebase-shortcut.html#measure-your-robot-first",
     "title": "The Earned Shortcut",
     "section": "Measure your robot first",
-    "text": "Measure your robot first\n\nDriveBase asks for two numbers: wheel diameter and axle track (tire-center to tire-center). Why does it need the second one?\nHint: you already used it once — on Day 3…\n\n\n\nIt’s your turn-circle! You ran that math by hand once to get 148 — DriveBase runs your derivation for any angle. The shortcut is math you already own."
+    "text": "Measure your robot first\n\nDriveBase asks for two numbers: wheel diameter and axle track (tire-center to tire-center). Why does it need the second one?\nHint: you already used it once — on Day 3…\n\n\n\nIt’s your turn-circle! You ran that math by hand once to get 148 — DriveBase runs your derivation for any angle. The shortcut is math you already own.\n\n\n\nBoth numbers are measured, not copied: roll the wheel 5 turns, divide by 5 and π for diameter (they’ll land near 88); the track they measured on Day 3 for the 148 derivation (≈145 mm on our build; the stock ADB is ≈114) — have each team re-measure its chosen robot now, since that’s the number going into its config. Wrong track → every turn systematically over- or under-shoots: that’s the afternoon’s tuning conversation (drive.settings()). If asked why the track matters: a spin-in-place drives the wheels around a circle as wide as the axle track — wider track = more wheel-degrees per robot-degree."
   },
   {
-    "objectID": "slides/drivebase-shortcut.html#build-your-drivebase",
-    "href": "slides/drivebase-shortcut.html#build-your-drivebase",
+    "objectID": "slides/drivebase-shortcut.html#build-your-drivebase-from-the-config",
+    "href": "slides/drivebase-shortcut.html#build-your-drivebase-from-the-config",
     "title": "The Earned Shortcut",
-    "section": "Build your DriveBase",
-    "text": "Build your DriveBase\nfrom pybricks.robotics import DriveBase   # the shortcut, now earned\n\nWHEEL_DIAMETER = 88   # mm — π × 88 ≈ 276 mm = 27.6 cm. Sound familiar? 😏\nAXLE_TRACK = 145      # mm — tire center to tire center. MEASURE yours!\n\ndrive = DriveBase(left, right, WHEEL_DIAMETER, AXLE_TRACK)\ndrive.use_gyro(True)  # ← your gyro moves, built in and switched on\n\nDriveBase speaks mm and robot-degrees — drive.straight(300), drive.turn(90) — and with use_gyro(True) every move is watched, exactly like yours were.\n\n\nBoth numbers are measured, not copied: roll the wheel 5 turns, divide by 5 and π for diameter (they’ll land near 88); the track they measured on Day 3 for the 148 derivation (≈145 mm on our build; the stock ADB is ≈114) — have them re-check it, squads with mods will differ. Wrong track → every turn systematically over- or under-shoots: that’s today’s tuning conversation (drive.settings()). If asked why the track matters: a spin-in-place drives the wheels around a circle as wide as the axle track — wider track = more wheel-degrees per robot-degree."
+    "section": "Build your DriveBase — from the config",
+    "text": "Build your DriveBase — from the config\nfrom pybricks.robotics import DriveBase   # now earned\n\ndrive = DriveBase(left, right,\n                  CFG.wheel_diameter, CFG.axle_track)\ndrive.use_gyro(True)  # your gyro + full PID, switched on\ndrive.settings(straight_speed=CFG.straight_speed,\n               turn_rate=150)\n\nDriveBase speaks mm and robot-degrees — drive.straight(300), drive.turn(90) — and with use_gyro(True) every move is watched and PID-corrected, exactly like yours were. And it reads its facts from CFG, so it survives a robot swap like everything else.\n\n\nTwo acts of the day snap together here: the reveal is wired straight into the config, so the shortcut is born team-proof. drive.settings() is the pro version of their tuned constants — speeds and accelerations, adjustable per robot, stored in the config. Also worth naming: drive.stalled() now replaces the per-motor stall trick from the wall day inside DriveBase moves, and drive.distance() is a free odometer. Don’t tour the whole API — the duel is next; let the tool prove itself."
   },
   {
-    "objectID": "slides/drivebase-shortcut.html#the-square-in-one-function",
-    "href": "slides/drivebase-shortcut.html#the-square-in-one-function",
+    "objectID": "slides/drivebase-shortcut.html#the-duel-your-verb-vs-the-pros",
+    "href": "slides/drivebase-shortcut.html#the-duel-your-verb-vs-the-pros",
     "title": "The Earned Shortcut",
-    "section": "The square, in one function",
-    "text": "The square, in one function\ndef drive_square(side_mm):\n    for side in range(4):\n        drive.straight(side_mm)   # gyro-healed straight, in mm\n        drive.turn(90)            # your watched turn, factory-tuned\n\ndrive_square(300)\n\n\nRun it. The square snaps shut. Same square as Day 3 — but every line is gyro-watched. Now show off: drive_square(200), drive_square(400)… one function, any square.\n\n\n\nClose the loop hard: put Day 3’s taped drift-square next to this one. Everything converged — for repeats the corner, def names the move, PID watches every line. The constants block on top becomes RobotConfig at D10."
+    "section": "The duel: your verb vs the pro’s 🥊",
+    "text": "The duel: your verb vs the pro’s 🥊\n\n  \n    ▶ drive_straight(1000) vs drive.straight(1000)\n    😈 nudge them BOTH\n  \n  \n    \n    \n    YOURS — drive_straight\n    PRO — drive.straight\n    \n    \n    1 m 🎯\n    \n    \n    \n      \n      \n      \n    \n    \n      \n      \n      \n    \n  \n  yours landed – · pro landed –\n\n\n\n\nNudge them both: both heal — same three letters inside. The pro edges ahead on polish (smooth speed ramps, factory-tuned gains, years of testing), not on magic. You didn’t get replaced — you hired a chauffeur for the part you already mastered.\n\n\n\nRun the duel on the real robots too — their drive_straight next to drive.straight under a nudge and a battery swap; the sim just makes the point projectable. Expected honest outcome: both survive, DriveBase is a bit crisper on arrival (its speed ramps are S-curves, its gains factory-tuned per motor model). The verdict to speak: hand-rolled took two weeks to build and would take another season to polish; the pro one is free and made of math they own. That’s why the reveal waited — a shortcut is only a shortcut if you know the long way."
   },
   {
-    "objectID": "slides/drivebase-shortcut.html#bullseye",
-    "href": "slides/drivebase-shortcut.html#bullseye",
+    "objectID": "slides/drivebase-shortcut.html#what-retires-what-stays-yours",
+    "href": "slides/drivebase-shortcut.html#what-retires-what-stays-yours",
     "title": "The Earned Shortcut",
-    "section": "Bullseye 🎯",
-    "text": "Bullseye 🎯\n\n\n\n\n\n\nThe challenge\n\n\nDrive forward exactly 1 metre and stop as close to the mark as you can. 3 attempts, best counts.\n\n\n\n\ndrive.straight(1000) + a wheel diameter you measured. Predict, then prove.\nPro move: does your run survive a battery swap? A judge’s evil nudge mid-run? (It should now. 😏)"
+    "section": "What retires, what stays yours",
+    "text": "What retires, what stays yours\n\n\nRetires today 🪦\n\ndrive_straight(d) → drive.straight(d)\nturn_to(a) → drive.turn(…) (gyro-watched)\nhand-tuned KP/kd → drive.settings()\n\n\nStays in my_lib.py 💪\n\ndrive_to_wall() · wall_square() — the feel verbs\nfollow_line() · square_on_line() — the eyes verbs\nevery mechanism verb Week 3 will add\n\n\n\n\nDriveBase replaces exactly two internals — the moving. It has no idea how to feel a wall, ride a line’s edge, or work a mechanism. The library keeps every verb the pro tool doesn’t have — which is most of them. Missions from here on: DriveBase drives, your library does everything else.\n\n\n\nThis boundary slide is the anti-demoralizer — put numbers on it: two verbs retire, four survive today, and every mechanism verb from Week 3 joins the surviving side. Mechanically the retirement is gentle: inside my_lib, drive_straight/turn_to can simply become one-line wrappers over drive.straight/drive.turn, so every mission list and runner from the setlist day works unchanged — nothing downstream even notices. (That’s the payoff of naming moves: swap the engine, keep the verbs.) drive.stalled() similarly upgrades the inside of drive_to_wall without changing its name."
+  },
+  {
+    "objectID": "slides/drivebase-shortcut.html#mini-mission",
+    "href": "slides/drivebase-shortcut.html#mini-mission",
+    "title": "The Earned Shortcut",
+    "section": "Mini Mission 🎤",
+    "text": "Mini Mission 🎤\n\n\n\n\n\n\nThe challenge\n\n\nA 3-task run — drive, turn, push an object home — in 60 seconds. Everything from two weeks, on one clock: integration, time management, nerve.\n\n\n\n\nPlan it as a mission list over your verbs — you have a runner for exactly this.\nBudget the clock: a clean 2-task run beats a chaotic 3-task attempt. (Sound familiar? It’s the anchor-first rule, in miniature.)\n\n\nTemplate is Competition Ready Lesson 8 “Mission Ready.” This is the last solo competition and the scorecard’s final data point — watch integration and composure, not just score. Call out anyone who deliberately drops to two tasks to bank clean points: that’s competition maturity, praise it loudly — it’s the exact instinct the anchor-first strategy needs from them in Week 4. After scores are recorded, close the leaderboard era warmly: from tomorrow the competition is team vs team."
+  },
+  {
+    "objectID": "slides/drivebase-shortcut.html#the-draft",
+    "href": "slides/drivebase-shortcut.html#the-draft",
+    "title": "The Earned Shortcut",
+    "section": "The draft 🤝",
+    "text": "The draft 🤝\n\nTeams are formed on who works well together and what each team needs — complementary skills beat matching skills.\nEach team reviews its members’ robots and selects one as its competition robot.\nThe unselected robots become the parts donor pool — your insurance, one config edit away. 🛡️\nFrom tomorrow: team vs team, every day — double the mat time, twice the fun.\n\n\n\nYour robot may retire to the donor pool — your code and your skills don’t. Everything merges onto the team robot through robot_config.py, and both of the team’s cross-trained roles need every verb you built. The draft picks a chassis, not a coder.\n\n\n\nSay the framing line exactly as planned and nothing more: “I’m teaming you based on who works well together and what each team needs” — never rank, never “you scored lowest.” The pairings are already decided from the private scorecard + library benchmarks; announce, don’t debate. Give the selection its dignity: each team physically inspects its candidate robots (the four quality checks from Day 1 make a nice ritual return) before choosing. Handle the sting of an unselected robot with the card’s line — the donor pool is genuinely valuable, not a consolation. Set up team build areas after the announcement."
   },
   {
     "objectID": "slides/drivebase-shortcut.html#todays-gate",
     "href": "slides/drivebase-shortcut.html#todays-gate",
     "title": "The Earned Shortcut",
     "section": "Today’s gate",
-    "text": "Today’s gate\n\n\n\n\n\n\nYou’re done today when…\n\n\nYour robot drives a closed square with DriveBase + use_gyro, you can walk through your own P-turn and self-healing straight line by line and say what D and I add, and you’ve measured wheel diameter + axle track and can say why DriveBase needs each.\n\n\n\n\nNext week: Stop at the Wall — the motor becomes a sensor, and your robot learns to react to the world instead of just replaying a plan."
+    "text": "Today’s gate\n\n\n\n\n\n\nYou’re done today when…\n\n\nYour library passes its benchmarks one last time solo (drive_straight ±2 cm · turn_to ±2° · wall and line verbs demonstrated · the runner walks a called mission) — and your team leaves with one chosen robot, a donor pool, and a single robot_config.py that drives it with the merged code.\n\n\n\n\nNext week: your robot grows hands — the mechanisms that start turning driving skill into scored points, and the runner starts chaining them into the anchor run. 🔌🎤\n\n\nThe student-facing end-of-week-2 gate: individual benchmarks (they’re part of the draft evidence) plus the team artifacts — chosen robot, donor pool, one working config. The coach’s own checklist for today (gold-reference validation against the same gate, dimensions/weight/wireless-off, CAD capture in BrickLink Studio) runs off-stage and isn’t student material. Teaser lands on Week 3: mechanisms first — cables and microphone, instruments and avoidance — then the mission runner chains the ~135 anchor."
   },
   {
     "objectID": "slides/build-and-test.html#hands-up",
@@ -375,7 +473,7 @@
     "href": "index.html",
     "title": "Robot Rockstars",
     "section": "",
-    "text": "🤖🎸\n  Robot Rockstars\n  From a box of LEGO to a competition robot — in 5 weeks! Pick a day and let's build. 🚀\n  \n    🧱 LEGO SPIKE Prime\n    🐍 Python + Pybricks\n    🏆 WRO 2026 RoboMission\n  \n\n\n\n\n  \n  \n    Week 1 Build, Drive, Sense 🛠️\n    \n\n      \n        D1🧱\n        Build Your Robot\n        Meet the WRO, tour the bench, and build a rock-solid driving base — then switch it on!\n        ▶ Open slides\n      \n\n      \n        D2🏎️\n        Make It Move\n        Your first program! Speed = distance ÷ time, and turning wheel spins into real centimetres.\n        ▶ Open slides\n      \n\n      \n        D3⬛\n        Drive a Square\n        Loops that repeat, sneaky colon & indent bugs, and why the gyro fixes drifty turns.\n        ▶ Open slides\n      \n\n      \n        D4🧭\n        Straighten Up!\n        Teach the robot to self-correct: gentle turns, your first def, and the magic P-term.\n        ▶ Open slides\n      \n\n      \n        D5🎯\n        Bullseye Shortcut\n        Finish PID, learn the wheel geometry, and earn the powerful DriveBase shortcut.\n        ▶ Open slides\n      \n\n    \n  \n\n  \n  \n    Week 2 Score the Field, Form the Teams 🗺️\n    \n\n      \n        D6🚦\n        Stop & React\n        Use a motor as a sensor, back off on a bump, and make decisions with if / else.\n        🔒 Coming soon\n      \n\n      \n        D7🛣️\n        Follow the Line\n        From wobbly bang-bang to smooth PD line-following — and squaring up at junctions.\n        🔒 Coming soon\n      \n\n      \n        D8🔌\n        Cables & Microphone\n        Build mechanism #1: hook the cables (30 pts) and nail the microphone (20 pts).\n        🔒 Coming soon\n      \n\n      \n        D9🎹\n        Instruments & Dodging\n        Mechanism #2: place the instruments (45 pts) and grab the avoidance bonus (+40).\n        🔒 Coming soon\n      \n\n      \n        D10🤝\n        Gold Robot & Teams\n        Pass the gold-reference gate, split into teams, and meet RobotConfig.\n        🔒 Coming soon\n      \n\n    \n  \n\n  \n  \n    Week 3 Chain the Anchor Run ⛓️\n    \n\n      \n        D11📝\n        The Mission List\n        Store the whole run in a list and let a mission runner play it step by step.\n        🔒 Coming soon\n      \n\n      \n        D12🔌\n        Add the Cables\n        Drop the cables segment right into the middle of the run.\n        🔒 Coming soon\n      \n\n      \n        D13🎹\n        Add the Instruments\n        Chain the instruments segment into the growing run.\n        🔒 Coming soon\n      \n\n      \n        D14🎤\n        Mic + Dodge\n        Fold the microphone and the dodge move into the run.\n        🔒 Coming soon\n      \n\n      \n        D15🧩\n        Full Anchor Run\n        Connect every piece — the whole ~135-point run, start to finish!\n        🔒 Coming soon\n      \n\n    \n  \n\n  \n  \n    Week 4 Make It Reliable 🎯\n    \n\n      \n        D16⏱️\n        Lock the Anchor\n        Run under 2:00 — and land it clean 10 times in a row.\n        🔒 Coming soon\n      \n\n      \n        D17🔍\n        Find the Bug\n        Log failures, hunt the root cause, and keep a calibration diary.\n        🔒 Coming soon\n      \n\n      \n        D18🎶\n        The Fixed Notes\n        Add the green & red notes (+40 → ~175) and draft your Technical Summary.\n        🔒 Coming soon\n      \n\n      \n        D19🛡️\n        Venue-Proof It\n        HSV colour calibration, retry logic, and hardening for a strange room.\n        🔒 Coming soon\n      \n\n      \n        D20✅\n        Reliability Check\n        The Week-4 gate: hit ~175 points, 20 tries, 90%+ of the time.\n        🔒 Coming soon\n      \n\n    \n  \n\n  \n  \n    Week 5 Color, Notes & the Mock Qualifier 🏆\n    \n\n      \n        D21🌈\n        Randomized Notes\n        Map colours to targets and chase the four surprise notes (+80 stretch).\n        🔒 Coming soon\n      \n\n      \n        D22🎙️\n        Interview Ready\n        Finish the Technical Summary — both teammates ready to talk about the robot.\n        🔒 Coming soon\n      \n\n      \n        D23🥊\n        Mock Qualifier\n        Practice check-in, the Surprise Rule, and go head-to-head!\n        🔒 Coming soon\n      \n\n      \n        D24💯\n        Chase the 255\n        Push for the full 255 points and lock in your strongest setup.\n        🔒 Coming soon\n      \n\n      \n        D25🎉\n        Showcase Day\n        Pick the team, plan what's next, and show off your rockstar robot!\n        🔒 Coming soon\n      \n\n    \n  \n\n  \n    Made for Robot Rockstars ★ WRO 2026 RoboMission Elementary"
+    "text": "🤖🎸\n  Robot Rockstars\n  From a box of LEGO to a competition robot — in 5 weeks! Pick a day and let's build. 🚀\n  \n    🧱 LEGO SPIKE Prime\n    🐍 Python + Pybricks\n    🏆 WRO 2026 RoboMission\n  \n\n\n\n\n  \n  \n    Week 1 Build, Drive, Sense 🛠️\n    \n\n      \n        D1🧱\n        Build Your Robot\n        Meet the WRO, tour the bench, and build a rock-solid driving base — then switch it on!\n        ▶ Open slides\n      \n\n      \n        D2🏎️\n        Make It Move\n        Your first program! Speed = distance ÷ time, and turning wheel spins into real centimetres.\n        ▶ Open slides\n      \n\n      \n        D3⬛\n        Drive a Square\n        Loops that repeat, sneaky colon & indent bugs, and why the gyro fixes drifty turns.\n        ▶ Open slides\n      \n\n      \n        D4🧭\n        Straighten Up!\n        Teach the robot to self-correct: gentle turns, your first def, and the magic P-term.\n        ▶ Open slides\n      \n\n      \n        D5📦\n        Name Your Moves\n        Finish PID with D and I, then start your own move library — and win Bullseye with code you wrote.\n        ▶ Open slides\n      \n\n    \n  \n\n  \n  \n    Week 2 Program the Robot, Build the Library, Form the Teams 📦\n    \n\n      \n        D6🚦\n        Stop & React\n        Use a motor as a sensor, back off on a bump, and make decisions with if / else.\n        ▶ Open slides\n      \n\n      \n        D7🛣️\n        Follow the Line\n        From wobbly bang-bang to smooth PD line-following — and squaring up at junctions.\n        ▶ Open slides\n      \n\n      \n        D8🧰\n        Library Gauntlet\n        Five files become one clean my_lib.py — then a challenge circuit only library calls can beat.\n        🔒 Coming soon\n      \n\n      \n        D9🎵\n        The Setlist\n        Turn a whole mission into a list — and let a three-line runner play it, reorder it, grow it.\n        ▶ Open slides\n      \n\n      \n        D10🤝\n        Draft Day\n        Teams form, one robot is chosen, RobotConfig saves the merge — and a surprise you've earned. 🎁\n        ▶ Open slides\n      \n\n    \n  \n\n  \n  \n    Week 3 Build the Mechanisms, Chain the Anchor Run ⛓️\n    \n\n      \n        D11🔌\n        Cables & Microphone\n        Your team robot grows hands: hook the cables (30 pts) and nail the microphone (20 pts).\n        🔒 Coming soon\n      \n\n      \n        D12🎹\n        Instruments & Dodging\n        Mechanism #2: place the instruments (45 pts) and grab the avoidance bonus (+40).\n        🔒 Coming soon\n      \n\n      \n        D13🧩\n        Into the Runner\n        Drop the first scoring segments into your mission runner.\n        🔒 Coming soon\n      \n\n      \n        D14⛓️\n        Chain It Up\n        Fold the remaining segments into one growing run, wall-squaring between tasks.\n        🔒 Coming soon\n      \n\n      \n        D15🏟️\n        Full Anchor Run\n        Connect every piece — the whole ~135-point run, start to finish!\n        🔒 Coming soon\n      \n\n    \n  \n\n  \n  \n    Week 4 Make It Reliable 🎯\n    \n\n      \n        D16⏱️\n        Lock the Anchor\n        Run under 2:00 — and land it clean 10 times in a row.\n        🔒 Coming soon\n      \n\n      \n        D17🔍\n        Find the Bug\n        Log failures, hunt the root cause, and keep a calibration diary.\n        🔒 Coming soon\n      \n\n      \n        D18🎶\n        The Fixed Notes\n        Add the green & red notes (+40 → ~175) and draft your Technical Summary.\n        🔒 Coming soon\n      \n\n      \n        D19🛡️\n        Venue-Proof It\n        HSV colour calibration, retry logic, and hardening for a strange room.\n        🔒 Coming soon\n      \n\n      \n        D20✅\n        Reliability Check\n        The Week-4 gate: hit ~175 points, 20 tries, 90%+ of the time.\n        🔒 Coming soon\n      \n\n    \n  \n\n  \n  \n    Week 5 Color, Notes & the Mock Qualifier 🏆\n    \n\n      \n        D21🌈\n        Randomized Notes\n        Map colours to targets and chase the four surprise notes (+80 stretch).\n        🔒 Coming soon\n      \n\n      \n        D22🎙️\n        Interview Ready\n        Finish the Technical Summary — both teammates ready to talk about the robot.\n        🔒 Coming soon\n      \n\n      \n        D23🥊\n        Mock Qualifier\n        Practice check-in, the Surprise Rule, and go head-to-head!\n        🔒 Coming soon\n      \n\n      \n        D24💯\n        Chase the 255\n        Push for the full 255 points and lock in your strongest setup.\n        🔒 Coming soon\n      \n\n      \n        D25🎉\n        Showcase Day\n        Pick the team, plan what's next, and show off your rockstar robot!\n        🔒 Coming soon\n      \n\n    \n  \n\n  \n    Made for Robot Rockstars ★ WRO 2026 RoboMission Elementary"
   },
   {
     "objectID": "slides/drive-a-square.html#where-we-left-off",
@@ -389,7 +487,7 @@
     "href": "slides/drive-a-square.html#setup-same-as-yesterday",
     "title": "Drive a Square",
     "section": "Setup — same as yesterday",
-    "text": "Setup — same as yesterday\nfrom pybricks.hubs import PrimeHub\nfrom pybricks.pupdevices import Motor\nfrom pybricks.parameters import Port, Direction\nfrom pybricks.tools import wait\n\nhub = PrimeHub()\nleft = Motor(Port.A, Direction.COUNTERCLOCKWISE)\nright = Motor(Port.E)\n\nEveryone types this once at the top and keeps it for the whole day. Raw motors only, on purpose — today through D5 the students build the driver by hand; the polished shortcut (DriveBase) arrives on Day 5 as a reward they’ll have earned piece by piece."
+    "text": "Setup — same as yesterday\nfrom pybricks.hubs import PrimeHub\nfrom pybricks.pupdevices import Motor\nfrom pybricks.parameters import Port, Direction\nfrom pybricks.tools import wait\n\nhub = PrimeHub()\nleft = Motor(Port.A, Direction.COUNTERCLOCKWISE)\nright = Motor(Port.E)\n\nEveryone types this once at the top and keeps it for the whole day. Raw motors only, on purpose — through D9 the students build the whole driver and library by hand; the polished shortcut (DriveBase) waits until the D10 reveal (decision #20), a reward earned piece by piece."
   },
   {
     "objectID": "slides/drive-a-square.html#one-corner-how-many-degrees",
@@ -522,21 +620,21 @@
     "href": "slides/drive-a-square.html#the-watched-turn-your-first-gyro-move",
     "title": "Drive a Square",
     "section": "The watched turn — your first gyro move",
-    "text": "The watched turn — your first gyro move\nhub.imu.reset_heading(0)\n\nleft.run(200)                   # left wheel forward…\nright.run(-200)                 # …right wheel backward = spin in place\nwhile hub.imu.heading() &lt; 90:   # watch the gyro…\n    wait(5)\nleft.stop()                     # …and stop AT 90. Not \"about\" 90.\nright.stop()\nprint(hub.imu.heading())        # moment of truth 👀\nRun it. What did it print?\n\nEveryone runs it and reports their printed number. Nobody gets exactly 90 — expect 92–96 depending on speed and battery. Don’t explain yet; collect the numbers on the board and let the next slide interrogate them."
+    "text": "The watched turn — your first gyro move\nhub.imu.reset_heading(0)\n\nleft.run(200)                   # left wheel forward…\nright.run(-200)                 # …right wheel backward = spin in place\nwhile hub.imu.heading() &lt; 90:   # watch the gyro…\n    wait(5)\nleft.stop()                     # …and stop AT 90. Not \"about\" 90.\nright.stop()\nwait(1000)                      # let the coast settle — read too soon and you'll catch it mid-motion\nprint(hub.imu.heading())        # moment of truth 👀\nRun it. What did it print?\n\nEveryone runs it and reports their printed number. Nobody gets exactly 90 — expect 92–96 depending on speed and battery. Don’t explain yet; collect the numbers on the board and let the next slide interrogate them. The wait(1000) before the print is load-bearing, not filler: the robot keeps coasting for a beat after stop(), and reading heading() the instant you call it can catch that motion mid-flight and under-report the overshoot — the settle-wait is what makes the printed number (and the “it printed 94” quiz on the next slide) trustworthy."
   },
   {
     "objectID": "slides/drive-a-square.html#quiz-it-printed-94.-whos-guilty",
     "href": "slides/drive-a-square.html#quiz-it-printed-94.-whos-guilty",
     "title": "Drive a Square",
     "section": "Quiz: it printed 94. Who’s guilty? 🚨",
-    "text": "Quiz: it printed 94. Who’s guilty? 🚨\n\nThe gyro lying? Python too slow? The robot broken?\nHint: try to freeze yourself mid-spin.\n\n\n\nMomentum. stop() is instant — a spinning robot isn’t. It coasts past the line, like a car braking. The gyro told the truth: you did end at 94.\n\n\n\nDeliberate cliffhanger: the squad leaves with the thief named (momentum) but not yet arrested — the diagnosis is today’s property, the cure is D4’s opening act. If a squad proposes “just ask for 86”, park it with “would 86 survive a battery swap?” and move on; fudge factors are exactly what tomorrow’s fix makes unnecessary.\n\n⏱️ Time: 20 minutes"
+    "text": "Quiz: it printed 94. Who’s guilty? 🚨\n\nThe gyro lying? Python too slow? The robot broken?\nHint: try to freeze yourself mid-spin.\n\n\n\nMomentum. stop() is instant — a spinning robot isn’t. It coasts past the line, like a car braking. The gyro told the truth: you did end at 94.\n\n\n\nDeliberate cliffhanger: the squad leaves with the thief named (momentum) but not yet arrested — the diagnosis is today’s property, the cure is D4’s opening act. If a squad proposes “just ask for 86”, park it with “would 86 survive a battery swap?” and move on; fudge factors are exactly what tomorrow’s fix makes unnecessary. If someone asks why this turn feels jerkier than yesterday’s run_angle glide, it’s the same culprit: no easing off + coast-on-stop() produces both the overshoot number and the lurch — run_angle decelerated into its target, which is why it felt smoother (and still drifted). Fuller version lands on the watched-square slide.\n\n⏱️ Time: 20 minutes"
   },
   {
     "objectID": "slides/drive-a-square.html#the-watched-square-a-loop-in-a-loop",
     "href": "slides/drive-a-square.html#the-watched-square-a-loop-in-a-loop",
     "title": "Drive a Square",
     "section": "The watched square — a loop in a loop",
-    "text": "The watched square — a loop in a loop\nSIDE_ANGLE = 391    # 30 cm — yesterday's translator\nSPEED = 400\n\nfor side in range(4):\n    left.run_angle(SPEED, SIDE_ANGLE, wait=False)   # side: counted degrees\n    right.run_angle(SPEED, SIDE_ANGLE)\n    hub.imu.reset_heading(0)                        # corner: watched, not guessed\n    left.run(200); right.run(-200)\n    while hub.imu.heading() &lt; 90:\n        wait(5)\n    left.stop(); right.stop()\n\nA while inside a for — count loop draws, watch loop lands each corner.\nWhat’s gone: no 148. The gyro speaks robot-degrees — ask 90, it watches 90.\n\n\n\nTape your start. Run 3× beside the blind square: closer — and off by the same few degrees each time. A bug you can predict is a bug you can fix. 😏\n\n\n\nThe day’s two loops, nested — say it out loud: for repeats a known count, while repeats while a check is true, and a real robot program is almost always one inside the other. The comparison is the point: the blind square missed by a different amount each run (scrub and slip), the watched square misses by the same ~4° coast every corner. Consistency is the gyro’s gift — it converts a random bug into a predictable one, which is exactly what D4 exploits."
+    "text": "The watched square — a loop in a loop\nSIDE_ANGLE = 391    # 30 cm — yesterday's translator\nSPEED = 400\n\nfor side in range(4):\n    left.run_angle(SPEED, SIDE_ANGLE, wait=False)   # side: counted degrees\n    right.run_angle(SPEED, SIDE_ANGLE)\n    hub.imu.reset_heading(0)                        # corner: watched, not guessed\n    left.run(200); right.run(-200)\n    while hub.imu.heading() &lt; 90:\n        wait(5)\n    left.stop(); right.stop()\n\nA while inside a for — count loop draws, watch loop lands each corner.\nWhat’s gone: no 148. The gyro speaks robot-degrees — ask 90, it watches 90.\n\n\n\nTape your start. Run 3× beside the blind square: closer — and off by the same few degrees each time. A bug you can predict is a bug you can fix. 😏\n\n\n\n\nWatch the motion, though: yesterday’s counted square glided — this one lurches to each stop. That’s not the gyro — it’s us flooring it, then cutting power. Smooth ≠ right: the smooth one drifted. Tomorrow — smooth and right. 😏\n\n\n\nThe day’s two loops, nested — say it out loud: for repeats a known count, while repeats while a check is true, and a real robot program is almost always one inside the other. The comparison is the point: the blind square missed by a different amount each run (scrub and slip), the watched square misses by the same ~4° coast every corner. Consistency is the gyro’s gift — it converts a random bug into a predictable one, which is exactly what D4 exploits.\nField the “but yesterday’s turn was smoother” objection with the purple card, don’t dodge it: run_angle eased off the gas into its target (smooth ride, but slip-blind — it drifted), while this while/stop() turn runs flat-out then coasts (honest heading, rough ride). If a squad says “the calculation looked nicer,” agree — then point at where each square finished: smooth lost on accuracy. The lurch is a driving problem D4 cures (arrive slowly, then a controller), not a gyro problem — do NOT preview the fix, just name that it’s coming."
   },
   {
     "objectID": "slides/drive-a-square.html#pro-move-targets-that-climb",
@@ -550,7 +648,7 @@
     "href": "slides/drive-a-square.html#any-shape-two-numbers",
     "title": "Drive a Square",
     "section": "Any shape, two numbers 🔺⬣",
-    "text": "Any shape, two numbers 🔺⬣\n\n\n  \n    \n    \n    \n    \n      \n      \n    \n  \n  \n    \n      \n      \n      0°\n      of turning\n    \n    \n      sides = –\n    \n    \n    \n      Triangle\n      Square\n      Pentagon\n      Hexagon\n      Octagon\n    \n  \n\n\n\n\n\nEvery corner adds up to one full lap is 360°, so corner = 360 ÷ sides.\n\nA new shape in the code is just two edits: the range(...) count and that corner angle.\n\n\nElicit the 360 with bodies first, not algebra: one student walks a triangle on the mat and ends facing the way they started — however many corners, the turning always totals one full spin. Then drive the demo from their guesses: pick Triangle, each corner flashes its 120° turn right on the shape while the dial climbs 120 → 240 → 360 and closes; pick Octagon, eight skinny 45s stack to the same 360. That “always lands on 360” is the whole proof — corner = 360 ÷ n falls out of it. The contrast with the morning is worth a beat: same octagon, but the gyro eats robot-degrees directly, so the gap ÷ wheel translation retires (it returns on Day 5 inside DriveBase). Every squad edits their own file to a triangle and runs it before Shape Shifter.\n\n⏱️ Time: 20 minutes"
+    "text": "Any shape, two numbers 🔺⬣\n\n\n  \n    \n    \n    \n    \n      \n      \n    \n  \n  \n    \n      \n      \n      0°\n      of turning\n    \n    \n      sides = –\n    \n    \n    \n      Triangle\n      Square\n      Pentagon\n      Hexagon\n      Octagon\n    \n  \n\n\n\n\n\nEvery corner adds up to one full lap is 360°, so corner = 360 ÷ sides.\n\nA new shape in the code is just two edits: the range(...) count and that corner angle.\n\n\nElicit the 360 with bodies first, not algebra: one student walks a triangle on the mat and ends facing the way they started — however many corners, the turning always totals one full spin. Then drive the demo from their guesses: pick Triangle, each corner flashes its 120° turn right on the shape while the dial climbs 120 → 240 → 360 and closes; pick Octagon, eight skinny 45s stack to the same 360. That “always lands on 360” is the whole proof — corner = 360 ÷ n falls out of it. The contrast with the morning is worth a beat: same octagon, but the gyro eats robot-degrees directly, so the gap ÷ wheel translation retires (it returns at the D10 reveal inside DriveBase). Every squad edits their own file to a triangle and runs it before Shape Shifter.\n\n⏱️ Time: 20 minutes"
   },
   {
     "objectID": "slides/drive-a-square.html#shape-shifter",
@@ -761,5 +859,313 @@
     "title": "Make It Move",
     "section": "Tonight’s mission 🎬",
     "text": "Tonight’s mission 🎬\n\nYou made it move. You measured it like a scientist.\n\nOptional at home: WRO-Learn — Fundamentals of Mechanics (short videos — pure enrichment; everything you need is delivered in class)."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#where-we-left-off",
+    "href": "slides/name-your-moves.html#where-we-left-off",
+    "title": "Name Your Moves",
+    "section": "Where we left off",
+    "text": "Where we left off\n\n\n\n\n\n\n\nYesterday\nThe trick\n\n\n\n\n📈 P, named\nspeed = error × gain — far → fast, close → gentle, there → zero\n\n\n🔁 one formula, two jobs\nthe watched turn and the self-healing straight — same line, two uses\n\n\n🔥 crack #1\ngain = 20 flew past the target and zig-zagged back\n\n\n😴 crack #2\ngain = 1 parked a hair short — a leftover P never quite killed\n\n\n\n\n\nBoth cracks survived yesterday’s gain quiz — each one is a letter we collect this morning\nThen every move you own gets a name in your own library\n\n\n⏱️ Time: 10 minutes\n\nRecap by asking, not telling: “walk me through gyro_turn_p — what does gain do at a big error vs a tiny one?” Then surface the two cracks they already saw on the D4 quiz: the hot gain overshot and rang; the lazy gain parked short. Don’t fix anything yet — name that the morning’s job is those two leftovers, which turn out to be the last two letters of PID, and the afternoon’s job is turning everything they’ve hand-built into named library functions. Keep P as the hero they built; D and I are its finishing touches, not a new subject."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#break-it-p-in-a-hurry",
+    "href": "slides/name-your-moves.html#break-it-p-in-a-hurry",
+    "title": "Name Your Moves",
+    "section": "Break it: P in a hurry 🔥",
+    "text": "Break it: P in a hurry 🔥\n\n  \n    ▶ gyro_turn_p(90) — gain cranked 🔥\n  \n  \n    \n      \n      \n      \n      \n    \n    \n      heading = 0°  target 90°\n      \n        \n        \n      \n      P sprints in… and slams the door. 🚪\n    \n  \n\n\n\n\nThe push only knows how far is left — not how fast it’s closing\nIt arrives at 90 flat-out, blows past, over-corrects, and rings before it settles\nA bigger gain rings harder\n\n\n\nRun it before the fragment. The red arc painted past the tick is the overshoot made physical — point at it. Elicit the diagnosis in their words: “the number hit 90 — why didn’t it stop?” Because the wheels were still spinning fast; P read error 0 and cut power, but momentum carried it past, then P yanked it back, and round it goes. This is exactly the D3 coast — but now P can’t two-speed its way out, because a hot gain is what won the race yesterday. Set up the need: we want something that notices the error is dropping fast and eases off early. Don’t name D yet."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#name-it-d-damps",
+    "href": "slides/name-your-moves.html#name-it-d-damps",
+    "title": "Name Your Moves",
+    "section": "Name it: D damps 🛑",
+    "text": "Name it: D damps 🛑\ndef gyro_turn_pd(target, gain=4, kd=0.5):\n    hub.imu.reset_heading(0)\n    last_error = target\n    while abs(target - hub.imu.heading()) &gt; 1:\n        error = target - hub.imu.heading()   # how FAR → P\n        change = (error - last_error) / 0.005 # how FAST → D (°/s)\n        last_error = error\n        left.run(gain * error + kd * change) # ease off early\n        right.run(-(gain * error + kd * change))\n        wait(5)\n    left.stop(); right.stop()\n\n\nP reads where you ARE. D reads how fast you’re closing\nWatch error fall 90 → 55 → 30: each tick change is negative (−35, then −25) — the gap is closing fast\nD catches that and eases off early — it taps the brake before you arrive, so the turn glides in instead of ringing. That’s D — derivative, the second letter of PID\n\n\n\nAnticipation is the whole idea — say it that way: P only knows the gap’s size right now; D knows the gap is shrinking and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick’s error, subtract to get the change (a speed, °/s), feed it in. Sign check out loud on the card’s numbers — as the robot closes, error shrinks each tick, so change is negative, so it trims the command down → gentle arrival. kd is a new knob, same as gain was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They’ll feel both on the next slide. gyro_turn_pd stays on run() (see the D4 proportional-turn note on run() vs motor.dc()); worth knowing for coaches — and it pays off again at the D10 reveal, where the pro controller actuates one layer deeper, by torque/effort."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#feel-it-same-turn-calmed",
+    "href": "slides/name-your-moves.html#feel-it-same-turn-calmed",
+    "title": "Name Your Moves",
+    "section": "Feel it: same turn, calmed 🎢",
+    "text": "Feel it: same turn, calmed 🎢\n\n  \n    ▶ race P vs PD to 90°\n    kd: 0.5\n    \n  \n  \n    \n      \n        \n        \n        \n        \n        \n      \n      🔴 P — big car · 🟢 PD — small car\n    \n    \n      \n      \n      heading\n      time →\n      \n      target 90°\n      \n      \n      🔴 P alone — rings\n      🟢 PD — glides in\n      \n      \n      you are HERE\n    \n  \n  \n    P landed –° · PD landed –°\n  \n\n\n\n\nSame hot gain, same target. P reads only the error’s size and rings — watch the red car paint its wobble past the tick\nPD also reads its speed and eases off early — one clean glide (the graph is the cars’ diary; the yellow dot is now)\nSlide kd to 0 and the green curve rings too; too high and it crawls in. Fast when far, gentle as it arrives.\n\n\n\nReading ritual first, same as yesterday’s dot-and-car slides: the two cars on the dial ARE the robots (big red = P, small green = PD); the graph is their diary, written left to right while they turn; the yellow dot at each trace’s tip is now — car and dot move together, same robot, two views. Run at kd=0.5 — narrate the dial (“red blows past the tick, paints the arc, swings back; green glides on”) then point at the diary telling the identical story. Drag kd to 0 live: the green curve collapses onto the red one — proof that D is the only difference. Nudge kd up to ~1.5: green now approaches sluggishly and arrives late. The sweet spot is theirs to feel, exactly like the gain knob yesterday. The sim is illustrative, not gospel — on the real robot they’ll tune kd by eye, same habit."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#the-last-letter-i-coach-demo",
+    "href": "slides/name-your-moves.html#the-last-letter-i-coach-demo",
+    "title": "Name Your Moves",
+    "section": "The last letter: I — (coach demo) 🧲",
+    "text": "The last letter: I — (coach demo) 🧲\n\nRest a thumb of weight on one side. Now the P-turn stops a hair short — 88°, not 90 — and stays there, forever. Why can’t P finish the job?\n\n\n  \n    ▶ drive into the lean\n    I-term: OFF\n  \n  \n    \n      \n        \n        \n        \n        🧲\n      \n      🧲 = the lean, riding the car\n    \n    \n      \n      \n      heading\n      time →\n      \n      target 90°\n      \n      stuck 5° short 😤\n      \n      you are HERE\n    \n  \n  \n    the leftover P can't push out, piling up in I's memory:\n    \n  \n\n\n\n\nP’s push (gain × error) can’t beat the lean, so it parks a hair short forever — that’s yesterday’s gain = 1, now explained\nTurn I ON: each tick piles the leftover onto a running total (the purple bar) until the sum beats the lean. I — integral\n\n\n\nThis is a coach demo — never gated. Show it, don’t assign it. Point at the dial first: the car (🧲 riding its side — that’s the thumb of weight) climbs and sticks short of the tick, and the red sliver between nose and tick IS the flatline gap on the diary next to it — same robot, two views, yellow dot = now. Toggle I OFF first: the purple curve rises then flatlines short, the “stuck 5° short” tag appears — that’s yesterday’s gain=1 parks-short, now explained. Toggle I ON and rerun: the accumulator bar fills, the car creeps the last sliver onto the tick, and the curve creeps up to 90. Say plainly why it barely matters for us: our mission moves are short — a 30 cm straight or a 90° turn ends before the accumulator fills — so I earns its seat on long steady offsets, not here. They now own the whole acronym; that’s the win, not a tuned I."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#you-own-all-three-letters",
+    "href": "slides/name-your-moves.html#you-own-all-three-letters",
+    "title": "Name Your Moves",
+    "section": "You own all three letters 🏆",
+    "text": "You own all three letters 🏆\n\n  \n    P · I · D\n  \n\n\n  \n    P\n    the error's sizefar → hard push\n  \n  \n    I\n    the error's historykills a steady lean\n  \n  \n    D\n    the error's speedbrakes before arrival\n  \n\n\n\nSize, history, speed — three readings of one number, the error\nThis exact trio runs inside every drone, thermostat, and Mars rover\nYou didn’t learn a LEGO trick; you finished the most-used formula in robotics. Now give your moves names. 📦\n\n\n\nLet the acronym land with a beat of silence — this is the payoff of two days. Say it in one breath: P built yesterday, D and I today, all three read the same error different ways. Then pivot: every one of those moves still lives as a loose pasted loop in one file. The afternoon turns them into a library — named functions they’ll carry all the way to the competition table."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#break-it-the-copy-paste-swamp",
+    "href": "slides/name-your-moves.html#break-it-the-copy-paste-swamp",
+    "title": "Name Your Moves",
+    "section": "Break it: the copy-paste swamp 🔥",
+    "text": "Break it: the copy-paste swamp 🔥\n\nThe judge calls: turn to 90 · drive 40 cm · turn to 45 · drive 30 cm. With yesterday’s file, how many lines do you paste — and when a bug turns up in the turn loop, in how many places do you fix it?\n\n\n  \n    turn to 90\n    while abs(90 - …) &gt; 1:\n      error = 90 - …\n      left.run(4*error + …)\n      … 5 more lines …\n    🐛 fix here…\n  \n  \n    drive 40 cm\n    while left.angle() &lt; …:\n      error = heading()\n      left.run(500 - 4*error)\n      … 5 more lines …\n    …and here…\n  \n  \n    turn to 45\n    while abs(45 - …) &gt; 1:\n      error = 45 - …\n      left.run(4*error + …)\n      … 5 more lines …\n    …and here…\n  \n  \n    drive 30 cm\n    while left.angle() &lt; …:\n      error = heading()\n      left.run(500 - 4*error)\n      … 5 more lines …\n    …and here. 😵\n  \n\n\n\nFour moves ≈ 30 pasted lines, and one bug means four fixes — miss one and the robot lies to you\nA real mission has a dozen moves. The cure isn’t more pasting — it’s naming: write each move once, call it forever\n\n\n\nLet them actually start pasting for the judge’s call — a minute of real pasting sells the swamp better than any slide. Then freeze: “you already know the cure — you used it yesterday.” def gyro_turn was the first named move; today every move gets a name, in a file of its own. Vocabulary to land: a library = a file of named moves; your mission file imports the verbs. This is the same trick run_angle plays — someone at LEGO named a move so you wouldn’t have to paste motor physics."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#fix-it-a-file-of-your-own-my_lib.py",
+    "href": "slides/name-your-moves.html#fix-it-a-file-of-your-own-my_lib.py",
+    "title": "Name Your Moves",
+    "section": "Fix it: a file of your own — my_lib.py 📦",
+    "text": "Fix it: a file of your own — my_lib.py 📦\n# my_lib.py — YOUR moves: written once, named forever\nfrom pybricks.hubs import PrimeHub\nfrom pybricks.pupdevices import Motor\nfrom pybricks.parameters import Port, Direction\nfrom pybricks.tools import wait\n\nhub = PrimeHub()\nleft = Motor(Port.A, Direction.COUNTERCLOCKWISE)\nright = Motor(Port.E)\n\nKP = 4                                # named constants — tune HERE,\nWHEEL_MM = 88                         # nowhere else\nDEG_PER_MM = 360 / (3.14 * WHEEL_MM)  # Day 2's wheel math, bottled\n\n\nOne new file. The top holds the robot’s facts (ports, gains, wheel math); below it live the verbs\nYour mission file just says from my_lib import drive_straight, turn_to — and reads like a story instead of a swamp\n\n\n\nMake the file for real, together — everyone creates my_lib.py next to their mission file. The constants block is the same discipline from the square day, now promoted to the library’s front door: facts at the top, verbs below, missions elsewhere. DEG_PER_MM bottles the D2 rope-unroll math (360° per wheel-turn ÷ circumference) so distance-in-mm is a multiply away. Two verbs move in today; the library keeps growing all week — wall verbs next session, line verbs after — same file, more names."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#verb-1-turn_to-the-pd-turn-named",
+    "href": "slides/name-your-moves.html#verb-1-turn_to-the-pd-turn-named",
+    "title": "Name Your Moves",
+    "section": "Verb #1: turn_to — the PD turn, named",
+    "text": "Verb #1: turn_to — the PD turn, named\ndef turn_to(target, gain=4, kd=0.5):\n    \"\"\"PD gyro turn to a heading ON THE MAT — no reset.\"\"\"\n    # hub.imu.reset_heading(0)   ← DELETED. That's the whole diff.\n    last_error = target - hub.imu.heading()\n    ...   # the rest IS gyro_turn_pd, line for line\n\n\nCopy gyro_turn_pd into my_lib.py, rename it, delete the reset — that’s the whole edit\nturn_to(90) now means face 90 on the mat — not “turn 90 more”\nArrive at a corner 1° hot? The next turn_to absorbs it. Errors stop stacking.\n\n\n\nThe dropped reset is the day’s sneakiest upgrade — walk it slowly. With reset, every turn measures from wherever the robot happens to point, so corner errors add up (the D3 square never closed for exactly this reason). Without reset, the gyro keeps one map-wide heading and every turn_to is an absolute appointment: 90 is 90, whatever mess came before. Quiz it: “you’re at heading 92 after a bumped corner — what does turn_to(180) do?” (turns 88, not 90 — it fixes the bump for free). The gyro heading keeps counting past 360, which the square slide uses. Defaults (gain=4, kd=0.5) are their tuned D4/D5 values — theirs may differ; that’s the point of owning the knobs. Don’t unpack the = in the def line yet — default gets named and drilled two slides on."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#verb-2-drive_straight-a-straight-with-a-finish-line",
+    "href": "slides/name-your-moves.html#verb-2-drive_straight-a-straight-with-a-finish-line",
+    "title": "Name Your Moves",
+    "section": "Verb #2: drive_straight — a straight with a finish line",
+    "text": "Verb #2: drive_straight — a straight with a finish line\ndef drive_straight(distance_mm, speed=400):\n    \"\"\"Drive distance_mm, healing the heading the whole way.\"\"\"\n    heading = hub.imu.heading()                    # lock THIS heading\n    finish = left.angle() + distance_mm * DEG_PER_MM\n    while left.angle() &lt; finish:                   # encoder finish line\n        error = hub.imu.heading() - heading        # one heartbeat\n        left.run(speed - KP * error)\n        right.run(speed + KP * error)\n        wait(5)\n    left.stop(); right.stop()\n\n\nDay 2’s wheel math sets the finish line in degrees; Day 4’s healing loop steers every heartbeat on the way there\nA verb calling a verb would stack — here it’s inlined for simplicity, same idea: libraries grow by stacking, not pasting\n\n\n\nSingle function now: drive_straight handles both the finish line (encoder degrees) and the healing loop (P steering each tick). finish is measured from wherever the wheel already is (no encoder reset), same absolute-not-relative discipline as turn_to. Backwards moves (a negative distance_mm) need the comparison flipped — park it as a challenge today; it becomes urgent at the wall session’s measured back-off, and the coach exemplar handles it. Benchmarks come at the gate: 1 m within ±2 cm is very reachable with a measured wheel. The speed=400 in the def line gets its name — default — on the very next slide."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#knobs-with-defaults",
+    "href": "slides/name-your-moves.html#knobs-with-defaults",
+    "title": "Name Your Moves",
+    "section": "Knobs with defaults 🎛️",
+    "text": "Knobs with defaults 🎛️\ndef turn_to(target, gain=4, kd=0.5):         # two knobs, factory-set\ndef drive_straight(distance_mm, speed=400):  # one knob, factory-set\n\nEvery = in a def line is a default — a factory setting. Skip the knob, the factory value runs; name it — a keyword argument like kd=0 — and you turn that one knob, nothing else\n\n\nPredict — what runs? ① turn_to(90) · ② turn_to(90, kd=0) · ③ drive_straight(300, speed=150) · ④ drive_straight(speed=150)\n\n\n\n① all factory settings — your tuned gain=4, kd=0.5 run unasked · ② brake knob to zero — yesterday’s ringing P is back, on demand 🔔\n\n\n\n\n③ one careful straight at 150 — every other call still fast · ④ 💥 TypeError — distance_mm has no default. Some knobs must be turned\n\n\n\nName the vocabulary plainly, once: the names in the parentheses are parameters; a parameter with = carries a default; naming a knob at the call site (kd=0) is a keyword argument. They’ve used all three since gyro_turn_p(target, gain=4) — this slide only hangs names on habits. Quiz cadence: read a call, every squad commits out loud, then reveal the card — ② is the fun one (one keyword resurrects yesterday’s ringing bug, proof the default was doing real work), ④ is the confidence move: run it live, read the TypeError together — the interpreter is telling you which knob you forgot, not scolding you. Forward hook for coaches: at the D10 reveal, RobotConfig gathers all these factory settings into one dataclass — same idea, bigger box."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#two-homes-for-a-name",
+    "href": "slides/name-your-moves.html#two-homes-for-a-name",
+    "title": "Name Your Moves",
+    "section": "Two homes for a name 🗺️",
+    "text": "Two homes for a name 🗺️\n# top of my_lib.py — GLOBALS: born once, every verb reads them\nhub = PrimeHub()\nKP = 4\n\ndef drive_straight(distance_mm, speed=400):\n    heading = hub.imu.heading()              # LOCALS: born at the call…\n    error = hub.imu.heading() - heading      # …gone the moment it ends\n\nThe run just ended — what does print(error) print? And: change KP = 4 → 6 at the top — how many verbs feel it?\n\n\n\nprint(error) → NameError — error is a local: born at the call, dead at the end. A feature — every verb gets private scratch names that never collide\n\n\n\n\nKP is a global — one edit, every verb feels it. The file’s whole shape: facts up top (global) · verbs below · scratch inside (local)\n\n\n\nTwo words, two homes — point at the actual file while saying it: a name born at the top of the file is a global (born once, when the file loads; every verb below can read it — hub, left, KP, DEG_PER_MM); a name born inside a def is a local (born fresh at every call, gone at the end — heading, finish, error). Run the print(error) NameError live if a laptop’s handy; kids expect the number to still be there, and the error landing is the lesson. Then sell dying-locals as a feature: turn_to and drive_straight both use error and never trip over each other, and every call starts with a clean slate. The KP question is the payoff of the “tune HERE, nowhere else” comment they already wrote — one global, read by everyone, edited in one place. Don’t mention the global keyword; the next slide handles the one trap without it."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#break-it-the-tune-that-didnt-stick",
+    "href": "slides/name-your-moves.html#break-it-the-tune-that-didnt-stick",
+    "title": "Name Your Moves",
+    "section": "Break it: the tune that didn’t stick 🔥",
+    "text": "Break it: the tune that didn’t stick 🔥\ndef make_it_sharper():\n    KP = 12          # crank steering for the whole library… right?\n\nmake_it_sharper()\ndrive_straight(300)  # …still lazy. Nothing changed. 😤\n\n\nAssigning a name inside a def births a brand-new local — even when a global already owns that name. This KP lived inside make_it_sharper… and died at the end of the call. The top-of-file KP never moved\nThe fix is zero new code — it’s the rule the file already taught you: read a global from anywhere; change it only at the top. KP = 12 belongs in exactly ONE place — the constants block\n\n\n\nAct it out before explaining: type make_it_sharper live, run the straight, watch nothing change — let the 😤 be theirs. Then the one-sentence rule: the moment you assign a name inside a def, Python births a new local, even if a global already wears that name — the global is untouched, and the local evaporates at return. (Inside make_it_sharper the new KP even hides the global — same name, different box.) Do not teach the global keyword as the escape hatch — the library discipline is strictly better and it’s already on the slide: constants change at the top, nowhere else. Coach’s radar for Weeks 2–3: when a squad swears “I tuned it and it didn’t stick,” the first question is “where did you assign it?” — this slide is that bug, met safely in advance."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#the-square-in-four-names",
+    "href": "slides/name-your-moves.html#the-square-in-four-names",
+    "title": "Name Your Moves",
+    "section": "The square, in four names",
+    "text": "The square, in four names\nfrom my_lib import drive_straight, turn_to\n\ndef drive_square(side_mm):\n    for corner in [90, 180, 270, 360]:\n        drive_straight(side_mm)\n        turn_to(corner)\n\ndrive_square(300)\n\n\nRun it. The square snaps shut.\nEach corner is an appointment on the mat — 90, 180, 270, 360 — so a hot corner can’t poison the next one\nDay 3’s drift didn’t get patched; it became impossible. (And notice what the mission just turned into: a list. 😉)\n\n\n\nClose the loop hard: put Day 3’s taped drift-square next to this one. Everything converged — for repeats the move, the library names it, PD watches it, and absolute headings stop the corner errors stacking (the heading counts past 360, which is why the last appointment is 360 and not 0). The [90, 180, 270, 360] list is a deliberate wink — the mission-runner session turns whole missions into exactly this shape; don’t teach lists now, just let the shape sit there. Show off with drive_square(200), drive_square(400)."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#watch-the-square-snap-shut",
+    "href": "slides/name-your-moves.html#watch-the-square-snap-shut",
+    "title": "Name Your Moves",
+    "section": "Watch the square snap shut 🔲",
+    "text": "Watch the square snap shut 🔲\n\n  \n    ▶ Day 3: guessed turns\n    ▶ drive_straight + turn_to\n  \n  \n    \n    start / finish\n    \n    \n    \n  \n\n\n\n\nSame four sides, same four corners\nDay 3’s guessed turns spiral open; your library’s watched corners land the nose back on the start dot — every line of the cure is code you wrote\n\n\n\nRun drift first, then the library version — the old red spiral vs the closed green square is the whole two-day arc in one picture. Emphasize ownership: unlike a black-box shortcut, there is nothing hidden here — if the square doesn’t close on a real robot, they can open my_lib.py and see every line that could be wrong (gain, kd, DEG_PER_MM, the heading appointments). Debuggability is the library’s superpower, and it’s the skill Week 3’s mission work leans on."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#your-turn-own-the-knobs",
+    "href": "slides/name-your-moves.html#your-turn-own-the-knobs",
+    "title": "Name Your Moves",
+    "section": "Your turn: own the knobs 🏋️",
+    "text": "Your turn: own the knobs 🏋️\n\n\n\n\n\n\n\nchallenge\nprove it\n\n\n\n\n1️⃣ Ring it on purpose — turn_to(90), then turn_to(90, kd=0)\nsay which knob you turned — and what came back 🔔\n\n\n2️⃣ One slow straight — one drive_straight call at half speed, without opening my_lib.py\nevery other call still fast\n\n\n3️⃣ Factory-set your square — make bare drive_square() draw a 300 mm square\none = in one def line\n\n\n4️⃣ Detective 🔎 — slow every straight forever vs slow one call\npoint at each edit spot before typing\n\n\n\n\n\n⏱️ 10 minutes, robots out. Pass = your squad says all four: default = factory setting · keyword = one-call override · top of file = global · inside a def = local\nFast squads: invent wiggle(times=3) — a new verb with a factory setting of its own 🐍\n\n\n\nSquads at their robots, ~10 minutes, coach roams. Answers: 1️⃣ the kd knob — the ring comes back (defaults were doing real work); 2️⃣ drive_straight(1000, speed=200) — keyword argument, library untouched; 3️⃣ def drive_square(side_mm=300): — their first authored default, prove it with a bare drive_square(); 4️⃣ every-straight-forever = the speed=400 in the def line (or a top constant), one-call = a keyword at the call site. The pass is verbal, not gated — each squad says the four sentences on the slide in their own words; the Day-5 gate in the next section stays the motion benchmarks, unchanged. The finger-first rule on 4️⃣ matters: deciding where an edit belongs is the whole global/local/default lesson compressed into one gesture. Fast-squad wiggle(times=3): a for-loop of two quick opposite turn_tos is plenty — the point is authoring a def line with a default of their own."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#bullseye",
+    "href": "slides/name-your-moves.html#bullseye",
+    "title": "Name Your Moves",
+    "section": "Bullseye 🎯",
+    "text": "Bullseye 🎯\n\n\n\n\n\n\nThe challenge\n\n\nDrive forward exactly 1 metre with your own drive_straight and stop as close to the mark as you can. 3 attempts, best counts. (Fast squads: Sniper — 3 mat targets, score = total distance error.)\n\n\n\n\n  \n    ▶ drive_straight(1000)\n    😈 evil nudge\n  \n  \n    \n    \n    \n    1 m 🎯\n    guessed Ø\n    \n    \n  \n  landed –\n\n\n\ndrive_straight(1000) + a wheel diameter you measured into DEG_PER_MM. Predict, then prove.\nPro move: does your run survive a battery swap? A judge’s evil nudge mid-run? (It should — the healing loop is yours. 😏) The red ghost is where a guessed diameter would stop.\n\n\nThe competition proves their code, not a shortcut — that’s the day’s whole point, so say it: the button reads drive_straight, the function they wrote an hour ago. Battery swap and nudge are the two classic fakes that expose open-loop code; their encoder finish line shrugs off the battery (degrees are degrees at any voltage) and their P-loop shrugs off the nudge. The ghost dot is the D2 lesson refusing to die: a guessed 90 mm wheel on an 88 mm robot misses by ~2 cm — exactly the gate tolerance. Squads that miss: check DEG_PER_MM first, gain second."
+  },
+  {
+    "objectID": "slides/name-your-moves.html#todays-gate",
+    "href": "slides/name-your-moves.html#todays-gate",
+    "title": "Name Your Moves",
+    "section": "Today’s gate",
+    "text": "Today’s gate\n\n\n\n\n\n\nYou’re done today when…\n\n\nYour own drive_straight(1000) lands 1.0 m within ±2 cm and turn_to lands within ±2°, across 10 trials — on code you wrote line by line — your drive_square() (four library calls) closes the Day-3 square, and you can say what D and I each add to P.\n\n\n\n\nNext: Stop at the Wall — the motor becomes a sensor, and your library grows its first sensing verbs.\n\n\nThe benchmarks are the plan’s Week-1 gate verbatim: drive_straight 1.0 m ±2 cm, turn_to ±2° over 10 trials, square closed, D and I explained in their own words (I is never gated as a build — it was a coach demo). Log each student’s pass in the scorecard; these same benchmarks are re-run at the end-of-week-2 gate, so a shaky pass today is a flag, not a fail. Teaser stays topic-only: next session the motor itself becomes a touch sensor (stall detection) and drive_to_wall/wall_square join the library."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#where-we-left-off",
+    "href": "slides/pid-on-the-gyro.html#where-we-left-off",
+    "title": "The Drive That Heals Itself",
+    "section": "Where we left off",
+    "text": "Where we left off\n\n\n\n\n\n\n\nYesterday\nThe trick\n\n\n\n\n🧭 heading\none number for “which way” — net turning since reset_heading(0)\n\n\n👀 the watched turn\nspin · watch heading() · stop at the target — while\n\n\n🔁 loops, nested\nfor draws the shape, while lands the corner — 360 ÷ sides\n\n\n🚨 the open case\nit printed 94 — guilty party: momentum. Diagnosed, not cured\n\n\n\n\n🤔 Shape Shifter’s traces told the same story: every corner a few degrees hot, and the octagon paid 8 times. Today the coast meets its cure.\n\n⏱️ Time: 10 minutes"
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#setup-same-bench-one-new-import",
+    "href": "slides/pid-on-the-gyro.html#setup-same-bench-one-new-import",
+    "title": "The Drive That Heals Itself",
+    "section": "Setup — same bench, one new import",
+    "text": "Setup — same bench, one new import\nfrom pybricks.hubs import PrimeHub\nfrom pybricks.pupdevices import Motor\nfrom pybricks.parameters import Port, Direction\nfrom pybricks.tools import wait, StopWatch\n\nhub = PrimeHub()\nleft = Motor(Port.A, Direction.COUNTERCLOCKWISE)\nright = Motor(Port.E)\n\n# your watched turn from yesterday goes here — it still coasts to ~94. For now.\n\nEveryone starts from their own D3 file — imports plus their watched-turn lines. StopWatch sneaks into the imports here; it gets used (and explained in one breath) in the race lab. Recap by asking, not telling: “walk me through your watched turn line by line — and who was guilty for the 94?” — two or three students, one loop. Do NOT preview the fix; the next act builds it from the coast they already diagnosed."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#feel-the-fix-arrive-slowly",
+    "href": "slides/pid-on-the-gyro.html#feel-the-fix-arrive-slowly",
+    "title": "The Drive That Heals Itself",
+    "section": "Feel the fix: arrive slowly",
+    "text": "Feel the fix: arrive slowly\n🚗 that's your robot seen from above — nose up = heading 0°. The judge calls: turn right to the 90° tick.\n\n  \n    🚀 Full speed all the way\n    \n      \n      \n      90°\n      \n      \n        \n        \n        \n        \n        \n        \n        \n      \n    \n    0° \n  \n  \n    ▶ Turn to 90°\n  \n  \n    🐢 Fast, then crawl\n    \n      \n      \n      90°\n      \n        \n        \n        \n        \n        \n        \n        \n      \n    \n    0° \n  \n\n\n\n\nSame target. Same gyro. The only difference: the 🐢 arrives slowly — so there’s nothing left to coast. Fast when far, slow when close."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#the-fix-in-code",
+    "href": "slides/pid-on-the-gyro.html#the-fix-in-code",
+    "title": "The Drive That Heals Itself",
+    "section": "The fix, in code",
+    "text": "The fix, in code\ndef gyro_turn(target):                        # def = name a move once, use it forever\n    hub.imu.reset_heading(0)\n    left.run(200); right.run(-200)            # fast for the long haul…\n    while hub.imu.heading() &lt; target - 30:\n        wait(5)\n    left.run(50); right.run(-50)              # …crawl the last 30°\n    while hub.imu.heading() &lt; target:\n        wait(5)\n    left.stop(); right.stop()\n\ngyro_turn(90)     # or gyro_turn(45), gyro_turn(180)…\n\n\nTwo speeds, two whiles: fast for the long haul, crawl the last 30° — momentum arrives with nothing left to steal. And line 1: def names the move once; every call replays it.\n\n\n\nFirst def of the bootcamp — land it hard: a function is a named move, exactly like run_angle is someone else’s named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two run signs and the &lt; to &gt;, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; RobotConfig at D10. Demo on the next slide — walk the highlights here first."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#one-recipe-card-many-calls",
+    "href": "slides/pid-on-the-gyro.html#one-recipe-card-many-calls",
+    "title": "The Drive That Heals Itself",
+    "section": "One recipe card, many calls 📝",
+    "text": "One recipe card, many calls 📝\n\n  \n    call the one recipe:\n    gyro_turn(45)\n    gyro_turn(90)\n    gyro_turn(180)\n  \n  \n    \n      📝 one recipe card\n      def gyro_turn(target):\n        fast … then crawl\n        stop at the target\n    \n    \n      \n        \n        \n        \n          \n          \n          \n          \n          \n          \n          \n        \n      \n      landed –°\n      calls made: 0 · recipes written: 1\n    \n  \n\n\n\n\nThe 94 is cured — and you just wrote your first robot move: one recipe card, any number of calls, and the 🚗 parks on every tick.\n\n\n\n\nCan you beat two speeds? Imagine speed shrinking as the degrees-left shrink. Hold that thought — it comes due before lunch. 😏\n\n\n\nRun the demo BEFORE any fragment: click all three calls, watch the same recipe card flash and the car park on three different ticks — that is the def/call story, animated. Only then reveal the cards. The teal teaser plants the smarter fix (push proportional to distance-left) — do NOT name it: it gets built and named before lunch as the start of the PID story."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#bug-hunt-the-silent-robot",
+    "href": "slides/pid-on-the-gyro.html#bug-hunt-the-silent-robot",
+    "title": "The Drive That Heals Itself",
+    "section": "🐛 Bug hunt: the silent robot",
+    "text": "🐛 Bug hunt: the silent robot\n\nNo red error. No crash. The robot just… sits there. The code looks perfect. What did we forget?\n\ndef gyro_turn(target):\n    hub.imu.reset_heading(0)\n    left.run(200); right.run(-200)\n    while hub.imu.heading() &lt; target:\n        wait(5)\n    left.stop(); right.stop()\n\n\ndef only writes the recipe — it never cooks it. Nothing happens until you call the move by name: add gyro_turn(90) below. Defining a move and using a move are two separate steps.\n\n\n\nThe most instructive bug of the week — no error to read, so the robot’s stillness is the message. Elicit first: “if the code is right, why no movement?” Draw the split on the board — def …: writes the recipe card, gyro_turn(90) hands it to the cook. Leads straight into the bench lab, where they call it three times."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#bench-check-tune-your-crawl",
+    "href": "slides/pid-on-the-gyro.html#bench-check-tune-your-crawl",
+    "title": "The Drive That Heals Itself",
+    "section": "Bench check: tune your crawl 🎯",
+    "text": "Bench check: tune your crawl 🎯\n\nBuild gyro_turn, then judge-call yourself: 90° · 45° · 180° — print the landing each time.\nTune 200 / 50 / 30 until 90° lands within a degree or two. Write your three numbers on a sticky note — they’re about to testify.\n\n⏱️ Time: 20 minutes\n\nPerfect Pivot, folded into a bench lab: the cure is verified on 90°, but nobody is asked (yet) whether one tuning serves all three calls — that tension is the next act’s job. Make every squad physically write their three numbers down; the race lab reads them straight back."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#three-calls-one-sticky-note",
+    "href": "slides/pid-on-the-gyro.html#three-calls-one-sticky-note",
+    "title": "The Drive That Heals Itself",
+    "section": "Three calls, one sticky note ⏱️",
+    "text": "Three calls, one sticky note ⏱️\n\nThe judge calls 45° → 90° → 180° — same gyro_turn, same sticky note, and today the clock counts too. Two predictions with your partner:\n🐢 Sleepy check: the crawl always covers the last 30°. Which call spends the biggest slice of its turn crawling — what does that do to its time?\n🚀 Fly-past check: you crank the fast speed to beat the clock. Which call now risks blowing past its tick — and why that one?\n\n\n  Hint: each bar is one turn, start → 🎯. Mark where the crawl starts (target − 30) on each.\n  \n    45°🎯crawl starts at __°\n    90°🎯crawl starts at 60°\n    180°🎯crawl starts at __°\n  \n\n\nSketch it, then write both predictions down — the stopwatch grades them. 👀\n\n\nPure prediction, nothing revealed — the bars are deliberately unshaded; 90° is pre-filled as the worked example, squads fill 15 and 150 themselves. The sketch gives it away for 45: crawl from 15° means two-thirds of the turn is crawl — sleepy. For 180 the zone is proportionally tiny — fine at 200 deg/s, but crank the speed and the robot arrives at the zone hot: 30° isn’t enough braking distance. Don’t say any of that — take answers to both checks on the board and let the race lab grade them."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#lab-race-your-own-turn",
+    "href": "slides/pid-on-the-gyro.html#lab-race-your-own-turn",
+    "title": "The Drive That Heals Itself",
+    "section": "Lab: race your own turn 🏁",
+    "text": "Lab: race your own turn 🏁\ntimer = StopWatch()                 # a stopwatch, in code\n\nfor target in [45, 90, 180]:\n    timer.reset()\n    gyro_turn(target)\n    elapsed = timer.time()\n    wait(1000)                      # let the coast settle before you trust heading()\n    print(target, \"-&gt;\", elapsed, \"ms, landed\", hub.imu.heading())\n    wait(3000)                      # set the robot straight again\n\nRun it with your bench tuning — the sticky note. Look at 45°’s time. Sleepy? That’s the crawl lane eating two-thirds of a small turn.\nNow chase the clock: crank the fast speed 200 → 500 and rerun. Look at where 180° lands. 😬\n\n\n\nOne tuning, three calls: accurate but sleepy — or fast but flying past. The fixed crawl zone can’t serve every angle and every speed.\n\n\n\nBoard the results next to the predictions. Expected shape: at 200, everything lands within a few degrees but 45 feels absurdly slow for such a small turn and 180 takes ~2 s; at 500, the 180 blows through the 30° zone still hot and coasts well past (the 45 mostly survives — its crawl lane absorbs the speed). Battery level moves these numbers — that’s a feature, mention it. Squads that finish early: try 90 at 500 too."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#the-tuning-treadmill",
+    "href": "slides/pid-on-the-gyro.html#the-tuning-treadmill",
+    "title": "The Drive That Heals Itself",
+    "section": "The tuning treadmill 🎡",
+    "text": "The tuning treadmill 🎡\n\nFix it with yesterday’s toolbox: a wider crawl zone? A third speed? A different tuning per angle? — what does each one cost?\nTalk it out. Follow each fix two steps ahead.\n\n\nBoard your fixes — then we test-drive every single one. 🚗\n\n⏱️ Time: 20 minutes (discussion + test-drives)\n\nThis is the morning’s teal teaser (“imagine speed shrinking as the degrees-left shrink”) coming due. Let them propose the staircase fixes seriously — each is a real idea with a real cost; the point isn’t that they’re dumb, it’s that they don’t scale. Collect the fixes on the board first; the next slide drives them."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#test-drive-the-fixes",
+    "href": "slides/pid-on-the-gyro.html#test-drive-the-fixes",
+    "title": "The Drive That Heals Itself",
+    "section": "Test-drive the fixes 🚗",
+    "text": "Test-drive the fixes 🚗\n\n  \n    the fixes you boarded:\n    wider crawl zone\n    add a 3rd speed\n    a tuning per angle\n    reset\n    ▶ drive it\n  \n  \n    \n      \n      \n      wheel speed\n      🚀\n      🐢\n      degrees still to go\n      90\n      0 🎯\n      \n      \n      \n      cliff at 0: stop() while still moving 🤞\n      \n      \n      you are HERE\n    \n    \n      \n        \n        \n        \n          \n            \n            \n            \n            \n            \n            \n            \n          \n        \n      \n      landed –°in – s\n    \n  \n  \n    knobs to hand-tune: 2 · two speeds, one crawl zone — where we started\n  \n\n\n\n\nEvery fix adds a step and a knob — and every drive still ends the same: the 🚗 crosses the cliff still moving. What you actually want: speed that shrinks by itself as the degrees-left shrink.\n\n\n\nHow to read the picture — say it out loud, every time: the yellow dot is the robot’s moment: how far it walks right = degrees used up; how high it sits = how hard the wheels push. Apply a fix, hit ▶ drive it, and narrate the dot + car together: “far away → high up → car whips around… close → low → car creeps.” Wider zone: slower time, same coast. Extra speed: better time, same coast. Table: same staircase, ×10 retuning. The landing readout says ~92-and-something every single run — THAT’s the cliff no staircase removes. Someone usually says the magic sentence (“just make the speed depend on how far is left”) — hand them the chalk."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#you-already-run-this-controller",
+    "href": "slides/pid-on-the-gyro.html#you-already-run-this-controller",
+    "title": "The Drive That Heals Itself",
+    "section": "You already run this controller 🚶",
+    "text": "You already run this controller 🚶\n\n\n\n\n\n\nThe game\n\n\nStand three big steps from the wall. Walk to it and stop with your toes exactly on the line. Round 1: normal. Round 2: robot style — full speed, then slam the brakes at the end. Round 3: crawl the entire way. Which round felt right — and what were your legs doing in it?\n\n\n\n\n\nYour legs already run the deal: far → fast · close → gentle · there → zero. No zones, no steps — your speed simply follows the distance left. Robots can sign the same deal.\n\n\n⏱️ Time: 5 minutes\n\nSame unplugged-first habit as the D3 inner-ear game. Round 2 reproduces the coast (they’ll lean past the line or stutter-brake); round 3 is the sleepy 45. Ask round-1 walkers to narrate their own speed out loud — “fast… slower… slower… stop” — that sentence is the controller."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#say-the-deal-in-numbers",
+    "href": "slides/pid-on-the-gyro.html#say-the-deal-in-numbers",
+    "title": "The Drive That Heals Itself",
+    "section": "Say the deal in numbers",
+    "text": "Say the deal in numbers\n\nTarget 90°, heading reads 20°. Call the degrees-left the error — here, 70. Build the wheel speed from the error: you’re allowed one multiplication.\nWhat does your rule give at error 70? At 10? At 0?\n\n\n\n  speed = error × gain  (gain = 4)\n  error 70 → speed 280  flat out 🚀\n  error 10 → speed 40    tiptoe 🐢\n  error 0  → speed 0     parks itself 🎯\n\n\n\n\nspeed = error × gain — the whole staircase, in one line. gain is the slope: how hard to push per degree still to go. And at error 0 the speed is 0 — it doesn’t need to be told to stop.\n\n\n\nElicit the multiplication — don’t reveal it. Most squads propose “speed = distance left” first; ask “what if the wheels need bigger numbers?” and the × gain falls out. The three sample rows are the wall-walk in numbers: narrate them as “fast… slower… stop”, same sentence as the game."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#one-picture-staircase-vs-ramp",
+    "href": "slides/pid-on-the-gyro.html#one-picture-staircase-vs-ramp",
+    "title": "The Drive That Heals Itself",
+    "section": "One picture: staircase vs ramp",
+    "text": "One picture: staircase vs ramp\n\n  \n    \n    \n    \n    wheel speed\n    🚀\n    🐢\n    degrees still to go (the error)\n    90\n    60\n    30\n    0 🎯\n    \n    \n    crawl zone starts\n    \n    \n    🪜 two speeds: 200\n    crawl: 50\n    \n    \n      \n      📈 speed = error × 4\n      slope = the gain\n      \n    \n    \n    \n    you are HERE\n  \n  \n    \n      ▶ 🪜 drive it\n      ▶ 📈 drive it\n    \n    \n      \n      \n      \n        \n          \n          \n          \n          \n          \n          \n          \n        \n      \n    \n    \n      degrees still to go: 90°\n      \n      wheel speed: 0\n      \n    \n    the dot and the 🚗 move together — same robot, two views\n  \n\n\n\n\nEvery staircase fix added a step. The ramp has no steps to tune — it re-measures the error 200×/second and touches zero exactly at the target, so there’s never anything left to coast.\n\n\n\nSame reading ritual as the test-drive slide — the kids already know it: dot walks right = degrees getting used up; dot height = wheel push; the 🚗 dial is the same robot in real life. Drive the staircase first and narrate; then drive the ramp. Freeze the comparison at error = 30: the ramp is still doing 120 where the staircase crawls at 50 — faster there, yet it parks softer, because it keeps shrinking all the way in. That resolves the “fast OR accurate” trade from the race lab. The bars under the dial are the two axes, live — point at bar ↔︎ axis once and the graph is decoded."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#the-proportional-turn",
+    "href": "slides/pid-on-the-gyro.html#the-proportional-turn",
+    "title": "The Drive That Heals Itself",
+    "section": "The proportional turn",
+    "text": "The proportional turn\ndef gyro_turn_p(target, gain=4):\n    hub.imu.reset_heading(0)\n    while abs(target - hub.imu.heading()) &gt; 1:   # until within 1°…\n        error = target - hub.imu.heading()       # degrees still to go\n        left.run(gain * error)                   # far → fast\n        right.run(-gain * error)                 # close → gentle\n        wait(5)\n    left.stop(); right.stop()\n\ngyro_turn_p(90)   # gyro_turn_p(45)… gyro_turn_p(180)… gyro_turn_p(-90)!\n\n\nLine 10: a negative target flips the sign, the wheels swap — left turns come free. Yesterday’s version needed surgery for that.\n\n\n\nWalk the highlight stops: gain arrives as a parameter with a default — new syntax, teach it in one breath (“a knob you can leave alone”). Line 3’s abs() is what makes negative targets work. Demo on the next slide.\nCoach aside — “why run() and not motor.dc()?” (for the sharp student who’s read ahead). Honest truth: run() is itself a closed-loop speed controller inside Pybricks — so this hand-written P sits on top of it, a controller-on-a-controller. Your gain sets a speed target; Pybricks’ own loop chases it. A pro writing a controller from scratch often reaches for motor.dc() instead — raw power/duty — so their formula is the whole controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep run() on purpose for two reasons: it’s smoother and battery-proof (a fresh vs. tired hub turns the same — priceless with five robots on the bench), and it speaks the same “speed” language as drive.drive(speed, turn) and DriveBase — so speed = error × gain stays literally true all the way from this turn, through the self-healing straight, to D7’s line-follower. dc() is the right tool the day you build a controller with no help underneath; that day isn’t this bootcamp."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#playground-one-knob-every-angle",
+    "href": "slides/pid-on-the-gyro.html#playground-one-knob-every-angle",
+    "title": "The Drive That Heals Itself",
+    "section": "Playground: one knob, every angle 🎛️",
+    "text": "Playground: one knob, every angle 🎛️\n\n  \n    judge calls:\n    ▶ 45°\n    ▶ 90°\n    ▶ 180°\n    the game: land within ±2° and under 1.3 s — on all three calls. Which side can?\n  \n  \n    \n      🪜 two speeds (yesterday)\n      \n        \n        \n        \n          \n          \n          \n          \n          \n          \n          \n        \n      \n      landed –° · – s\n      fast speed: 200 °/s\n      \n    \n    \n      📈 speed = error × gain\n      \n        \n        \n        \n          \n          \n          \n          \n          \n          \n          \n        \n      \n      landed –° · – s\n      gain: 4\n      \n    \n  \n\n\n\nDrive it from their hypotheses. Round 1: all three calls at fast = 200 — the staircase lands everything but watch 180’s clock (~2 s) and how long 45 spends in the crawl lane. Round 2: crank fast to 600 to beat the clock — 180 blows past by ~7°: the fixed zone can’t absorb the speed. Round 3: the P side at gain 4 — all three calls land within a degree, at staircase-500 pace, same knob. Then let them feel the failures: gain 1 parks short (friction beats a tiny push — tomorrow’s breadcrumb), gain 20 arrives hot and flies past. The sim is illustrative, not gospel — the real robot’s sweet spot is theirs to find in the lab."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#name-the-move",
+    "href": "slides/pid-on-the-gyro.html#name-the-move",
+    "title": "The Drive That Heals Itself",
+    "section": "Name the move 🏷️",
+    "text": "Name the move 🏷️\nYou just built: a controller whose push is proportional to the error.\n\nthe P-controller\nP = proportional — the first letter of PID\n\n\n\nThis exact line runs inside every drone, thermostat, cruise control, elevator, and Mars rover. You didn’t learn a LEGO trick today — you wrote the opening letter of the most-used formula in robotics. I and D? They earn their seats tomorrow.\n\n\n\nThis is the payoff of yesterday’s “it has a name every roboticist on Earth knows” — let it land with a beat of silence. Do NOT preview what I and D do; tomorrow each arrives as the rescue to a failure they’ll see (P in a hurry overshoots → D; a leftover P can’t kill → I)."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#quick-quiz-the-gain-knob",
+    "href": "slides/pid-on-the-gyro.html#quick-quiz-the-gain-knob",
+    "title": "The Drive That Heals Itself",
+    "section": "Quick quiz: the gain knob 🚨",
+    "text": "Quick quiz: the gain knob 🚨\n\nBefore you touch the robot: gain = 1 — what will the turn feel like? gain = 20? Predict both.\n\n\n\n1 = lazy — near the target it pushes too weakly to beat friction and parks short. 20 = hot — it flies past and zig-zags back. Tuning is the middle: hard enough to arrive, soft enough to arrive calm. That lazy leftover it parks on gets a name tomorrow. 😏\n\n\n\nThe prediction is the day’s real gate: “the bigger the error, the harder the push” plus what too-small/too-big does. Collect predictions out loud, then feel the answers — flick back to the playground and drag the gain slider to 1 and 20, or better, straight onto the bench robot in the lab. Per the plan, tuning this by feel without prompting is the strongest robotics-instinct signal on the scorecard — watch for who reaches for the knob before you suggest it."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#lab-your-gain-your-rematch",
+    "href": "slides/pid-on-the-gyro.html#lab-your-gain-your-rematch",
+    "title": "The Drive That Heals Itself",
+    "section": "Lab: your gain, your rematch 🎛️",
+    "text": "Lab: your gain, your rematch 🎛️\n\nBuild gyro_turn_p, then rerun the morning race — same three calls, one gain. Beat your two-speed times and landings?\nFind your gain: start at 4 → halve it, double it, feel both failures, close in from the middle.\nTry gyro_turn_p(-90). No surgery required. 😎\n\n⏱️ Time: 30 minutes\n\nEvery squad’s best gain is different (battery, tire wear, robot mass) — that’s the point of it being a knob, and why nobody copies a neighbor’s number. Log times + landings like the morning so the win over the staircase is on paper. Fast squads: call gyro_turn_p(360) — a full spin that parks where it started — or race 45 at gain 8 vs 4."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#break-it-the-nudge-test",
+    "href": "slides/pid-on-the-gyro.html#break-it-the-nudge-test",
+    "title": "The Drive That Heals Itself",
+    "section": "Break it: the nudge test 💥",
+    "text": "Break it: the nudge test 💥\nhub.imu.reset_heading(0)\nleft.reset_angle(0)              # zero the wheel's degree-counter\n\nleft.run(500); right.run(500)\nwhile left.angle() &lt; 1304:       # ≈ 100 cm — Day 2's number!\n    print(hub.imu.heading())\n    wait(100)\nleft.stop(); right.stop()\n\nleft.angle() = the same degree-counter run_angle uses — now you read it.\nWhile it drives, give the robot’s side a gentle nudge (or lay a pencil in its path). Watch the printout…\n\n\nLine-walk the code first; the sim of the nudge is on the next slide, then they do it for real on the bench."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#watch-the-printout",
+    "href": "slides/pid-on-the-gyro.html#watch-the-printout",
+    "title": "The Drive That Heals Itself",
+    "section": "Watch the printout 👀",
+    "text": "Watch the printout 👀\n\n  \n    \n      ▶ Drive\n      💥 Nudge\n    \n    printout: heading 0° \n  \n  \n    \n    \n    \n    \n  \n\n\n\n\nIt jumps to 8 — and stays at 8. run() spins the wheels equally; nobody keeps the robot pointing.\n\n\n\n\nBut the gyro knew — it read the 8 the whole time. 👀"
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#talk-it-out",
+    "href": "slides/pid-on-the-gyro.html#talk-it-out",
+    "title": "The Drive That Heals Itself",
+    "section": "Talk it out",
+    "text": "Talk it out\n\nHeading says +8 — nosed right. You command each wheel’s speed. What should the wheels do about it?\nAnd should a +2 error get the same medicine as a +20 error?\n\n\n\nSteer back left — right wheel faster, left slower — until heading reads 0. And the bigger the error, the harder the push."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#the-drive-that-heals-itself",
+    "href": "slides/pid-on-the-gyro.html#the-drive-that-heals-itself",
+    "title": "The Drive That Heals Itself",
+    "section": "The drive that heals itself",
+    "text": "The drive that heals itself\nhub.imu.reset_heading(0)\nleft.reset_angle(0)\n\nwhile left.angle() &lt; 1304:        # until ≈ 100 cm rolls by…\n    error = hub.imu.heading()     # +8 = nosed right · -5 = nosed left\n    left.run(500 - 4 * error)     # nosed right? left eases off…\n    right.run(500 + 4 * error)    # …right pushes harder → steers back left\n    wait(10)\nleft.stop(); right.stop()\nRun it — and nudge it again. 😈\n\n\nIt fights back. A hundred times a second: read the error, steer against it. Error 0 → wheels equal → dead straight. That tiny loop is the heart of every self-driving machine on Earth.\n\n\n\nCheck the signs with them, don’t just assert: error +8 → left runs 468, right runs 532 → right faster → robot swings left → error shrinks. Negative error works out symmetrically. The 4 is a strength knob — let one squad try 1 (lazy) and 20 (jittery zig-zag). Name it out loud: the same P-controller as this morning’s turn — one formula, second application; the third is D7’s line-follower. Same run()-is-a-speed-controller caveat as the proportional-turn note applies here — the 500 ± 4*error is a base speed plus a proportional trim, and it stays on run() for the same reasons (smooth, battery-proof, speaks DriveBase’s “speed” language)."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#watch-it-heal",
+    "href": "slides/pid-on-the-gyro.html#watch-it-heal",
+    "title": "The Drive That Heals Itself",
+    "section": "Watch it heal 🩹",
+    "text": "Watch it heal 🩹\n\n  \n    \n      ▶ Drive\n      💥 Nudge!\n      gyro fix: OFF\n    \n    heading: 0°\n  \n  \n    \n    \n    \n    \n      \n        \n        \n        \n        \n        \n        \n        \n      \n    \n  \n\n\n\n\nGyro fix OFF: one nudge and it rides the wall forever. ON: every nudge gets steered right back out. Same robot — the only difference is watching the error.\n\n\n⏱️ Time: 15 minutes"
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#nudge-wars",
+    "href": "slides/pid-on-the-gyro.html#nudge-wars",
+    "title": "The Drive That Heals Itself",
+    "section": "Nudge Wars 💥",
+    "text": "Nudge Wars 💥\n\n\n\n\n\n\nThe challenge\n\n\nDrive 1.5 m straight while the judge nudges your robot twice mid-run. Score = closest final heading to 0° + straightest trace. 3 attempts, best counts.\n\n\n\n\nTune on the bench first — your straight’s 4 is a knob too: too soft and a shove sends you wandering; too hot and the trace zig-zags all the way down the lane.\nWatch one recovery closely: the harder the shove, the harder the fight-back. The shove is the error.\n\n\nFormat: a 1.5 m taped lane; the judge nudges at roughly the 0.5 m and 1.0 m marks with a consistent finger-push to the robot’s side. Final |heading| is the score; trace straightness (eyeball the wheel-path) breaks ties. Uses only today’s material: error × gain on the straight. This competition is the plan’s flagged talent signal — P-tuning instinct is the strongest predictor of robotics skill; note on the scorecard who re-tunes between attempts by feel (gain reasoning: lazy vs jittery), not by guessing."
+  },
+  {
+    "objectID": "slides/pid-on-the-gyro.html#todays-gate",
+    "href": "slides/pid-on-the-gyro.html#todays-gate",
+    "title": "The Drive That Heals Itself",
+    "section": "Today’s gate",
+    "text": "Today’s gate\n\n\n\n\n\n\nYou’re done today when…\n\n\nOne gain turns your robot to any called angle — both directions — with your own gyro_turn_p; your 1.5 m straight fights back through two nudges; and you can say “the bigger the error, the harder the push” and predict what a too-small / too-big gain does before running it.\n\n\n\n\nTomorrow: put P in a hurry and watch it slam past the target — meet the letter that damps it. Then a lean P never quite kills — one more letter. Finish the acronym… and start naming moves in a library of your own. 📦\n\n\nThe gate is the plan’s D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the gain prediction in their own words — same formula, two applications today (turn + straight); the third is D7’s line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins my_lib.py (drive_straight/turn_to) — the DriveBase surprise now waits at the D10 reveal (decision #20), earned only after the whole library is theirs."
   }
 ]

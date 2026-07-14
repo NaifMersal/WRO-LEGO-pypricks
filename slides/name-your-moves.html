@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
+
+  <meta name="dcterms.date" content="2026-07-14">
+  <title>Name Your Moves</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-05b633aaffd58596cc6573a610a4b559.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MCA4MCI+DQogIDxkZWZzPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYSIgeDE9Ii0xLjkxMSIgeDI9IjIuOTg1IiB5MT0iLS44NDEiIHkyPSIxLjQxNCIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjOTlkNjMzIi8+DQogICAgICA8c3RvcCBvZmZzZXQ9Ii41IiBzdG9wLWNvbG9yPSIjM2M5Ii8+DQogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyNzM0NzAiLz4NCiAgICA8L2xpbmVhckdyYWRpZW50Pg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYSIgaWQ9ImQiIHgxPSItMy41NjkiIHgyPSIxLjMyOCIgeTE9Ii0xLjYwNSIgeTI9Ii42NTEiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJlIiB4MT0iLTMuMDQ3IiB4Mj0iMS44NDkiIHkxPSItLjkwNCIgeTI9IjEuMzUyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iZiIgeDE9Ii0yLjg5IiB4Mj0iMi4wMDciIHkxPSItMS4yOTIiIHkyPSIuOTY0Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iZyIgeDE9Ii0yLjQiIHgyPSIyLjQ5NyIgeTE9Ii0xLjA2NiIgeTI9IjEuMTg5Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iaCIgeDE9Ii0uOTkyIiB4Mj0iMi42NzkiIHkxPSItLjQxOCIgeTI9IjEuMjczIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iaSIgeDE9Ii0xLjUxMiIgeDI9IjIuMTU5IiB5MT0iLS4xOTciIHkyPSIxLjQ5NSIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYSIgaWQ9ImoiIHgxPSItLjkxNCIgeDI9IjIuNzU4IiB5MT0iLjA3OSIgeTI9IjEuNzcxIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iayIgeDE9Ii0zLjQwNSIgeDI9IjEuNDkzIiB5MT0iLTEuMDY4IiB5Mj0iMS4xODciLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJsIiB4MT0iLjM0NyIgeDI9IjMuMjg1IiB5MT0iLjE5OSIgeTI9IjEuNTUyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0ibSIgeDE9Ii0uOTA1IiB4Mj0iMi43NjciIHkxPSIuMDgzIiB5Mj0iMS43NzUiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJuIiB4MT0iLTIuMTE5IiB4Mj0iMi43NzgiIHkxPSItLjQ3NiIgeTI9IjEuNzc5Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0ibyIgeDE9Ii01LjY0NCIgeDI9Ii40ODYiIHkxPSItMi45OTgiIHkyPSIuNzQxIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0icCIgeDE9Ii0zLjQ5NSIgeDI9IjIuNjM2IiB5MT0iLTEuNjg3IiB5Mj0iMi4wNTMiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJxIiB4MT0iLTEuNDIyIiB4Mj0iMy4xNzUiIHkxPSItLjkyMyIgeTI9IjEuODgyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNhIiBpZD0iciIgeDE9Ii0zLjMwNiIgeDI9IjIuODI1IiB5MT0iLTIuMDcyIiB5Mj0iMS42NjgiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2EiIGlkPSJzIiB4MT0iLTEuNjgzIiB4Mj0iMi45MTQiIHkxPSItMS4wODEiIHkyPSIxLjcyMyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYSIgaWQ9InQiIHgxPSItMS4xNTgiIHgyPSIyLjUyMSIgeTE9Ii0uMjYxIiB5Mj0iMS45ODMiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSIuMjYxIiB4Mj0iLjYyNCIgeTE9IjMuNTYiIHkyPSItMS40NjkiIGdyYWRpZW50VW5pdHM9Im9iamVjdEJvdW5kaW5nQm94Ij4NCiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzZjZiIvPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIuNSIgc3RvcC1jb2xvcj0iIzYyNThhNiIvPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMjczNDcwIi8+DQogICAgPC9saW5lYXJHcmFkaWVudD4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ1IiB4MT0iLjE2MyIgeDI9Ii41MjYiIHkxPSI0LjkyNCIgeTI9Ii0uMTAzIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0idiIgeDE9Ii4zODYiIHgyPSIuNjU4IiB5MT0iMS44MjUiIHkyPSItMS45NDUiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ3IiB4MT0iLjI1MiIgeDI9Ii42MTUiIHkxPSI0LjE4MiIgeTI9Ii0uODQ1Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0ieCIgeDE9Ii40MTciIHgyPSIuNjg5IiB5MT0iMS45IiB5Mj0iLTEuODciLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ5IiB4MT0iLjQ4NSIgeDI9Ii43MDMiIHkxPSIuOTU2IiB5Mj0iLTIuMDYiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJ6IiB4MT0iLjM3NyIgeDI9Ii42NDkiIHkxPSIyLjQ1NSIgeTI9Ii0xLjMxNCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkEiIHgxPSIuMTk5IiB4Mj0iLjU2MiIgeTE9IjQuOTIyIiB5Mj0iLS4xMDUiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJCIiB4MT0iLjQzNyIgeDI9Ii43MDkiIHkxPSIxLjYyNSIgeTI9Ii0yLjE0NSIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkMiIHgxPSIuMjYxIiB4Mj0iLjYyNCIgeTE9IjQuMDU1IiB5Mj0iLS45NzIiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJEIiB4MT0iLjUiIHgyPSIuNSIgeTE9IjMuMDQ1IiB5Mj0iLTEuOTI3Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iRSIgeDE9Ii41IiB4Mj0iLjUiIHkxPSI0LjkwMSIgeTI9Ii0uMDcyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iRiIgeDE9Ii41IiB4Mj0iLjUiIHkxPSIyLjQzNSIgeTI9Ii0xLjI5NiIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkciIHgxPSIuNSIgeDI9Ii41IiB5MT0iLjkzNCIgeTI9Ii0yLjA1Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iSCIgeDE9Ii41IiB4Mj0iLjUiIHkxPSIzLjc4NSIgeTI9Ii0xLjE4NyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYiIgaWQ9IkkiIHgxPSIuNSIgeDI9Ii41IiB5MT0iMS44MDkiIHkyPSItMS45MjEiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2IiIGlkPSJKIiB4MT0iLjUiIHgyPSIuNSIgeTE9IjMuMDQ2IiB5Mj0iLTEuOTI4Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNiIiBpZD0iSyIgeDE9Ii41IiB4Mj0iLjUiIHkxPSIyLjc5NCIgeTI9Ii0yLjE3NyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYyIgeDE9IjUuMDEiIHgyPSItMi4yNzciIHkxPSItMS4zODMiIHkyPSIyLjAzOSIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPg0KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZmRiZDRkIi8+DQogICAgICA8c3RvcCBvZmZzZXQ9Ii41IiBzdG9wLWNvbG9yPSIjZjYzIi8+DQogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyNzM0NzAiLz4NCiAgICA8L2xpbmVhckdyYWRpZW50Pg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IkwiIHgxPSIyLjIzOSIgeDI9Ii0yLjEzNCIgeTE9Ii0uMDgyIiB5Mj0iMS45NzEiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJNIiB4MT0iNi4wOTgiIHgyPSItMS4xOTEiIHkxPSItMS44OTMiIHkyPSIxLjUyOCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9Ik4iIHgxPSIzLjM4NCIgeDI9Ii0yLjA4MSIgeTE9Ii0xLjA4OCIgeTI9IjEuNDc3Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iTyIgeDE9IjIuNzgiIHgyPSItMi42ODYiIHkxPSItLjgwNSIgeTI9IjEuNzYxIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iUCIgeDE9IjcuMDc0IiB4Mj0iLS4yMTIiIHkxPSItMi4zNTMiIHkyPSIxLjA2OSIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlEiIHgxPSI1LjA3NSIgeDI9Ii0yLjIxMSIgeTE9Ii0xLjQxNCIgeTI9IjIuMDA4Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iUiIgeDE9IjUuNzM2IiB4Mj0iLTEuNTUiIHkxPSItMi4xOTQiIHkyPSIxLjIyOCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlMiIHgxPSIyLjA4MSIgeDI9Ii0xLjc4MSIgeTE9Ii0uMDQ3IiB5Mj0iMS45Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iVCIgeDE9Ii43MjkiIHgyPSItMi4zNjEiIHkxPSIuMTM1IiB5Mj0iMS42OTIiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJVIiB4MT0iMi43MTciIHgyPSItMi40MzMiIHkxPSItLjg2OCIgeTI9IjEuNzI4Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iViIgeDE9IjEuNTE3IiB4Mj0iLTIuMzQ3IiB5MT0iLS4yNjIiIHkyPSIxLjY4NCIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlciIHgxPSIzLjU0NCIgeDI9Ii0xLjYwNiIgeTE9Ii0xLjI4NCIgeTI9IjEuMzEyIi8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iWCIgeDE9IjIuNjMxIiB4Mj0iLTEuMjMzIiB5MT0iLS4zMjQiIHkyPSIxLjYyMyIvPg0KICAgIDxsaW5lYXJHcmFkaWVudCBocmVmPSIjYyIgaWQ9IlkiIHgxPSIyLjAwMyIgeDI9Ii0xLjg2IiB5MT0iLS4wMDciIHkyPSIxLjk0Ii8+DQogICAgPGxpbmVhckdyYWRpZW50IGhyZWY9IiNjIiBpZD0iWiIgeDE9IjQuMTI1IiB4Mj0iLTEuMDI1IiB5MT0iLTEuMDc3IiB5Mj0iMS41MTgiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJhYSIgeDE9IjMuMDIyIiB4Mj0iLTIuMTI3IiB5MT0iLTEuMDIxIiB5Mj0iMS41NzQiLz4NCiAgICA8bGluZWFyR3JhZGllbnQgaHJlZj0iI2MiIGlkPSJhYiIgeDE9IjQuNjgxIiB4Mj0iLS40NjkiIHkxPSItMS44NTciIHkyPSIuNzM4Ii8+DQogIDwvZGVmcz4NCiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMy44IDEpIj4NCiAgPHBhdGggZmlsbD0iIzNjOSIgZD0ibTM2LjA0MSAyNi41My0xMS40NDggNi42MTF2MTMuMjJsMTEuNDQ4IDYuNjEyIDExLjQ0Ni02LjYwOFYzMy4xNDFaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjYSkiIGQ9Ik03MS40NjQgMjAuOTF2Ny45MzJsLTYuODctMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjZCkiIGQ9Ik02NC4yNDkgNTIuOTdsNi44NjkgMy45NjV2LTcuOTNaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjZSkiIGQ9Im02OC4xIDQ2LjM1OSAtNi44NjkgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2YpIiBkPSJNNzIuMzkyIDM1LjM3djcuOTMybC02Ljg2OSAtMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjZykiIGQ9Ik01Ni42NTEgNTYuODQ3djcuOTMybC02Ljg2OSAtMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjaCkiIGQ9Im01Ny43OTQgNTEuNjQzIC05LjE2IC01LjI4NiA5LjE2IC01LjI5WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2kpIiBkPSJtNTcuNzk1IDUyLjk3IC05LjE2IDUuMjlWNDcuNjg0WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2opIiBkPSJtNTcuNzkyIDM5Ljc0OSAtOS4xNTggNS4yODZ2LTEwLjU3MloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNrKSIgZD0ibTU4LjUgNzAuMzE4IC02Ljg2OCAzLjk2N3YtNy45MzJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjbCkiIGQ9Im00Ny40ODcgNDYuMzYxIC0xMS40NDYgLTYuNjEyIDExLjQ0NiAtNi42MTFaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjbSkiIGQ9Im00Ni4zNDQgNjEuMDc3IC05LjE1OCA1LjI4NnYtMTAuNTcyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI24pIiBkPSJtNDUuMTk5IDc0LjAzNSAtNi44NjggMy45NjV2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI28pIiBkPSJtNzAuMDIxIDYxLjc3NSAtNi44NjkgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3ApIiBkPSJtNjguMSAzMy4xNDIgLTYuODY5IDMuOTY3di03LjkzMloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNxKSIgZD0iTTU3Ljc5NCAyNy44NTJ2MTAuNTc2bC05LjE2IC01LjI5WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3IpIiBkPSJNNDUuMjAyIDYyLjg5MXY3LjkzMmwtNi44NjkgLTMuOTY3WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3MpIiBkPSJtNDYuMzQzIDU5Ljc1NiAtOS4xNTcgLTUuMjg2IDkuMTU3IC01LjI5WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3QpIiBkPSJtMzYuMDQxIDM5Ljc1IDExLjQ0NiA2LjYxMiAtMTEuNDQ2IDYuNjA4WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI2IpIiBkPSJtNjkuMzM0IDE3LjAzMSAtNi44NjkgMy45NjV2LTcuOTNaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjdSkiIGQ9Im01OC4wODIgNS40NiAtNi44NzEgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3YpIiBkPSJtNTcuNzk2IDI2LjUyOSAtOS4xNjIgNS4yODZWMjEuMjQxWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3cpIiBkPSJtNDUuMiAxNC41NDUgLTYuODY5IC0zLjk2NSA2Ljg2OSAtMy45NjdaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjeCkiIGQ9Ik00Ni4zNDQgMTkuNzQ0VjMwLjMxOWwtOS4xNTggLTUuMjg2WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI3kpIiBkPSJNMzYuMDQxIDI2LjUzdjEzLjIyTDI0LjU5MyAzMy4xNDFaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjeikiIGQ9Im0zNC44OTcgMjMuNzA5IC05LjE1OCAtNS4yODYgOS4xNTggLTUuMjlaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjQSkiIGQ9Im0zMy43NSA3LjkzMiAtNi44NyAtMy45NjUgNi44NyAtMy45NjdaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjQikiIGQ9Im0yMy40NDkgMzEuODE2IC05LjE1OCAtNS4yOSA5LjE1OCAtNS4yODVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjQykiIGQ9Ik0xOS43NiA2LjAzOXY3LjkzMmwtNi44NjkgLTMuOTY1WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0QpIiBkPSJtNTYuNjQ3IDIyLjY1MSAtNi44NzEgLTMuOTY3IDYuODcxIC0zLjk2N1oiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNFKSIgZD0ibTQ1LjIgMy45NjcgLTYuODY5IDMuOTY1di03LjkzMloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNGKSIgZD0ibTQ2LjM0NCAxOC40MTcgLTkuMTU4IDUuMjg2di0xMC41NjhaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjRykiIGQ9Im00Ny40ODcgMzMuMTQxIC0xMS40NDYgNi42MTF2LTEzLjIyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0gpIiBkPSJtMzMuNzUzIDEyLjgxNCAtNi44NzEgMy45Njd2LTcuOTMyWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0kpIiBkPSJtMzQuODk2IDI1LjAzMyAtOS4xNTggNS4yODZ2LTEwLjU3NVoiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNKKSIgZD0ibTIyLjMgMTguNjg0IC02Ljg3IDMuOTY1di03LjkzWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI0spIiBkPSJtNy41NTYgMjQuNjM3IC02Ljg3IC0zLjk2NSA2Ljg3IC0zLjk2N1oiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNjKSIgZD0ibTMzLjc1MSA3OC4wMDEgLTYuODcxIC0zLjk2NSA2Ljg3MSAtMy45NjdaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjTCkiIGQ9Ik0zNi4wNDEgMzkuNzV2MTMuMjJsLTExLjQ0OCAtNi42MTJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjTSkiIGQ9Ik0yMi4zIDY2Ljc2M3Y3LjkzMmwtNi44NyAtMy45NjZaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjTikiIGQ9Im0yMy40NDkgNDYuMzYyIC05LjE1OCA1LjI4NnYtMTAuNTc2WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI08pIiBkPSJtMjMuNDQ5IDMzLjE0MiAtOS4xNTggNS4yOXYtMTAuNThaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjUCkiIGQ9Ik05LjYxNiA1OS40MDF2Ny45M2wtNi44NzEgLTMuOTY1WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI1EpIiBkPSJNMTAuODUxIDI4Ljg5OXY3LjkzMmwtNi44NzEgLTMuOTY1WiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI1IpIiBkPSJtNi44NzEgNDAuMDkzIC02Ljg3MSAzLjk2NXYtNy45M1oiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNTKSIgZD0ibTM0Ljg5NCA2Ni4zNjcgLTkuMTYgLTUuMjg2IDkuMTYgLTUuMjlaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjVCkiIGQ9Im0zNi4wNDEgMzkuNzUgLTExLjQ0OCA2LjYwOHYtMTMuMjJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjVSkiIGQ9Im0zMy43NSA2Ny40MjUgLTYuODcxIDMuOTY3di03LjkzMloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNWKSIgZD0ibTM0Ljg5MiA1NC40NjcgLTkuMTU3IDUuMjl2LTEwLjU4MloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNXKSIgZD0ibTIyLjI5OSA2MC44MTQgLTYuODY5IDMuOTY1di03LjkzWiIvPg0KICA8cGF0aCBmaWxsPSJ1cmwoI1gpIiBkPSJNMjMuNDQ5IDQ3LjY4M3YxMC41NzNsLTkuMTU4IC01LjI4NloiLz4NCiAgPHBhdGggZmlsbD0idXJsKCNZKSIgZD0iTTIzLjQ0OSAzNC40NTl2MTAuNTczbC05LjE1OCAtNS4yODNaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjWikiIGQ9Im0xMC44NSA1MC4zMjYgLTYuODcxIC0zLjk2NyA2Ljg3MSAtMy45NjVaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjYWEpIiBkPSJtNy4xNDUgMjYuNTMxIC02Ljg2OSAzLjk2NXYtNy45MzJaIi8+DQogIDxwYXRoIGZpbGw9InVybCgjYWIpIiBkPSJtNy41NTYgNTMuNDUyIC02Ljg3MSAzLjk2NXYtNy45MzVaIi8+DQogIDwvZz4NCjwvc3ZnPg0K">
+
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="../slides_template/assets/anim.svg" data-background-opacity="0.15" data-background-size="cover" class="quarto-title-block center">
+  <h1 class="title">Name Your Moves</h1>
+  <p class="subtitle">Day 5 · Robot Rockstars · SPIKE Prime + Pybricks</p>
+
+<div class="quarto-title-authors">
+</div>
+
+  <p class="date">2026-07-14</p>
+</section>
+<section>
+<section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
+<h1>A. Warm-Up</h1>
+<p>Yesterday you <em>named</em> <strong>P</strong> — <code>error × gain</code>. Today: the two letters that fix what P alone can’t — and then your moves get <strong>names of their own</strong>. 📦</p>
+<!-- Shared assets for every sim in this deck: one car (two sizes), one helper kit. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="nmCar">
+      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="var(--car,#1C355E)"></rect>
+      <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+      <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"></rect>
+      <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+      <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"></rect>
+      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+      <circle cy="-30" r="4" fill="#FFD500"></circle>
+    </g>
+    <g id="nmCarMini">
+      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="var(--car,#1C355E)"></rect>
+      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"></path>
+      <circle cy="-30" r="4" fill="#FFD500"></circle>
+    </g>
+  </defs>
+</svg>
+<script>
+window.NM = {
+  el: function(id){ return document.getElementById(id); },
+  pt: function(a,R){ var r=a*Math.PI/180; return (R*Math.sin(r)).toFixed(1)+' '+(-R*Math.cos(r)).toFixed(1); },
+  arcD: function(a1,a2,R){ if(a2-a1<0.5) return ''; return 'M '+NM.pt(a1,R)+' A '+R+' '+R+' 0 '+((a2-a1)>180?1:0)+' 1 '+NM.pt(a2,R); },
+  // one 5 ms tick of the turn-to-90 sim (kd = 0 → pure P), shared by both PID sims
+  step: function(s, kd){
+    var sd=0.005, err=90-s.h, change=err-s.lastErr; s.lastErr=err;
+    var cmd=12*err + kd*(change/sd);
+    if(cmd>450)cmd=450; if(cmd<-450)cmd=-450;
+    s.v += (cmd-s.v)*Math.min(5*sd,1);
+    s.h += s.v*0.5*sd; s.t+=sd;
+  }
+};
+</script>
+</section>
+<section id="where-we-left-off" class="slide level2">
+<h2>Where we left off</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Yesterday</th>
+<th>The trick</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>📈 <strong>P, named</strong></td>
+<td><code>speed = error × gain</code> — far → fast, close → gentle, there → zero</td>
+</tr>
+<tr class="even">
+<td>🔁 <strong>one formula, two jobs</strong></td>
+<td>the <strong>watched turn</strong> <em>and</em> the <strong>self-healing straight</strong> — same line, two uses</td>
+</tr>
+<tr class="odd">
+<td>🔥 <strong>crack #1</strong></td>
+<td><code>gain = 20</code> flew <strong>past</strong> the target and zig-zagged back</td>
+</tr>
+<tr class="even">
+<td>😴 <strong>crack #2</strong></td>
+<td><code>gain = 1</code> <strong>parked a hair short</strong> — a leftover P never quite killed</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up">
+<ul>
+<li>Both cracks survived yesterday’s gain quiz — each one is a <strong>letter</strong> we collect this morning</li>
+<li>Then every move you own gets a <strong>name</strong> in <strong>your own library</strong></li>
+</ul>
+</div>
+<p>⏱️ <strong>Time: 10 minutes</strong></p>
+<aside class="notes">
+<p>Recap by asking, not telling: “walk me through <code>gyro_turn_p</code> — what does gain do at a big error vs a tiny one?” Then surface the two cracks <em>they already saw</em> on the D4 quiz: the hot gain overshot and rang; the lazy gain parked short. Don’t fix anything yet — name that the morning’s job is those two leftovers, which turn out to be the last two letters of PID, and the afternoon’s job is turning everything they’ve hand-built into named library functions. Keep P as the hero they built; D and I are its finishing touches, not a new subject.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="b.-finish-the-word-d-and-i" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
+<h1>B. Finish the Word: D and I</h1>
+<ul>
+<li>P knows <strong>how far</strong> is left</li>
+<li>P ignores <strong>how fast</strong> it’s closing — or that a lean is stealing from it</li>
+<li>Two letters fix that</li>
+</ul>
+</section>
+<section id="break-it-p-in-a-hurry" class="slide level2">
+<h2>Break it: P in a hurry 🔥</h2>
+<div style="width:780px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:6px;">
+    <button onclick="phRun()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">▶ gyro_turn_p(90) — gain cranked 🔥</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:44px;">
+    <svg width="200" height="200" viewbox="-105 -105 210 210" style="display:block;">
+      <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
+      <g id="phTick"><line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"></line></g>
+      <path id="phArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"></path>
+      <g id="phNeedle"><use href="#nmCar" style="--car:#FF7A5C"></use></g>
+    </svg>
+    <div style="font-family:Consolas,monospace;font-size:20px;color:#1C355E;min-width:300px;">
+      <div style="margin-bottom:6px;">heading = <span id="phHdg" style="font-weight:800;color:#FF7A5C;">0</span>° &nbsp;<span style="opacity:.6;font-size:15px;">target 90°</span></div>
+      <div style="height:20px;background:#eef3f8;border-radius:6px;overflow:hidden;margin-bottom:12px;position:relative;">
+        <div style="position:absolute;left:calc(90/110*100%);top:0;width:2px;height:100%;background:#00AE8D;"></div>
+        <div id="phHdgBar" style="height:100%;width:0%;background:#FF7A5C;opacity:.55;"></div>
+      </div>
+      <div id="phMsg" style="font-size:17px;color:#625D9C;font-weight:700;min-height:52px;">P sprints in… and slams the door. 🚪</div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, el=NM.el;
+  function run(){
+    var s={h:0,v:0,lastErr:90,t:0}, peak=0, done=false;
+    el('phMsg').textContent='P sprints in… watch it ring. 🔔';
+    el('phMsg').style.color='#625D9C';
+    el('phArc').setAttribute('d',''); el('phArc').setAttribute('opacity','0');
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var n=Math.max(1,Math.round(dt/0.005));
+      for(var i=0;i<n && !done;i++){
+        NM.step(s, 0);                        // hot gain, D=0
+        if(s.h>peak)peak=s.h;
+        if(s.t>4){ done=true; }
+      }
+      el('phNeedle').setAttribute('transform','rotate('+s.h.toFixed(1)+')');
+      el('phHdg').textContent=s.h.toFixed(0);
+      el('phHdgBar').style.width=Math.max(0,Math.min(s.h/110*100,100))+'%';
+      if(peak>90){ el('phArc').setAttribute('d',NM.arcD(90,peak,94)); el('phArc').setAttribute('opacity','1'); }
+      if(!done){ raf=requestAnimationFrame(frame); }
+      else{
+        raf=null;
+        el('phMsg').innerHTML='shot to <b>'+peak.toFixed(0)+'°</b> — the red arc it painted past the tick — swung back, rang, <b>then</b> settled. 😬';
+        el('phMsg').style.color='#E96852';
+      }
+    }
+    if(raf)cancelAnimationFrame(raf); last=null; raf=requestAnimationFrame(frame);
+  }
+  window.phRun=run;
+})();
+</script>
+<div class="fragment fade-up">
+<ul>
+<li class="fragment">The push only knows <em>how far</em> is left — <strong>not how fast it’s closing</strong></li>
+<li class="fragment">It arrives at 90 flat-out, blows past, over-corrects, and <strong>rings</strong> before it settles</li>
+<li class="fragment">A bigger gain rings <em>harder</em></li>
+</ul>
+</div>
+<aside class="notes">
+<p>Run it before the fragment. The red arc painted past the tick is the overshoot made physical — point at it. Elicit the diagnosis in their words: “the number hit 90 — why didn’t it stop?” Because the wheels were still spinning fast; P read error 0 and cut power, but momentum carried it past, then P yanked it back, and round it goes. This is exactly the D3 coast — but now P can’t two-speed its way out, because a hot gain is what won the race yesterday. Set up the need: we want something that notices the error is <em>dropping fast</em> and eases off early. Don’t name D yet.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="name-it-d-damps" class="slide level2 code-shrink">
+<h2>Name it: D damps 🛑</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1|3|4|5|6-7|8|10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="kw">def</span> gyro_turn_pd(target, gain<span class="op">=</span><span class="dv">4</span>, kd<span class="op">=</span><span class="fl">0.5</span>):</span>
+<span id="cb1-2"><a></a>    hub.imu.reset_heading(<span class="dv">0</span>)</span>
+<span id="cb1-3"><a></a>    last_error <span class="op">=</span> target</span>
+<span id="cb1-4"><a></a>    <span class="cf">while</span> <span class="bu">abs</span>(target <span class="op">-</span> hub.imu.heading()) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb1-5"><a></a>        error <span class="op">=</span> target <span class="op">-</span> hub.imu.heading()   <span class="co"># how FAR → P</span></span>
+<span id="cb1-6"><a></a>        change <span class="op">=</span> (error <span class="op">-</span> last_error) <span class="op">/</span> <span class="fl">0.005</span> <span class="co"># how FAST → D (°/s)</span></span>
+<span id="cb1-7"><a></a>        last_error <span class="op">=</span> error</span>
+<span id="cb1-8"><a></a>        left.run(gain <span class="op">*</span> error <span class="op">+</span> kd <span class="op">*</span> change) <span class="co"># ease off early</span></span>
+<span id="cb1-9"><a></a>        right.run(<span class="op">-</span>(gain <span class="op">*</span> error <span class="op">+</span> kd <span class="op">*</span> change))</span>
+<span id="cb1-10"><a></a>        wait(<span class="dv">5</span>)</span>
+<span id="cb1-11"><a></a>    left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<ul>
+<li class="fragment">P reads where you ARE. D reads how fast you’re closing</li>
+<li class="fragment">Watch <code>error</code> fall <code>90 → 55 → 30</code>: each tick <code>change</code> is <em>negative</em> (<code>−35</code>, then <code>−25</code>) — the gap is closing fast</li>
+<li class="fragment">D catches that and <strong>eases off early — it taps the brake <em>before</em> you arrive</strong>, so the turn glides in instead of ringing. That’s <strong>D — derivative</strong>, the second letter of <strong>PID</strong></li>
+</ul>
+</div>
+<aside class="notes">
+<p>Anticipation is the whole idea — say it that way: P only knows the gap’s <em>size</em> right now; D knows the gap is <em>shrinking</em> and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick’s error, subtract to get the <em>change</em> (a speed, °/s), feed it in. Sign check out loud on the card’s numbers — as the robot closes, <code>error</code> shrinks each tick, so <code>change</code> is negative, so it trims the command down → gentle arrival. <code>kd</code> is a new knob, same as <code>gain</code> was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They’ll feel both on the next slide. <code>gyro_turn_pd</code> stays on <code>run()</code> (see the D4 proportional-turn note on <code>run()</code> vs <code>motor.dc()</code>); worth knowing for coaches — and it pays off again at the D10 reveal, where the pro controller actuates one layer <em>deeper</em>, by torque/effort.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="feel-it-same-turn-calmed" class="slide level2">
+<h2>Feel it: same turn, calmed 🎢</h2>
+<div style="width:880px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:6px;">
+    <button onclick="fdRun()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:7px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ race P vs PD to 90°</button>
+    <span style="font-size:18px;color:#1C355E;font-weight:700;margin-left:10px;">kd: <b><span id="fdKdV">0.5</span></b></span>
+    <input type="range" min="0" max="1.6" step="0.1" value="0.5" oninput="fdKd(this.value)" style="width:200px;accent-color:#00AE8D;">
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;">
+    <div style="text-align:center;">
+      <svg width="200" height="200" viewbox="-105 -105 210 210" style="display:block;margin:0 auto;">
+        <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
+        <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"></line>
+        <path id="fdArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"></path>
+        <g id="fdCarP"><use href="#nmCar" style="--car:#E96852"></use></g>
+        <g id="fdCarPD"><g transform="scale(0.62)"><use href="#nmCar" style="--car:#00C9A7"></use></g></g>
+      </svg>
+      <div style="font-size:14px;color:#1C355E;font-weight:700;">🔴 P — big car · 🟢 PD — small car</div>
+    </div>
+    <svg width="590" height="255" viewbox="0 0 590 255" style="display:block;">
+      <line x1="50" y1="215" x2="570" y2="215" stroke="#1C355E" stroke-width="3"></line>
+      <line x1="50" y1="215" x2="50" y2="25" stroke="#1C355E" stroke-width="3"></line>
+      <text x="22" y="125" font-size="15" fill="#1C355E" font-weight="700" transform="rotate(-90 22 125)" text-anchor="middle">heading</text>
+      <text x="518" y="238" font-size="15" fill="#1C355E" font-weight="700" text-anchor="middle">time →</text>
+      <line id="fdTgt" x1="50" y1="78" x2="570" y2="78" stroke="#00AE8D" stroke-width="2" stroke-dasharray="8 8"></line>
+      <text x="562" y="72" font-size="14" fill="#00AE8D" font-weight="700" text-anchor="end">target 90°</text>
+      <polyline id="fdPtrace" points="" fill="none" stroke="#E96852" stroke-width="4"></polyline>
+      <polyline id="fdPDtrace" points="" fill="none" stroke="#00C9A7" stroke-width="4"></polyline>
+      <text x="115" y="44" font-size="17" fill="#E96852" font-weight="800">🔴 P alone — rings</text>
+      <text x="115" y="66" font-size="17" fill="#00AE8D" font-weight="800">🟢 PD — glides in</text>
+      <circle id="fdDotP" r="7" fill="#FFD500" stroke="#1C355E" stroke-width="2.5" opacity="0"></circle>
+      <circle id="fdDotPD" r="7" fill="#FFD500" stroke="#1C355E" stroke-width="2.5" opacity="0"></circle>
+      <text id="fdHere" font-size="14" fill="#1C355E" font-weight="800" opacity="0">you are HERE</text>
+    </svg>
+  </div>
+  <div style="text-align:center;font-family:Consolas,monospace;font-size:18px;color:#1C355E;">
+    P landed <span id="fdLandP" style="font-weight:800;color:#E96852;">–</span>° · PD landed <span id="fdLandPD" style="font-weight:800;color:#00AE8D;">–</span>°
+  </div>
+</div>
+<script>
+(function(){
+  var kd=0.5, raf=null, last=null, el=NM.el;
+  var X0=50, X1=570, TSPAN=4.0, YB=215, HMAX=115;
+  function yOf(h){ return YB - (h/HMAX)*(YB-40); }
+  function fresh(){ return {h:0,v:0,lastErr:90,t:0,done:false,pts:[],lx:X0,ly:YB}; }
+  function stepc(s, useD){
+    NM.step(s, useD? kd : 0);   // D = kd × closing speed (°/s) → damps, same as the code
+    if(s.t>TSPAN) s.done=true;
+  }
+  function push(s){
+    var x=X0+(s.t/TSPAN)*(X1-X0), y=yOf(s.h);
+    s.lx=x; s.ly=y;
+    s.pts.push(x.toFixed(1)+','+y.toFixed(1));
+  }
+  window.fdRun=function(){
+    var P=fresh(), PD=fresh(), peak=0; last=null;
+    el('fdLandP').textContent='–'; el('fdLandPD').textContent='–';
+    el('fdPtrace').setAttribute('points',''); el('fdPDtrace').setAttribute('points','');
+    el('fdArc').setAttribute('d',''); el('fdArc').setAttribute('opacity','0');
+    el('fdCarP').setAttribute('transform','rotate(0)'); el('fdCarPD').setAttribute('transform','rotate(0)');
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var n=Math.max(1,Math.round(dt/0.005));
+      for(var i=0;i<n;i++){ if(!P.done){stepc(P,false);push(P);} if(!PD.done){stepc(PD,true);push(PD);} }
+      el('fdPtrace').setAttribute('points',P.pts.join(' '));
+      el('fdPDtrace').setAttribute('points',PD.pts.join(' '));
+      el('fdCarP').setAttribute('transform','rotate('+P.h.toFixed(1)+')');
+      el('fdCarPD').setAttribute('transform','rotate('+PD.h.toFixed(1)+')');
+      if(P.h>peak)peak=P.h;
+      if(peak>90){ el('fdArc').setAttribute('d',NM.arcD(90,peak,94)); el('fdArc').setAttribute('opacity','1'); }
+      el('fdDotP').setAttribute('cx',P.lx.toFixed(1)); el('fdDotP').setAttribute('cy',P.ly.toFixed(1)); el('fdDotP').setAttribute('opacity','1');
+      el('fdDotPD').setAttribute('cx',PD.lx.toFixed(1)); el('fdDotPD').setAttribute('cy',PD.ly.toFixed(1)); el('fdDotPD').setAttribute('opacity','1');
+      var hx=Math.max(P.lx,PD.lx), hy=Math.max(20,Math.min(P.ly,PD.ly)-14);
+      el('fdHere').setAttribute('x',(hx>460?hx-14:hx+14).toFixed(1)); el('fdHere').setAttribute('y',hy.toFixed(1));
+      el('fdHere').setAttribute('text-anchor', hx>460?'end':'start'); el('fdHere').setAttribute('opacity','1');
+      if(P.done&&PD.done){ raf=null; el('fdLandP').textContent=P.h.toFixed(0); el('fdLandPD').textContent=PD.h.toFixed(0); }
+      else raf=requestAnimationFrame(frame);
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+  window.fdKd=function(v){ kd=parseFloat(v); el('fdKdV').textContent=v; };
+})();
+</script>
+<div class="fragment fade-up">
+<ul>
+<li>Same hot gain, same target. <strong>P</strong> reads only the error’s <em>size</em> and rings — watch the red car paint its wobble past the tick</li>
+<li><strong>PD</strong> also reads its <em>speed</em> and eases off early — one clean glide <em>(the graph is the cars’ <strong>diary</strong>; the yellow dot is now)</em></li>
+<li>Slide <code>kd</code> to <strong>0</strong> and the green curve rings too; too high and it crawls in. <strong>Fast when far, gentle as it arrives.</strong></li>
+</ul>
+</div>
+<aside class="notes">
+<p>Reading ritual first, same as yesterday’s dot-and-car slides: the two cars on the dial ARE the robots (big red = P, small green = PD); the graph is their diary, written left to right while they turn; the yellow dot at each trace’s tip is <em>now</em> — car and dot move together, same robot, two views. Run at kd=0.5 — narrate the dial (“red blows past the tick, paints the arc, swings back; green glides on”) <em>then</em> point at the diary telling the identical story. Drag kd to 0 live: the green curve collapses onto the red one — <em>proof</em> that D is the only difference. Nudge kd up to ~1.5: green now approaches sluggishly and arrives late. The sweet spot is theirs to feel, exactly like the gain knob yesterday. The sim is illustrative, not gospel — on the real robot they’ll tune kd by eye, same habit.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-last-letter-i-coach-demo" class="slide level2">
+<h2>The last letter: I — <em>(coach demo)</em> 🧲</h2>
+<div class="qbox">
+<p><span class="qtitle">Rest a thumb of weight on one side. Now the P-turn stops <strong>a hair short</strong> — 88°, not 90 — and <strong>stays there, forever.</strong> Why can’t P finish the job?</span></p>
+</div>
+<div style="width:860px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:6px;">
+    <button onclick="itRun()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:7px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive into the lean</button>
+    <button id="itBtn" onclick="itToggle()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:7px 20px;font-size:19px;font-weight:700;cursor:pointer;">I-term: OFF</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;">
+    <div style="text-align:center;">
+      <svg width="160" height="160" viewbox="-105 -105 210 210" style="display:block;margin:0 auto;">
+        <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
+        <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"></line>
+        <path id="itGapArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"></path>
+        <g id="itCar"><use href="#nmCar" style="--car:#625D9C"></use><text x="17" y="4" font-size="15">🧲</text></g>
+      </svg>
+      <div style="font-size:13px;color:#1C355E;font-weight:700;">🧲 = the lean, riding the car</div>
+    </div>
+    <svg width="545" height="189" viewbox="0 0 590 205" style="display:block;">
+      <line x1="50" y1="175" x2="570" y2="175" stroke="#1C355E" stroke-width="3"></line>
+      <line x1="50" y1="175" x2="50" y2="20" stroke="#1C355E" stroke-width="3"></line>
+      <text x="22" y="100" font-size="15" fill="#1C355E" font-weight="700" transform="rotate(-90 22 100)" text-anchor="middle">heading</text>
+      <text x="518" y="198" font-size="15" fill="#1C355E" font-weight="700" text-anchor="middle">time →</text>
+      <line x1="50" y1="40" x2="570" y2="40" stroke="#00AE8D" stroke-width="2" stroke-dasharray="8 8"></line>
+      <text x="562" y="34" font-size="14" fill="#00AE8D" font-weight="700" text-anchor="end">target 90°</text>
+      <polyline id="itTrace" points="" fill="none" stroke="#625D9C" stroke-width="4"></polyline>
+      <text id="itGap" x="420" y="78" font-size="15" fill="#E96852" font-weight="700" opacity="0">stuck 5° short 😤</text>
+      <circle id="itDot" r="7" fill="#FFD500" stroke="#1C355E" stroke-width="2.5" opacity="0"></circle>
+      <text id="itHere" font-size="14" fill="#1C355E" font-weight="800" opacity="0">you are HERE</text>
+    </svg>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;font-size:15px;color:#1C355E;">
+    <span>the <b>leftover</b> P can't push out, piling up in <b>I</b>'s memory:</span>
+    <div style="width:220px;height:16px;background:#eef3f8;border-radius:6px;overflow:hidden;"><div id="itAcc" style="height:100%;width:0%;background:#625D9C;"></div></div>
+  </div>
+</div>
+<script>
+(function(){
+  var useI=false, raf=null, last=null, el=NM.el;
+  var X0=50, X1=570, TSPAN=8.0, YB=175, HMAX=100;
+  function yOf(h){ return YB - (h/HMAX)*(YB-25); }
+  window.itRun=function(){
+    var T=90, h=0, acc=0, t=0, done=false, pts=[]; last=null;
+    var LEAN=16;                                  // constant load the wheels must overcome
+    el('itTrace').setAttribute('points',''); el('itGap').setAttribute('opacity','0');
+    el('itGapArc').setAttribute('d',''); el('itGapArc').setAttribute('opacity','0');
+    el('itCar').setAttribute('transform','rotate(0)');
+    el('itAcc').style.width='0%';
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var n=Math.max(1,Math.round(dt/0.005));
+      for(var i=0;i<n && !done;i++){
+        var sd=0.005, err=T-h;
+        acc += err*sd;
+        var push = 3*err + (useI? 0.3*acc : 0) - LEAN;   // P + (I) fighting the lean
+        h += push*0.5*sd; t+=sd;
+        if(t>TSPAN) done=true;
+      }
+      var x=X0+(t/TSPAN)*(X1-X0), y=yOf(h);
+      pts.push(x.toFixed(1)+','+y.toFixed(1));
+      el('itTrace').setAttribute('points',pts.join(' '));
+      el('itCar').setAttribute('transform','rotate('+h.toFixed(1)+')');
+      el('itDot').setAttribute('cx',x.toFixed(1)); el('itDot').setAttribute('cy',y.toFixed(1)); el('itDot').setAttribute('opacity','1');
+      el('itHere').setAttribute('x',(x>460?x-14:x+14).toFixed(1)); el('itHere').setAttribute('y',Math.max(16,y-14).toFixed(1));
+      el('itHere').setAttribute('text-anchor', x>460?'end':'start'); el('itHere').setAttribute('opacity','1');
+      el('itAcc').style.width=Math.min(0.3*acc/LEAN*100, 100)+'%';
+      if(!done){ raf=requestAnimationFrame(frame); }
+      else{
+        raf=null;
+        if(!useI && h<T-1){
+          el('itGap').setAttribute('opacity','1');
+          el('itGapArc').setAttribute('d',NM.arcD(h,T,94)); el('itGapArc').setAttribute('opacity','1');
+        }
+      }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+  window.itToggle=function(){
+    useI=!useI;
+    var b=el('itBtn');
+    b.textContent='I-term: '+(useI?'ON':'OFF');
+    b.style.background=useI?'#625D9C':'#eef3f8';
+    b.style.color=useI?'#fff':'#1C355E';
+    b.style.border=useI?'none':'2px solid #1C355E';
+  };
+})();
+</script>
+<div class="fragment fade-up">
+<ul>
+<li>P’s push (<code>gain × error</code>) can’t beat the lean, so it <strong>parks a hair short forever</strong> — that’s yesterday’s <code>gain = 1</code>, now explained</li>
+<li>Turn <strong>I ON</strong>: each tick piles the leftover onto a <strong>running total</strong> (the purple bar) until the sum beats the lean. <strong>I — integral</strong></li>
+</ul>
+</div>
+<aside class="notes">
+<p>This is a <strong>coach demo — never gated.</strong> Show it, don’t assign it. Point at the dial first: the car (🧲 riding its side — that’s the thumb of weight) climbs and sticks short of the tick, and the red sliver between nose and tick IS the flatline gap on the diary next to it — same robot, two views, yellow dot = now. Toggle I OFF first: the purple curve rises then flatlines short, the “stuck 5° short” tag appears — that’s yesterday’s <code>gain=1</code> parks-short, now explained. Toggle I ON and rerun: the accumulator bar fills, the car creeps the last sliver onto the tick, and the curve creeps up to 90. Say plainly why it barely matters for us: our mission moves are short — a 30 cm straight or a 90° turn ends before the accumulator fills — so I earns its seat on long steady offsets, not here. They now <em>own</em> the whole acronym; that’s the win, not a tuned I.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="you-own-all-three-letters" class="slide level2">
+<h2>You own all three letters 🏆</h2>
+<div style="text-align:center;margin:10px 0 4px 0;">
+  <div style="font-size:64px;font-weight:800;letter-spacing:6px;">
+    <span style="color:#00AE8D;">P</span> · <span style="color:#625D9C;">I</span> · <span style="color:#E96852;">D</span>
+  </div>
+</div>
+<div style="display:flex;justify-content:center;gap:26px;margin-top:8px;">
+  <div style="background:#eef3f8;border-radius:12px;border-top:5px solid #00AE8D;padding:12px 20px;text-align:center;width:200px;">
+    <div style="font-size:26px;font-weight:800;color:#00AE8D;">P</div>
+    <div style="font-size:16px;color:#1C355E;">the error's <b>size</b><br>far → hard push</div>
+  </div>
+  <div style="background:#eef3f8;border-radius:12px;border-top:5px solid #625D9C;padding:12px 20px;text-align:center;width:200px;">
+    <div style="font-size:26px;font-weight:800;color:#625D9C;">I</div>
+    <div style="font-size:16px;color:#1C355E;">the error's <b>history</b><br>kills a steady lean</div>
+  </div>
+  <div style="background:#eef3f8;border-radius:12px;border-top:5px solid #E96852;padding:12px 20px;text-align:center;width:200px;">
+    <div style="font-size:26px;font-weight:800;color:#E96852;">D</div>
+    <div style="font-size:16px;color:#1C355E;">the error's <b>speed</b><br>brakes before arrival</div>
+  </div>
+</div>
+<div class="fragment fade-up">
+<ul>
+<li>Size, history, speed — three readings of one number, the error</li>
+<li>This exact trio runs inside every drone, thermostat, and Mars rover</li>
+<li>You didn’t learn a LEGO trick; you <strong>finished the most-used formula in robotics.</strong> Now give your moves <strong>names.</strong> 📦</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Let the acronym land with a beat of silence — this is the payoff of two days. Say it in one breath: P built yesterday, D and I today, all three read the same error different ways. Then pivot: every one of those moves still lives as a loose pasted loop in one file. The afternoon turns them into a <strong>library</strong> — named functions they’ll carry all the way to the competition table.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="c.-the-library-begins" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
+<h1>C. The Library Begins</h1>
+<p>Every move you own is still a <em>pasted loop</em>. Name each one <strong>once</strong>, and a mission becomes a sentence.</p>
+</section>
+<section id="break-it-the-copy-paste-swamp" class="slide level2">
+<h2>Break it: the copy-paste swamp 🔥</h2>
+<div class="qbox">
+<p><span class="qtitle">The judge calls: <em>turn to 90 · drive 40 cm · turn to 45 · drive 30 cm.</em> With yesterday’s file, how many lines do you paste — and when a bug turns up in the turn loop, in how many places do you fix it?</span></p>
+</div>
+<div style="display:flex;justify-content:center;gap:16px;margin-top:10px;">
+  <div style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
+    <div style="font-weight:800;color:#E96852;">turn to 90</div>
+    <div>while abs(90 - …) &gt; 1:</div>
+    <div>&nbsp;&nbsp;error = 90 - …</div>
+    <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(4*error + …)</span></div>
+    <div>&nbsp;&nbsp;… 5 more lines …</div>
+    <div style="color:#E96852;font-weight:700;">🐛 fix here…</div>
+  </div>
+  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
+    <div style="font-weight:800;color:#E96852;">drive 40 cm</div>
+    <div>while left.angle() &lt; …:</div>
+    <div>&nbsp;&nbsp;error = heading()</div>
+    <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(500 - 4*error)</span></div>
+    <div>&nbsp;&nbsp;… 5 more lines …</div>
+    <div style="color:#E96852;font-weight:700;">…and here…</div>
+  </div>
+  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
+    <div style="font-weight:800;color:#E96852;">turn to 45</div>
+    <div>while abs(45 - …) &gt; 1:</div>
+    <div>&nbsp;&nbsp;error = 45 - …</div>
+    <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(4*error + …)</span></div>
+    <div>&nbsp;&nbsp;… 5 more lines …</div>
+    <div style="color:#E96852;font-weight:700;">…and here…</div>
+  </div>
+  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
+    <div style="font-weight:800;color:#E96852;">drive 30 cm</div>
+    <div>while left.angle() &lt; …:</div>
+    <div>&nbsp;&nbsp;error = heading()</div>
+    <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(500 - 4*error)</span></div>
+    <div>&nbsp;&nbsp;… 5 more lines …</div>
+    <div style="color:#E96852;font-weight:700;">…and here. 😵</div>
+  </div>
+</div>
+<div class="fragment fade-up">
+<ul>
+<li>Four moves ≈ <strong>30 pasted lines</strong>, and one bug means <strong>four fixes</strong> — miss one and the robot lies to you</li>
+<li>A real mission has a <em>dozen</em> moves. The cure isn’t more pasting — it’s <strong>naming</strong>: write each move once, call it forever</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Let them actually start pasting for the judge’s call — a minute of real pasting sells the swamp better than any slide. Then freeze: “you already know the cure — you used it yesterday.” <code>def gyro_turn</code> was the first named move; today every move gets a name, in a file of its own. Vocabulary to land: a <strong>library</strong> = a file of named moves; your mission file <em>imports</em> the verbs. This is the same trick <code>run_angle</code> plays — someone at LEGO named a move so you wouldn’t have to paste motor physics.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="fix-it-a-file-of-your-own-my_lib.py" class="slide level2 code-shrink">
+<h2>Fix it: a file of your own — <code>my_lib.py</code> 📦</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1|2-9|11-13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># my_lib.py — YOUR moves: written once, named forever</span></span>
+<span id="cb2-2"><a></a><span class="im">from</span> pybricks.hubs <span class="im">import</span> PrimeHub</span>
+<span id="cb2-3"><a></a><span class="im">from</span> pybricks.pupdevices <span class="im">import</span> Motor</span>
+<span id="cb2-4"><a></a><span class="im">from</span> pybricks.parameters <span class="im">import</span> Port, Direction</span>
+<span id="cb2-5"><a></a><span class="im">from</span> pybricks.tools <span class="im">import</span> wait</span>
+<span id="cb2-6"><a></a></span>
+<span id="cb2-7"><a></a>hub <span class="op">=</span> PrimeHub()</span>
+<span id="cb2-8"><a></a>left <span class="op">=</span> Motor(Port.A, Direction.COUNTERCLOCKWISE)</span>
+<span id="cb2-9"><a></a>right <span class="op">=</span> Motor(Port.E)</span>
+<span id="cb2-10"><a></a></span>
+<span id="cb2-11"><a></a>KP <span class="op">=</span> <span class="dv">4</span>                                <span class="co"># named constants — tune HERE,</span></span>
+<span id="cb2-12"><a></a>WHEEL_MM <span class="op">=</span> <span class="dv">88</span>                         <span class="co"># nowhere else</span></span>
+<span id="cb2-13"><a></a>DEG_PER_MM <span class="op">=</span> <span class="dv">360</span> <span class="op">/</span> (<span class="fl">3.14</span> <span class="op">*</span> WHEEL_MM)  <span class="co"># Day 2's wheel math, bottled</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<ul>
+<li>One new file. The top holds the robot’s <strong>facts</strong> (ports, gains, wheel math); below it live the <strong>verbs</strong></li>
+<li>Your mission file just says <code>from my_lib import drive_straight, turn_to</code> — and reads like a story instead of a swamp</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Make the file for real, together — everyone creates <code>my_lib.py</code> next to their mission file. The constants block is the same discipline from the square day, now promoted to the library’s front door: facts at the top, verbs below, missions elsewhere. <code>DEG_PER_MM</code> bottles the D2 rope-unroll math (360° per wheel-turn ÷ circumference) so distance-in-mm is a multiply away. Two verbs move in today; the library keeps growing all week — wall verbs next session, line verbs after — same file, more names.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="verb-1-turn_to-the-pd-turn-named" class="slide level2">
+<h2>Verb #1: <code>turn_to</code> — the PD turn, named</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|2|3|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> turn_to(target, gain<span class="op">=</span><span class="dv">4</span>, kd<span class="op">=</span><span class="fl">0.5</span>):</span>
+<span id="cb3-2"><a></a>    <span class="co">"""PD gyro turn to a heading ON THE MAT — no reset."""</span></span>
+<span id="cb3-3"><a></a>    <span class="co"># hub.imu.reset_heading(0)   ← DELETED. That's the whole diff.</span></span>
+<span id="cb3-4"><a></a>    last_error <span class="op">=</span> target <span class="op">-</span> hub.imu.heading()</span>
+<span id="cb3-5"><a></a>    ...   <span class="co"># the rest IS gyro_turn_pd, line for line</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<ul>
+<li>Copy <code>gyro_turn_pd</code> into <code>my_lib.py</code>, rename it, <strong>delete the reset</strong> — that’s the whole edit</li>
+<li><code>turn_to(90)</code> now means <em>face 90 on the mat</em> — not “turn 90 more”</li>
+<li>Arrive at a corner 1° hot? The <strong>next</strong> <code>turn_to</code> absorbs it. <strong>Errors stop stacking.</strong></li>
+</ul>
+</div>
+<aside class="notes">
+<p>The dropped reset is the day’s sneakiest upgrade — walk it slowly. With reset, every turn measures from wherever the robot happens to point, so corner errors <em>add up</em> (the D3 square never closed for exactly this reason). Without reset, the gyro keeps one map-wide heading and every <code>turn_to</code> is an absolute appointment: 90 is 90, whatever mess came before. Quiz it: “you’re at heading 92 after a bumped corner — what does <code>turn_to(180)</code> do?” (turns 88, not 90 — it <em>fixes</em> the bump for free). The gyro heading keeps counting past 360, which the square slide uses. Defaults (<code>gain=4, kd=0.5</code>) are their tuned D4/D5 values — theirs may differ; that’s the point of owning the knobs. Don’t unpack the <code>=</code> in the def line yet — <em>default</em> gets named and drilled two slides on.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="verb-2-drive_straight-a-straight-with-a-finish-line" class="slide level2 code-shrink">
+<h2>Verb #2: <code>drive_straight</code> — a straight with a finish line</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers="|1|3|5|6-8|9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> drive_straight(distance_mm, speed<span class="op">=</span><span class="dv">400</span>):</span>
+<span id="cb4-2"><a></a>    <span class="co">"""Drive distance_mm, healing the heading the whole way."""</span></span>
+<span id="cb4-3"><a></a>    heading <span class="op">=</span> hub.imu.heading()                    <span class="co"># lock THIS heading</span></span>
+<span id="cb4-4"><a></a>    finish <span class="op">=</span> left.angle() <span class="op">+</span> distance_mm <span class="op">*</span> DEG_PER_MM</span>
+<span id="cb4-5"><a></a>    <span class="cf">while</span> left.angle() <span class="op">&lt;</span> finish:                   <span class="co"># encoder finish line</span></span>
+<span id="cb4-6"><a></a>        error <span class="op">=</span> hub.imu.heading() <span class="op">-</span> heading        <span class="co"># one heartbeat</span></span>
+<span id="cb4-7"><a></a>        left.run(speed <span class="op">-</span> KP <span class="op">*</span> error)</span>
+<span id="cb4-8"><a></a>        right.run(speed <span class="op">+</span> KP <span class="op">*</span> error)</span>
+<span id="cb4-9"><a></a>        wait(<span class="dv">5</span>)</span>
+<span id="cb4-10"><a></a>    left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<ul>
+<li>Day 2’s wheel math sets the <strong>finish line in degrees</strong>; Day 4’s healing loop steers every heartbeat on the way there</li>
+<li>A verb calling a verb would stack — here it’s inlined for simplicity, same idea: <strong>libraries grow by stacking, not pasting</strong></li>
+</ul>
+</div>
+<aside class="notes">
+<p>Single function now: <code>drive_straight</code> handles both the finish line (encoder degrees) and the healing loop (P steering each tick). <code>finish</code> is measured from wherever the wheel already is (no encoder reset), same absolute-not-relative discipline as <code>turn_to</code>. Backwards moves (a negative <code>distance_mm</code>) need the comparison flipped — park it as a challenge today; it becomes urgent at the wall session’s measured back-off, and the coach exemplar handles it. Benchmarks come at the gate: 1 m within ±2 cm is very reachable with a measured wheel. The <code>speed=400</code> in the def line gets its name — <em>default</em> — on the very next slide.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="knobs-with-defaults" class="slide level2 smaller">
+<h2>Knobs with defaults 🎛️</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1|2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> turn_to(target, gain<span class="op">=</span><span class="dv">4</span>, kd<span class="op">=</span><span class="fl">0.5</span>):         <span class="co"># two knobs, factory-set</span></span>
+<span id="cb5-2"><a></a><span class="kw">def</span> drive_straight(distance_mm, speed<span class="op">=</span><span class="dv">400</span>):  <span class="co"># one knob, factory-set</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Every <code>=</code> in a <code>def</code> line is a <strong>default</strong> — a factory setting. Skip the knob, the factory value runs; name it — a <strong>keyword argument</strong> like <code>kd=0</code> — and you turn <em>that one knob</em>, nothing else</li>
+</ul>
+<div class="qbox">
+<p><span class="qtitle">Predict — what runs? ① <code>turn_to(90)</code> · ② <code>turn_to(90, kd=0)</code> · ③ <code>drive_straight(300, speed=150)</code> · ④ <code>drive_straight(speed=150)</code></span></p>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>① all factory settings — <strong>your</strong> tuned <code>gain=4, kd=0.5</code> run unasked · ② brake knob to zero — <strong>yesterday’s ringing P is back, on demand</strong> 🔔</p>
+</div>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox purple">
+<p>③ one careful straight at 150 — every <em>other</em> call still fast · ④ 💥 <code>TypeError</code> — <code>distance_mm</code> has <strong>no</strong> default. Some knobs <em>must</em> be turned</p>
+</div>
+</div>
+<aside class="notes">
+<p>Name the vocabulary plainly, once: the names in the parentheses are <strong>parameters</strong>; a parameter with <code>=</code> carries a <strong>default</strong>; naming a knob at the call site (<code>kd=0</code>) is a <strong>keyword argument</strong>. They’ve used all three since <code>gyro_turn_p(target, gain=4)</code> — this slide only hangs names on habits. Quiz cadence: read a call, every squad commits out loud, <em>then</em> reveal the card — ② is the fun one (one keyword resurrects yesterday’s ringing bug, proof the default was doing real work), ④ is the confidence move: run it live, read the <code>TypeError</code> together — the interpreter is <em>telling you which knob you forgot</em>, not scolding you. Forward hook for coaches: at the D10 reveal, <code>RobotConfig</code> gathers all these factory settings into one dataclass — same idea, bigger box.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="two-homes-for-a-name" class="slide level2 smaller">
+<h2>Two homes for a name 🗺️</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="|1-3|5-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># top of my_lib.py — GLOBALS: born once, every verb reads them</span></span>
+<span id="cb6-2"><a></a>hub <span class="op">=</span> PrimeHub()</span>
+<span id="cb6-3"><a></a>KP <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb6-4"><a></a></span>
+<span id="cb6-5"><a></a><span class="kw">def</span> drive_straight(distance_mm, speed<span class="op">=</span><span class="dv">400</span>):</span>
+<span id="cb6-6"><a></a>    heading <span class="op">=</span> hub.imu.heading()              <span class="co"># LOCALS: born at the call…</span></span>
+<span id="cb6-7"><a></a>    error <span class="op">=</span> hub.imu.heading() <span class="op">-</span> heading      <span class="co"># …gone the moment it ends</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="qbox">
+<p><span class="qtitle">The run just ended — what does <code>print(error)</code> print? And: change <code>KP = 4</code> → <code>6</code> at the top — how many verbs feel it?</span></p>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p><code>print(error)</code> → <strong>NameError</strong> — <code>error</code> is a <strong>local</strong>: born at the call, dead at the end. A <em>feature</em> — every verb gets private scratch names that never collide</p>
+</div>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p><code>KP</code> is a <strong>global</strong> — one edit, <strong>every</strong> verb feels it. The file’s whole shape: <strong>facts up top (global) · verbs below · scratch inside (local)</strong></p>
+</div>
+</div>
+<aside class="notes">
+<p>Two words, two homes — point at the actual file while saying it: a name born at the <strong>top of the file</strong> is a <strong>global</strong> (born once, when the file loads; every verb below can read it — <code>hub</code>, <code>left</code>, <code>KP</code>, <code>DEG_PER_MM</code>); a name born <strong>inside a def</strong> is a <strong>local</strong> (born fresh at every call, gone at the end — <code>heading</code>, <code>finish</code>, <code>error</code>). Run the <code>print(error)</code> NameError live if a laptop’s handy; kids expect the number to still be there, and the error landing is the lesson. Then sell dying-locals as a feature: <code>turn_to</code> and <code>drive_straight</code> <em>both</em> use <code>error</code> and never trip over each other, and every call starts with a clean slate. The KP question is the payoff of the “tune HERE, nowhere else” comment they already wrote — one global, read by everyone, edited in one place. Don’t mention the <code>global</code> keyword; the next slide handles the one trap without it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="break-it-the-tune-that-didnt-stick" class="slide level2">
+<h2>Break it: the tune that didn’t stick 🔥</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-code-line-numbers="|1-2|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="kw">def</span> make_it_sharper():</span>
+<span id="cb7-2"><a></a>    KP <span class="op">=</span> <span class="dv">12</span>          <span class="co"># crank steering for the whole library… right?</span></span>
+<span id="cb7-3"><a></a></span>
+<span id="cb7-4"><a></a>make_it_sharper()</span>
+<span id="cb7-5"><a></a>drive_straight(<span class="dv">300</span>)  <span class="co"># …still lazy. Nothing changed. 😤</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<ul>
+<li class="fragment"><strong>Assigning</strong> a name inside a <code>def</code> births a brand-new <strong>local</strong> — even when a global already owns that name. This <code>KP</code> lived inside <code>make_it_sharper</code>… and <strong>died at the end of the call</strong>. The top-of-file <code>KP</code> never moved</li>
+<li class="fragment">The fix is zero new code — it’s the rule the file already taught you: <strong>read a global from anywhere; <em>change</em> it only at the top.</strong> <code>KP = 12</code> belongs in exactly ONE place — the constants block</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Act it out before explaining: type <code>make_it_sharper</code> live, run the straight, watch nothing change — let the 😤 be theirs. Then the one-sentence rule: the moment you <em>assign</em> a name inside a def, Python births a new local, even if a global already wears that name — the global is untouched, and the local evaporates at return. (Inside <code>make_it_sharper</code> the new <code>KP</code> even <em>hides</em> the global — same name, different box.) Do <strong>not</strong> teach the <code>global</code> keyword as the escape hatch — the library discipline is strictly better and it’s already on the slide: constants change at the top, nowhere else. Coach’s radar for Weeks 2–3: when a squad swears “I tuned it and it didn’t stick,” the first question is <em>“where did you assign it?”</em> — this slide is that bug, met safely in advance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-square-in-four-names" class="slide level2">
+<h2>The square, in four names</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-code-line-numbers="|1|3-6|8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">from</span> my_lib <span class="im">import</span> drive_straight, turn_to</span>
+<span id="cb8-2"><a></a></span>
+<span id="cb8-3"><a></a><span class="kw">def</span> drive_square(side_mm):</span>
+<span id="cb8-4"><a></a>    <span class="cf">for</span> corner <span class="kw">in</span> [<span class="dv">90</span>, <span class="dv">180</span>, <span class="dv">270</span>, <span class="dv">360</span>]:</span>
+<span id="cb8-5"><a></a>        drive_straight(side_mm)</span>
+<span id="cb8-6"><a></a>        turn_to(corner)</span>
+<span id="cb8-7"><a></a></span>
+<span id="cb8-8"><a></a>drive_square(<span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<ul>
+<li>Run it. <strong>The square snaps shut.</strong></li>
+<li>Each corner is an <em>appointment on the mat</em> — 90, 180, 270, 360 — so a hot corner can’t poison the next one</li>
+<li>Day 3’s drift didn’t get patched; it became <strong>impossible</strong>. (And notice what the mission just turned into: <em>a list.</em> 😉)</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Close the loop hard: put Day 3’s taped drift-square next to this one. Everything converged — <code>for</code> repeats the move, the library names it, PD watches it, and absolute headings stop the corner errors stacking (the heading counts past 360, which is why the last appointment is 360 and not 0). The <code>[90, 180, 270, 360]</code> list is a deliberate wink — the mission-runner session turns whole missions into exactly this shape; don’t teach lists now, just let the shape sit there. Show off with <code>drive_square(200)</code>, <code>drive_square(400)</code>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="watch-the-square-snap-shut" class="slide level2">
+<h2>Watch the square snap shut 🔲</h2>
+<div style="width:820px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
+    <button onclick="sqDrive('drift')" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ Day 3: guessed turns</button>
+    <button onclick="sqDrive('heal')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight + turn_to</button>
+  </div>
+  <svg width="420" height="360" viewbox="0 0 420 360" style="display:block;margin:0 auto;background:#eef3f8;border-radius:14px;">
+    <circle id="sqStart" cx="140" cy="250" r="7" fill="#1C355E"></circle>
+    <text x="140" y="278" font-size="13" fill="#1C355E" text-anchor="middle" font-weight="700">start / finish</text>
+    <polyline id="sqTrace" points="" fill="none" stroke="#00C9A7" stroke-width="4" stroke-linejoin="round"></polyline>
+    <g id="sqBot" transform="translate(140,250)"><g transform="scale(0.5)"><use href="#nmCarMini"></use></g></g>
+    <text id="sqMsg" x="210" y="30" font-size="17" fill="#1C355E" font-weight="800" text-anchor="middle"></text>
+  </svg>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, el=NM.el;
+  window.sqDrive=function(mode){
+    var side=110, x=140, y=250, h=-90, seg=0, prog=0, pts=['140,250'];
+    var drift = mode==='drift' ? 7 : 0;           // degrees of error added per corner
+    var col = mode==='drift' ? '#E96852' : '#00C9A7';
+    el('sqTrace').setAttribute('stroke',col);
+    el('sqTrace').setAttribute('points','140,250');
+    el('sqMsg').textContent=''; el('sqMsg').setAttribute('fill','#1C355E');
+    last=null;
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var r=h*Math.PI/180, sp=150;
+      x+=sp*Math.cos(r)*dt; y+=sp*Math.sin(r)*dt; prog+=sp*dt;
+      pts.push(x.toFixed(1)+','+y.toFixed(1));
+      el('sqTrace').setAttribute('points',pts.join(' '));
+      el('sqBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(h+90).toFixed(1)+')');
+      if(prog>=side){ prog=0; seg++; h+=90+drift; if(seg>=4){ raf=null; finish(x,y); return; } }
+      raf=requestAnimationFrame(frame);
+    }
+    function finish(fx,fy){
+      var gap=Math.hypot(fx-140,fy-250);
+      if(mode==='drift'){ el('sqMsg').setAttribute('fill','#E96852'); el('sqMsg').textContent='never closes — gap of '+gap.toFixed(0)+' 😬'; }
+      else { el('sqMsg').setAttribute('fill','#00AE8D'); el('sqMsg').textContent='snaps shut 🎯'; }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+})();
+</script>
+<div class="fragment fade-up">
+<ul>
+<li>Same four sides, same four corners</li>
+<li>Day 3’s guessed turns spiral <strong>open</strong>; your library’s watched corners land the nose back on the <strong>start dot</strong> — every line of the cure is code <strong>you wrote</strong></li>
+</ul>
+</div>
+<aside class="notes">
+<p>Run drift first, then the library version — the old red spiral vs the closed green square is the whole two-day arc in one picture. Emphasize ownership: unlike a black-box shortcut, there is nothing hidden here — if the square doesn’t close on a real robot, they can open <code>my_lib.py</code> and <em>see</em> every line that could be wrong (gain, kd, DEG_PER_MM, the heading appointments). Debuggability is the library’s superpower, and it’s the skill Week 3’s mission work leans on.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="your-turn-own-the-knobs" class="slide level2 smaller">
+<h2>Your turn: own the knobs 🏋️</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>challenge</th>
+<th>prove it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1️⃣ <strong>Ring it on purpose</strong> — <code>turn_to(90)</code>, then <code>turn_to(90, kd=0)</code></td>
+<td>say which knob you turned — and what came back 🔔</td>
+</tr>
+<tr class="even">
+<td>2️⃣ <strong>One slow straight</strong> — one <code>drive_straight</code> call at half speed, <em>without opening <code>my_lib.py</code></em></td>
+<td>every <em>other</em> call still fast</td>
+</tr>
+<tr class="odd">
+<td>3️⃣ <strong>Factory-set your square</strong> — make bare <code>drive_square()</code> draw a 300 mm square</td>
+<td>one <code>=</code> in one def line</td>
+</tr>
+<tr class="even">
+<td>4️⃣ <strong>Detective</strong> 🔎 — slow <em>every</em> straight forever vs slow <em>one</em> call</td>
+<td>point at each edit spot <em>before</em> typing</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up">
+<ul>
+<li>⏱️ <strong>10 minutes, robots out.</strong> Pass = your squad says all four: <em>default = factory setting · keyword = one-call override · top of file = global · inside a def = local</em></li>
+<li>Fast squads: invent <code>wiggle(times=3)</code> — a new verb with a factory setting of its own 🐍</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Squads at their robots, ~10 minutes, coach roams. Answers: 1️⃣ the <code>kd</code> knob — the ring comes back (defaults were doing real work); 2️⃣ <code>drive_straight(1000, speed=200)</code> — keyword argument, library untouched; 3️⃣ <code>def drive_square(side_mm=300):</code> — their first <em>authored</em> default, prove it with a bare <code>drive_square()</code>; 4️⃣ every-straight-forever = the <code>speed=400</code> in the def line (or a top constant), one-call = a keyword at the call site. The pass is <strong>verbal, not gated</strong> — each squad says the four sentences on the slide in their own words; the Day-5 gate in the next section stays the motion benchmarks, unchanged. The finger-first rule on 4️⃣ matters: deciding <em>where</em> an edit belongs is the whole global/local/default lesson compressed into one gesture. Fast-squad <code>wiggle(times=3)</code>: a for-loop of two quick opposite <code>turn_to</code>s is plenty — the point is authoring a def line with a default of their own.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="d.-compete-gate" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
+<h1>D. Compete &amp; Gate</h1>
+<p>Today’s showdown: <strong>Bullseye</strong> 🎯</p>
+</section>
+<section id="bullseye" class="slide level2">
+<h2>Bullseye 🎯</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The challenge</strong></p>
+</div>
+<div class="callout-content">
+<p>Drive forward <strong>exactly 1 metre</strong> <em>with your own <code>drive_straight</code></em> and stop as close to the mark as you can. 3 attempts, best counts. <em>(Fast squads: <strong>Sniper</strong> — 3 mat targets, score = total distance error.)</em></p>
+</div>
+</div>
+</div>
+<div style="width:840px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
+    <button onclick="beRun()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight(1000)</button>
+    <button id="beBtn" onclick="beNudge()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">😈 evil nudge</button>
+  </div>
+  <svg width="820" height="180" viewbox="0 0 820 180" style="display:block;margin:0 auto;">
+    <rect x="0" y="30" width="820" height="120" rx="14" fill="#eef3f8"></rect>
+    <line x1="60" y1="90" x2="760" y2="90" stroke="#c9d4e0" stroke-width="3" stroke-dasharray="14 10"></line>
+    <line x1="720" y1="40" x2="720" y2="140" stroke="#00AE8D" stroke-width="4"></line>
+    <text x="720" y="30" font-size="14" fill="#00AE8D" font-weight="800" text-anchor="middle">1 m 🎯</text>
+    <g id="beGhost" transform="translate(650,90)" opacity="0.4"><circle r="8" fill="#E96852"></circle><text y="26" font-size="12" fill="#E96852" text-anchor="middle" font-weight="700">guessed Ø</text></g>
+    <polyline id="beTrace" points="" fill="none" stroke="#00C9A7" stroke-width="3"></polyline>
+    <g id="beBot" transform="translate(60,90)"><g transform="rotate(90) scale(0.5)"><use href="#nmCarMini"></use></g></g>
+  </svg>
+  <div style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;">landed <span id="beOut" style="font-weight:800;">–</span></div>
+</div>
+<script>
+(function(){
+  var raf=null, last=null, nudgeReq=false, el=NM.el;
+  window.beRun=function(){
+    var x=60, y=90, h=0, t=0, done=false, pts=['60,90'], nudged=false; last=null; nudgeReq=false;
+    el('beTrace').setAttribute('points','60,90'); el('beOut').textContent='–'; el('beOut').style.color='#1C355E';
+    function frame(now){
+      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
+      var sp=(720-x)*2.4+8;                        // eases to a stop at the 1 m line
+      if(sp>320)sp=320;
+      if(nudgeReq && !nudged && x>320){ h=22; nudged=true; nudgeReq=false; }
+      h -= h*3.2*dt;                               // the healing loop steers the heading back to 0
+      var r=h*Math.PI/180;
+      x+=sp*Math.cos(r)*dt; y+=sp*Math.sin(r)*dt; t+=dt;
+      pts.push(x.toFixed(1)+','+y.toFixed(1)); el('beTrace').setAttribute('points',pts.join(' '));
+      el('beBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
+      if(x>=719 || t>6){ done=true; }
+      if(!done){ raf=requestAnimationFrame(frame); }
+      else{ raf=null; el('beOut').innerHTML='<b>0.0 cm</b> off — measured Ø + your healing loop 🎯'; el('beOut').style.color='#00AE8D'; }
+    }
+    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+  };
+  window.beNudge=function(){ nudgeReq=true; };
+})();
+</script>
+<ul>
+<li><code>drive_straight(1000)</code> + a wheel diameter <em>you measured</em> into <code>DEG_PER_MM</code>. Predict, then prove.</li>
+<li>Pro move: does your run survive a <strong>battery swap</strong>? A <strong>judge’s evil nudge</strong> mid-run? (It should — the healing loop is <em>yours</em>. 😏) The red ghost is where a <em>guessed</em> diameter would stop.</li>
+</ul>
+<aside class="notes">
+<p>The competition proves <em>their</em> code, not a shortcut — that’s the day’s whole point, so say it: the button reads <code>drive_straight</code>, the function they wrote an hour ago. Battery swap and nudge are the two classic fakes that expose open-loop code; their encoder finish line shrugs off the battery (degrees are degrees at any voltage) and their P-loop shrugs off the nudge. The ghost dot is the D2 lesson refusing to die: a guessed 90 mm wheel on an 88 mm robot misses by ~2 cm — exactly the gate tolerance. Squads that miss: check DEG_PER_MM first, gain second.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="todays-gate" class="slide level2">
+<h2>Today’s gate</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>You’re done today when…</strong></p>
+</div>
+<div class="callout-content">
+<p>Your own <code>drive_straight(1000)</code> lands <strong>1.0 m within ±2 cm</strong> and <code>turn_to</code> lands <strong>within ±2°</strong>, across 10 trials — on code you wrote line by line — your <code>drive_square()</code> (four library calls) <strong>closes the Day-3 square</strong>, and you can say what <strong>D</strong> and <strong>I</strong> each add to P.</p>
+</div>
+</div>
+</div>
+<div class="fragment fade-up">
+<p>Next: <em>Stop at the Wall</em> — the motor becomes a <strong>sensor</strong>, and your library grows its first <em>sensing</em> verbs.</p>
+</div>
+<aside class="notes">
+<p>The benchmarks are the plan’s Week-1 gate verbatim: drive_straight 1.0 m ±2 cm, turn_to ±2° over 10 trials, square closed, D and I explained in their own words (I is never gated as a build — it was a coach demo). Log each student’s pass in the scorecard; these same benchmarks are re-run at the end-of-week-2 gate, so a shaky pass today is a flag, not a fail. Teaser stays topic-only: next session the motor itself becomes a touch sensor (stall detection) and <code>drive_to_wall</code>/<code>wall_square</code> join the library.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../slides_template/assets/sdaia.svg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/NaifMersal\.github\.io\/WRO-LEGO-pypricks\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
