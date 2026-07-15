@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-07-15">
+  <meta name="dcterms.date" content="2026-07-16">
   <title>Name Your Moves</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,7 +206,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-07-15</p>
+  <p class="date">2026-07-16</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
@@ -406,7 +406,7 @@ window.NM = {
 </ul>
 </div>
 <aside class="notes">
-<p>Anticipation is the whole idea — say it that way: P only knows the gap’s <em>size</em> right now; D knows the gap is <em>shrinking</em> and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick’s error, subtract to get the <em>change</em> (a speed, °/s), feed it in. Sign check out loud on the card’s numbers — as the robot closes, <code>error</code> shrinks each tick, so <code>change</code> is negative, so it trims the command down → gentle arrival. <code>kd</code> is a new knob, same as <code>gain</code> was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They’ll feel both on the next slide. <code>gyro_turn_pd</code> stays on <code>run()</code> (see the D4 proportional-turn note on <code>run()</code> vs <code>motor.dc()</code>); worth knowing for coaches — and it pays off again at the D10 reveal, where the pro controller actuates one layer <em>deeper</em>, by torque/effort.</p>
+<p>Anticipation is the whole idea — say it that way: P only knows the gap’s <em>size</em> right now; D knows the gap is <em>shrinking</em> and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick’s error, subtract to get the <em>change</em> (a speed, °/s), feed it in. Sign check out loud on the card’s numbers — as the robot closes, <code>error</code> shrinks each tick, so <code>change</code> is negative, so it trims the command down → gentle arrival. <code>kd</code> is a new knob, same as <code>gain</code> was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They’ll feel both on the next slide. <code>gyro_turn_pd</code> stays on <code>run()</code> (see the D4 proportional-turn note on <code>run()</code> vs <code>motor.dc()</code>); worth knowing for coaches — and it pays off again at the D8 reveal, where the pro controller actuates one layer <em>deeper</em>, by torque/effort.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -854,7 +854,7 @@ window.NM = {
 </div>
 </div>
 <aside class="notes">
-<p>Name the vocabulary plainly, once: the names in the parentheses are <strong>parameters</strong>; a parameter with <code>=</code> carries a <strong>default</strong>; naming a knob at the call site (<code>kd=0</code>) is a <strong>keyword argument</strong>. They’ve used all three since <code>gyro_turn_p(target, gain=4)</code> — this slide only hangs names on habits. Quiz cadence: read a call, every squad commits out loud, <em>then</em> reveal the card — ② is the fun one (one keyword resurrects yesterday’s ringing bug, proof the default was doing real work), ④ is the confidence move: run it live, read the <code>TypeError</code> together — the interpreter is <em>telling you which knob you forgot</em>, not scolding you. Forward hook for coaches: at the D10 reveal, <code>RobotConfig</code> gathers all these factory settings into one dataclass — same idea, bigger box.</p>
+<p>Name the vocabulary plainly, once: the names in the parentheses are <strong>parameters</strong>; a parameter with <code>=</code> carries a <strong>default</strong>; naming a knob at the call site (<code>kd=0</code>) is a <strong>keyword argument</strong>. They’ve used all three since <code>gyro_turn_p(target, gain=4)</code> — this slide only hangs names on habits. Quiz cadence: read a call, every squad commits out loud, <em>then</em> reveal the card — ② is the fun one (one keyword resurrects yesterday’s ringing bug, proof the default was doing real work), ④ is the confidence move: run it live, read the <code>TypeError</code> together — the interpreter is <em>telling you which knob you forgot</em>, not scolding you. Forward hook for coaches: at the D8 reveal, <code>RobotConfig</code> gathers all these factory settings into one dataclass — same idea, bigger box.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1173,7 +1173,7 @@ window.NM = {
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Next: <em>Stop at the Wall</em> — the motor becomes a <strong>sensor</strong>, and your library grows its first <em>sensing</em> verbs.</p>
+<p>Next: <em>Line King</em> — the robot opens its <strong>eyes</strong> and steers with a formula you <strong>already own</strong>.</p>
 </div>
 <aside class="notes">
 <p>The benchmarks are the plan’s Week-1 gate verbatim: drive_straight 1.0 m ±2 cm, turn_to ±2° over 10 trials, square closed, D and I explained in their own words (I is never gated as a build — it was a coach demo). Log each student’s pass in the scorecard; these same benchmarks are re-run at the end-of-week-2 gate, so a shaky pass today is a flag, not a fail. Teaser stays topic-only: next session the motor itself becomes a touch sensor (stall detection) and <code>drive_to_wall</code>/<code>wall_square</code> join the library.</p>

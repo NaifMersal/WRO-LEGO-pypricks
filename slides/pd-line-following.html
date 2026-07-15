@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-07-15">
+  <meta name="dcterms.date" content="2026-07-16">
   <title>Line King</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -201,12 +201,12 @@
 
 <section id="title-slide" data-background-image="../slides_template/assets/anim.svg" data-background-opacity="0.15" data-background-size="cover" class="quarto-title-block center">
   <h1 class="title">Line King</h1>
-  <p class="subtitle">Day 7 · Robot Rockstars · SPIKE Prime + Pybricks</p>
+  <p class="subtitle">Day 6 · Robot Rockstars · SPIKE Prime + Pybricks</p>
 
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-07-15</p>
+  <p class="date">2026-07-16</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
@@ -224,16 +224,16 @@
 </thead>
 <tbody>
 <tr class="odd">
+<td>📦 <strong><code>my_lib.py</code> begins</strong></td>
+<td><code>drive_straight</code> · <code>turn_to</code></td>
+</tr>
+<tr class="even">
 <td>📈 <strong><code>error × gain</code></strong></td>
 <td>the turn · the straight</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>🛑 <strong>D — damping</strong></td>
 <td>brakes before overshoot</td>
-</tr>
-<tr class="odd">
-<td>👀 <strong>the eye, calibrated</strong></td>
-<td>echo 0–100 · threshold per surface</td>
 </tr>
 </tbody>
 </table>
@@ -247,13 +247,64 @@
 <p><strong>One thing up front</strong></p>
 </div>
 <div class="callout-content">
-<p>Today reads <strong>brightness</strong>, not color names — colors are <strong>Week 4</strong>.</p>
+<p>A script is <strong>blind</strong> — today: <strong>see → decide → steer.</strong> Brightness only; color names are <strong>Week 4</strong>.</p>
 </div>
 </div>
+</div>
+</div>
+<p>⏱️ <strong>Time: 5 minutes — then a bug hunt</strong></p>
+<aside class="notes">
+<p>Anchor today in what they already own, or it feels like a brand-new mountain (it isn’t — the plan flags the line day as the longest precisely because the <em>old</em> material was video-paced; live, it’s one formula applied a third time). Recap <code>error × gain</code> from the gyro out loud. Today the robot opens its eyes — three new powers land: the color eye (reflection = the echo of its own light), the per-surface threshold, and <code>if</code> (the first real decision). Flag the reflection-vs-color point early and firmly — kids will want to “detect the green line”; stop that now, it’s brightness only until Week 4. The day is eye → threshold → <code>if</code> → bang-bang → P on the line, then junction squaring — <strong>the P follower + squaring pair is the gate</strong> (it’s what the anchor run actually uses); the PD upgrade is the stretch for squads that tune P early. If the cohort is still behind on programming, the afternoon flexes to library-consolidation practice instead of pushing PD. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bug-hunt-the-tune-that-didnt-stick" class="slide level2">
+<h2>🔎 Bug hunt: the tune that didn’t stick</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-2|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="kw">def</span> make_it_sharper():</span>
+<span id="cb1-2"><a></a>    KP <span class="op">=</span> <span class="dv">12</span>          <span class="co"># crank steering for the whole library… right?</span></span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a>make_it_sharper()</span>
+<span id="cb1-5"><a></a>drive_straight(<span class="dv">300</span>)  <span class="co"># …still lazy. Nothing changed. 😤</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="qbox">
+<p><span class="qtitle">Watch it stay lazy — find the bug. Where <em>should</em> <code>KP = 12</code> live?</span></p>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p>Inside a <code>def</code> you made a <strong>local</strong> — dead the moment it returned. <strong>Change globals only at the top.</strong></p>
 </div>
 </div>
 <aside class="notes">
-<p>Anchor today in what they already own, or it feels like a brand-new mountain (it isn’t — the plan flags D7 as the longest day precisely because the <em>old</em> material was video-paced; live, it’s one formula applied a third time). Recap <code>error × gain</code> from the gyro out loud. Flag the reflection-vs-color point early and firmly — kids will want to “detect the green line”; stop that now, it’s brightness only until Week 4. The day is bang-bang → P on the line, then junction squaring — <strong>that pair is the gate</strong> (it’s what the anchor run actually uses); the PD upgrade is the stretch for squads that tune P early. If the cohort is still behind on programming, the afternoon flexes to library-consolidation practice instead of pushing PD.</p>
+<p>This closes Day 5’s leftover (globals/shadowing), delivered as a live hunt instead of slides — decision #22. Run the planted bug on the coach robot and let squads diagnose for ~5 minutes before any reveal; the 😤 must be theirs. Two live moments: (1) the fix — move <code>KP = 12</code> to the constants block, rerun, the straight sharpens; (2) <code>print(error)</code> after a run → NameError, proof that locals evaporate (and that’s a <em>feature</em>: every verb gets private scratch names). Close with the D5 verbal pass, squad by squad, in their own words: <em>default = factory setting · keyword = one-call override · top of file = global · inside a def = local</em>. Do NOT teach the <code>global</code> keyword — the constants-block discipline is strictly better. Coach’s radar for W2–3: “I tuned it and it didn’t stick” → first question is <em>where did you assign it?</em></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="robots-out-bullseye-on-the-real-mat" class="slide level2">
+<h2>🤖 Robots out: Bullseye on the real mat 🎯</h2>
+<ul>
+<li>🎯 <code>drive_straight(1000)</code> on the <strong>real mat</strong> — one attempt, <strong>±2 cm</strong> passes</li>
+<li>📦 <code>drive_square(300)</code> — watch it snap shut where it started</li>
+<li>⏱️ <strong>15 minutes</strong>, then the robot opens its <strong>eyes</strong></li>
+</ul>
+<aside class="notes">
+<p>Pure energy burner with a hidden agenda: it closes the remaining D5 gate legs (<code>drive_straight</code> 1.0 m ±2 cm, square closed) on the real surface, and it front-loads the session with driving instead of sitting — the drill-first rhythm (decision #22). Logistics: mat on the ground, no table yet (decision #23) — the printed staff lines are today’s territory; nothing today needs borders at true positions. Watch for surprises vs the tape field: the print’s friction and colour differ — if someone’s 1 m lands long/short vs last week, that’s the calibration-transfer checkpoint doing its job (re-measure, don’t panic). Keep it to 15 minutes; the leaderboard can wait for Line King.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -269,14 +320,127 @@
 <section>
 <section id="b.-one-eye-one-edge" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
 <h1>B. One Eye, One Edge</h1>
-<p>A line is a <strong>border</strong> — park one eye right on it. One sensor, one edge. 👁️</p>
+<p>The robot <strong>opens its eyes</strong> — then parks one on a line’s edge. 👁️</p>
 </section>
-<section id="meet-the-eye-ride-the-edge" class="slide level2">
-<h2>Meet the eye: ride the edge</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="co"># Watch it live FIRST — before any steering. Just read the number.</span></span>
-<span id="cb1-2"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb1-3"><a></a>    <span class="bu">print</span>(<span class="st">"reflection:"</span>, left_eye.reflection())   <span class="co"># 0=black, 100=white</span></span>
-<span id="cb1-4"><a></a>    wait(<span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="meet-the-eye" class="slide level2">
+<h2>Meet the eye 🔦</h2>
+<p>A <strong>flashlight + light meter</strong> in one brick — it measures its own echo.</p>
+<div style="width:780px;margin:0 auto;">
+  <svg width="740" height="200" viewbox="0 0 740 200" style="display:block;margin:0 auto;">
+    <defs>
+      <marker id="meY" markerunits="userSpaceOnUse" markerwidth="14" markerheight="14" refx="7" refy="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#FFD500"></path></marker>
+      <marker id="meFaint" markerunits="userSpaceOnUse" markerwidth="12" markerheight="12" refx="6" refy="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#9B8EC0"></path></marker>
+      <marker id="meStrong" markerunits="userSpaceOnUse" markerwidth="14" markerheight="14" refx="7" refy="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#00AE8D"></path></marker>
+    </defs>
+    <!-- readings -->
+    <text x="175" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#1C355E" text-anchor="middle">reflection() → 10</text>
+    <text x="565" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#00AE8D" text-anchor="middle">reflection() → 88</text>
+    <!-- sensors -->
+    <g transform="translate(175,0)">
+      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"></rect>
+      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"></circle>
+    </g>
+    <g transform="translate(565,0)">
+      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"></rect>
+      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"></circle>
+    </g>
+    <!-- light down -->
+    <line x1="160" y1="78" x2="150" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"></line>
+    <line x1="550" y1="78" x2="540" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"></line>
+    <!-- echo back up: faint from black, strong from white -->
+    <line x1="196" y1="140" x2="189" y2="84" stroke="#9B8EC0" stroke-width="2" stroke-dasharray="4 6" marker-end="url(#meFaint)"></line>
+    <line x1="590" y1="140" x2="583" y2="84" stroke="#00AE8D" stroke-width="6" marker-end="url(#meStrong)"></line>
+    <!-- surfaces -->
+    <rect x="55" y="150" width="240" height="22" rx="4" fill="#101820"></rect>
+    <rect x="445" y="150" width="240" height="22" rx="4" fill="#f7f9fc" stroke="#dbe2ea"></rect>
+    <text x="175" y="166" font-size="13" fill="#ffffff" font-weight="800" text-anchor="middle">black line — echo swallowed</text>
+    <text x="565" y="166" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat — echo bounces back</text>
+    <text x="370" y="112" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">same flashlight —</text>
+    <text x="370" y="132" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">different echo</text>
+  </svg>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>left_eye.reflection()   <span class="co"># 0-100: % of its OWN light echoing back</span></span>
+<span id="cb2-2"><a></a>left_eye.color()        <span class="co"># a name: Color.RED... (Week 4's tool)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>Anything that changes the <strong>echo</strong> changes the number — ✨ gloss · 💡 light · 📏 height.</p>
+</div>
+</div>
+<aside class="notes">
+<p>The live demo beats the diagram: run a <code>print(left_eye.reflection())</code> loop, hold the robot, and let students slide surfaces under the eye, tilt it, lift it — the number dances. Establish the active-sensor idea: it brings its own LED, so it mostly ignores the room, but gloss, sensor height, and strong ambient light still shift the echo — which is exactly why every surface gets its own calibration (next slide). <code>reflection()</code> vs <code>color()</code>: today reflection does all the work; <code>color()</code> names colors and gets a cameo here — its real job is Week 4’s notes. Two eyes fill ports B and F; one eye does the following — <code>square_on_line</code> at the end of today shows why we carry two.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="break-it-the-threshold-you-guessed" class="slide level2">
+<h2>Break it: the threshold you guessed 🔥</h2>
+<div class="qbox">
+<p><span class="qtitle">Last week the tape split at <strong>50</strong> (white 88, black 10). Does 50 still work on the <strong>mat</strong>? The <strong>floor</strong>?</span></p>
+</div>
+<p>🤖 <strong>Robots out.</strong> Print <code>reflection()</code> across <strong>three surfaces</strong> — tape · mat · floor. Log white &amp; black for each.</p>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p>A threshold is a fact about a <strong>surface</strong> — read white · read black · <strong>split the middle.</strong></p>
+</div>
+</div>
+<aside class="notes">
+<p>Let each squad predict <em>before</em> measuring — commitments make the surprise land. The printed mat just arrived (decision #23), so this is also the real calibration-transfer checkpoint from the plan: the numbers they log here ARE the re-logged thresholds. Expected outcome: the mat’s white and the tape-field’s white read differently (print ink vs paper, matte tarp vs tape), the split point moves, and the habit lands — look first, then split what you actually see. The glossy-table failure (black reading 60, <code>&lt; 50</code> calling the line “clear” and driving over it) is the venue-day version of the same lesson; it lives as an interactive sim in the 🏠 appendix since we don’t have a glossy table in the room — mention it, don’t show it. The takeaway is a habit, not a number: re-read and re-split, every surface.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="fix-it-calibrate-then-decide-if-else" class="slide level2">
+<h2>Fix it: calibrate, then decide — <code>if / else</code> 🎚️</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1-2|3|4|5-6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="co"># Calibrate FIRST — measure, never guess</span></span>
+<span id="cb3-2"><a></a>REFLECT_THRESHOLD <span class="op">=</span> <span class="dv">50</span>              <span class="co"># for THIS surface</span></span>
+<span id="cb3-3"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb3-4"><a></a>    <span class="cf">if</span> left_eye.color() <span class="op">==</span> Color.RED:</span>
+<span id="cb3-5"><a></a>        hub.speaker.beep(frequency<span class="op">=</span><span class="dv">880</span>)     <span class="co"># high beep on red</span></span>
+<span id="cb3-6"><a></a>    <span class="cf">elif</span> left_eye.reflection() <span class="op">&lt;</span> REFLECT_THRESHOLD:</span>
+<span id="cb3-7"><a></a>        hub.speaker.beep(frequency<span class="op">=</span><span class="dv">220</span>)     <span class="co"># low beep on a line</span></span>
+<span id="cb3-8"><a></a>    wait(<span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>🤖 <strong>Robots out.</strong> Threshold from <em>your</em> mat numbers — low beep on lines, high beep on red.</p>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p><code>if … elif</code> is the robot <strong>choosing</strong> — new surface → <strong>re-calibrate the threshold, never the code.</strong></p>
+</div>
+</div>
+<aside class="notes">
+<p>This is the just-in-time concept for the day: <code>if/elif</code> + booleans. Keep it concrete — a boolean is the answer to a yes/no question the robot asks the world (<code>color() == RED</code>, <code>reflection() &lt; 50</code>). <code>elif</code> = “otherwise, check this next.” Tie it straight back to the three-surface ritual: the threshold is data you recalibrate per surface; the <code>if/elif</code> structure never changes. The mat’s printed staff lines make the beeper test real mission geography — they’re the same lines we follow and square on later today. If a squad is flying, mention <code>else</code> for the catch-all case, but don’t gate on it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="ride-the-edge" class="slide level2">
+<h2>Ride the edge 👁️</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="co"># Watch it live FIRST — before any steering. Just read the number.</span></span>
+<span id="cb4-2"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb4-3"><a></a>    <span class="bu">print</span>(<span class="st">"reflection:"</span>, left_eye.reflection())   <span class="co"># 0=black, 100=white</span></span>
+<span id="cb4-4"><a></a>    wait(<span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="width:820px;margin:0 auto;">
   <div style="text-align:center;margin-bottom:6px;">
     <span style="font-size:16px;color:#1C355E;font-weight:700;">slide the eye across the edge:</span>
@@ -337,14 +501,14 @@
 <div class="qbox">
 <p><span class="qtitle">Two moves only — <em>hard left</em> or <em>hard right</em>. Predict the path.</span></p>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1|2|3-4|5-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb2-2"><a></a>    <span class="cf">if</span> left_eye.reflection() <span class="op">&lt;</span> THRESHOLD:</span>
-<span id="cb2-3"><a></a>        left.run(LINE_SPEED <span class="op">+</span> TURN_HARD)       <span class="co"># on black → yank right</span></span>
-<span id="cb2-4"><a></a>        right.run(LINE_SPEED <span class="op">-</span> TURN_HARD)</span>
-<span id="cb2-5"><a></a>    <span class="cf">else</span>:</span>
-<span id="cb2-6"><a></a>        left.run(LINE_SPEED <span class="op">-</span> TURN_HARD)       <span class="co"># on white → yank left</span></span>
-<span id="cb2-7"><a></a>        right.run(LINE_SPEED <span class="op">+</span> TURN_HARD)</span>
-<span id="cb2-8"><a></a>    wait(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1|2|3-4|5-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb5-2"><a></a>    <span class="cf">if</span> left_eye.reflection() <span class="op">&lt;</span> THRESHOLD:</span>
+<span id="cb5-3"><a></a>        left.run(LINE_SPEED <span class="op">+</span> TURN_HARD)       <span class="co"># on black → yank right</span></span>
+<span id="cb5-4"><a></a>        right.run(LINE_SPEED <span class="op">-</span> TURN_HARD)</span>
+<span id="cb5-5"><a></a>    <span class="cf">else</span>:</span>
+<span id="cb5-6"><a></a>        left.run(LINE_SPEED <span class="op">-</span> TURN_HARD)       <span class="co"># on white → yank left</span></span>
+<span id="cb5-7"><a></a>        right.run(LINE_SPEED <span class="op">+</span> TURN_HARD)</span>
+<span id="cb5-8"><a></a>    wait(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
 <p>Two answers = it can <strong>never</strong> go straight — it slams left-right forever.</p>
@@ -366,9 +530,9 @@
 </section>
 <section id="name-it-p-proportional-steering" class="slide level2">
 <h2>Name it: P — proportional steering 📈</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|2-3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>error <span class="op">=</span> left_eye.reflection() <span class="op">-</span> THRESHOLD    <span class="co"># signed: how far off the edge?</span></span>
-<span id="cb3-2"><a></a>left.run(LINE_SPEED <span class="op">+</span> KP <span class="op">*</span> error)            <span class="co"># far → hard steer,</span></span>
-<span id="cb3-3"><a></a>right.run(LINE_SPEED <span class="op">-</span> KP <span class="op">*</span> error)           <span class="co"># near → gentle</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="|1|2-3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>error <span class="op">=</span> left_eye.reflection() <span class="op">-</span> THRESHOLD    <span class="co"># signed: how far off the edge?</span></span>
+<span id="cb6-2"><a></a>left.run(LINE_SPEED <span class="op">+</span> KP <span class="op">*</span> error)            <span class="co"># far → hard steer,</span></span>
+<span id="cb6-3"><a></a>right.run(LINE_SPEED <span class="op">-</span> KP <span class="op">*</span> error)           <span class="co"># near → gentle</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
 <p><code>error × gain</code> <strong>again</strong> — tune <strong><code>KP</code></strong>: too small = lazy, too big = the wobble is back.</p>
@@ -503,18 +667,18 @@
 </section>
 <section id="name-it-follow_line-joins-the-library" class="slide level2 code-shrink">
 <h2>Name it: <code>follow_line</code> joins the library 📦</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers="|1|3|4|5-6|7|8-9|12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> follow_line(distance_mm, speed<span class="op">=</span><span class="dv">250</span>, kd<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb4-2"><a></a>    <span class="co">"""P follow on the LEFT eye — kd &gt; 0 is the PD stretch."""</span></span>
-<span id="cb4-3"><a></a>    finish <span class="op">=</span> left.angle() <span class="op">+</span> distance_mm <span class="op">*</span> DEG_PER_MM</span>
-<span id="cb4-4"><a></a>    last_error <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-5"><a></a>    <span class="cf">while</span> left.angle() <span class="op">&lt;</span> finish:</span>
-<span id="cb4-6"><a></a>        error <span class="op">=</span> left_eye.reflection() <span class="op">-</span> THRESHOLD</span>
-<span id="cb4-7"><a></a>        steer <span class="op">=</span> KP_LINE <span class="op">*</span> error <span class="op">+</span> kd <span class="op">*</span> (error <span class="op">-</span> last_error)</span>
-<span id="cb4-8"><a></a>        left.run(speed <span class="op">+</span> steer)</span>
-<span id="cb4-9"><a></a>        right.run(speed <span class="op">-</span> steer)</span>
-<span id="cb4-10"><a></a>        last_error <span class="op">=</span> error</span>
-<span id="cb4-11"><a></a>        wait(<span class="dv">10</span>)</span>
-<span id="cb4-12"><a></a>    left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-code-line-numbers="|1|3|4|5-6|7|8-9|12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="kw">def</span> follow_line(distance_mm, speed<span class="op">=</span><span class="dv">250</span>, kd<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb7-2"><a></a>    <span class="co">"""P follow on the LEFT eye — kd &gt; 0 is the PD stretch."""</span></span>
+<span id="cb7-3"><a></a>    finish <span class="op">=</span> left.angle() <span class="op">+</span> distance_mm <span class="op">*</span> DEG_PER_MM</span>
+<span id="cb7-4"><a></a>    last_error <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-5"><a></a>    <span class="cf">while</span> left.angle() <span class="op">&lt;</span> finish:</span>
+<span id="cb7-6"><a></a>        error <span class="op">=</span> left_eye.reflection() <span class="op">-</span> THRESHOLD</span>
+<span id="cb7-7"><a></a>        steer <span class="op">=</span> KP_LINE <span class="op">*</span> error <span class="op">+</span> kd <span class="op">*</span> (error <span class="op">-</span> last_error)</span>
+<span id="cb7-8"><a></a>        left.run(speed <span class="op">+</span> steer)</span>
+<span id="cb7-9"><a></a>        right.run(speed <span class="op">-</span> steer)</span>
+<span id="cb7-10"><a></a>        last_error <span class="op">=</span> error</span>
+<span id="cb7-11"><a></a>        wait(<span class="dv">10</span>)</span>
+<span id="cb7-12"><a></a>    left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
 <p>The P loop, <strong>bottled</strong> — a finish line in degrees makes it a <em>segment</em>. <strong><code>kd</code></strong> is the stretch knob.</p>
@@ -537,16 +701,16 @@
 <section id="the-two-eye-job-square-up" class="slide level2 code-shrink">
 <h2>The two-eye job: square up 📐</h2>
 <p>The <strong>second</strong> eye’s moment: you hit a junction <strong>crooked</strong> — sit square before the next move.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1|3|4|5|6-7|8-9|10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> square_on_line(speed<span class="op">=</span><span class="dv">160</span>):</span>
-<span id="cb5-2"><a></a>    <span class="co">"""Stop each wheel as ITS OWN eye reaches the line."""</span></span>
-<span id="cb5-3"><a></a>    left_done <span class="op">=</span> right_done <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb5-4"><a></a>    left.run(speed)<span class="op">;</span> right.run(speed)</span>
-<span id="cb5-5"><a></a>    <span class="cf">while</span> <span class="kw">not</span> (left_done <span class="kw">and</span> right_done):</span>
-<span id="cb5-6"><a></a>        <span class="cf">if</span> <span class="kw">not</span> left_done <span class="kw">and</span> left_eye.reflection() <span class="op">&lt;</span> THRESHOLD:</span>
-<span id="cb5-7"><a></a>            left.hold()<span class="op">;</span> left_done <span class="op">=</span> <span class="va">True</span>      <span class="co"># park left wheel</span></span>
-<span id="cb5-8"><a></a>        <span class="cf">if</span> <span class="kw">not</span> right_done <span class="kw">and</span> right_eye.reflection() <span class="op">&lt;</span> THRESHOLD:</span>
-<span id="cb5-9"><a></a>            right.hold()<span class="op">;</span> right_done <span class="op">=</span> <span class="va">True</span>    <span class="co"># park right wheel</span></span>
-<span id="cb5-10"><a></a>        wait(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-code-line-numbers="|1|3|4|5|6-7|8-9|10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="kw">def</span> square_on_line(speed<span class="op">=</span><span class="dv">160</span>):</span>
+<span id="cb8-2"><a></a>    <span class="co">"""Stop each wheel as ITS OWN eye reaches the line."""</span></span>
+<span id="cb8-3"><a></a>    left_done <span class="op">=</span> right_done <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb8-4"><a></a>    left.run(speed)<span class="op">;</span> right.run(speed)</span>
+<span id="cb8-5"><a></a>    <span class="cf">while</span> <span class="kw">not</span> (left_done <span class="kw">and</span> right_done):</span>
+<span id="cb8-6"><a></a>        <span class="cf">if</span> <span class="kw">not</span> left_done <span class="kw">and</span> left_eye.reflection() <span class="op">&lt;</span> THRESHOLD:</span>
+<span id="cb8-7"><a></a>            left.hold()<span class="op">;</span> left_done <span class="op">=</span> <span class="va">True</span>      <span class="co"># park left wheel</span></span>
+<span id="cb8-8"><a></a>        <span class="cf">if</span> <span class="kw">not</span> right_done <span class="kw">and</span> right_eye.reflection() <span class="op">&lt;</span> THRESHOLD:</span>
+<span id="cb8-9"><a></a>            right.hold()<span class="op">;</span> right_done <span class="op">=</span> <span class="va">True</span>    <span class="co"># park right wheel</span></span>
+<span id="cb8-10"><a></a>        wait(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
 <p>Each eye stops <strong>its own</strong> wheel — the robot <strong>pivots square</strong>. <em>That’s</em> why it carries two.</p>
@@ -674,7 +838,7 @@
 </div><div class="column" style="width:50%;">
 <p><strong>Where squads lose it</strong></p>
 <ul>
-<li>Threshold from <em>yesterday’s</em> surface 😬</li>
+<li>Threshold from <em>last week’s tape</em>, not this mat 😬</li>
 <li><code>KP</code> so high the straight wobbles</li>
 <li>Skipping the square → drift compounds</li>
 </ul>
@@ -713,10 +877,10 @@
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Next: five files become <strong>one clean <code>my_lib.py</code></strong> — a gauntlet only <strong>library calls</strong> can beat. 📦</p>
+<p>Next: <em>Stop at the Wall</em> — the motor becomes a <strong>sensor</strong>, and the wall <strong>resets the truth</strong>. 🧱</p>
 </div>
 <aside class="notes">
-<p>The gate is the plan’s D7 outcome: build, tune, and <em>explain</em> a P follower + reliable junction squaring — what the anchor run actually uses; PD is explicitly the stretch, never the gate. A student who can narrate why each term is there owns the concept and can debug it in Week 3 when the follower serves the run. Two eyes, one job each: one follows, both square. Close by pointing forward: next is the consolidation day — one module, one constants block, the challenge gauntlet — then missions become <em>lists</em>; the point-scoring mechanisms arrive with the Week-3 team builds, feeding the anchor-first 255 map they read yesterday.</p>
+<p>The gate is the plan’s line-day outcome: build, tune, and <em>explain</em> a P follower + reliable junction squaring — what the anchor run actually uses; PD is explicitly the stretch, never the gate. A student who can narrate why each term is there owns the concept and can debug it in Week 3 when the follower serves the run. Two eyes, one job each: one follows, both square. Close by pointing forward: tomorrow the motor itself becomes a sensor — the robot feels walls, patrols between them, and resets its heading truth against them — and the scoresheet gets read the anchor-first way: everything those color-free verbs score comes first.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -728,6 +892,78 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section></section>
+<section>
+<section id="explore-at-home" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #9B8EC0)">
+<h1>🏠 Explore at Home</h1>
+<p>Optional replays — <strong>nothing tomorrow depends on these.</strong> 🎮</p>
+</section>
+<section id="the-threshold-that-broke-on-gloss-sim" class="slide level2">
+<h2>🏠 The threshold that broke on gloss (sim) 🔥</h2>
+<div style="width:860px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px;">
+    <span style="font-size:16px;color:#1C355E;font-weight:700;">surface:</span>
+    <button id="rmHome" onclick="rmSurf('home')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">📄 practice paper</button>
+    <button id="rmGloss" onclick="rmSurf('gloss')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">🏆 glossy table</button>
+    <span style="font-size:16px;color:#1C355E;font-weight:700;margin-left:12px;">threshold: <b><span id="rmThV">50</span></b></span>
+    <input id="rmTh" type="range" min="0" max="100" step="1" value="50" oninput="rmTh(this.value)" style="width:170px;accent-color:#E96852;">
+  </div>
+  <svg width="820" height="150" viewbox="0 0 820 150" style="display:block;margin:0 auto;">
+    <rect x="60" y="58" width="700" height="26" rx="13" fill="#101820"></rect>
+    <rect x="60" y="58" width="700" height="26" rx="13" fill="url(#rmGrad)"></rect>
+    <defs><lineargradient id="rmGrad" x1="0" x2="1"><stop offset="0" stop-color="#101820"></stop><stop offset="1" stop-color="#ffffff"></stop></lineargradient></defs>
+    <text x="60" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">0 · dark</text>
+    <text x="760" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">100 · bright</text>
+    <!-- threshold line -->
+    <line id="rmThLine" x1="410" y1="44" x2="410" y2="98" stroke="#E96852" stroke-width="3" stroke-dasharray="6 5"></line>
+    <text id="rmThTxt" x="410" y="38" font-size="13" fill="#E96852" font-weight="800" text-anchor="middle">50</text>
+    <!-- markers -->
+    <g id="rmBlack"><circle cy="71" r="11" fill="#1C355E" stroke="#fff" stroke-width="2"></circle><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">black line</text></g>
+    <g id="rmWhite"><circle cy="71" r="11" fill="#FFD500" stroke="#1C355E" stroke-width="2"></circle><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat</text></g>
+  </svg>
+  <div id="rmVerdict" style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;font-weight:700;min-height:28px;">pick a surface — read what the eye actually sees</div>
+</div>
+<script>
+(function(){
+  var X0=60, X1=760, thr=50, surf=null;
+  var S={ home:{white:88, black:10}, gloss:{white:95, black:60} };
+  function el(id){return document.getElementById(id);}
+  function xOf(v){ return X0 + v/100*(X1-X0); }
+  function draw(){
+    el('rmThLine').setAttribute('x1',xOf(thr)); el('rmThLine').setAttribute('x2',xOf(thr));
+    el('rmThTxt').setAttribute('x',xOf(thr)); el('rmThTxt').textContent=thr;
+    if(!surf) return;
+    var s=S[surf];
+    el('rmBlack').setAttribute('transform','translate('+xOf(s.black).toFixed(1)+',0)');
+    el('rmWhite').setAttribute('transform','translate('+xOf(s.white).toFixed(1)+',0)');
+    var blackOK = s.black < thr;   // robot must call the dark line "line"
+    var whiteOK = s.white > thr;   // and the bright mat "clear"
+    var v=el('rmVerdict');
+    if(blackOK && whiteOK){
+      v.style.color='#00AE8D';
+      v.innerHTML='black '+s.black+' &lt; '+thr+' → <b>LINE ✓</b> &nbsp;·&nbsp; white '+s.white+' &gt; '+thr+' → <b>clear ✓</b> &nbsp; 🎯';
+    } else {
+      v.style.color='#E96852';
+      var msg = !blackOK ? ('black reads '+s.black+' — <b>above '+thr+'</b>, so the robot calls the line "clear" and drives right over it. 😬')
+                         : ('white reads '+s.white+' — <b>below '+thr+'</b>, so the robot brakes on empty mat. 😬');
+      v.innerHTML=msg;
+    }
+  }
+  window.rmSurf=function(k){
+    surf=k;
+    el('rmHome').style.background = k==='home' ? '#00C9A7':'#eef3f8';
+    el('rmHome').style.color = k==='home' ? '#fff':'#1C355E';
+    el('rmHome').style.border = k==='home' ? 'none':'2px solid #1C355E';
+    el('rmGloss').style.background = k==='gloss' ? '#00C9A7':'#eef3f8';
+    el('rmGloss').style.color = k==='gloss' ? '#fff':'#1C355E';
+    el('rmGloss').style.border = k==='gloss' ? 'none':'2px solid #1C355E';
+    draw();
+  };
+  window.rmTh=function(v){ thr=parseInt(v,10); el('rmThV').textContent=v; draw(); };
+  window.rmSurf('home');
+})();
+</script>
+<p>On a glossy venue table, “black” can bounce back <strong>60</strong> — drag the threshold and rescue the robot.</p>
 
 
 </section></section>

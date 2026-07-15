@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-07-15">
+  <meta name="dcterms.date" content="2026-07-16">
   <title>Drive a Square</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,7 +206,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-07-15</p>
+  <p class="date">2026-07-16</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
@@ -249,7 +249,7 @@
 <span id="cb1-7"><a></a>left <span class="op">=</span> Motor(Port.A, Direction.COUNTERCLOCKWISE)</span>
 <span id="cb1-8"><a></a>right <span class="op">=</span> Motor(Port.E)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
-<p>Everyone types this once at the top and keeps it for the whole day. Raw motors only, on purpose — through D9 the students <em>build</em> the whole driver and library by hand; the polished shortcut (<code>DriveBase</code>) waits until the D10 reveal (decision #20), a reward earned piece by piece.</p>
+<p>Everyone types this once at the top and keeps it for the whole day. Raw motors only, on purpose — through D7 the students <em>build</em> the whole driver and library by hand; the polished shortcut (<code>DriveBase</code>) waits until the D8 reveal (decision #20, re-timed by #26), a reward earned piece by piece.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -430,7 +430,7 @@
 </div>
 </div>
 <aside class="notes">
-<p>Act 3 of the turn-circle story: question → wheels answer → unroll the answer. Elicit the substitution, don’t re-teach it — both ropes are Day-2 property: “what IS 13.04?” (360 ÷ 27.6) and “what was 27.6?” (3.14 × 8.8, the wheel’s rope). The only NEW thing on this slide is the cancellation: same 3.14 on top and bottom → cancels; 360 ÷ 4 → 90. What’s left is 90 × gap ÷ wheel: sanity-check on the calculator, 90 × 14.5 ÷ 8.8 = 148.3 ≈ their 148. The pocket line is a deliberate plant: <strong>gap and wheel diameter are exactly the two numbers <code>DriveBase</code> asks for on Day 5</strong> — when that deck asks “why does it need the axle track?”, call back to this cancellation. Land at least the final gap ÷ wheel line with everyone; if a squad is drowning in the algebra, the demo intuition carries the load — skim the middle steps and move on.</p>
+<p>Act 3 of the turn-circle story: question → wheels answer → unroll the answer. Elicit the substitution, don’t re-teach it — both ropes are Day-2 property: “what IS 13.04?” (360 ÷ 27.6) and “what was 27.6?” (3.14 × 8.8, the wheel’s rope). The only NEW thing on this slide is the cancellation: same 3.14 on top and bottom → cancels; 360 ÷ 4 → 90. What’s left is 90 × gap ÷ wheel: sanity-check on the calculator, 90 × 14.5 ÷ 8.8 = 148.3 ≈ their 148. The pocket line is a deliberate plant: <strong>gap and wheel diameter are exactly the two numbers <code>DriveBase</code> asks for at the D8 reveal</strong> — when that deck asks “why does it need the axle track?”, call back to this cancellation. Land at least the final gap ÷ wheel line with everyone; if a squad is drowning in the algebra, the demo intuition carries the load — skim the middle steps and move on.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1057,7 +1057,7 @@
 <p>A new shape in the code is just <strong>two edits</strong>: the <code>range(...)</code> count and that corner angle.</p>
 </div>
 <aside class="notes">
-<p>Elicit the 360 with bodies first, not algebra: one student walks a triangle on the mat and ends facing the way they started — however many corners, the <em>turning</em> always totals one full spin. Then drive the demo from their guesses: pick <strong>Triangle</strong>, each corner flashes its <strong>120°</strong> turn right on the shape while the dial climbs 120 → 240 → 360 and closes; pick <strong>Octagon</strong>, eight skinny 45s stack to the <em>same</em> 360. That “always lands on 360” is the whole proof — corner = 360 ÷ n falls out of it. The contrast with the morning is worth a beat: same octagon, but the gyro eats robot-degrees directly, so the gap ÷ wheel translation retires (it returns at the D10 reveal inside <code>DriveBase</code>). Every squad edits their own file to a triangle and runs it before Shape Shifter.</p>
+<p>Elicit the 360 with bodies first, not algebra: one student walks a triangle on the mat and ends facing the way they started — however many corners, the <em>turning</em> always totals one full spin. Then drive the demo from their guesses: pick <strong>Triangle</strong>, each corner flashes its <strong>120°</strong> turn right on the shape while the dial climbs 120 → 240 → 360 and closes; pick <strong>Octagon</strong>, eight skinny 45s stack to the <em>same</em> 360. That “always lands on 360” is the whole proof — corner = 360 ÷ n falls out of it. The contrast with the morning is worth a beat: same octagon, but the gyro eats robot-degrees directly, so the gap ÷ wheel translation retires (it returns at the D8 reveal inside <code>DriveBase</code>). Every squad edits their own file to a triangle and runs it before Shape Shifter.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

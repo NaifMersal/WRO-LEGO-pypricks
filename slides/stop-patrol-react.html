@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-07-15">
+  <meta name="dcterms.date" content="2026-07-16">
   <title>Stop at the Wall</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -201,48 +201,48 @@
 
 <section id="title-slide" data-background-image="../slides_template/assets/anim.svg" data-background-opacity="0.15" data-background-size="cover" class="quarto-title-block center">
   <h1 class="title">Stop at the Wall</h1>
-  <p class="subtitle">Day 6 · Robot Rockstars · SPIKE Prime + Pybricks</p>
+  <p class="subtitle">Day 7 · Robot Rockstars · SPIKE Prime + Pybricks</p>
 
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-07-15</p>
+  <p class="date">2026-07-16</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>A. Warm-Up</h1>
-<p>Last week: replay a plan, blind. Today the robot starts <strong>reacting</strong>. 👀</p>
+<p>Yesterday the robot learned to <strong>see</strong>. Today it learns to <strong>feel</strong>. 🧱</p>
 </section>
 <section id="where-we-left-off" class="slide level2">
 <h2>Where we left off</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>Last week</th>
+<th>Yesterday</th>
 <th>What you own</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>📦 <strong><code>my_lib.py</code> begins</strong></td>
-<td><code>drive_straight</code> · <code>turn_to</code></td>
+<td>👀 <strong>the eye, calibrated</strong></td>
+<td>echo 0–100 · threshold per surface</td>
 </tr>
 <tr class="even">
-<td>📏 <strong>measured, not guessed</strong></td>
-<td><code>DEG_PER_MM</code>, rolled &amp; measured</td>
+<td>📈 <strong><code>error × gain</code>, third time</strong></td>
+<td><code>follow_line</code> rides the edge</td>
 </tr>
 <tr class="odd">
-<td>🔁 <strong>replay a plan</strong></td>
-<td><code>drive_square(300)</code> snaps shut</td>
+<td>📐 <strong>two eyes square up</strong></td>
+<td><code>square_on_line</code> at the junction</td>
 </tr>
 </tbody>
 </table>
 <div class="fragment fade-up">
-<p>🤔 But a script is <strong>blind</strong> — today’s new job: <strong>sense → decide → act.</strong></p>
+<p>🤔 The eye reads the <strong>floor</strong> — but a <strong>wall</strong>? No port left for a distance sensor…</p>
 </div>
-<p>⏱️ <strong>Time: 5 minutes — then a bug hunt</strong></p>
+<p>⏱️ <strong>Time: 5 minutes — then robots out</strong></p>
 <aside class="notes">
-<p>Recap by asking, not telling: “what does <code>drive_straight(300)</code> know about the world?” Nothing — it counts wheel-degrees (healing its heading on the way) and stops. That’s replay. Today’s whole arc is the opposite: the robot reads something <em>live</em>, then chooses what to do. Three new powers land today — the motor as a sensor (stall = touch), the color eye (reflection = the echo of its own light), and <code>if/else</code> (the first real decision) — then we wrap them in a loop so one decision becomes a patrol, and the library gains its first <em>sensing</em> verbs. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15, so the recap is a springboard, not a lecture.</p>
+<p>Recap by asking, not telling: “how does the robot know where it is?” Yesterday’s answers all live on the floor — the calibrated eye, the P follower, the two-eye square. Today’s problem stands upright: walls. No port is free for a distance sensor (all six are spoken for), and that constraint is the day’s gift — the drive motors themselves become touch sensors. Arc of the day: feel the wall (stall), back off a measured distance, wrap it in a patrol loop (yesterday’s <code>if</code> now lives inside a <code>while</code>), then bottle <code>drive_to_wall</code> + <code>wall_square</code> into the library and read the 255 scoresheet the anchor-first way. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15, so the recap is a springboard, not a lecture.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -255,44 +255,15 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="bug-hunt-the-tune-that-didnt-stick" class="slide level2">
-<h2>🔎 Bug hunt: the tune that didn’t stick</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-2|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="kw">def</span> make_it_sharper():</span>
-<span id="cb1-2"><a></a>    KP <span class="op">=</span> <span class="dv">12</span>          <span class="co"># crank steering for the whole library… right?</span></span>
-<span id="cb1-3"><a></a></span>
-<span id="cb1-4"><a></a>make_it_sharper()</span>
-<span id="cb1-5"><a></a>drive_straight(<span class="dv">300</span>)  <span class="co"># …still lazy. Nothing changed. 😤</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="qbox">
-<p><span class="qtitle">Watch it stay lazy — find the bug. Where <em>should</em> <code>KP = 12</code> live?</span></p>
-</div>
-<div class="fragment fade-up">
-<div class="cardbox coral">
-<p>Inside a <code>def</code> you made a <strong>local</strong> — dead the moment it returned. <strong>Change globals only at the top.</strong></p>
-</div>
-</div>
-<aside class="notes">
-<p>This closes Day 5’s leftover (globals/shadowing), delivered as a live hunt instead of slides — decision #22. Run the planted bug on the coach robot and let squads diagnose for ~5 minutes before any reveal; the 😤 must be theirs. Two live moments: (1) the fix — move <code>KP = 12</code> to the constants block, rerun, the straight sharpens; (2) <code>print(error)</code> after a run → NameError, proof that locals evaporate (and that’s a <em>feature</em>: every verb gets private scratch names). Close with the D5 verbal pass, squad by squad, in their own words: <em>default = factory setting · keyword = one-call override · top of file = global · inside a def = local</em>. Do NOT teach the <code>global</code> keyword — the constants-block discipline is strictly better. Coach’s radar for W2–3: “I tuned it and it didn’t stick” → first question is <em>where did you assign it?</em></p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="robots-out-bullseye-on-the-real-mat" class="slide level2">
-<h2>🤖 Robots out: Bullseye on the real mat 🎯</h2>
+<section id="robots-out-line-king-rematch" class="slide level2">
+<h2>🤖 Robots out: Line King rematch 👑</h2>
 <ul>
-<li>🎯 <code>drive_straight(1000)</code> on the <strong>real mat</strong> — one attempt, <strong>±2 cm</strong> passes</li>
-<li>📦 <code>drive_square(300)</code> — watch it snap shut where it started</li>
+<li>🛣️ <code>follow_line(600)</code> on the mat’s staff lines — <strong>hold the curve</strong></li>
+<li>📐 finish with <code>square_on_line()</code> at the junction — <strong>sit square</strong></li>
 <li>⏱️ <strong>15 minutes</strong>, then the robot gets its sense of touch</li>
 </ul>
 <aside class="notes">
-<p>Pure energy burner with a hidden agenda: it closes the remaining D5 gate legs (<code>drive_straight</code> 1.0 m ±2 cm, square closed) on the real surface, and it front-loads the session with driving instead of sitting — the drill-first rhythm (decision #22). Logistics: mat on the ground, no table yet (decision #23) — the wall board goes at the mat edge for the stall work later; nothing today needs borders at true positions. Watch for surprises vs the tape field: the print’s friction and colour differ — if someone’s 1 m lands long/short vs last week, that’s the calibration-transfer checkpoint doing its job (re-measure, don’t panic). Keep it to 15 minutes; the leaderboard can wait for Gentle Giant.</p>
+<p>Drill-first (decision #22): yesterday’s compete replayed as the warm-up, on the real mat. It re-proves the two verbs the anchor run leans on — the tuned P follower and the junction square — and it surfaces overnight drift: if a squad’s follower wobbles today, the first question is the threshold (did the light change? re-read white/black, re-split), not the code. Squads that finish early re-run for speed — that’s the Speed Demon itch, let them scratch it. Logistics: mat on the ground, no table yet (decision #23) — the wall board goes at the mat edge for the stall work next; nothing today needs borders at true positions. Keep it to 15 minutes; the leaderboard can wait for Gentle Giant.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -312,10 +283,10 @@
 </section>
 <section id="feel-it-see-the-invisible" class="slide level2">
 <h2>Feel it: see the invisible 📉</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># Run this ALONE first — watch the number, not the robot.</span></span>
-<span id="cb2-2"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb2-3"><a></a>    <span class="bu">print</span>(<span class="st">"wheel speed:"</span>, left.speed())</span>
-<span id="cb2-4"><a></a>    wait(<span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="co"># Run this ALONE first — watch the number, not the robot.</span></span>
+<span id="cb1-2"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb1-3"><a></a>    <span class="bu">print</span>(<span class="st">"wheel speed:"</span>, left.speed())</span>
+<span id="cb1-4"><a></a>    wait(<span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>🤖 <strong>Robots out.</strong> Run the loop, <strong>grab the wheels</strong> — watch it dive. Then the wall board: same dive, no hand.</p>
 <div class="fragment fade-up">
 <div class="cardbox teal">
@@ -338,13 +309,13 @@
 </section>
 <section id="fix-it-stall-touch-then-back-off" class="slide level2">
 <h2>Fix it: stall = touch, then back off 🧱</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|2|3-4|5|6|7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>APPROACH_SPEED <span class="op">=</span> <span class="dv">150</span>         <span class="co"># deg/s — gentle, not a crash</span></span>
-<span id="cb3-2"><a></a>right.run(APPROACH_SPEED)    <span class="co"># right rolls along…</span></span>
-<span id="cb3-3"><a></a>left.run_until_stalled(APPROACH_SPEED,</span>
-<span id="cb3-4"><a></a>                       duty_limit<span class="op">=</span><span class="dv">50</span>)   <span class="co"># …until LEFT jams</span></span>
-<span id="cb3-5"><a></a>right.stop()</span>
-<span id="cb3-6"><a></a>hub.speaker.beep()           <span class="co"># "I arrived"</span></span>
-<span id="cb3-7"><a></a>drive_straight(<span class="op">-</span>BACKOFF_MM)         <span class="co"># measured, repeatable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1|2|3-4|5|6|7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>APPROACH_SPEED <span class="op">=</span> <span class="dv">150</span>         <span class="co"># deg/s — gentle, not a crash</span></span>
+<span id="cb2-2"><a></a>right.run(APPROACH_SPEED)    <span class="co"># right rolls along…</span></span>
+<span id="cb2-3"><a></a>left.run_until_stalled(APPROACH_SPEED,</span>
+<span id="cb2-4"><a></a>                       duty_limit<span class="op">=</span><span class="dv">50</span>)   <span class="co"># …until LEFT jams</span></span>
+<span id="cb2-5"><a></a>right.stop()</span>
+<span id="cb2-6"><a></a>hub.speaker.beep()           <span class="co"># "I arrived"</span></span>
+<span id="cb2-7"><a></a>drive_straight(<span class="op">-</span>BACKOFF_MM)         <span class="co"># measured, repeatable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>🤖 <strong>Robots out.</strong> Build it, tune <code>BACKOFF_MM</code> against the board — this is today’s competition in seven lines.</p>
 <div class="fragment fade-up">
 <div class="cardbox purple">
@@ -352,7 +323,7 @@
 </div>
 </div>
 <aside class="notes">
-<p>Stress the gentleness knobs: a low approach speed (≈150 deg/s) and <code>duty_limit=50</code> — the duty limit caps how hard the motor is <em>allowed</em> to push, so the reading is crisp and the LEGO survives. Driving straight into a wall jams both wheels, so watching ONE motor is enough — <code>run_until_stalled</code> blocks on the left while the right just rolls. Line 6 calls their own <code>drive_straight</code> with a <em>negative</em> distance — the challenge parked at the library day is now urgent: flip the <code>while</code> comparison (or mirror it for negatives) in <code>my_lib.py</code>, two-minute fix, big payoff. Back-off is measured, not guessed — <code>BACKOFF_MM = 50</code> ends exactly 5 cm off the wall, every run. (The pro equivalent, <code>DriveBase.stalled()</code>, arrives with the D10 reveal.)</p>
+<p>Stress the gentleness knobs: a low approach speed (≈150 deg/s) and <code>duty_limit=50</code> — the duty limit caps how hard the motor is <em>allowed</em> to push, so the reading is crisp and the LEGO survives. Driving straight into a wall jams both wheels, so watching ONE motor is enough — <code>run_until_stalled</code> blocks on the left while the right just rolls. Line 6 calls their own <code>drive_straight</code> with a <em>negative</em> distance — the challenge parked at the library day is now urgent: flip the <code>while</code> comparison (or mirror it for negatives) in <code>my_lib.py</code>, two-minute fix, big payoff. Back-off is measured, not guessed — <code>BACKOFF_MM = 50</code> ends exactly 5 cm off the wall, every run. (The pro equivalent, <code>DriveBase.stalled()</code>, arrives with the D8 reveal.)</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -366,126 +337,8 @@
       }</style></aside>
 </section></section>
 <section>
-<section id="c.-the-robot-opens-its-eyes" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
-<h1>C. The Robot Opens Its Eyes</h1>
-<p>Touch found the wall. Now <strong>light</strong> — the sensors switch on. 👀</p>
-</section>
-<section id="meet-the-eye" class="slide level2">
-<h2>Meet the eye 🔦</h2>
-<p>A <strong>flashlight + light meter</strong> in one brick — it measures its own echo.</p>
-<div style="width:780px;margin:0 auto;">
-  <svg width="740" height="200" viewbox="0 0 740 200" style="display:block;margin:0 auto;">
-    <defs>
-      <marker id="meY" markerunits="userSpaceOnUse" markerwidth="14" markerheight="14" refx="7" refy="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#FFD500"></path></marker>
-      <marker id="meFaint" markerunits="userSpaceOnUse" markerwidth="12" markerheight="12" refx="6" refy="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#9B8EC0"></path></marker>
-      <marker id="meStrong" markerunits="userSpaceOnUse" markerwidth="14" markerheight="14" refx="7" refy="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#00AE8D"></path></marker>
-    </defs>
-    <!-- readings -->
-    <text x="175" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#1C355E" text-anchor="middle">reflection() → 10</text>
-    <text x="565" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#00AE8D" text-anchor="middle">reflection() → 88</text>
-    <!-- sensors -->
-    <g transform="translate(175,0)">
-      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"></rect>
-      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"></circle>
-    </g>
-    <g transform="translate(565,0)">
-      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"></rect>
-      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"></circle>
-    </g>
-    <!-- light down -->
-    <line x1="160" y1="78" x2="150" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"></line>
-    <line x1="550" y1="78" x2="540" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"></line>
-    <!-- echo back up: faint from black, strong from white -->
-    <line x1="196" y1="140" x2="189" y2="84" stroke="#9B8EC0" stroke-width="2" stroke-dasharray="4 6" marker-end="url(#meFaint)"></line>
-    <line x1="590" y1="140" x2="583" y2="84" stroke="#00AE8D" stroke-width="6" marker-end="url(#meStrong)"></line>
-    <!-- surfaces -->
-    <rect x="55" y="150" width="240" height="22" rx="4" fill="#101820"></rect>
-    <rect x="445" y="150" width="240" height="22" rx="4" fill="#f7f9fc" stroke="#dbe2ea"></rect>
-    <text x="175" y="166" font-size="13" fill="#ffffff" font-weight="800" text-anchor="middle">black line — echo swallowed</text>
-    <text x="565" y="166" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat — echo bounces back</text>
-    <text x="370" y="112" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">same flashlight —</text>
-    <text x="370" y="132" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">different echo</text>
-  </svg>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>left_eye.reflection()   <span class="co"># 0-100: % of its OWN light echoing back</span></span>
-<span id="cb4-2"><a></a>left_eye.color()        <span class="co"># a name: Color.RED... (Week 4's tool)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment fade-up">
-<div class="cardbox teal">
-<p>Anything that changes the <strong>echo</strong> changes the number — ✨ gloss · 💡 light · 📏 height.</p>
-</div>
-</div>
-<aside class="notes">
-<p>The live demo beats the diagram: run a <code>print(left_eye.reflection())</code> loop, hold the robot, and let students slide surfaces under the eye, tilt it, lift it — the number dances. Establish the active-sensor idea: it brings its own LED, so it mostly ignores the room, but gloss, sensor height, and strong ambient light still shift the echo — which is exactly why every surface gets its own calibration (next slide). <code>reflection()</code> vs <code>color()</code>: today reflection does all the work; <code>color()</code> names colors and gets one cameo (the RED beep) — its real job is Week 4’s notes. Two eyes fill ports B and F; today one eye is plenty — D7 explains why we carry two.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="break-it-the-threshold-you-guessed" class="slide level2">
-<h2>Break it: the threshold you guessed 🔥</h2>
-<div class="qbox">
-<p><span class="qtitle">Last week the tape split at <strong>50</strong> (white 88, black 10). Does 50 still work on the <strong>mat</strong>? The <strong>floor</strong>?</span></p>
-</div>
-<p>🤖 <strong>Robots out.</strong> Print <code>reflection()</code> across <strong>three surfaces</strong> — tape · mat · floor. Log white &amp; black for each.</p>
-<div class="fragment fade-up">
-<div class="cardbox coral">
-<p>A threshold is a fact about a <strong>surface</strong> — read white · read black · <strong>split the middle.</strong></p>
-</div>
-</div>
-<aside class="notes">
-<p>Let each squad predict <em>before</em> measuring — commitments make the surprise land. The printed mat just arrived (decision #23), so this is also the real calibration-transfer checkpoint from the plan: the numbers they log here ARE the re-logged thresholds. Expected outcome: the mat’s white and the tape-field’s white read differently (print ink vs paper, matte tarp vs tape), the split point moves, and the habit lands — look first, then split what you actually see. The glossy-table failure (black reading 60, <code>&lt; 50</code> calling the line “clear” and driving over it) is the venue-day version of the same lesson; it lives as an interactive sim in the 🏠 appendix since we don’t have a glossy table in the room — mention it, don’t show it. The takeaway is a habit, not a number: re-read and re-split, every surface.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="fix-it-calibrate-then-decide-if-else" class="slide level2">
-<h2>Fix it: calibrate, then decide — <code>if / else</code> 🎚️</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1-2|3|4|5-6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="co"># Calibrate FIRST — measure, never guess</span></span>
-<span id="cb5-2"><a></a>REFLECT_THRESHOLD <span class="op">=</span> <span class="dv">50</span>              <span class="co"># for THIS surface</span></span>
-<span id="cb5-3"><a></a><span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb5-4"><a></a>    <span class="cf">if</span> left_eye.color() <span class="op">==</span> Color.RED:</span>
-<span id="cb5-5"><a></a>        hub.speaker.beep(frequency<span class="op">=</span><span class="dv">880</span>)     <span class="co"># high beep on red</span></span>
-<span id="cb5-6"><a></a>    <span class="cf">elif</span> left_eye.reflection() <span class="op">&lt;</span> REFLECT_THRESHOLD:</span>
-<span id="cb5-7"><a></a>        hub.speaker.beep(frequency<span class="op">=</span><span class="dv">220</span>)     <span class="co"># low beep on a line</span></span>
-<span id="cb5-8"><a></a>    wait(<span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>🤖 <strong>Robots out.</strong> Threshold from <em>your</em> mat numbers — low beep on lines, high beep on red.</p>
-<div class="fragment fade-up">
-<div class="cardbox teal">
-<p><code>if … elif</code> is the robot <strong>choosing</strong> — new surface → <strong>re-calibrate the threshold, never the code.</strong></p>
-</div>
-</div>
-<aside class="notes">
-<p>This is the just-in-time concept for the day: <code>if/elif</code> + booleans. Keep it concrete — a boolean is the answer to a yes/no question the robot asks the world (<code>color() == RED</code>, <code>reflection() &lt; 50</code>). <code>elif</code> = “otherwise, check this next.” Tie it straight back to the three-surface ritual: the threshold is data you recalibrate per surface; the <code>if/elif</code> structure never changes. The mat’s printed staff lines make the beeper test real mission geography — they’re the same lines D7 follows and squares on. If a squad is flying, mention <code>else</code> for the catch-all case, but don’t gate on it.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section></section>
-<section>
-<section id="d.-patrol-react" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
-<h1>D. Patrol &amp; React</h1>
+<section id="c.-patrol-react" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
+<h1>C. Patrol &amp; React</h1>
 <p>One wall is a fluke. A real run is a <strong>patrol</strong>. 🔁</p>
 </section>
 <section id="break-it-the-one-shot-miss" class="slide level2">
@@ -515,23 +368,23 @@
 </section>
 <section id="name-it-the-patrol-loop" class="slide level2">
 <h2>Name it: the patrol loop 🔁</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="|1|2|3|4-6|7|8|9-10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>hub.imu.reset_heading(<span class="dv">0</span>)</span>
-<span id="cb6-2"><a></a><span class="cf">for</span> lap <span class="kw">in</span> <span class="bu">range</span>(PATROL_LAPS):          <span class="co"># counted repeat = laps</span></span>
-<span id="cb6-3"><a></a>    left.run(PATROL_SPEED)<span class="op">;</span> right.run(PATROL_SPEED)</span>
-<span id="cb6-4"><a></a>    <span class="cf">while</span> <span class="kw">not</span> left.stalled():           <span class="co"># repeat until the wall</span></span>
-<span id="cb6-5"><a></a>        <span class="cf">if</span> left_eye.color() <span class="op">==</span> Color.RED:</span>
-<span id="cb6-6"><a></a>            hub.speaker.beep(<span class="dv">880</span>)       <span class="co"># react, don't stop</span></span>
-<span id="cb6-7"><a></a>        wait(<span class="dv">10</span>)</span>
-<span id="cb6-8"><a></a>    left.stop()<span class="op">;</span> right.stop()</span>
-<span id="cb6-9"><a></a>    drive_straight(<span class="op">-</span>BACKOFF_MM)                <span class="co"># measured back-off</span></span>
-<span id="cb6-10"><a></a>    turn_to(<span class="dv">90</span> <span class="op">*</span> (lap <span class="op">+</span> <span class="dv">1</span>))             <span class="co"># absolute appointment</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|2|3|4-6|7|8|9-10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>hub.imu.reset_heading(<span class="dv">0</span>)</span>
+<span id="cb3-2"><a></a><span class="cf">for</span> lap <span class="kw">in</span> <span class="bu">range</span>(PATROL_LAPS):          <span class="co"># counted repeat = laps</span></span>
+<span id="cb3-3"><a></a>    left.run(PATROL_SPEED)<span class="op">;</span> right.run(PATROL_SPEED)</span>
+<span id="cb3-4"><a></a>    <span class="cf">while</span> <span class="kw">not</span> left.stalled():           <span class="co"># repeat until the wall</span></span>
+<span id="cb3-5"><a></a>        <span class="cf">if</span> left_eye.reflection() <span class="op">&lt;</span> REFLECT_THRESHOLD:</span>
+<span id="cb3-6"><a></a>            hub.speaker.beep(<span class="dv">880</span>)       <span class="co"># react, don't stop</span></span>
+<span id="cb3-7"><a></a>        wait(<span class="dv">10</span>)</span>
+<span id="cb3-8"><a></a>    left.stop()<span class="op">;</span> right.stop()</span>
+<span id="cb3-9"><a></a>    drive_straight(<span class="op">-</span>BACKOFF_MM)                <span class="co"># measured back-off</span></span>
+<span id="cb3-10"><a></a>    turn_to(<span class="dv">90</span> <span class="op">*</span> (lap <span class="op">+</span> <span class="dv">1</span>))             <span class="co"># absolute appointment</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
 <p>Two loops <strong>nested</strong> — <code>for</code> counts laps, <code>while</code> waits for the wall, the <code>if</code> reacts <strong>on the move.</strong></p>
 </div>
 </div>
 <aside class="notes">
-<p>Read the shape aloud: outer <code>for</code> = “do this lap N times,” inner <code>while not left.stalled()</code> = “keep rolling until you feel the wall,” inner <code>if</code> = “and if you spot red on the way, sing out.” The <code>if</code> living <em>inside</em> the <code>while</code> is the subtle win — reaction happens continuously during motion, not as a stop-and-check. (That’s also why this loop uses <code>left.stalled()</code> rather than the blocking <code>run_until_stalled</code> from this morning — the robot needs to keep <em>checking things</em> while it rolls.) <code>turn_to(90 * (lap + 1))</code> is the library day’s absolute-appointment trick doing its job silently: corner 1 aims at 90, corner 2 at 180 — a bumped corner can’t poison the next one. This program is the literal answer key for Gentle Giant’s loop bonus. With one board and no table borders yet, patrol two “walls” by moving the board between reps or using a wall + heavy box pair — the loop doesn’t care.</p>
+<p>Read the shape aloud: outer <code>for</code> = “do this lap N times,” inner <code>while not left.stalled()</code> = “keep rolling until you feel the wall,” inner <code>if</code> = “and if you cross a staff line on the way, sing out” — yesterday’s calibrated threshold, reused as-is. The <code>if</code> living <em>inside</em> the <code>while</code> is the subtle win — reaction happens continuously during motion, not as a stop-and-check. (That’s also why this loop uses <code>left.stalled()</code> rather than the blocking <code>run_until_stalled</code> from this morning — the robot needs to keep <em>checking things</em> while it rolls.) <code>turn_to(90 * (lap + 1))</code> is the library day’s absolute-appointment trick doing its job silently: corner 1 aims at 90, corner 2 at 180 — a bumped corner can’t poison the next one. This program is the literal answer key for Gentle Giant’s loop bonus. With one board and no table borders yet, patrol two “walls” by moving the board between reps or using a wall + heavy box pair — the loop doesn’t care.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -545,26 +398,26 @@
       }</style></aside>
 </section></section>
 <section>
-<section id="e.-bottle-it-two-new-verbs" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
-<h1>E. Bottle It: Two New Verbs</h1>
+<section id="d.-bottle-it-two-new-verbs" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
+<h1>D. Bottle It: Two New Verbs</h1>
 <p>Bottle today’s tricks into <code>my_lib.py</code> — then read the scoresheet like a pro. 📦</p>
 </section>
 <section id="drive_to_wall-and-wall_square-join-the-library" class="slide level2 code-shrink">
 <h2><code>drive_to_wall</code> and <code>wall_square</code> join the library 📦</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-code-line-numbers="|1-5|7-9|10-11|12|13|14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="kw">def</span> drive_to_wall(speed<span class="op">=</span><span class="dv">150</span>):</span>
-<span id="cb7-2"><a></a>    <span class="co">"""Roll gently until the wheels feel the wall."""</span></span>
-<span id="cb7-3"><a></a>    right.run(speed)</span>
-<span id="cb7-4"><a></a>    left.run_until_stalled(speed, duty_limit<span class="op">=</span><span class="dv">50</span>)</span>
-<span id="cb7-5"><a></a>    right.stop()</span>
-<span id="cb7-6"><a></a></span>
-<span id="cb7-7"><a></a><span class="kw">def</span> wall_square(heading<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb7-8"><a></a>    <span class="co">"""Press BOTH wheels flat on the wall → truth restored."""</span></span>
-<span id="cb7-9"><a></a>    left.run(<span class="dv">120</span>)<span class="op">;</span> right.run(<span class="dv">120</span>)</span>
-<span id="cb7-10"><a></a>    <span class="cf">while</span> <span class="kw">not</span> (left.stalled() <span class="kw">and</span> right.stalled()):</span>
-<span id="cb7-11"><a></a>        wait(<span class="dv">10</span>)</span>
-<span id="cb7-12"><a></a>    left.stop()<span class="op">;</span> right.stop()</span>
-<span id="cb7-13"><a></a>    hub.imu.reset_heading(heading)   <span class="co"># the wall never lies</span></span>
-<span id="cb7-14"><a></a>    drive_straight(<span class="op">-</span>BACKOFF_MM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers="|1-5|7-9|10-11|12|13|14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> drive_to_wall(speed<span class="op">=</span><span class="dv">150</span>):</span>
+<span id="cb4-2"><a></a>    <span class="co">"""Roll gently until the wheels feel the wall."""</span></span>
+<span id="cb4-3"><a></a>    right.run(speed)</span>
+<span id="cb4-4"><a></a>    left.run_until_stalled(speed, duty_limit<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb4-5"><a></a>    right.stop()</span>
+<span id="cb4-6"><a></a></span>
+<span id="cb4-7"><a></a><span class="kw">def</span> wall_square(heading<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb4-8"><a></a>    <span class="co">"""Press BOTH wheels flat on the wall → truth restored."""</span></span>
+<span id="cb4-9"><a></a>    left.run(<span class="dv">120</span>)<span class="op">;</span> right.run(<span class="dv">120</span>)</span>
+<span id="cb4-10"><a></a>    <span class="cf">while</span> <span class="kw">not</span> (left.stalled() <span class="kw">and</span> right.stalled()):</span>
+<span id="cb4-11"><a></a>        wait(<span class="dv">10</span>)</span>
+<span id="cb4-12"><a></a>    left.stop()<span class="op">;</span> right.stop()</span>
+<span id="cb4-13"><a></a>    hub.imu.reset_heading(heading)   <span class="co"># the wall never lies</span></span>
+<span id="cb4-14"><a></a>    drive_straight(<span class="op">-</span>BACKOFF_MM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
 <p>Both wheels flat on the wall → heading <strong>known again</strong>. <strong>The wall never lies.</strong></p>
@@ -645,7 +498,7 @@
 <p><strong>135 points, zero color</strong> — never trade a reliable anchor for a shaky full run.</p>
 </div>
 <aside class="notes">
-<p>This slide connects the whole bootcamp to the scoresheet — and now the mat is physically in the room, point at the real zones while clicking through the tiers. The load-bearing idea: color is <em>risk</em> (lighting, calibration — they just saw the numbers move between surfaces), so we defer every point that needs it. Everything the anchor needs lives color-free: the precise driving and wall verbs this week builds, then the Week-3 team mechanisms — cables, instruments, microphone, avoidance. Fixed notes (+40) arrive Week 4 only after the anchor is locked; randomized notes (+80) are a Week-5 stretch. If a parent asks “why not go for 255 now?”: a reliable 175 beats a heroic 255 you land one time in ten — this is a WRO scoring truth, not a confidence thing.</p>
+<p>This slide connects the whole bootcamp to the scoresheet — and now the mat is physically in the room, point at the real zones while clicking through the tiers. The load-bearing idea: color is <em>risk</em> (lighting, calibration — they watched the numbers move between surfaces yesterday), so we defer every point that needs it. Everything the anchor needs lives color-free: the precise driving and wall verbs this week builds, then the Week-3 team mechanisms — cables, instruments, microphone, avoidance. Fixed notes (+40) arrive Week 4 only after the anchor is locked; randomized notes (+80) are a Week-5 stretch. If a parent asks “why not go for 255 now?”: a reliable 175 beats a heroic 255 you land one time in ten — this is a WRO scoring truth, not a confidence thing.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -659,8 +512,8 @@
       }</style></aside>
 </section></section>
 <section>
-<section id="f.-compete-gate" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
-<h1>F. Compete &amp; Gate</h1>
+<section id="e.-compete-gate" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
+<h1>E. Compete &amp; Gate</h1>
 <p>Today’s showdown: <strong>Gentle Giant</strong> 🐘 — on the real mat, against the real wall board.</p>
 </section>
 <section id="gentle-giant-live-on-the-mat" class="slide level2">
@@ -717,10 +570,10 @@
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Next: <em>Line King</em> — trace a line at speed with a formula you <strong>already own.</strong> 🛣️</p>
+<p>Next: five files become <strong>one clean <code>my_lib.py</code></strong> — and the pros’ <code>DriveBase</code> joins the team. 📦</p>
 </div>
 <aside class="notes">
-<p>The gate has three legs: the reactive patrol (stall + calibrated back-off + loop across two walls), the two new library verbs demonstrated from <code>my_lib.py</code> (plus the quick oral check: what does <code>duty_limit</code> protect?), and the scoring understanding (anchor-first). All three are observable at the bench in under 20 minutes with five robots. Optional ½-block if time allows — the plan’s “Good Practices” beat gets its full day at the consolidation session, but a taste here is cheap insurance: pseudocode the patrol in plain words first, comment the threshold with its calibration numbers, and back the working file up before the line day. Then tease D7: same <code>error × gain</code> they built for the gyro, now steering an eye down a line — on the mat’s printed staff lines.</p>
+<p>The gate has three legs: the reactive patrol (stall + calibrated back-off + loop across two walls), the two new library verbs demonstrated from <code>my_lib.py</code> (plus the quick oral check: what does <code>duty_limit</code> protect?), and the scoring understanding (anchor-first). All three are observable at the bench in under 20 minutes with five robots. Optional ½-block if time allows — the plan’s “Good Practices” beat gets its full day at the consolidation session, but a taste here is cheap insurance: pseudocode the patrol in plain words first, comment the threshold with its calibration numbers, and back the working file up before the consolidation day. Then tease tomorrow: five scattered files become one clean module with one constants block — and the pros’ <code>DriveBase</code> finally joins the team, driving everything the library taught by hand.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -800,73 +653,6 @@
 })();
 </script>
 <p>The same dive you saw on your real robot — the speed trace collapsing <em>is</em> the wall.</p>
-</section>
-<section id="the-threshold-that-broke-on-gloss-sim" class="slide level2">
-<h2>🏠 The threshold that broke on gloss (sim) 🔥</h2>
-<div style="width:860px;margin:0 auto;">
-  <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px;">
-    <span style="font-size:16px;color:#1C355E;font-weight:700;">surface:</span>
-    <button id="rmHome" onclick="rmSurf('home')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">📄 practice paper</button>
-    <button id="rmGloss" onclick="rmSurf('gloss')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">🏆 glossy table</button>
-    <span style="font-size:16px;color:#1C355E;font-weight:700;margin-left:12px;">threshold: <b><span id="rmThV">50</span></b></span>
-    <input id="rmTh" type="range" min="0" max="100" step="1" value="50" oninput="rmTh(this.value)" style="width:170px;accent-color:#E96852;">
-  </div>
-  <svg width="820" height="150" viewbox="0 0 820 150" style="display:block;margin:0 auto;">
-    <rect x="60" y="58" width="700" height="26" rx="13" fill="#101820"></rect>
-    <rect x="60" y="58" width="700" height="26" rx="13" fill="url(#rmGrad)"></rect>
-    <defs><lineargradient id="rmGrad" x1="0" x2="1"><stop offset="0" stop-color="#101820"></stop><stop offset="1" stop-color="#ffffff"></stop></lineargradient></defs>
-    <text x="60" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">0 · dark</text>
-    <text x="760" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">100 · bright</text>
-    <!-- threshold line -->
-    <line id="rmThLine" x1="410" y1="44" x2="410" y2="98" stroke="#E96852" stroke-width="3" stroke-dasharray="6 5"></line>
-    <text id="rmThTxt" x="410" y="38" font-size="13" fill="#E96852" font-weight="800" text-anchor="middle">50</text>
-    <!-- markers -->
-    <g id="rmBlack"><circle cy="71" r="11" fill="#1C355E" stroke="#fff" stroke-width="2"></circle><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">black line</text></g>
-    <g id="rmWhite"><circle cy="71" r="11" fill="#FFD500" stroke="#1C355E" stroke-width="2"></circle><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat</text></g>
-  </svg>
-  <div id="rmVerdict" style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;font-weight:700;min-height:28px;">pick a surface — read what the eye actually sees</div>
-</div>
-<script>
-(function(){
-  var X0=60, X1=760, thr=50, surf=null;
-  var S={ home:{white:88, black:10}, gloss:{white:95, black:60} };
-  function el(id){return document.getElementById(id);}
-  function xOf(v){ return X0 + v/100*(X1-X0); }
-  function draw(){
-    el('rmThLine').setAttribute('x1',xOf(thr)); el('rmThLine').setAttribute('x2',xOf(thr));
-    el('rmThTxt').setAttribute('x',xOf(thr)); el('rmThTxt').textContent=thr;
-    if(!surf) return;
-    var s=S[surf];
-    el('rmBlack').setAttribute('transform','translate('+xOf(s.black).toFixed(1)+',0)');
-    el('rmWhite').setAttribute('transform','translate('+xOf(s.white).toFixed(1)+',0)');
-    var blackOK = s.black < thr;   // robot must call the dark line "line"
-    var whiteOK = s.white > thr;   // and the bright mat "clear"
-    var v=el('rmVerdict');
-    if(blackOK && whiteOK){
-      v.style.color='#00AE8D';
-      v.innerHTML='black '+s.black+' &lt; '+thr+' → <b>LINE ✓</b> &nbsp;·&nbsp; white '+s.white+' &gt; '+thr+' → <b>clear ✓</b> &nbsp; 🎯';
-    } else {
-      v.style.color='#E96852';
-      var msg = !blackOK ? ('black reads '+s.black+' — <b>above '+thr+'</b>, so the robot calls the line "clear" and drives right over it. 😬')
-                         : ('white reads '+s.white+' — <b>below '+thr+'</b>, so the robot brakes on empty mat. 😬');
-      v.innerHTML=msg;
-    }
-  }
-  window.rmSurf=function(k){
-    surf=k;
-    el('rmHome').style.background = k==='home' ? '#00C9A7':'#eef3f8';
-    el('rmHome').style.color = k==='home' ? '#fff':'#1C355E';
-    el('rmHome').style.border = k==='home' ? 'none':'2px solid #1C355E';
-    el('rmGloss').style.background = k==='gloss' ? '#00C9A7':'#eef3f8';
-    el('rmGloss').style.color = k==='gloss' ? '#fff':'#1C355E';
-    el('rmGloss').style.border = k==='gloss' ? 'none':'2px solid #1C355E';
-    draw();
-  };
-  window.rmTh=function(v){ thr=parseInt(v,10); el('rmThV').textContent=v; draw(); };
-  window.rmSurf('home');
-})();
-</script>
-<p>On a glossy venue table, “black” can bounce back <strong>60</strong> — drag the threshold and rescue the robot.</p>
 </section>
 <section id="one-shot-vs-patrol-sim" class="slide level2">
 <h2>🏠 One-shot vs patrol (sim) 🔁</h2>

@@ -2,15 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/slides/stop-patrol-react.html</loc>
-    <lastmod>2026-07-14T20:01:31.632Z</lastmod>
+    <lastmod>2026-07-15T11:24:26.036Z</lastmod>
   </url>
   <url>
     <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/slides/pd-line-following.html</loc>
-    <lastmod>2026-07-14T08:49:24.259Z</lastmod>
+    <lastmod>2026-07-15T11:20:14.721Z</lastmod>
   </url>
   <url>
     <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/slides/mission-list.html</loc>
-    <lastmod>2026-07-13T15:13:06.006Z</lastmod>
+    <lastmod>2026-07-15T11:26:11.443Z</lastmod>
   </url>
   <url>
     <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/slides/drivebase-shortcut.html</loc>
@@ -22,11 +22,15 @@
   </url>
   <url>
     <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/index.html</loc>
-    <lastmod>2026-07-14T20:01:31.139Z</lastmod>
+    <lastmod>2026-07-15T21:24:10.790Z</lastmod>
+  </url>
+  <url>
+    <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/library-three-ways.html</loc>
+    <lastmod>2026-07-15T23:05:51.503Z</lastmod>
   </url>
   <url>
     <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/slides/drive-a-square.html</loc>
-    <lastmod>2026-07-14T07:14:48.725Z</lastmod>
+    <lastmod>2026-07-15T11:25:47.935Z</lastmod>
   </url>
   <url>
     <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/slides/make-it-move.html</loc>
@@ -34,10 +38,10 @@
   </url>
   <url>
     <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/slides/name-your-moves.html</loc>
-    <lastmod>2026-07-14T07:15:26.543Z</lastmod>
+    <lastmod>2026-07-15T11:25:20.154Z</lastmod>
   </url>
   <url>
     <loc>https://NaifMersal.github.io/WRO-LEGO-pypricks/slides/pid-on-the-gyro.html</loc>
-    <lastmod>2026-07-14T07:15:26.574Z</lastmod>
+    <lastmod>2026-07-15T11:25:27.503Z</lastmod>
   </url>
 </urlset>

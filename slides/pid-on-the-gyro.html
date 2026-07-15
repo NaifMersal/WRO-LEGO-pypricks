@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-07-15">
+  <meta name="dcterms.date" content="2026-07-16">
   <title>The Drive That Heals Itself</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,7 +206,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-07-15</p>
+  <p class="date">2026-07-16</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
@@ -386,7 +386,7 @@ function raceDials(){
 </div>
 </div>
 <aside class="notes">
-<p>First <code>def</code> of the bootcamp — land it hard: a function is a <em>named move</em>, exactly like <code>run_angle</code> is someone else’s named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two <code>run</code> signs and the <code>&lt;</code> to <code>&gt;</code>, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; <code>RobotConfig</code> at D10. Demo on the next slide — walk the highlights here first.</p>
+<p>First <code>def</code> of the bootcamp — land it hard: a function is a <em>named move</em>, exactly like <code>run_angle</code> is someone else’s named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two <code>run</code> signs and the <code>&lt;</code> to <code>&gt;</code>, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; <code>RobotConfig</code> at D8. Demo on the next slide — walk the highlights here first.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1036,7 +1036,7 @@ function raceDials(){
 </div>
 <aside class="notes">
 <p>Walk the highlight stops: <code>gain</code> arrives as a <em>parameter with a default</em> — new syntax, teach it in one breath (“a knob you can leave alone”). Line 3’s <code>abs()</code> is what makes negative targets work. Demo on the next slide.</p>
-<p><strong>Coach aside — “why <code>run()</code> and not <code>motor.dc()</code>?”</strong> (for the sharp student who’s read ahead). Honest truth: <code>run()</code> is <em>itself</em> a closed-loop <strong>speed</strong> controller inside Pybricks — so this hand-written P sits <em>on top</em> of it, a controller-on-a-controller. Your <code>gain</code> sets a speed <em>target</em>; Pybricks’ own loop chases it. A pro writing a controller from scratch often reaches for <code>motor.dc()</code> instead — raw power/duty — so their formula is the <em>whole</em> controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep <code>run()</code> on purpose for two reasons: it’s <strong>smoother and battery-proof</strong> (a fresh vs.&nbsp;tired hub turns the same — priceless with five robots on the bench), and it speaks the same <strong>“speed”</strong> language as <code>drive.drive(speed, turn)</code> and <code>DriveBase</code> — so <code>speed = error × gain</code> stays literally true all the way from this turn, through the self-healing straight, to D7’s line-follower. <code>dc()</code> is the right tool the day you build a controller with no help underneath; that day isn’t this bootcamp.</p>
+<p><strong>Coach aside — “why <code>run()</code> and not <code>motor.dc()</code>?”</strong> (for the sharp student who’s read ahead). Honest truth: <code>run()</code> is <em>itself</em> a closed-loop <strong>speed</strong> controller inside Pybricks — so this hand-written P sits <em>on top</em> of it, a controller-on-a-controller. Your <code>gain</code> sets a speed <em>target</em>; Pybricks’ own loop chases it. A pro writing a controller from scratch often reaches for <code>motor.dc()</code> instead — raw power/duty — so their formula is the <em>whole</em> controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep <code>run()</code> on purpose for two reasons: it’s <strong>smoother and battery-proof</strong> (a fresh vs.&nbsp;tired hub turns the same — priceless with five robots on the bench), and it speaks the same <strong>“speed”</strong> language as <code>drive.drive(speed, turn)</code> and <code>DriveBase</code> — so <code>speed = error × gain</code> stays literally true all the way from this turn, through the self-healing straight, to D6’s line-follower. <code>dc()</code> is the right tool the day you build a controller with no help underneath; that day isn’t this bootcamp.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1370,7 +1370,7 @@ function raceDials(){
 </div>
 </div>
 <aside class="notes">
-<p>Check the signs with them, don’t just assert: error +8 → left runs 468, right runs 532 → right faster → robot swings left → error shrinks. Negative error works out symmetrically. The <code>4</code> is a strength knob — let one squad try 1 (lazy) and 20 (jittery zig-zag). Name it out loud: <strong>the same P-controller as this morning’s turn</strong> — one formula, second application; the third is D7’s line-follower. Same <code>run()</code>-is-a-speed-controller caveat as the proportional-turn note applies here — the <code>500 ± 4*error</code> is a base speed plus a proportional trim, and it stays on <code>run()</code> for the same reasons (smooth, battery-proof, speaks DriveBase’s “speed” language).</p>
+<p>Check the signs with them, don’t just assert: error +8 → left runs 468, right runs 532 → right faster → robot swings left → error shrinks. Negative error works out symmetrically. The <code>4</code> is a strength knob — let one squad try 1 (lazy) and 20 (jittery zig-zag). Name it out loud: <strong>the same P-controller as this morning’s turn</strong> — one formula, second application; the third is D6’s line-follower. Same <code>run()</code>-is-a-speed-controller caveat as the proportional-turn note applies here — the <code>500 ± 4*error</code> is a base speed plus a proportional trim, and it stays on <code>run()</code> for the same reasons (smooth, battery-proof, speaks DriveBase’s “speed” language).</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1522,7 +1522,7 @@ function raceDials(){
 <p>Tomorrow: put P in a <em>hurry</em> and watch it slam past the target — meet the letter that <strong>damps</strong> it. Then a lean P never quite kills — one more letter. Finish the acronym… and start naming moves in a library of your <strong>own</strong>. 📦</p>
 </div>
 <aside class="notes">
-<p>The gate is the plan’s D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the gain prediction in their own words — same formula, two applications today (turn + straight); the third is D7’s line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins <code>my_lib.py</code> (<code>drive_straight</code>/<code>turn_to</code>) — the <code>DriveBase</code> surprise now waits at the D10 reveal (decision #20), earned only after the whole library is theirs.</p>
+<p>The gate is the plan’s D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the gain prediction in their own words — same formula, two applications today (turn + straight); the third is D6’s line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins <code>my_lib.py</code> (<code>drive_straight</code>/<code>turn_to</code>) — the <code>DriveBase</code> surprise now waits at the D8 reveal (decision #20, re-timed by #26), earned only after the whole library is theirs.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
