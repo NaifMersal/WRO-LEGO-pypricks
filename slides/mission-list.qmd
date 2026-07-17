@@ -300,9 +300,9 @@ You can **read and build a list** (index from 0, iterate, append), your steps ar
 :::
 
 ::: {.fragment .fade-up}
-Next: **Draft Day** — teams form, each team picks its competition robot… and a surprise you've spent two weeks earning. 🎁
+Next: **Draft Day** — teams form, each team picks its competition robot… and the first *mechanism* gets built. 🤝
 :::
 
 ::: {.notes}
-The gate is the plan's D9 outcome verbatim. This is the last solo-robot day — tomorrow's session opens with the *Mini Mission* finale and the draft, so make sure every student's library + runner are saved and named (they carry into the team merge, which is exactly what motivates the config lesson there). Keep the teaser vague on purpose: the "surprise" is the DriveBase reveal, and it lands best unspoiled.
+The gate is the plan's D9 outcome verbatim. This is the last solo-robot day — tomorrow's session opens with the *Mini Mission* finale and the draft, so make sure every student's library + runner are saved and named (they carry into the team merge: each member's `RobotConfig` numbers get consolidated onto the selected robot). Then the mechanism builds begin — the anchor run's cables, microphone, and instruments.
 :::

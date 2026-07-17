@@ -34,7 +34,7 @@ Your new team keeps **one** robot. Everyone's code was tuned for a *different* o
 ## Break it: the merge 🔥
 
 ::: {.qbox}
-[Your team just picked its robot — and it's **not yours**. Your `my_lib.py` thinks the wheels are 88 mm; the chosen robot's are 87. Your teammate's turn gain is tuned hotter. A motor sits on a different port. How many edits until *your* mission runs on *this* robot?]{.qtitle}
+[Your team just picked its robot — and it's **not yours**. Your `my_lib.py` thinks the wheels are 88 mm; the chosen robot's are 87. Your teammate's turn `kp` is tuned hotter. A motor sits on a different port. How many edits until *your* mission runs on *this* robot?]{.qtitle}
 :::
 
 ```{=html}
@@ -73,14 +73,15 @@ Make it concrete with the team's actual files if the draft order allows — thre
 
 ## Fix it: `RobotConfig` — the robot in one place {.code-shrink}
 
-```{.python code-line-numbers="|1-2|3-4|5-6|7-9|11"}
+```{.python code-line-numbers="|1-2|3-4|5-6|7-10|12"}
 @dataclass
 class RobotConfig:
     wheel_diameter: int = 88    # mm — MEASURE the team robot
     axle_track: int = 145       # mm — wheel center to center
     left_port: Port = Port.A    # re-port a motor = one edit
     right_port: Port = Port.E
-    turn_gain: float = 4.0      # the tuned knobs live here too
+    turn_kp: float = 4.0        # the tuned knobs live here too
+    turn_kd: float = 0.5
     straight_speed: int = 300   # mm/s
     backoff_mm: int = 50        # the measured back-off
 
@@ -106,8 +107,8 @@ right = Motor(CFG.right_port)
 
 DEG_PER_MM = 360 / (3.14 * CFG.wheel_diameter)
 
-def turn_to(target, gain=None, kd=None):
-    gain = gain or CFG.turn_gain
+def turn_to(target, kp=None, kd=None):
+    kp = kp or CFG.turn_kp
     kd = kd or CFG.turn_kd
     # …the same PD loop as ever…
 ```
@@ -119,7 +120,7 @@ New robot? **Measure it, edit `robot_config.py`, done** — the library and ever
 :::
 
 ::: {.notes}
-The team exercise that proves it (from the exemplar): run the merged code with teammate A's old constants on the chosen robot — watch the square miss; then fix ONLY robot_config.py and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap.
+The team exercise that proves it (from the exemplar): run the merged code with teammate A's old constants on the chosen robot — watch the square miss; then fix ONLY robot_config.py and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap. Continuity note: squads' own `my_lib.py` from D5 may still spell the turn knob `gain=` — fold the rename into today's promotion and say it once: "we've been calling this knob the gain; its code name is `kp`, same K-family as the `KP` constants."
 :::
 
 # C. The Reveal — Let DriveBase Drive {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}

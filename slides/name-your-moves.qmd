@@ -7,7 +7,7 @@ format: revealjs
 
 # A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-Yesterday you *named* **P** — `error × gain`. Today: the two letters that fix what P alone can't — and then your moves get **names of their own**. 📦
+Yesterday you *named* **P** — `error × KP`. Today: the two letters that fix what P alone can't — and then your moves get **names of their own**. 📦
 
 ```{=html}
 <!-- Shared assets for every sim in this deck: one car (two sizes), one helper kit. -->
@@ -51,20 +51,20 @@ window.NM = {
 
 | Yesterday | The trick |
 |---|---|
-| 📈 **P, named** | `speed = error × gain` — far → fast, close → gentle, there → zero |
+| 📈 **P, named** | `speed = error × KP` — far → fast, close → gentle, there → zero |
 | 🔁 **one formula, two jobs** | the **watched turn** *and* the **self-healing straight** — same line, two uses |
-| 🔥 **crack #1** | `gain = 20` flew **past** the target and zig-zagged back |
-| 😴 **crack #2** | `gain = 1` **parked a hair short** — a leftover P never quite killed |
+| 🔥 **crack #1** | `KP = 20` flew **past** the target and zig-zagged back |
+| 😴 **crack #2** | `KP = 1` **parked a hair short** — a leftover P never quite killed |
 
 ::: {.fragment .fade-up}
-- Both cracks survived yesterday's gain quiz — each one is a **letter** we collect this morning
+- Both cracks survived yesterday's KP quiz — each one is a **letter** we collect this morning
 - Then every move you own gets a **name** in **your own library**
 :::
 
 ⏱️ **Time: 10 minutes**
 
 ::: {.notes}
-Recap by asking, not telling: "walk me through `gyro_turn_p` — what does gain do at a big error vs a tiny one?" Then surface the two cracks *they already saw* on the D4 quiz: the hot gain overshot and rang; the lazy gain parked short. Don't fix anything yet — name that the morning's job is those two leftovers, which turn out to be the last two letters of PID, and the afternoon's job is turning everything they've hand-built into named library functions. Keep P as the hero they built; D and I are its finishing touches, not a new subject.
+Recap by asking, not telling: "walk me through `gyro_turn_p` — what does `kp` do at a big error vs a tiny one?" Then surface the two cracks *they already saw* on the D4 quiz: the hot KP overshot and rang; the lazy KP parked short. Don't fix anything yet — name that the morning's job is those two leftovers, which turn out to be the last two letters of PID, and the afternoon's job is turning everything they've hand-built into named library functions. Keep P as the hero they built; D and I are its finishing touches, not a new subject.
 :::
 
 # B. Finish the Word: D and I {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
@@ -78,7 +78,7 @@ Recap by asking, not telling: "walk me through `gyro_turn_p` — what does gain 
 ```{=html}
 <div style="width:780px;margin:0 auto;">
   <div style="text-align:center;margin-bottom:6px;">
-    <button onclick="phRun()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">▶ gyro_turn_p(90) — gain cranked 🔥</button>
+    <button onclick="phRun()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">▶ gyro_turn_p(90) — KP cranked 🔥</button>
   </div>
   <div style="display:flex;justify-content:center;align-items:center;gap:44px;">
     <svg width="200" height="200" viewBox="-105 -105 210 210" style="display:block;">
@@ -109,7 +109,7 @@ Recap by asking, not telling: "walk me through `gyro_turn_p` — what does gain 
       var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
       var n=Math.max(1,Math.round(dt/0.005));
       for(var i=0;i<n && !done;i++){
-        NM.step(s, 0);                        // hot gain, D=0
+        NM.step(s, 0);                        // hot KP, D=0
         if(s.h>peak)peak=s.h;
         if(s.t>4){ done=true; }
       }
@@ -134,25 +134,25 @@ Recap by asking, not telling: "walk me through `gyro_turn_p` — what does gain 
 ::: {.fragment .fade-up .incremental}
 - The push only knows *how far* is left — **not how fast it's closing**
 - It arrives at 90 flat-out, blows past, over-corrects, and **rings** before it settles
-- A bigger gain rings *harder*
+- A bigger KP rings *harder*
 :::
 
 ::: {.notes}
-Run it before the fragment. The red arc painted past the tick is the overshoot made physical — point at it. Elicit the diagnosis in their words: "the number hit 90 — why didn't it stop?" Because the wheels were still spinning fast; P read error 0 and cut power, but momentum carried it past, then P yanked it back, and round it goes. This is exactly the D3 coast — but now P can't two-speed its way out, because a hot gain is what won the race yesterday. Set up the need: we want something that notices the error is *dropping fast* and eases off early. Don't name D yet.
+Run it before the fragment. The red arc painted past the tick is the overshoot made physical — point at it. Elicit the diagnosis in their words: "the number hit 90 — why didn't it stop?" Because the wheels were still spinning fast; P read error 0 and cut power, but momentum carried it past, then P yanked it back, and round it goes. This is exactly the D3 coast — but now P can't two-speed its way out, because a hot KP is what won the race yesterday. Set up the need: we want something that notices the error is *dropping fast* and eases off early. Don't name D yet.
 :::
 
 ## Name it: D damps 🛑 {.code-shrink}
 
 ```{.python code-line-numbers="|1|3|4|5|6-7|8|10"}
-def gyro_turn_pd(target, gain=4, kd=0.5):
+def gyro_turn_pd(target, kp=4, kd=0.5):
     hub.imu.reset_heading(0)
     last_error = target
     while abs(target - hub.imu.heading()) > 1:
         error = target - hub.imu.heading()   # how FAR → P
         change = (error - last_error) / 0.005 # how FAST → D (°/s)
         last_error = error
-        left.run(gain * error + kd * change) # ease off early
-        right.run(-(gain * error + kd * change))
+        left.run(kp * error + kd * change)   # ease off early
+        right.run(-(kp * error + kd * change))
         wait(5)
     left.stop(); right.stop()
 ```
@@ -164,7 +164,184 @@ def gyro_turn_pd(target, gain=4, kd=0.5):
 :::
 
 ::: {.notes}
-Anticipation is the whole idea — say it that way: P only knows the gap's *size* right now; D knows the gap is *shrinking* and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick's error, subtract to get the *change* (a speed, °/s), feed it in. Sign check out loud on the card's numbers — as the robot closes, `error` shrinks each tick, so `change` is negative, so it trims the command down → gentle arrival. `kd` is a new knob, same as `gain` was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They'll feel both on the next slide. `gyro_turn_pd` stays on `run()` (see the D4 proportional-turn note on `run()` vs `motor.dc()`); worth knowing for coaches — and it pays off again at the D10 reveal, where the pro controller actuates one layer *deeper*, by torque/effort.
+Anticipation is the whole idea — say it that way: P only knows the gap's *size* right now; D knows the gap is *shrinking* and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick's error, subtract to get the *change* (a speed, °/s), feed it in. Sign check out loud on the card's numbers — as the robot closes, `error` shrinks each tick, so `change` is negative, so it trims the command down → gentle arrival. `kd` is a new knob, same as `kp` was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They'll feel both on the next slide. `gyro_turn_pd` stays on `run()` (see the D4 proportional-turn note on `run()` vs `motor.dc()`); worth knowing for coaches — and it pays off again at the D8 reveal, where the pro controller actuates one layer *deeper*, by torque/effort.
+:::
+
+## Step it: be the robot 🔍 {.smaller}
+
+```{=html}
+<style>
+.svln{opacity:.4;padding:1px 8px;border-left:4px solid transparent;border-radius:6px;white-space:pre;transition:opacity .12s;}
+.svln.on{opacity:1;border-left-color:#E96852;background:#FFD50022;}
+.svln.dim{opacity:.35;} .svln.body{opacity:.8;}
+.svrow{display:flex;justify-content:space-between;padding:2px 10px;border-bottom:1px solid #dbe2ea;}
+.svrow b{transition:background .25s;border-radius:4px;padding:0 4px;}
+</style>
+<div style="width:965px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
+    <button onclick="svStep()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">▶ step one line</button>
+    <button onclick="svPass()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">⟳ whole pass</button>
+    <button id="svPlayB" onclick="svPlay()" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">▶▶ play</button>
+    <button onclick="svReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:5px 14px;font-size:17px;font-weight:700;cursor:pointer;">↺ reset</button>
+    <span style="font-size:16px;color:#1C355E;font-weight:700;margin-left:8px;">kp: <b id="svKpV">4</b></span>
+    <input id="svKpR" type="range" min="1" max="20" step="1" value="4" oninput="svKp(this.value)" style="width:110px;accent-color:#E96852;">
+    <span style="font-size:16px;color:#1C355E;font-weight:700;">kd: <b id="svKdV">0.5</b></span>
+    <input id="svKdR" type="range" min="0" max="1.6" step="0.1" value="0.5" oninput="svKd(this.value)" style="width:110px;accent-color:#00AE8D;">
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+    <span style="font-size:14px;color:#1C355E;font-weight:800;">one click, one crack ⚡</span>
+    <button onclick="svPreset(4,0.5)" style="background:#eef3f8;color:#00AE8D;border:2px solid #00AE8D;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">✅ tuned · kp 4 · kd 0.5</button>
+    <button onclick="svPreset(20,0)" style="background:#eef3f8;color:#E96852;border:2px solid #E96852;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">🔥 too hot · kp 20 · kd 0</button>
+    <button onclick="svPreset(1,0.5)" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">😴 too low · kp 1</button>
+    <button onclick="svPreset(4,1.6)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">🌊 kd too high · kd 1.6</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:flex-start;gap:18px;">
+    <div style="background:#f7f9fc;border:1px solid #dbe2ea;border-radius:12px;padding:10px 12px;font-family:Consolas,monospace;font-size:14px;line-height:1.55;color:#1C355E;width:552px;">
+<div id="svL0" class="svln">def gyro_turn_pd(target, kp, kd):</div>
+<div id="svL1" class="svln">    hub.imu.reset_heading(0)</div>
+<div id="svL2" class="svln">    last_error = target</div>
+<div id="svL3" class="svln">    while abs(target - hub.imu.heading()) > 1:<span id="svNote" style="font-size:11.5px;font-weight:800;margin-left:8px;"></span></div>
+<div id="svL4" class="svln">        error = target - hub.imu.heading()</div>
+<div id="svL5" class="svln">        change = (error - last_error) / 0.005</div>
+<div id="svL6" class="svln">        last_error = error</div>
+<div id="svL7" class="svln">        left.run(kp * error + kd * change)</div>
+<div id="svL8" class="svln">        right.run(-(kp * error + kd * change))</div>
+<div id="svL9" class="svln">        wait(5)</div>
+<div id="svL10" class="svln">    left.stop(); right.stop()</div>
+    </div>
+    <div style="width:375px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg width="150" height="150" viewBox="-105 -105 210 210" style="display:block;flex:none;">
+          <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
+          <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/>
+          <path id="svArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"/>
+          <g id="svCar"><use href="#nmCar" style="--car:#625D9C"/></g>
+        </svg>
+        <div style="font-family:Consolas,monospace;font-size:15px;color:#1C355E;flex:1;">
+          <div class="svrow"><span>heading</span><b id="svRHead">?</b></div>
+          <div class="svrow"><span>error</span><b id="svRErr">–</b></div>
+          <div class="svrow"><span>change</span><b id="svRChg">–</b></div>
+          <div class="svrow"><span>last_error</span><b id="svRLast">–</b></div>
+          <div class="svrow"><span>push (°/s)</span><b id="svRCmd">–</b></div>
+          <div style="padding:4px 10px;font-weight:800;">loop pass <span style="color:#625D9C;">#</span><span id="svPassN" style="color:#625D9C;">0</span></div>
+        </div>
+      </div>
+      <div id="svMsg" style="font-size:14.5px;color:#625D9C;font-weight:700;min-height:64px;margin-top:6px;">the highlighted line runs on your next click — <b>you</b> are the robot's brain 🧠</div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var el=NM.el, SD=0.005, F=1.2, LAG=0.1, CAP=650;
+  var kp=4, kd=0.5, s=null, raf=null, coastT=null, playing=false;
+  function fresh(){ return {h:0,v:0,lastErr:null,err:null,change:null,cmd:null,cmdc:0,pc:0,passes:0,peak:0,done:false}; }
+  function msg(t,c){ if(playing)return; el('svMsg').innerHTML=t; el('svMsg').style.color=c||'#625D9C'; }
+  function note(t,ok){ var n=el('svNote'); n.textContent=t; n.style.color=ok?'#00AE8D':'#E96852'; }
+  function row(id,txt,fl){ var e=el(id); e.textContent=txt; if(fl&&!playing){ e.style.background='#FFD50088'; setTimeout(function(){e.style.background='transparent';},300); } }
+  function highlight(){ for(var i=0;i<=10;i++){ var L=el('svL'+i); L.className='svln'+(playing?(i>=3&&i<=9?' body':' dim'):(i===s.pc?' on':'')); } }
+  function drawBot(){
+    el('svCar').setAttribute('transform','rotate('+s.h.toFixed(1)+')');
+    if(s.peak>90){ el('svArc').setAttribute('d',NM.arcD(90,s.peak,94)); el('svArc').setAttribute('opacity','1'); }
+  }
+  function doLine(){
+    if(s.done) return;
+    var pc=s.pc;
+    if(pc===0){ msg('called: <b>gyro_turn_pd(90, kp='+kp+', kd='+kd+')</b> — the knobs are set'); s.pc=1; }
+    else if(pc===1){ s.h=0; row('svRHead','0.0°',1); drawBot(); msg('gyro zeroed — heading now means <i>degrees turned so far</i>'); s.pc=2; }
+    else if(pc===2){ s.lastErr=90; row('svRLast','90.0',1); msg('the loop\'s <b>memory</b> starts full: last_error = target = 90'); s.pc=3; }
+    else if(pc===3){
+      var e=90-s.h, ok=Math.abs(e)>1;
+      note('abs(90−'+s.h.toFixed(1)+')='+Math.abs(e).toFixed(1)+(ok?' >1 ✓ again!':' ≤1 ✗ exit'), ok);
+      if(ok){ s.passes++; el('svPassN').textContent=s.passes; msg('the while line is a <b>door</b>: gap is '+Math.abs(e).toFixed(1)+'°, still &gt; 1 — run the body again'); s.pc=4; }
+      else { msg('gap ≤ 1° — the door <b>closes</b>: jump past the body','#00AE8D'); s.pc=10; }
+    }
+    else if(pc===4){ s.err=90-s.h; row('svRErr',s.err.toFixed(1),1); msg('error = 90 − '+s.h.toFixed(1)+' = <b>'+s.err.toFixed(1)+'</b> — how FAR is left'); s.pc=5; }
+    else if(pc===5){
+      s.change=(s.err-s.lastErr)/SD;
+      row('svRChg',s.change.toFixed(0)+' °/s',1);
+      msg('change = ('+s.err.toFixed(1)+' − '+s.lastErr.toFixed(1)+') / 0.005 = <b>'+s.change.toFixed(0)+' °/s</b> — how FAST it\'s closing');
+      s.pc=6;
+    }
+    else if(pc===6){ s.lastErr=s.err; row('svRLast',s.lastErr.toFixed(1),1); msg('memory updated — next pass, <i>this</i> error is the old one'); s.pc=7; }
+    else if(pc===7){
+      s.cmd=kp*s.err+kd*s.change;
+      s.cmdc=Math.max(-CAP,Math.min(CAP,s.cmd));
+      row('svRCmd',s.cmd.toFixed(0)+(Math.abs(s.cmd)>CAP?' ⚠':''),1);
+      msg('push = '+kp+'×'+s.err.toFixed(1)+' + '+kd+'×('+s.change.toFixed(0)+') = <b>'+s.cmd.toFixed(0)+'</b>'+(Math.abs(s.cmd)>CAP?' — motor maxes out at ±'+CAP+'! ⚠':''));
+      s.pc=8;
+    }
+    else if(pc===8){ msg('same push, mirrored — that\'s what spins it in place'); s.pc=9; }
+    else if(pc===9){
+      s.v+=(s.cmdc-s.v)*LAG; s.h+=s.v*F*SD; if(s.h>s.peak)s.peak=s.h;
+      row('svRHead',s.h.toFixed(1)+'°',1); drawBot();
+      msg('wait(5): the code sleeps, the <b>world moves</b> — the robot turned to '+s.h.toFixed(1)+'°');
+      s.pc=3;
+    }
+    else if(pc===10){ finish(); return; }
+    highlight();
+  }
+  function finish(){
+    s.done=true; playing=false; el('svPlayB').innerHTML='▶▶ play'; s.pc=10; highlight();
+    var exitV=s.v;
+    function coast(){
+      var moved=false;
+      for(var i=0;i<3;i++){ if(Math.abs(s.v)>=1){ s.v*=0.55; s.h+=s.v*F*SD; moved=true; } }
+      row('svRHead',s.h.toFixed(1)+'°'); if(s.h>s.peak)s.peak=s.h; drawBot();
+      if(moved){ coastT=setTimeout(coast,30); }
+      else{
+        coastT=null; playing=false;
+        var t='✅ loop done after <b>'+s.passes+'</b> passes — landed at <b>'+s.h.toFixed(1)+'°</b>';
+        if(s.peak>91.5) t+=', after ringing out to '+s.peak.toFixed(1)+'° 🔔';
+        if(Math.abs(exitV)>30) t+='<br>😱 it left the loop <b>still spinning '+Math.abs(exitV).toFixed(0)+' °/s</b> — the door only checks the gap, not the speed';
+        el('svMsg').innerHTML=t; el('svMsg').style.color=(s.peak>91.5||Math.abs(exitV)>30)?'#E96852':'#00AE8D';
+      }
+    }
+    coast();
+  }
+  function pass(){ do{ doLine(); }while(!s.done && s.pc!==3); }
+  window.svStep=function(){ if(playing)window.svPlay(); doLine(); };
+  window.svPass=function(){ if(playing)window.svPlay(); pass(); };
+  window.svPlay=function(){
+    if(s.done)return;
+    playing=!playing;
+    el('svPlayB').innerHTML=playing?'⏸ pause':'▶▶ play';
+    highlight();
+    if(playing){
+      el('svMsg').innerHTML='⏩ fast-forward — the real robot does this ~200× a second'; el('svMsg').style.color='#625D9C';
+      function frame(){ if(!playing||s.done)return; var n=s.passes>240?6:1; for(var i=0;i<n&&!s.done;i++)pass(); if(playing&&!s.done)raf=requestAnimationFrame(frame); }
+      raf=requestAnimationFrame(frame);
+    }
+  };
+  window.svReset=function(){
+    if(raf)cancelAnimationFrame(raf); raf=null; if(coastT)clearTimeout(coastT); coastT=null; playing=false; s=fresh();
+    el('svPlayB').innerHTML='▶▶ play'; el('svPassN').textContent='0'; note('',1);
+    row('svRHead','?'); row('svRErr','–'); row('svRChg','–'); row('svRLast','–'); row('svRCmd','–');
+    el('svCar').setAttribute('transform','rotate(0)'); el('svArc').setAttribute('opacity','0'); el('svArc').setAttribute('d','');
+    el('svMsg').innerHTML='the highlighted line runs on your next click — <b>you</b> are the robot\'s brain 🧠'; el('svMsg').style.color='#625D9C';
+    highlight();
+  };
+  window.svKp=function(v){ kp=parseFloat(v); el('svKpV').textContent=v; window.svReset(); };
+  window.svKd=function(v){ kd=parseFloat(v); el('svKdV').textContent=v; window.svReset(); };
+  window.svPreset=function(kpv,kdv){
+    kp=kpv; kd=kdv;
+    el('svKpR').value=kpv; el('svKpV').textContent=kpv;
+    el('svKdR').value=kdv; el('svKdV').textContent=kdv;
+    window.svReset(); window.svPlay();
+  };
+  window.svReset();
+})();
+</script>
+```
+
+::: {.fragment .fade-up .incremental}
+- The `while` line is a **door**, not a countdown — every pass it re-asks *"is the gap still > 1?"*
+- `last_error` is the loop's only **memory**, always one heartbeat behind `error` — that's why pass #1's `change` is `0`
+- 🔥 `error` goes **negative**, the push **flips sign**, and it flies through the door **still spinning** — yesterday's ring, caught line by line
+- 😴 every push is a whisper — the **pass counter balloons** · 🌊 too much `kd` brakes so early it **crawls the last degrees**
+:::
+
+::: {.notes}
+Same code as the last slide, now under a microscope — and *they* are the CPU. Ritual: the highlighted line is the one that runs on the next click; before every click of pass #1, squads predict out loud what it does and what number it writes. Landmark numbers at the defaults (kp 4, kd 0.5): pass 1 — `change` is **0** (ask why! `last_error = target` on the line above means the first pass sees no change), push 360. Pass 2 — error 89.8, change −43 °/s, push 338. Then `⟳ whole pass` a few times — watch `last_error` trail `error` by exactly one beat — then ▶▶ play to the end: ~278 passes, lands 89.0°, the while-note flips to ✗. Land the sentence: *the loop never counted to 90 — it kept CHECKING until the gap got small.* Then the preset chips break it on demand — one crack per click, each sets the sliders and auto-plays. 🔥 **too hot** (kp 20, kd 0): the push computes **1800** but the motor caps at ±650 — extra kp buys nothing but trouble. It blows past (arc paints to ~101°), `error` goes negative, the push flips sign — hit ⏸ in the ring zone (or ▶ step, which auto-pauses) so they read a negative error flow through the formula. Bonus crack: it flies out the door at ~90.3° **still swinging back at ~85 °/s** — the `> 1` test is a door, not a brake, and a fast robot flies through it; that's why a hot kp lands crooked, not just late. 😴 **too low** (kp 1): nothing dramatic ever happens — *that's* the failure. Every push is a whisper and the pass counter balloons past **1,100** (~4× the tuned 278); on a real robot that fading push slips below friction and **parks short** — crack #2, and the cue for I later this morning. 🌊 **kd too high** (1.6): D brakes so hard so early that the last degrees arrive at a crawl (~540 passes) — damping is a dial, not a free upgrade; ✅ is the sweet spot they can always come home to. The sim is deliberate slow motion (the real hub runs this ~200×/s) with readable numbers; illustrative, never gated.
 :::
 
 ## Feel it: same turn, calmed 🎢
@@ -254,13 +431,13 @@ Anticipation is the whole idea — say it that way: P only knows the gap's *size
 ```
 
 ::: {.fragment .fade-up}
-- Same hot gain, same target. **P** reads only the error's *size* and rings — watch the red car paint its wobble past the tick
+- Same hot KP, same target. **P** reads only the error's *size* and rings — watch the red car paint its wobble past the tick
 - **PD** also reads its *speed* and eases off early — one clean glide *(the graph is the cars' **diary**; the yellow dot is now)*
 - Slide `kd` to **0** and the green curve rings too; too high and it crawls in. **Fast when far, gentle as it arrives.**
 :::
 
 ::: {.notes}
-Reading ritual first, same as yesterday's dot-and-car slides: the two cars on the dial ARE the robots (big red = P, small green = PD); the graph is their diary, written left to right while they turn; the yellow dot at each trace's tip is *now* — car and dot move together, same robot, two views. Run at kd=0.5 — narrate the dial ("red blows past the tick, paints the arc, swings back; green glides on") *then* point at the diary telling the identical story. Drag kd to 0 live: the green curve collapses onto the red one — *proof* that D is the only difference. Nudge kd up to ~1.5: green now approaches sluggishly and arrives late. The sweet spot is theirs to feel, exactly like the gain knob yesterday. The sim is illustrative, not gospel — on the real robot they'll tune kd by eye, same habit.
+Reading ritual first, same as yesterday's dot-and-car slides: the two cars on the dial ARE the robots (big red = P, small green = PD); the graph is their diary, written left to right while they turn; the yellow dot at each trace's tip is *now* — car and dot move together, same robot, two views. Run at kd=0.5 — narrate the dial ("red blows past the tick, paints the arc, swings back; green glides on") *then* point at the diary telling the identical story. Drag kd to 0 live: the green curve collapses onto the red one — *proof* that D is the only difference. Nudge kd up to ~1.5: green now approaches sluggishly and arrives late. The sweet spot is theirs to feel, exactly like the KP knob yesterday. The sim is illustrative, not gospel — on the real robot they'll tune kd by eye, same habit.
 :::
 
 ## The last letter: I — *(coach demo)* 🧲
@@ -357,12 +534,12 @@ Reading ritual first, same as yesterday's dot-and-car slides: the two cars on th
 ```
 
 ::: {.fragment .fade-up}
-- P's push (`gain × error`) can't beat the lean, so it **parks a hair short forever** — that's yesterday's `gain = 1`, now explained
+- P's push (`KP × error`) can't beat the lean, so it **parks a hair short forever** — that's yesterday's `KP = 1`, now explained
 - Turn **I ON**: each tick piles the leftover onto a **running total** (the purple bar) until the sum beats the lean. **I — integral**
 :::
 
 ::: {.notes}
-This is a **coach demo — never gated.** Show it, don't assign it. Point at the dial first: the car (🧲 riding its side — that's the thumb of weight) climbs and sticks short of the tick, and the red sliver between nose and tick IS the flatline gap on the diary next to it — same robot, two views, yellow dot = now. Toggle I OFF first: the purple curve rises then flatlines short, the "stuck 5° short" tag appears — that's yesterday's `gain=1` parks-short, now explained. Toggle I ON and rerun: the accumulator bar fills, the car creeps the last sliver onto the tick, and the curve creeps up to 90. Say plainly why it barely matters for us: our mission moves are short — a 30 cm straight or a 90° turn ends before the accumulator fills — so I earns its seat on long steady offsets, not here. They now *own* the whole acronym; that's the win, not a tuned I.
+This is a **coach demo — never gated.** Show it, don't assign it. Point at the dial first: the car (🧲 riding its side — that's the thumb of weight) climbs and sticks short of the tick, and the red sliver between nose and tick IS the flatline gap on the diary next to it — same robot, two views, yellow dot = now. Toggle I OFF first: the purple curve rises then flatlines short, the "stuck 5° short" tag appears — that's yesterday's `KP=1` parks-short, now explained. Toggle I ON and rerun: the accumulator bar fills, the car creeps the last sliver onto the tick, and the curve creeps up to 90. Say plainly why it barely matters for us: our mission moves are short — a 30 cm straight or a 90° turn ends before the accumulator fills — so I earns its seat on long steady offsets, not here. They now *own* the whole acronym; that's the win, not a tuned I.
 :::
 
 ## You own all three letters 🏆
@@ -485,7 +662,7 @@ Make the file for real, together — everyone creates `my_lib.py` next to their 
 ## Verb #1: `turn_to` — the PD turn, named
 
 ```{.python code-line-numbers="|1|2|3|4-5"}
-def turn_to(target, gain=4, kd=0.5):
+def turn_to(target, kp=4, kd=0.5):
     """PD gyro turn to a heading ON THE MAT — no reset."""
     # hub.imu.reset_heading(0)   ← DELETED. That's the whole diff.
     last_error = target - hub.imu.heading()
@@ -499,7 +676,7 @@ def turn_to(target, gain=4, kd=0.5):
 :::
 
 ::: {.notes}
-The dropped reset is the day's sneakiest upgrade — walk it slowly. With reset, every turn measures from wherever the robot happens to point, so corner errors *add up* (the D3 square never closed for exactly this reason). Without reset, the gyro keeps one map-wide heading and every `turn_to` is an absolute appointment: 90 is 90, whatever mess came before. Quiz it: "you're at heading 92 after a bumped corner — what does `turn_to(180)` do?" (turns 88, not 90 — it *fixes* the bump for free). The gyro heading keeps counting past 360, which the square slide uses. Defaults (`gain=4, kd=0.5`) are their tuned D4/D5 values — theirs may differ; that's the point of owning the knobs. Don't unpack the `=` in the def line yet — *default* gets named and drilled two slides on.
+The dropped reset is the day's sneakiest upgrade — walk it slowly. With reset, every turn measures from wherever the robot happens to point, so corner errors *add up* (the D3 square never closed for exactly this reason). Without reset, the gyro keeps one map-wide heading and every `turn_to` is an absolute appointment: 90 is 90, whatever mess came before. Quiz it: "you're at heading 92 after a bumped corner — what does `turn_to(180)` do?" (turns 88, not 90 — it *fixes* the bump for free). The gyro heading keeps counting past 360, which the square slide uses. Defaults (`kp=4, kd=0.5`) are their tuned D4/D5 values — theirs may differ; that's the point of owning the knobs. Don't unpack the `=` in the def line yet — *default* gets named and drilled two slides on.
 :::
 
 ## Verb #2: `drive_straight` — a straight with a finish line {.code-shrink}
@@ -529,7 +706,7 @@ Single function now: `drive_straight` handles both the finish line (encoder degr
 ## Knobs with defaults 🎛️ {.smaller}
 
 ```{.python code-line-numbers="|1|2"}
-def turn_to(target, gain=4, kd=0.5):         # two knobs, factory-set
+def turn_to(target, kp=4, kd=0.5):           # two knobs, factory-set
 def drive_straight(distance_mm, speed=400):  # one knob, factory-set
 ```
 
@@ -541,7 +718,7 @@ def drive_straight(distance_mm, speed=400):  # one knob, factory-set
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-① all factory settings — **your** tuned `gain=4, kd=0.5` run unasked · ② brake knob to zero — **yesterday's ringing P is back, on demand** 🔔
+① all factory settings — **your** tuned `kp=4, kd=0.5` run unasked · ② brake knob to zero — **yesterday's ringing P is back, on demand** 🔔
 :::
 :::
 
@@ -552,7 +729,7 @@ def drive_straight(distance_mm, speed=400):  # one knob, factory-set
 :::
 
 ::: {.notes}
-Name the vocabulary plainly, once: the names in the parentheses are **parameters**; a parameter with `=` carries a **default**; naming a knob at the call site (`kd=0`) is a **keyword argument**. They've used all three since `gyro_turn_p(target, gain=4)` — this slide only hangs names on habits. Quiz cadence: read a call, every squad commits out loud, *then* reveal the card — ② is the fun one (one keyword resurrects yesterday's ringing bug, proof the default was doing real work), ④ is the confidence move: run it live, read the `TypeError` together — the interpreter is *telling you which knob you forgot*, not scolding you. Forward hook for coaches: at the D10 reveal, `RobotConfig` gathers all these factory settings into one dataclass — same idea, bigger box.
+Name the vocabulary plainly, once: the names in the parentheses are **parameters**; a parameter with `=` carries a **default**; naming a knob at the call site (`kd=0`) is a **keyword argument**. They've used all three since `gyro_turn_p(target, kp=4)` — this slide only hangs names on habits. Quiz cadence: read a call, every squad commits out loud, *then* reveal the card — ② is the fun one (one keyword resurrects yesterday's ringing bug, proof the default was doing real work), ④ is the confidence move: run it live, read the `TypeError` together — the interpreter is *telling you which knob you forgot*, not scolding you. Forward hook for coaches: at the D8 reveal, `RobotConfig` gathers all these factory settings into one dataclass — same idea, bigger box.
 :::
 
 ## Two homes for a name 🗺️ {.smaller}
@@ -683,7 +860,7 @@ Close the loop hard: put Day 3's taped drift-square next to this one. Everything
 :::
 
 ::: {.notes}
-Run drift first, then the library version — the old red spiral vs the closed green square is the whole two-day arc in one picture. Emphasize ownership: unlike a black-box shortcut, there is nothing hidden here — if the square doesn't close on a real robot, they can open `my_lib.py` and *see* every line that could be wrong (gain, kd, DEG_PER_MM, the heading appointments). Debuggability is the library's superpower, and it's the skill Week 3's mission work leans on.
+Run drift first, then the library version — the old red spiral vs the closed green square is the whole two-day arc in one picture. Emphasize ownership: unlike a black-box shortcut, there is nothing hidden here — if the square doesn't close on a real robot, they can open `my_lib.py` and *see* every line that could be wrong (kp, kd, DEG_PER_MM, the heading appointments). Debuggability is the library's superpower, and it's the skill Week 3's mission work leans on.
 :::
 
 ## Your turn: own the knobs 🏋️ {.smaller}
@@ -763,7 +940,7 @@ Drive forward **exactly 1 metre** *with your own `drive_straight`* and stop as c
 - Pro move: does your run survive a **battery swap**? A **judge's evil nudge** mid-run? (It should — the healing loop is *yours*. 😏) The red ghost is where a *guessed* diameter would stop.
 
 ::: {.notes}
-The competition proves *their* code, not a shortcut — that's the day's whole point, so say it: the button reads `drive_straight`, the function they wrote an hour ago. Battery swap and nudge are the two classic fakes that expose open-loop code; their encoder finish line shrugs off the battery (degrees are degrees at any voltage) and their P-loop shrugs off the nudge. The ghost dot is the D2 lesson refusing to die: a guessed 90 mm wheel on an 88 mm robot misses by ~2 cm — exactly the gate tolerance. Squads that miss: check DEG_PER_MM first, gain second.
+The competition proves *their* code, not a shortcut — that's the day's whole point, so say it: the button reads `drive_straight`, the function they wrote an hour ago. Battery swap and nudge are the two classic fakes that expose open-loop code; their encoder finish line shrugs off the battery (degrees are degrees at any voltage) and their P-loop shrugs off the nudge. The ghost dot is the D2 lesson refusing to die: a guessed 90 mm wheel on an 88 mm robot misses by ~2 cm — exactly the gate tolerance. Squads that miss: check DEG_PER_MM first, KP second.
 :::
 
 ## Today's gate
@@ -774,7 +951,7 @@ Your own `drive_straight(1000)` lands **1.0 m within ±2 cm** and `turn_to` land
 :::
 
 ::: {.fragment .fade-up}
-Next: *Stop at the Wall* — the motor becomes a **sensor**, and your library grows its first *sensing* verbs.
+Next: *Line King* — the robot opens its **eyes** and steers with a formula you **already own**.
 :::
 
 ::: {.notes}

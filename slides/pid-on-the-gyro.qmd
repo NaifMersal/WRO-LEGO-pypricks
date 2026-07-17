@@ -162,7 +162,7 @@ Two speeds, two `while`s: **fast for the long haul, crawl the last 30°** — mo
 :::
 
 ::: {.notes}
-First `def` of the bootcamp — land it hard: a function is a *named move*, exactly like `run_angle` is someone else's named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two `run` signs and the `<` to `>`, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; `RobotConfig` at D10. Demo on the next slide — walk the highlights here first.
+First `def` of the bootcamp — land it hard: a function is a *named move*, exactly like `run_angle` is someone else's named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two `run` signs and the `<` to `>`, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; `RobotConfig` at D8. Demo on the next slide — walk the highlights here first.
 :::
 
 ## One recipe card, many calls 📝
@@ -559,7 +559,7 @@ What does your rule give at error 70? At 10? At 0?
 ::: {.fragment .fade-up}
 ```{=html}
 <div style="font-family:Consolas,monospace;font-size:23px;color:#1C355E;background:#eef3f8;border-radius:12px;padding:14px 26px;line-height:2.0;width:fit-content;margin:0 auto;">
-  <div>speed = <span style="color:#E96852;font-weight:800;">error</span> × <span style="color:#625D9C;font-weight:800;">gain</span>&nbsp;&nbsp;<span style="opacity:0.65;">(gain = 4)</span></div>
+  <div>speed = <span style="color:#E96852;font-weight:800;">error</span> × <span style="color:#625D9C;font-weight:800;">KP</span>&nbsp;&nbsp;<span style="opacity:0.65;">(KP = 4)</span></div>
   <div>error <span style="color:#E96852;font-weight:700;">70</span> → speed <b>280</b>&nbsp;&nbsp;flat out 🚀</div>
   <div>error <span style="color:#E96852;font-weight:700;">10</span> → speed <b>40</b>&nbsp;&nbsp;&nbsp;&nbsp;tiptoe 🐢</div>
   <div>error <span style="color:#E96852;font-weight:700;">0</span>&nbsp; → speed <b>0</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parks itself 🎯</div>
@@ -569,12 +569,12 @@ What does your rule give at error 70? At 10? At 0?
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-**`speed = error × gain`** — the whole staircase, in one line. `gain` is the slope: how hard to push *per degree still to go*. And at error 0 the speed is 0 — it doesn't need to be told to stop.
+**`speed = error × KP`** — the whole staircase, in one line. `KP` is the slope — engineers call this knob the **gain**: how hard to push *per degree left*. And at error 0 the speed is 0 — it parks itself.
 :::
 :::
 
 ::: {.notes}
-Elicit the multiplication — don't reveal it. Most squads propose "speed = distance left" first; ask "what if the wheels need bigger numbers?" and the × gain falls out. The three sample rows are the wall-walk in numbers: narrate them as "fast… slower… stop", same sentence as the game.
+Elicit the multiplication — don't reveal it. Most squads propose "speed = distance left" first; ask "what if the wheels need bigger numbers?" and the × KP falls out — name it once out loud ("its code name is KP; engineers call it the gain") and use KP from here on. The three sample rows are the wall-walk in numbers: narrate them as "fast… slower… stop", same sentence as the game.
 :::
 
 ## One picture: staircase vs ramp
@@ -604,7 +604,7 @@ Elicit the multiplication — don't reveal it. Most squads propose "speed = dist
     <g id="opRampG" opacity="0.15">
       <line x1="70" y1="73" x2="560" y2="300" stroke="#00C9A7" stroke-width="6" stroke-linecap="round"/>
       <text x="150" y="130" font-size="16" fill="#00AE8D" font-weight="800">📈 speed = error × 4</text>
-      <text x="150" y="150" font-size="14" fill="#00AE8D">slope = the gain</text>
+      <text x="150" y="150" font-size="14" fill="#00AE8D">slope = KP</text>
       <circle cx="560" cy="300" r="8" fill="#00AE8D"/>
     </g>
     <polyline id="opTrace" points="" fill="none" stroke="#1C355E" stroke-width="2.5" opacity="0.45"/>
@@ -719,12 +719,12 @@ Same reading ritual as the test-drive slide — the kids already know it: dot wa
 ## The proportional turn
 
 ```{.python code-line-numbers="|1|3|4|5-6|8|10"}
-def gyro_turn_p(target, gain=4):
+def gyro_turn_p(target, kp=4):
     hub.imu.reset_heading(0)
     while abs(target - hub.imu.heading()) > 1:   # until within 1°…
         error = target - hub.imu.heading()       # degrees still to go
-        left.run(gain * error)                   # far → fast
-        right.run(-gain * error)                 # close → gentle
+        left.run(kp * error)                     # far → fast
+        right.run(-kp * error)                   # close → gentle
         wait(5)
     left.stop(); right.stop()
 
@@ -738,9 +738,9 @@ Line 10: a **negative** target flips the sign, the wheels swap — **left turns 
 :::
 
 ::: {.notes}
-Walk the highlight stops: `gain` arrives as a *parameter with a default* — new syntax, teach it in one breath ("a knob you can leave alone"). Line 3's `abs()` is what makes negative targets work. Demo on the next slide.
+Walk the highlight stops: `kp` arrives as a *parameter with a default* — new syntax, teach it in one breath ("a knob you can leave alone"). Line 3's `abs()` is what makes negative targets work. Demo on the next slide.
 
-**Coach aside — "why `run()` and not `motor.dc()`?"** (for the sharp student who's read ahead). Honest truth: `run()` is *itself* a closed-loop **speed** controller inside Pybricks — so this hand-written P sits *on top* of it, a controller-on-a-controller. Your `gain` sets a speed *target*; Pybricks' own loop chases it. A pro writing a controller from scratch often reaches for `motor.dc()` instead — raw power/duty — so their formula is the *whole* controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep `run()` on purpose for two reasons: it's **smoother and battery-proof** (a fresh vs. tired hub turns the same — priceless with five robots on the bench), and it speaks the same **"speed"** language as `drive.drive(speed, turn)` and `DriveBase` — so `speed = error × gain` stays literally true all the way from this turn, through the self-healing straight, to D7's line-follower. `dc()` is the right tool the day you build a controller with no help underneath; that day isn't this bootcamp.
+**Coach aside — "why `run()` and not `motor.dc()`?"** (for the sharp student who's read ahead). Honest truth: `run()` is *itself* a closed-loop **speed** controller inside Pybricks — so this hand-written P sits *on top* of it, a controller-on-a-controller. Your `kp` sets a speed *target*; Pybricks' own loop chases it. A pro writing a controller from scratch often reaches for `motor.dc()` instead — raw power/duty — so their formula is the *whole* controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep `run()` on purpose for two reasons: it's **smoother and battery-proof** (a fresh vs. tired hub turns the same — priceless with five robots on the bench), and it speaks the same **"speed"** language as `drive.drive(speed, turn)` and `DriveBase` — so `speed = error × KP` stays literally true all the way from this turn, through the self-healing straight, to D6's line-follower. `dc()` is the right tool the day you build a controller with no help underneath; that day isn't this bootcamp.
 :::
 
 ## Playground: one knob, every angle 🎛️
@@ -775,7 +775,7 @@ Walk the highlight stops: `gain` arrives as a *parameter with a default* — new
       <input type="range" min="200" max="600" step="20" value="200" oninput="pgFast(this.value)" style="width:190px;accent-color:#E96852;"></div>
     </div>
     <div style="text-align:center;">
-      <div style="font-weight:800;color:#00AE8D;font-size:21px;">📈 speed = error × gain</div>
+      <div style="font-weight:800;color:#00AE8D;font-size:21px;">📈 speed = error × KP</div>
       <svg width="195" height="195" viewBox="-105 -105 210 210" style="display:block;margin:2px auto;">
         <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
         <g id="ppTick" opacity="0"><line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6"/></g>
@@ -790,15 +790,15 @@ Walk the highlight stops: `gain` arrives as a *parameter with a default* — new
         </g>
       </svg>
       <div style="font-family:Consolas,monospace;font-size:19px;color:#1C355E;">landed <span id="ppLand" style="font-weight:800;">–</span>° · <span id="ppTime" style="font-weight:800;">–</span> s</div>
-      <div style="font-size:17px;color:#1C355E;margin-top:4px;">gain: <b><span id="ppGainV">4</span></b><br>
-      <input type="range" min="1" max="20" step="0.5" value="4" oninput="pgGain(this.value)" style="width:190px;accent-color:#00AE8D;"></div>
+      <div style="font-size:17px;color:#1C355E;margin-top:4px;">KP: <b><span id="ppKpV">4</span></b><br>
+      <input type="range" min="1" max="20" step="0.5" value="4" oninput="pgKp(this.value)" style="width:190px;accent-color:#00AE8D;"></div>
     </div>
   </div>
 </div>
 <script>
 (function(){
   var W = 1.65;                 // wheel deg/s -> robot deg/s divisor (gap/wheel)
-  var T = 90, fast = 200, gain = 4, raf = null, last = null;
+  var T = 90, fast = 200, kp = 4, raf = null, last = null;
   var A, B;
   function el(id){ return document.getElementById(id); }
   function fresh(){ return {h:0, r:0, t:0, stopped:false, stall:0, done:false, buf:[]}; }
@@ -819,7 +819,7 @@ Walk the highlight stops: `gain` arrives as a *parameter with a default* — new
     var cmd;
     if(!s.stopped){
       if(Math.abs(T - s.h) <= 1){ s.stopped = true; cmd = 0; }
-      else cmd = Math.max(-364, Math.min(364, gain*(T - hs)/W));
+      else cmd = Math.max(-364, Math.min(364, kp*(T - hs)/W));
     } else cmd = 0;
     var k = s.stopped ? 22 : 7;
     s.r += (cmd - s.r) * Math.min(k*dt, 1);
@@ -864,14 +864,14 @@ Walk the highlight stops: `gain` arrives as a *parameter with a default* — new
     raf = requestAnimationFrame(frame);
   };
   window.pgFast = function(v){ fast = parseFloat(v); el('tsFastV').textContent = v; };
-  window.pgGain = function(v){ gain = parseFloat(v); el('ppGainV').textContent = v; };
+  window.pgKp = function(v){ kp = parseFloat(v); el('ppKpV').textContent = v; };
   A = fresh(); B = fresh(); draw();
 })();
 </script>
 ```
 
 ::: {.notes}
-Drive it from their hypotheses. Round 1: all three calls at fast = 200 — the staircase lands everything but watch 180's clock (~2 s) and how long 45 spends in the crawl lane. Round 2: crank fast to 600 to beat the clock — 180 blows past by ~7°: the fixed zone can't absorb the speed. Round 3: the P side at gain 4 — all three calls land within a degree, at staircase-500 pace, **same knob**. Then let them feel the failures: gain 1 parks short (friction beats a tiny push — tomorrow's breadcrumb), gain 20 arrives hot and flies past. The sim is illustrative, not gospel — the real robot's sweet spot is theirs to find in the lab.
+Drive it from their hypotheses. Round 1: all three calls at fast = 200 — the staircase lands everything but watch 180's clock (~2 s) and how long 45 spends in the crawl lane. Round 2: crank fast to 600 to beat the clock — 180 blows past by ~7°: the fixed zone can't absorb the speed. Round 3: the P side at KP 4 — all three calls land within a degree, at staircase-500 pace, **same knob**. Then let them feel the failures: KP 1 parks short (friction beats a tiny push — tomorrow's breadcrumb), KP 20 arrives hot and flies past. The sim is illustrative, not gospel — the real robot's sweet spot is theirs to find in the lab.
 :::
 
 ## Name the move 🏷️
@@ -895,10 +895,10 @@ This exact line runs inside every drone, thermostat, cruise control, elevator, a
 This is the payoff of yesterday's "it has a name every roboticist on Earth knows" — let it land with a beat of silence. Do NOT preview what I and D do; tomorrow each arrives as the rescue to a failure they'll *see* (P in a hurry overshoots → D; a leftover P can't kill → I).
 :::
 
-## Quick quiz: the gain knob 🚨
+## Quick quiz: the KP knob 🚨
 
 ::: {.qbox}
-[Before you touch the robot: **gain = 1** — what will the turn *feel* like? **gain = 20**? Predict both.]{.qtitle}
+[Before you touch the robot: **KP = 1** — what will the turn *feel* like? **KP = 20**? Predict both.]{.qtitle}
 :::
 
 ::: {.fragment .fade-up}
@@ -908,19 +908,19 @@ This is the payoff of yesterday's "it has a name every roboticist on Earth knows
 :::
 
 ::: {.notes}
-The prediction is the day's real gate: "the bigger the error, the harder the push" plus what too-small/too-big does. Collect predictions out loud, then *feel* the answers — flick back to the playground and drag the gain slider to 1 and 20, or better, straight onto the bench robot in the lab. Per the plan, tuning this by feel *without prompting* is the strongest robotics-instinct signal on the scorecard — watch for who reaches for the knob before you suggest it.
+The prediction is the day's real gate: "the bigger the error, the harder the push" plus what too-small/too-big does. Collect predictions out loud, then *feel* the answers — flick back to the playground and drag the KP slider to 1 and 20, or better, straight onto the bench robot in the lab. Per the plan, tuning this by feel *without prompting* is the strongest robotics-instinct signal on the scorecard — watch for who reaches for the knob before you suggest it.
 :::
 
-## Lab: your gain, your rematch 🎛️
+## Lab: your KP, your rematch 🎛️
 
-- Build `gyro_turn_p`, then rerun the **morning race** — same three calls, one gain. Beat your two-speed times *and* landings?
-- Find **your** gain: start at 4 → halve it, double it, feel both failures, close in from the middle.
+- Build `gyro_turn_p`, then rerun the **morning race** — same three calls, one KP. Beat your two-speed times *and* landings?
+- Find **your** KP: start at 4 → halve it, double it, feel both failures, close in from the middle.
 - Try `gyro_turn_p(-90)`. No surgery required. 😎
 
 ⏱️ **Time: 30 minutes**
 
 ::: {.notes}
-Every squad's best gain is different (battery, tire wear, robot mass) — that's the point of it being a knob, and why nobody copies a neighbor's number. Log times + landings like the morning so the win over the staircase is on paper. Fast squads: call `gyro_turn_p(360)` — a full spin that parks where it started — or race 45 at gain 8 vs 4.
+Every squad's best KP is different (battery, tire wear, robot mass) — that's the point of it being a knob, and why nobody copies a neighbor's number. Log times + landings like the morning so the win over the staircase is on paper. Fast squads: call `gyro_turn_p(360)` — a full spin that parks where it started — or race 45 at KP 8 vs 4.
 :::
 
 # E. Straight With It {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
@@ -1036,7 +1036,7 @@ Run it — and **nudge it again.** 😈
 :::
 
 ::: {.notes}
-Check the signs with them, don't just assert: error +8 → left runs 468, right runs 532 → right faster → robot swings left → error shrinks. Negative error works out symmetrically. The `4` is a strength knob — let one squad try 1 (lazy) and 20 (jittery zig-zag). Name it out loud: **the same P-controller as this morning's turn** — one formula, second application; the third is D7's line-follower. Same `run()`-is-a-speed-controller caveat as the proportional-turn note applies here — the `500 ± 4*error` is a base speed plus a proportional trim, and it stays on `run()` for the same reasons (smooth, battery-proof, speaks DriveBase's "speed" language).
+Check the signs with them, don't just assert: error +8 → left runs 468, right runs 532 → right faster → robot swings left → error shrinks. Negative error works out symmetrically. The `4` is a strength knob — let one squad try 1 (lazy) and 20 (jittery zig-zag). Name it out loud: **the same P-controller as this morning's turn** — one formula, second application; the third is D6's line-follower. Same `run()`-is-a-speed-controller caveat as the proportional-turn note applies here — the `500 ± 4*error` is a base speed plus a proportional trim, and it stays on `run()` for the same reasons (smooth, battery-proof, speaks DriveBase's "speed" language).
 :::
 
 ## Watch it heal 🩹
@@ -1140,14 +1140,14 @@ Drive 1.5 m straight while the judge nudges your robot **twice** mid-run. Score 
 - Watch one recovery closely: the harder the shove, the harder the fight-back. **The shove *is* the error.**
 
 ::: {.notes}
-Format: a 1.5 m taped lane; the judge nudges at roughly the 0.5 m and 1.0 m marks with a consistent finger-push to the robot's side. Final |heading| is the score; trace straightness (eyeball the wheel-path) breaks ties. Uses only today's material: `error × gain` on the straight. This competition is the plan's flagged talent signal — **P-tuning instinct is the strongest predictor of robotics skill**; note on the scorecard who re-tunes between attempts by feel (gain reasoning: lazy vs jittery), not by guessing.
+Format: a 1.5 m taped lane; the judge nudges at roughly the 0.5 m and 1.0 m marks with a consistent finger-push to the robot's side. Final |heading| is the score; trace straightness (eyeball the wheel-path) breaks ties. Uses only today's material: `error × KP` on the straight. This competition is the plan's flagged talent signal — **P-tuning instinct is the strongest predictor of robotics skill**; note on the scorecard who re-tunes between attempts by feel (KP reasoning: lazy vs jittery), not by guessing.
 :::
 
 ## Today's gate
 
 ::: {.callout-important}
 ## You're done today when…
-One gain turns your robot to **any called angle** — both directions — with your own `gyro_turn_p`; your 1.5 m straight **fights back** through two nudges; and you can say *"the bigger the error, the harder the push"* and predict what a too-small / too-big gain does **before** running it.
+One KP turns your robot to **any called angle** — both directions — with your own `gyro_turn_p`; your 1.5 m straight **fights back** through two nudges; and you can say *"the bigger the error, the harder the push"* and predict what a too-small / too-big KP does **before** running it.
 :::
 
 ::: {.fragment .fade-up}
@@ -1155,5 +1155,5 @@ Tomorrow: put P in a *hurry* and watch it slam past the target — meet the lett
 :::
 
 ::: {.notes}
-The gate is the plan's D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the gain prediction in their own words — same formula, two applications today (turn + straight); the third is D7's line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins `my_lib.py` (`drive_straight`/`turn_to`) — the `DriveBase` surprise now waits at the D10 reveal (decision #20), earned only after the whole library is theirs.
+The gate is the plan's D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the KP prediction in their own words — same formula, two applications today (turn + straight); the third is D6's line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins `my_lib.py` (`drive_straight`/`turn_to`) — the `DriveBase` surprise now waits at the D8 reveal (decision #20, re-timed by #26), earned only after the whole library is theirs.
 :::
