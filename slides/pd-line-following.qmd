@@ -1,38 +1,173 @@
 ---
 title: "Line King"
-subtitle: "Day 7 · Robot Rockstars · SPIKE Prime + Pybricks"
+subtitle: "Day 6 · Robot Rockstars · SPIKE Prime + Pybricks"
 date: today
 format: revealjs
 ---
 
 # A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-`error × gain`, **third time** — today it steers the **eye**. 🛣️
+`error × KP`, **third time** — today it steers the **eye**. 🛣️
 
 ## Where we left off
 
 | You own | Built on |
 |---|---|
-| 📈 **`error × gain`** | the turn · the straight |
+| 📦 **`my_lib.py` begins** | `drive_straight` · `turn_to` |
+| 📈 **`error × KP`** | the turn · the straight |
 | 🛑 **D — damping** | brakes before overshoot |
-| 👀 **the eye, calibrated** | echo 0–100 · threshold per surface |
 
 ::: {.fragment .fade-up}
 ::: {.callout-note}
 ## One thing up front
-Today reads **brightness**, not color names — colors are **Week 4**.
+A script is **blind** — today: **see → decide → steer.** Brightness only; color names are **Week 4**.
+:::
+:::
+
+⏱️ **Time: 5 minutes — then a bug hunt**
+
+::: {.notes}
+Anchor today in what they already own, or it feels like a brand-new mountain (it isn't — the plan flags the line day as the longest precisely because the *old* material was video-paced; live, it's one formula applied a third time). Recap `error × KP` from the gyro out loud. Today the robot opens its eyes — three new powers land: the color eye (reflection = the echo of its own light), the per-surface threshold, and `if` (the first real decision). Flag the reflection-vs-color point early and firmly — kids will want to "detect the green line"; stop that now, it's brightness only until Week 4. The day is eye → threshold → `if` → bang-bang → P on the line, then junction squaring — **the P follower + squaring pair is the gate** (it's what the anchor run actually uses); the PD upgrade is the stretch for squads that tune P early. If the cohort is still behind on programming, the afternoon flexes to library-consolidation practice instead of pushing PD. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15.
+:::
+
+## 🔎 Bug hunt: the tune that didn't stick
+
+```{.python code-line-numbers="|1-2|4-5"}
+def make_it_sharper():
+    KP = 12          # crank steering for the whole library… right?
+
+make_it_sharper()
+drive_straight(300)  # …still lazy. Nothing changed. 😤
+```
+
+::: {.qbox}
+[Watch it stay lazy — find the bug. Where *should* `KP = 12` live?]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+Inside a `def` you made a **local** — dead the moment it returned. **Change globals only at the top.**
 :::
 :::
 
 ::: {.notes}
-Anchor today in what they already own, or it feels like a brand-new mountain (it isn't — the plan flags D7 as the longest day precisely because the *old* material was video-paced; live, it's one formula applied a third time). Recap `error × gain` from the gyro out loud. Flag the reflection-vs-color point early and firmly — kids will want to "detect the green line"; stop that now, it's brightness only until Week 4. The day is bang-bang → P on the line, then junction squaring — **that pair is the gate** (it's what the anchor run actually uses); the PD upgrade is the stretch for squads that tune P early. If the cohort is still behind on programming, the afternoon flexes to library-consolidation practice instead of pushing PD.
+This closes Day 5's leftover (globals/shadowing), delivered as a live hunt instead of slides — decision #22. Run the planted bug on the coach robot and let squads diagnose for ~5 minutes before any reveal; the 😤 must be theirs. Two live moments: (1) the fix — move `KP = 12` to the constants block, rerun, the straight sharpens; (2) `print(error)` after a run → NameError, proof that locals evaporate (and that's a *feature*: every verb gets private scratch names). Close with the D5 verbal pass, squad by squad, in their own words: *default = factory setting · keyword = one-call override · top of file = global · inside a def = local*. Do NOT teach the `global` keyword — the constants-block discipline is strictly better. Coach's radar for W2–3: "I tuned it and it didn't stick" → first question is *where did you assign it?*
+:::
+
+## 🤖 Robots out: Bullseye on the real mat 🎯
+
+- 🎯 `drive_straight(1000)` on the **real mat** — one attempt, **±2 cm** passes
+- 📦 `drive_square(300)` — watch it snap shut where it started
+- ⏱️ **15 minutes**, then the robot opens its **eyes**
+
+::: {.notes}
+Pure energy burner with a hidden agenda: it closes the remaining D5 gate legs (`drive_straight` 1.0 m ±2 cm, square closed) on the real surface, and it front-loads the session with driving instead of sitting — the drill-first rhythm (decision #22). Logistics: mat on the ground, no table yet (decision #23) — the printed staff lines are today's territory; nothing today needs borders at true positions. Watch for surprises vs the tape field: the print's friction and colour differ — if someone's 1 m lands long/short vs last week, that's the calibration-transfer checkpoint doing its job (re-measure, don't panic). Keep it to 15 minutes; the leaderboard can wait for Line King.
 :::
 
 # B. One Eye, One Edge {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
 
-A line is a **border** — park one eye right on it. One sensor, one edge. 👁️
+The robot **opens its eyes** — then parks one on a line's edge. 👁️
 
-## Meet the eye: ride the edge
+## Meet the eye 🔦
+
+A **flashlight + light meter** in one brick — it measures its own echo.
+
+```{=html}
+<div style="width:780px;margin:0 auto;">
+  <svg width="740" height="200" viewBox="0 0 740 200" style="display:block;margin:0 auto;">
+    <defs>
+      <marker id="meY" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#FFD500"/></marker>
+      <marker id="meFaint" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#9B8EC0"/></marker>
+      <marker id="meStrong" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#00AE8D"/></marker>
+    </defs>
+    <!-- readings -->
+    <text x="175" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#1C355E" text-anchor="middle">reflection() → 10</text>
+    <text x="565" y="18" font-family="Consolas,monospace" font-size="17" font-weight="800" fill="#00AE8D" text-anchor="middle">reflection() → 88</text>
+    <!-- sensors -->
+    <g transform="translate(175,0)">
+      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"/>
+      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"/>
+    </g>
+    <g transform="translate(565,0)">
+      <rect x="-28" y="30" width="56" height="36" rx="7" fill="#1C355E"/>
+      <circle cx="0" cy="66" r="7" fill="#FFD500" stroke="#fff" stroke-width="2"/>
+    </g>
+    <!-- light down -->
+    <line x1="160" y1="78" x2="150" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"/>
+    <line x1="550" y1="78" x2="540" y2="136" stroke="#FFD500" stroke-width="5" marker-end="url(#meY)"/>
+    <!-- echo back up: faint from black, strong from white -->
+    <line x1="196" y1="140" x2="189" y2="84" stroke="#9B8EC0" stroke-width="2" stroke-dasharray="4 6" marker-end="url(#meFaint)"/>
+    <line x1="590" y1="140" x2="583" y2="84" stroke="#00AE8D" stroke-width="6" marker-end="url(#meStrong)"/>
+    <!-- surfaces -->
+    <rect x="55" y="150" width="240" height="22" rx="4" fill="#101820"/>
+    <rect x="445" y="150" width="240" height="22" rx="4" fill="#f7f9fc" stroke="#dbe2ea"/>
+    <text x="175" y="166" font-size="13" fill="#ffffff" font-weight="800" text-anchor="middle">black line — echo swallowed</text>
+    <text x="565" y="166" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat — echo bounces back</text>
+    <text x="370" y="112" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">same flashlight —</text>
+    <text x="370" y="132" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">different echo</text>
+  </svg>
+</div>
+```
+
+```{.python}
+left_eye.reflection()   # 0-100: % of its OWN light echoing back
+left_eye.color()        # a name: Color.RED... (Week 4's tool)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Anything that changes the **echo** changes the number — ✨ gloss · 💡 light · 📏 height.
+:::
+:::
+
+::: {.notes}
+The live demo beats the diagram: run a `print(left_eye.reflection())` loop, hold the robot, and let students slide surfaces under the eye, tilt it, lift it — the number dances. Establish the active-sensor idea: it brings its own LED, so it mostly ignores the room, but gloss, sensor height, and strong ambient light still shift the echo — which is exactly why every surface gets its own calibration (next slide). `reflection()` vs `color()`: today reflection does all the work; `color()` names colors and gets a cameo here — its real job is Week 4's notes. Two eyes fill ports B and F; one eye does the following — `square_on_line` at the end of today shows why we carry two.
+:::
+
+## Break it: the threshold you guessed 🔥
+
+::: {.qbox}
+[Last week the tape split at **50** (white 88, black 10). Does 50 still work on the **mat**? The **floor**?]{.qtitle}
+:::
+
+🤖 **Robots out.** Print `reflection()` across **three surfaces** — tape · mat · floor. Log white & black for each.
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+A threshold is a fact about a **surface** — read white · read black · **split the middle.**
+:::
+:::
+
+::: {.notes}
+Let each squad predict *before* measuring — commitments make the surprise land. The printed mat just arrived (decision #23), so this is also the real calibration-transfer checkpoint from the plan: the numbers they log here ARE the re-logged thresholds. Expected outcome: the mat's white and the tape-field's white read differently (print ink vs paper, matte tarp vs tape), the split point moves, and the habit lands — look first, then split what you actually see. The glossy-table failure (black reading 60, `< 50` calling the line "clear" and driving over it) is the venue-day version of the same lesson; it lives as an interactive sim in the 🏠 appendix since we don't have a glossy table in the room — mention it, don't show it. The takeaway is a habit, not a number: re-read and re-split, every surface.
+:::
+
+## Fix it: calibrate, then decide — `if / else` 🎚️
+
+```{.python code-line-numbers="|1-2|3|4|5-6"}
+# Calibrate FIRST — measure, never guess
+REFLECT_THRESHOLD = 50              # for THIS surface
+while True:
+    if left_eye.color() == Color.RED:
+        hub.speaker.beep(frequency=880)     # high beep on red
+    elif left_eye.reflection() < REFLECT_THRESHOLD:
+        hub.speaker.beep(frequency=220)     # low beep on a line
+    wait(50)
+```
+
+🤖 **Robots out.** Threshold from *your* mat numbers — low beep on lines, high beep on red.
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+`if … elif` is the robot **choosing** — new surface → **re-calibrate the threshold, never the code.**
+:::
+:::
+
+::: {.notes}
+This is the just-in-time concept for the day: `if/elif` + booleans. Keep it concrete — a boolean is the answer to a yes/no question the robot asks the world (`color() == RED`, `reflection() < 50`). `elif` = "otherwise, check this next." Tie it straight back to the three-surface ritual: the threshold is data you recalibrate per surface; the `if/elif` structure never changes. The mat's printed staff lines make the beeper test real mission geography — they're the same lines we follow and square on later today. If a squad is flying, mention `else` for the catch-all case, but don't gate on it.
+:::
+
+## Ride the edge 👁️
 
 ```{.python}
 # Watch it live FIRST — before any steering. Just read the number.
@@ -114,7 +249,7 @@ Two answers = it can **never** go straight — it slams left-right forever.
 :::
 
 ::: {.notes}
-This is **bang-bang** — the naïve controller. Let them predict, then confirm with the sim two slides on. The diagnosis you want in their words: "it only knows left or right, so it's always turning." The bridge to P is exactly the gain quiz from Day 4: what if the correction were *proportional* to how far off we are, instead of always full-tilt? Keep bang-bang short — it exists only to make P feel like the rescue.
+This is **bang-bang** — the naïve controller. Let them predict, then confirm with the sim two slides on. The diagnosis you want in their words: "it only knows left or right, so it's always turning." The bridge to P is exactly the KP quiz from Day 4: what if the correction were *proportional* to how far off we are, instead of always full-tilt? Keep bang-bang short — it exists only to make P feel like the rescue.
 :::
 
 ## Name it: P — proportional steering 📈
@@ -127,12 +262,12 @@ right.run(LINE_SPEED - KP * error)           # near → gentle
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-`error × gain` **again** — tune **`KP`**: too small = lazy, too big = the wobble is back.
+`error × KP` **again** — tune **`KP`**: too small = lazy, too big = the wobble is back.
 :::
 :::
 
 ::: {.notes}
-The "aha" is that they've written this line before — twice. It's *literally* the D4 self-healing straight with a new error source: swap `hub.imu.heading()` for the eye's reflection and the two `run` lines are identical. Same `error × gain`, different sensor feeding it. Two failure modes to name so they recognize them on the bench: sluggish (KP too low) drifts wide on curves; twitchy (KP too high) reintroduces the wobble. Start small and adjust. This alone wins "Line King" on gentle lines — but push the speed up on a curve and it starts to overshoot, which is the doorway to the PD stretch. If a student raises the "use `motor.dc()`" advice here: same answer as the D4 proportional-turn coach note — `run()` keeps "speed" meaning speed, so `KP * error` stays a correction in deg/s they can reason about.
+The "aha" is that they've written this line before — twice. It's *literally* the D4 self-healing straight with a new error source: swap `hub.imu.heading()` for the eye's reflection and the two `run` lines are identical. Same `error × KP`, different sensor feeding it. Two failure modes to name so they recognize them on the bench: sluggish (KP too low) drifts wide on curves; twitchy (KP too high) reintroduces the wobble. Start small and adjust. This alone wins "Line King" on gentle lines — but push the speed up on a curve and it starts to overshoot, which is the doorway to the PD stretch. If a student raises the "use `motor.dc()`" advice here: same answer as the D4 proportional-turn coach note — `run()` keeps "speed" meaning speed, so `KP * error` stays a correction in deg/s they can reason about.
 :::
 
 # C. P → PD, and Squaring {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
@@ -239,7 +374,7 @@ Push P fast into a curve — an old ghost comes back. 🛑
 :::
 
 ::: {.notes}
-Run bang-bang first (big zigzag), then P at speed 200 (fine on the straight, overshoots into the S), then PD (clean). The money move is live: with PD selected, drag KD to 0 — the green curve starts ringing exactly like P; nudge it back up and it settles. That's the same demonstration as Day 5's kd slider on the gyro, now on the line — same D, same job, new sensor. Crank the speed slider to show P's overshoot grows with speed while PD holds. Sim is illustrative; on the real robot they tune the P gain first, and only squads chasing the stretch touch kd.
+Run bang-bang first (big zigzag), then P at speed 200 (fine on the straight, overshoots into the S), then PD (clean). The money move is live: with PD selected, drag KD to 0 — the green curve starts ringing exactly like P; nudge it back up and it settles. That's the same demonstration as Day 5's kd slider on the gyro, now on the line — same D, same job, new sensor. Crank the speed slider to show P's overshoot grows with speed while PD holds. Sim is illustrative; on the real robot they tune KP first, and only squads chasing the stretch touch kd.
 :::
 
 ## Name it: `follow_line` joins the library 📦 {.code-shrink}
@@ -266,7 +401,7 @@ The P loop, **bottled** — a finish line in degrees makes it a *segment*. **`kd
 :::
 
 ::: {.notes}
-Same promotion ritual as every day this week: the loose P loop gets a name and moves into `my_lib.py` (the gain becomes `KP_LINE` — the library's constants block already owns `KP` for the gyro). Map every part back to what they own: `error` = P on the eye, the `finish` line = `drive_straight`'s DEG_PER_MM trick (follow *for a distance* — that's how missions call it), `kd * (error - last_error)` = the D from the library-day gyro turn, with `last_error` the one-line memory that makes D possible. The gate is the P version — `follow_line(600)` with kd=0; the stretch is sliding kd up until the fast curve stops overshooting, which is what wins Speed Demon. State the I-policy plainly and move on: integral fixes a *steady* offset over a *long* run; our segments are short, so I is a demo they can watch but never something the gate depends on.
+Same promotion ritual as every day this week: the loose P loop gets a name and moves into `my_lib.py` (its `KP` becomes `KP_LINE` — the library's constants block already owns `KP` for the gyro). Map every part back to what they own: `error` = P on the eye, the `finish` line = `drive_straight`'s DEG_PER_MM trick (follow *for a distance* — that's how missions call it), `kd * (error - last_error)` = the D from the library-day gyro turn, with `last_error` the one-line memory that makes D possible. The gate is the P version — `follow_line(600)` with kd=0; the stretch is sliding kd up until the fast curve stops overshooting, which is what wins Speed Demon. State the I-policy plainly and move on: integral fixes a *steady* offset over a *long* run; our segments are short, so I is a demo they can watch but never something the gate depends on.
 :::
 
 ## The two-eye job: square up 📐 {.code-shrink}
@@ -392,7 +527,7 @@ Today's showdown: **Line King** 👑 — and for the fast squads, **Speed Demon.
 ::: {.column width="50%"}
 **Where squads lose it**
 
-- Threshold from *yesterday's* surface 😬
+- Threshold from *last week's tape*, not this mat 😬
 - `KP` so high the straight wobbles
 - Skipping the square → drift compounds
 :::
@@ -413,9 +548,83 @@ Line King rewards a clean, honest tune over raw speed; Speed Demon is the stretc
 :::
 
 ::: {.fragment .fade-up}
-Next: five files become **one clean `my_lib.py`** — a gauntlet only **library calls** can beat. 📦
+Next: *Stop at the Wall* — the motor becomes a **sensor**, and the wall **resets the truth**. 🧱
 :::
 
 ::: {.notes}
-The gate is the plan's D7 outcome: build, tune, and *explain* a P follower + reliable junction squaring — what the anchor run actually uses; PD is explicitly the stretch, never the gate. A student who can narrate why each term is there owns the concept and can debug it in Week 3 when the follower serves the run. Two eyes, one job each: one follows, both square. Close by pointing forward: next is the consolidation day — one module, one constants block, the challenge gauntlet — then missions become *lists*; the point-scoring mechanisms arrive with the Week-3 team builds, feeding the anchor-first 255 map they read yesterday.
+The gate is the plan's line-day outcome: build, tune, and *explain* a P follower + reliable junction squaring — what the anchor run actually uses; PD is explicitly the stretch, never the gate. A student who can narrate why each term is there owns the concept and can debug it in Week 3 when the follower serves the run. Two eyes, one job each: one follows, both square. Close by pointing forward: tomorrow the motor itself becomes a sensor — the robot feels walls, patrols between them, and resets its heading truth against them — and the scoresheet gets read the anchor-first way: everything those color-free verbs score comes first.
 :::
+
+# 🏠 Explore at Home {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #9B8EC0)"}
+
+Optional replays — **nothing tomorrow depends on these.** 🎮
+
+## 🏠 The threshold that broke on gloss (sim) 🔥
+
+```{=html}
+<div style="width:860px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px;">
+    <span style="font-size:16px;color:#1C355E;font-weight:700;">surface:</span>
+    <button id="rmHome" onclick="rmSurf('home')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">📄 practice paper</button>
+    <button id="rmGloss" onclick="rmSurf('gloss')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">🏆 glossy table</button>
+    <span style="font-size:16px;color:#1C355E;font-weight:700;margin-left:12px;">threshold: <b><span id="rmThV">50</span></b></span>
+    <input id="rmTh" type="range" min="0" max="100" step="1" value="50" oninput="rmTh(this.value)" style="width:170px;accent-color:#E96852;">
+  </div>
+  <svg width="820" height="150" viewBox="0 0 820 150" style="display:block;margin:0 auto;">
+    <rect x="60" y="58" width="700" height="26" rx="13" fill="#101820"/>
+    <rect x="60" y="58" width="700" height="26" rx="13" fill="url(#rmGrad)"/>
+    <defs><linearGradient id="rmGrad" x1="0" x2="1"><stop offset="0" stop-color="#101820"/><stop offset="1" stop-color="#ffffff"/></linearGradient></defs>
+    <text x="60" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">0 · dark</text>
+    <text x="760" y="105" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">100 · bright</text>
+    <!-- threshold line -->
+    <line id="rmThLine" x1="410" y1="44" x2="410" y2="98" stroke="#E96852" stroke-width="3" stroke-dasharray="6 5"/>
+    <text id="rmThTxt" x="410" y="38" font-size="13" fill="#E96852" font-weight="800" text-anchor="middle">50</text>
+    <!-- markers -->
+    <g id="rmBlack"><circle cy="71" r="11" fill="#1C355E" stroke="#fff" stroke-width="2"/><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">black line</text></g>
+    <g id="rmWhite"><circle cy="71" r="11" fill="#FFD500" stroke="#1C355E" stroke-width="2"/><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat</text></g>
+  </svg>
+  <div id="rmVerdict" style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;font-weight:700;min-height:28px;">pick a surface — read what the eye actually sees</div>
+</div>
+<script>
+(function(){
+  var X0=60, X1=760, thr=50, surf=null;
+  var S={ home:{white:88, black:10}, gloss:{white:95, black:60} };
+  function el(id){return document.getElementById(id);}
+  function xOf(v){ return X0 + v/100*(X1-X0); }
+  function draw(){
+    el('rmThLine').setAttribute('x1',xOf(thr)); el('rmThLine').setAttribute('x2',xOf(thr));
+    el('rmThTxt').setAttribute('x',xOf(thr)); el('rmThTxt').textContent=thr;
+    if(!surf) return;
+    var s=S[surf];
+    el('rmBlack').setAttribute('transform','translate('+xOf(s.black).toFixed(1)+',0)');
+    el('rmWhite').setAttribute('transform','translate('+xOf(s.white).toFixed(1)+',0)');
+    var blackOK = s.black < thr;   // robot must call the dark line "line"
+    var whiteOK = s.white > thr;   // and the bright mat "clear"
+    var v=el('rmVerdict');
+    if(blackOK && whiteOK){
+      v.style.color='#00AE8D';
+      v.innerHTML='black '+s.black+' &lt; '+thr+' → <b>LINE ✓</b> &nbsp;·&nbsp; white '+s.white+' &gt; '+thr+' → <b>clear ✓</b> &nbsp; 🎯';
+    } else {
+      v.style.color='#E96852';
+      var msg = !blackOK ? ('black reads '+s.black+' — <b>above '+thr+'</b>, so the robot calls the line "clear" and drives right over it. 😬')
+                         : ('white reads '+s.white+' — <b>below '+thr+'</b>, so the robot brakes on empty mat. 😬');
+      v.innerHTML=msg;
+    }
+  }
+  window.rmSurf=function(k){
+    surf=k;
+    el('rmHome').style.background = k==='home' ? '#00C9A7':'#eef3f8';
+    el('rmHome').style.color = k==='home' ? '#fff':'#1C355E';
+    el('rmHome').style.border = k==='home' ? 'none':'2px solid #1C355E';
+    el('rmGloss').style.background = k==='gloss' ? '#00C9A7':'#eef3f8';
+    el('rmGloss').style.color = k==='gloss' ? '#fff':'#1C355E';
+    el('rmGloss').style.border = k==='gloss' ? 'none':'2px solid #1C355E';
+    draw();
+  };
+  window.rmTh=function(v){ thr=parseInt(v,10); el('rmThV').textContent=v; draw(); };
+  window.rmSurf('home');
+})();
+</script>
+```
+
+On a glossy venue table, "black" can bounce back **60** — drag the threshold and rescue the robot.
