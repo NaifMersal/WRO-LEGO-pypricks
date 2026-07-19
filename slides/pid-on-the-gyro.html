@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-07-16">
+  <meta name="dcterms.date" content="2026-07-19">
   <title>The Drive That Heals Itself</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,7 +206,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-07-16</p>
+  <p class="date">2026-07-19</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
@@ -850,7 +850,7 @@ function raceDials(){
 </div>
 <div class="fragment fade-up">
 <div style="font-family:Consolas,monospace;font-size:23px;color:#1C355E;background:#eef3f8;border-radius:12px;padding:14px 26px;line-height:2.0;width:fit-content;margin:0 auto;">
-  <div>speed = <span style="color:#E96852;font-weight:800;">error</span> × <span style="color:#625D9C;font-weight:800;">gain</span>&nbsp;&nbsp;<span style="opacity:0.65;">(gain = 4)</span></div>
+  <div>speed = <span style="color:#E96852;font-weight:800;">error</span> × <span style="color:#625D9C;font-weight:800;">KP</span>&nbsp;&nbsp;<span style="opacity:0.65;">(KP = 4)</span></div>
   <div>error <span style="color:#E96852;font-weight:700;">70</span> → speed <b>280</b>&nbsp;&nbsp;flat out 🚀</div>
   <div>error <span style="color:#E96852;font-weight:700;">10</span> → speed <b>40</b>&nbsp;&nbsp;&nbsp;&nbsp;tiptoe 🐢</div>
   <div>error <span style="color:#E96852;font-weight:700;">0</span>&nbsp; → speed <b>0</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parks itself 🎯</div>
@@ -858,11 +858,11 @@ function raceDials(){
 </div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><strong><code>speed = error × gain</code></strong> — the whole staircase, in one line. <code>gain</code> is the slope: how hard to push <em>per degree still to go</em>. And at error 0 the speed is 0 — it doesn’t need to be told to stop.</p>
+<p><strong><code>speed = error × KP</code></strong> — the whole staircase, in one line. <code>KP</code> is the slope — engineers call this knob the <strong>gain</strong>: how hard to push <em>per degree left</em>. And at error 0 the speed is 0 — it parks itself.</p>
 </div>
 </div>
 <aside class="notes">
-<p>Elicit the multiplication — don’t reveal it. Most squads propose “speed = distance left” first; ask “what if the wheels need bigger numbers?” and the × gain falls out. The three sample rows are the wall-walk in numbers: narrate them as “fast… slower… stop”, same sentence as the game.</p>
+<p>Elicit the multiplication — don’t reveal it. Most squads propose “speed = distance left” first; ask “what if the wheels need bigger numbers?” and the × KP falls out — name it once out loud (“its code name is KP; engineers call it the gain”) and use KP from here on. The three sample rows are the wall-walk in numbers: narrate them as “fast… slower… stop”, same sentence as the game.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -901,7 +901,7 @@ function raceDials(){
     <g id="opRampG" opacity="0.15">
       <line x1="70" y1="73" x2="560" y2="300" stroke="#00C9A7" stroke-width="6" stroke-linecap="round"></line>
       <text x="150" y="130" font-size="16" fill="#00AE8D" font-weight="800">📈 speed = error × 4</text>
-      <text x="150" y="150" font-size="14" fill="#00AE8D">slope = the gain</text>
+      <text x="150" y="150" font-size="14" fill="#00AE8D">slope = KP</text>
       <circle cx="560" cy="300" r="8" fill="#00AE8D"></circle>
     </g>
     <polyline id="opTrace" points="" fill="none" stroke="#1C355E" stroke-width="2.5" opacity="0.45"></polyline>
@@ -1019,12 +1019,12 @@ function raceDials(){
 </section>
 <section id="the-proportional-turn" class="slide level2">
 <h2>The proportional turn</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1|3|4|5-6|8|10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> gyro_turn_p(target, gain<span class="op">=</span><span class="dv">4</span>):</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1|3|4|5-6|8|10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> gyro_turn_p(target, kp<span class="op">=</span><span class="dv">4</span>):</span>
 <span id="cb5-2"><a></a>    hub.imu.reset_heading(<span class="dv">0</span>)</span>
 <span id="cb5-3"><a></a>    <span class="cf">while</span> <span class="bu">abs</span>(target <span class="op">-</span> hub.imu.heading()) <span class="op">&gt;</span> <span class="dv">1</span>:   <span class="co"># until within 1°…</span></span>
 <span id="cb5-4"><a></a>        error <span class="op">=</span> target <span class="op">-</span> hub.imu.heading()       <span class="co"># degrees still to go</span></span>
-<span id="cb5-5"><a></a>        left.run(gain <span class="op">*</span> error)                   <span class="co"># far → fast</span></span>
-<span id="cb5-6"><a></a>        right.run(<span class="op">-</span>gain <span class="op">*</span> error)                 <span class="co"># close → gentle</span></span>
+<span id="cb5-5"><a></a>        left.run(kp <span class="op">*</span> error)                     <span class="co"># far → fast</span></span>
+<span id="cb5-6"><a></a>        right.run(<span class="op">-</span>kp <span class="op">*</span> error)                   <span class="co"># close → gentle</span></span>
 <span id="cb5-7"><a></a>        wait(<span class="dv">5</span>)</span>
 <span id="cb5-8"><a></a>    left.stop()<span class="op">;</span> right.stop()</span>
 <span id="cb5-9"><a></a></span>
@@ -1035,8 +1035,8 @@ function raceDials(){
 </div>
 </div>
 <aside class="notes">
-<p>Walk the highlight stops: <code>gain</code> arrives as a <em>parameter with a default</em> — new syntax, teach it in one breath (“a knob you can leave alone”). Line 3’s <code>abs()</code> is what makes negative targets work. Demo on the next slide.</p>
-<p><strong>Coach aside — “why <code>run()</code> and not <code>motor.dc()</code>?”</strong> (for the sharp student who’s read ahead). Honest truth: <code>run()</code> is <em>itself</em> a closed-loop <strong>speed</strong> controller inside Pybricks — so this hand-written P sits <em>on top</em> of it, a controller-on-a-controller. Your <code>gain</code> sets a speed <em>target</em>; Pybricks’ own loop chases it. A pro writing a controller from scratch often reaches for <code>motor.dc()</code> instead — raw power/duty — so their formula is the <em>whole</em> controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep <code>run()</code> on purpose for two reasons: it’s <strong>smoother and battery-proof</strong> (a fresh vs.&nbsp;tired hub turns the same — priceless with five robots on the bench), and it speaks the same <strong>“speed”</strong> language as <code>drive.drive(speed, turn)</code> and <code>DriveBase</code> — so <code>speed = error × gain</code> stays literally true all the way from this turn, through the self-healing straight, to D6’s line-follower. <code>dc()</code> is the right tool the day you build a controller with no help underneath; that day isn’t this bootcamp.</p>
+<p>Walk the highlight stops: <code>kp</code> arrives as a <em>parameter with a default</em> — new syntax, teach it in one breath (“a knob you can leave alone”). Line 3’s <code>abs()</code> is what makes negative targets work. Demo on the next slide.</p>
+<p><strong>Coach aside — “why <code>run()</code> and not <code>motor.dc()</code>?”</strong> (for the sharp student who’s read ahead). Honest truth: <code>run()</code> is <em>itself</em> a closed-loop <strong>speed</strong> controller inside Pybricks — so this hand-written P sits <em>on top</em> of it, a controller-on-a-controller. Your <code>kp</code> sets a speed <em>target</em>; Pybricks’ own loop chases it. A pro writing a controller from scratch often reaches for <code>motor.dc()</code> instead — raw power/duty — so their formula is the <em>whole</em> controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep <code>run()</code> on purpose for two reasons: it’s <strong>smoother and battery-proof</strong> (a fresh vs.&nbsp;tired hub turns the same — priceless with five robots on the bench), and it speaks the same <strong>“speed”</strong> language as <code>drive.drive(speed, turn)</code> and <code>DriveBase</code> — so <code>speed = error × KP</code> stays literally true all the way from this turn, through the self-healing straight, to D6’s line-follower. <code>dc()</code> is the right tool the day you build a controller with no help underneath; that day isn’t this bootcamp.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1080,7 +1080,7 @@ function raceDials(){
       <input type="range" min="200" max="600" step="20" value="200" oninput="pgFast(this.value)" style="width:190px;accent-color:#E96852;"></div>
     </div>
     <div style="text-align:center;">
-      <div style="font-weight:800;color:#00AE8D;font-size:21px;">📈 speed = error × gain</div>
+      <div style="font-weight:800;color:#00AE8D;font-size:21px;">📈 speed = error × KP</div>
       <svg width="195" height="195" viewbox="-105 -105 210 210" style="display:block;margin:2px auto;">
         <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
         <g id="ppTick" opacity="0"><line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6"></line></g>
@@ -1095,15 +1095,15 @@ function raceDials(){
         </g>
       </svg>
       <div style="font-family:Consolas,monospace;font-size:19px;color:#1C355E;">landed <span id="ppLand" style="font-weight:800;">–</span>° · <span id="ppTime" style="font-weight:800;">–</span> s</div>
-      <div style="font-size:17px;color:#1C355E;margin-top:4px;">gain: <b><span id="ppGainV">4</span></b><br>
-      <input type="range" min="1" max="20" step="0.5" value="4" oninput="pgGain(this.value)" style="width:190px;accent-color:#00AE8D;"></div>
+      <div style="font-size:17px;color:#1C355E;margin-top:4px;">KP: <b><span id="ppKpV">4</span></b><br>
+      <input type="range" min="1" max="20" step="0.5" value="4" oninput="pgKp(this.value)" style="width:190px;accent-color:#00AE8D;"></div>
     </div>
   </div>
 </div>
 <script>
 (function(){
   var W = 1.65;                 // wheel deg/s -> robot deg/s divisor (gap/wheel)
-  var T = 90, fast = 200, gain = 4, raf = null, last = null;
+  var T = 90, fast = 200, kp = 4, raf = null, last = null;
   var A, B;
   function el(id){ return document.getElementById(id); }
   function fresh(){ return {h:0, r:0, t:0, stopped:false, stall:0, done:false, buf:[]}; }
@@ -1124,7 +1124,7 @@ function raceDials(){
     var cmd;
     if(!s.stopped){
       if(Math.abs(T - s.h) <= 1){ s.stopped = true; cmd = 0; }
-      else cmd = Math.max(-364, Math.min(364, gain*(T - hs)/W));
+      else cmd = Math.max(-364, Math.min(364, kp*(T - hs)/W));
     } else cmd = 0;
     var k = s.stopped ? 22 : 7;
     s.r += (cmd - s.r) * Math.min(k*dt, 1);
@@ -1169,12 +1169,12 @@ function raceDials(){
     raf = requestAnimationFrame(frame);
   };
   window.pgFast = function(v){ fast = parseFloat(v); el('tsFastV').textContent = v; };
-  window.pgGain = function(v){ gain = parseFloat(v); el('ppGainV').textContent = v; };
+  window.pgKp = function(v){ kp = parseFloat(v); el('ppKpV').textContent = v; };
   A = fresh(); B = fresh(); draw();
 })();
 </script>
 <aside class="notes">
-<p>Drive it from their hypotheses. Round 1: all three calls at fast = 200 — the staircase lands everything but watch 180’s clock (~2 s) and how long 45 spends in the crawl lane. Round 2: crank fast to 600 to beat the clock — 180 blows past by ~7°: the fixed zone can’t absorb the speed. Round 3: the P side at gain 4 — all three calls land within a degree, at staircase-500 pace, <strong>same knob</strong>. Then let them feel the failures: gain 1 parks short (friction beats a tiny push — tomorrow’s breadcrumb), gain 20 arrives hot and flies past. The sim is illustrative, not gospel — the real robot’s sweet spot is theirs to find in the lab.</p>
+<p>Drive it from their hypotheses. Round 1: all three calls at fast = 200 — the staircase lands everything but watch 180’s clock (~2 s) and how long 45 spends in the crawl lane. Round 2: crank fast to 600 to beat the clock — 180 blows past by ~7°: the fixed zone can’t absorb the speed. Round 3: the P side at KP 4 — all three calls land within a degree, at staircase-500 pace, <strong>same knob</strong>. Then let them feel the failures: KP 1 parks short (friction beats a tiny push — tomorrow’s breadcrumb), KP 20 arrives hot and flies past. The sim is illustrative, not gospel — the real robot’s sweet spot is theirs to find in the lab.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1213,10 +1213,10 @@ function raceDials(){
           display:block!important;
       }</style></aside>
 </section>
-<section id="quick-quiz-the-gain-knob" class="slide level2">
-<h2>Quick quiz: the gain knob 🚨</h2>
+<section id="quick-quiz-the-kp-knob" class="slide level2">
+<h2>Quick quiz: the KP knob 🚨</h2>
 <div class="qbox">
-<p><span class="qtitle">Before you touch the robot: <strong>gain = 1</strong> — what will the turn <em>feel</em> like? <strong>gain = 20</strong>? Predict both.</span></p>
+<p><span class="qtitle">Before you touch the robot: <strong>KP = 1</strong> — what will the turn <em>feel</em> like? <strong>KP = 20</strong>? Predict both.</span></p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
@@ -1224,7 +1224,7 @@ function raceDials(){
 </div>
 </div>
 <aside class="notes">
-<p>The prediction is the day’s real gate: “the bigger the error, the harder the push” plus what too-small/too-big does. Collect predictions out loud, then <em>feel</em> the answers — flick back to the playground and drag the gain slider to 1 and 20, or better, straight onto the bench robot in the lab. Per the plan, tuning this by feel <em>without prompting</em> is the strongest robotics-instinct signal on the scorecard — watch for who reaches for the knob before you suggest it.</p>
+<p>The prediction is the day’s real gate: “the bigger the error, the harder the push” plus what too-small/too-big does. Collect predictions out loud, then <em>feel</em> the answers — flick back to the playground and drag the KP slider to 1 and 20, or better, straight onto the bench robot in the lab. Per the plan, tuning this by feel <em>without prompting</em> is the strongest robotics-instinct signal on the scorecard — watch for who reaches for the knob before you suggest it.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1237,16 +1237,16 @@ function raceDials(){
           display:block!important;
       }</style></aside>
 </section>
-<section id="lab-your-gain-your-rematch" class="slide level2">
-<h2>Lab: your gain, your rematch 🎛️</h2>
+<section id="lab-your-kp-your-rematch" class="slide level2">
+<h2>Lab: your KP, your rematch 🎛️</h2>
 <ul>
-<li>Build <code>gyro_turn_p</code>, then rerun the <strong>morning race</strong> — same three calls, one gain. Beat your two-speed times <em>and</em> landings?</li>
-<li>Find <strong>your</strong> gain: start at 4 → halve it, double it, feel both failures, close in from the middle.</li>
+<li>Build <code>gyro_turn_p</code>, then rerun the <strong>morning race</strong> — same three calls, one KP. Beat your two-speed times <em>and</em> landings?</li>
+<li>Find <strong>your</strong> KP: start at 4 → halve it, double it, feel both failures, close in from the middle.</li>
 <li>Try <code>gyro_turn_p(-90)</code>. No surgery required. 😎</li>
 </ul>
 <p>⏱️ <strong>Time: 30 minutes</strong></p>
 <aside class="notes">
-<p>Every squad’s best gain is different (battery, tire wear, robot mass) — that’s the point of it being a knob, and why nobody copies a neighbor’s number. Log times + landings like the morning so the win over the staircase is on paper. Fast squads: call <code>gyro_turn_p(360)</code> — a full spin that parks where it started — or race 45 at gain 8 vs 4.</p>
+<p>Every squad’s best KP is different (battery, tire wear, robot mass) — that’s the point of it being a knob, and why nobody copies a neighbor’s number. Log times + landings like the morning so the win over the staircase is on paper. Fast squads: call <code>gyro_turn_p(360)</code> — a full spin that parks where it started — or race 45 at KP 8 vs 4.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1490,7 +1490,7 @@ function raceDials(){
 <li>Watch one recovery closely: the harder the shove, the harder the fight-back. <strong>The shove <em>is</em> the error.</strong></li>
 </ul>
 <aside class="notes">
-<p>Format: a 1.5 m taped lane; the judge nudges at roughly the 0.5 m and 1.0 m marks with a consistent finger-push to the robot’s side. Final |heading| is the score; trace straightness (eyeball the wheel-path) breaks ties. Uses only today’s material: <code>error × gain</code> on the straight. This competition is the plan’s flagged talent signal — <strong>P-tuning instinct is the strongest predictor of robotics skill</strong>; note on the scorecard who re-tunes between attempts by feel (gain reasoning: lazy vs jittery), not by guessing.</p>
+<p>Format: a 1.5 m taped lane; the judge nudges at roughly the 0.5 m and 1.0 m marks with a consistent finger-push to the robot’s side. Final |heading| is the score; trace straightness (eyeball the wheel-path) breaks ties. Uses only today’s material: <code>error × KP</code> on the straight. This competition is the plan’s flagged talent signal — <strong>P-tuning instinct is the strongest predictor of robotics skill</strong>; note on the scorecard who re-tunes between attempts by feel (KP reasoning: lazy vs jittery), not by guessing.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1514,7 +1514,7 @@ function raceDials(){
 <p><strong>You’re done today when…</strong></p>
 </div>
 <div class="callout-content">
-<p>One gain turns your robot to <strong>any called angle</strong> — both directions — with your own <code>gyro_turn_p</code>; your 1.5 m straight <strong>fights back</strong> through two nudges; and you can say <em>“the bigger the error, the harder the push”</em> and predict what a too-small / too-big gain does <strong>before</strong> running it.</p>
+<p>One KP turns your robot to <strong>any called angle</strong> — both directions — with your own <code>gyro_turn_p</code>; your 1.5 m straight <strong>fights back</strong> through two nudges; and you can say <em>“the bigger the error, the harder the push”</em> and predict what a too-small / too-big KP does <strong>before</strong> running it.</p>
 </div>
 </div>
 </div>
@@ -1522,7 +1522,7 @@ function raceDials(){
 <p>Tomorrow: put P in a <em>hurry</em> and watch it slam past the target — meet the letter that <strong>damps</strong> it. Then a lean P never quite kills — one more letter. Finish the acronym… and start naming moves in a library of your <strong>own</strong>. 📦</p>
 </div>
 <aside class="notes">
-<p>The gate is the plan’s D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the gain prediction in their own words — same formula, two applications today (turn + straight); the third is D6’s line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins <code>my_lib.py</code> (<code>drive_straight</code>/<code>turn_to</code>) — the <code>DriveBase</code> surprise now waits at the D8 reveal (decision #20, re-timed by #26), earned only after the whole library is theirs.</p>
+<p>The gate is the plan’s D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the KP prediction in their own words — same formula, two applications today (turn + straight); the third is D6’s line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins <code>my_lib.py</code> (<code>drive_straight</code>/<code>turn_to</code>) — the <code>DriveBase</code> surprise now waits at the D8 reveal (decision #20, re-timed by #26), earned only after the whole library is theirs.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

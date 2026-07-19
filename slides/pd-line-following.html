@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-07-16">
+  <meta name="dcterms.date" content="2026-07-19">
   <title>Line King</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,12 +206,12 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-07-16</p>
+  <p class="date">2026-07-19</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>A. Warm-Up</h1>
-<p><code>error × gain</code>, <strong>third time</strong> — today it steers the <strong>eye</strong>. 🛣️</p>
+<p><code>error × KP</code>, <strong>third time</strong> — today it steers the <strong>eye</strong>. 🛣️</p>
 </section>
 <section id="where-we-left-off" class="slide level2">
 <h2>Where we left off</h2>
@@ -228,7 +228,7 @@
 <td><code>drive_straight</code> · <code>turn_to</code></td>
 </tr>
 <tr class="even">
-<td>📈 <strong><code>error × gain</code></strong></td>
+<td>📈 <strong><code>error × KP</code></strong></td>
 <td>the turn · the straight</td>
 </tr>
 <tr class="odd">
@@ -254,7 +254,7 @@
 </div>
 <p>⏱️ <strong>Time: 5 minutes — then a bug hunt</strong></p>
 <aside class="notes">
-<p>Anchor today in what they already own, or it feels like a brand-new mountain (it isn’t — the plan flags the line day as the longest precisely because the <em>old</em> material was video-paced; live, it’s one formula applied a third time). Recap <code>error × gain</code> from the gyro out loud. Today the robot opens its eyes — three new powers land: the color eye (reflection = the echo of its own light), the per-surface threshold, and <code>if</code> (the first real decision). Flag the reflection-vs-color point early and firmly — kids will want to “detect the green line”; stop that now, it’s brightness only until Week 4. The day is eye → threshold → <code>if</code> → bang-bang → P on the line, then junction squaring — <strong>the P follower + squaring pair is the gate</strong> (it’s what the anchor run actually uses); the PD upgrade is the stretch for squads that tune P early. If the cohort is still behind on programming, the afternoon flexes to library-consolidation practice instead of pushing PD. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15.</p>
+<p>Anchor today in what they already own, or it feels like a brand-new mountain (it isn’t — the plan flags the line day as the longest precisely because the <em>old</em> material was video-paced; live, it’s one formula applied a third time). Recap <code>error × KP</code> from the gyro out loud. Today the robot opens its eyes — three new powers land: the color eye (reflection = the echo of its own light), the per-surface threshold, and <code>if</code> (the first real decision). Flag the reflection-vs-color point early and firmly — kids will want to “detect the green line”; stop that now, it’s brightness only until Week 4. The day is eye → threshold → <code>if</code> → bang-bang → P on the line, then junction squaring — <strong>the P follower + squaring pair is the gate</strong> (it’s what the anchor run actually uses); the PD upgrade is the stretch for squads that tune P early. If the cohort is still behind on programming, the afternoon flexes to library-consolidation practice instead of pushing PD. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -515,7 +515,7 @@
 </div>
 </div>
 <aside class="notes">
-<p>This is <strong>bang-bang</strong> — the naïve controller. Let them predict, then confirm with the sim two slides on. The diagnosis you want in their words: “it only knows left or right, so it’s always turning.” The bridge to P is exactly the gain quiz from Day 4: what if the correction were <em>proportional</em> to how far off we are, instead of always full-tilt? Keep bang-bang short — it exists only to make P feel like the rescue.</p>
+<p>This is <strong>bang-bang</strong> — the naïve controller. Let them predict, then confirm with the sim two slides on. The diagnosis you want in their words: “it only knows left or right, so it’s always turning.” The bridge to P is exactly the KP quiz from Day 4: what if the correction were <em>proportional</em> to how far off we are, instead of always full-tilt? Keep bang-bang short — it exists only to make P feel like the rescue.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -535,11 +535,11 @@
 <span id="cb6-3"><a></a>right.run(LINE_SPEED <span class="op">-</span> KP <span class="op">*</span> error)           <span class="co"># near → gentle</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><code>error × gain</code> <strong>again</strong> — tune <strong><code>KP</code></strong>: too small = lazy, too big = the wobble is back.</p>
+<p><code>error × KP</code> <strong>again</strong> — tune <strong><code>KP</code></strong>: too small = lazy, too big = the wobble is back.</p>
 </div>
 </div>
 <aside class="notes">
-<p>The “aha” is that they’ve written this line before — twice. It’s <em>literally</em> the D4 self-healing straight with a new error source: swap <code>hub.imu.heading()</code> for the eye’s reflection and the two <code>run</code> lines are identical. Same <code>error × gain</code>, different sensor feeding it. Two failure modes to name so they recognize them on the bench: sluggish (KP too low) drifts wide on curves; twitchy (KP too high) reintroduces the wobble. Start small and adjust. This alone wins “Line King” on gentle lines — but push the speed up on a curve and it starts to overshoot, which is the doorway to the PD stretch. If a student raises the “use <code>motor.dc()</code>” advice here: same answer as the D4 proportional-turn coach note — <code>run()</code> keeps “speed” meaning speed, so <code>KP * error</code> stays a correction in deg/s they can reason about.</p>
+<p>The “aha” is that they’ve written this line before — twice. It’s <em>literally</em> the D4 self-healing straight with a new error source: swap <code>hub.imu.heading()</code> for the eye’s reflection and the two <code>run</code> lines are identical. Same <code>error × KP</code>, different sensor feeding it. Two failure modes to name so they recognize them on the bench: sluggish (KP too low) drifts wide on curves; twitchy (KP too high) reintroduces the wobble. Start small and adjust. This alone wins “Line King” on gentle lines — but push the speed up on a curve and it starts to overshoot, which is the doorway to the PD stretch. If a student raises the “use <code>motor.dc()</code>” advice here: same answer as the D4 proportional-turn coach note — <code>run()</code> keeps “speed” meaning speed, so <code>KP * error</code> stays a correction in deg/s they can reason about.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -652,7 +652,7 @@
 </div>
 </div>
 <aside class="notes">
-<p>Run bang-bang first (big zigzag), then P at speed 200 (fine on the straight, overshoots into the S), then PD (clean). The money move is live: with PD selected, drag KD to 0 — the green curve starts ringing exactly like P; nudge it back up and it settles. That’s the same demonstration as Day 5’s kd slider on the gyro, now on the line — same D, same job, new sensor. Crank the speed slider to show P’s overshoot grows with speed while PD holds. Sim is illustrative; on the real robot they tune the P gain first, and only squads chasing the stretch touch kd.</p>
+<p>Run bang-bang first (big zigzag), then P at speed 200 (fine on the straight, overshoots into the S), then PD (clean). The money move is live: with PD selected, drag KD to 0 — the green curve starts ringing exactly like P; nudge it back up and it settles. That’s the same demonstration as Day 5’s kd slider on the gyro, now on the line — same D, same job, new sensor. Crank the speed slider to show P’s overshoot grows with speed while PD holds. Sim is illustrative; on the real robot they tune KP first, and only squads chasing the stretch touch kd.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -685,7 +685,7 @@
 </div>
 </div>
 <aside class="notes">
-<p>Same promotion ritual as every day this week: the loose P loop gets a name and moves into <code>my_lib.py</code> (the gain becomes <code>KP_LINE</code> — the library’s constants block already owns <code>KP</code> for the gyro). Map every part back to what they own: <code>error</code> = P on the eye, the <code>finish</code> line = <code>drive_straight</code>’s DEG_PER_MM trick (follow <em>for a distance</em> — that’s how missions call it), <code>kd * (error - last_error)</code> = the D from the library-day gyro turn, with <code>last_error</code> the one-line memory that makes D possible. The gate is the P version — <code>follow_line(600)</code> with kd=0; the stretch is sliding kd up until the fast curve stops overshooting, which is what wins Speed Demon. State the I-policy plainly and move on: integral fixes a <em>steady</em> offset over a <em>long</em> run; our segments are short, so I is a demo they can watch but never something the gate depends on.</p>
+<p>Same promotion ritual as every day this week: the loose P loop gets a name and moves into <code>my_lib.py</code> (its <code>KP</code> becomes <code>KP_LINE</code> — the library’s constants block already owns <code>KP</code> for the gyro). Map every part back to what they own: <code>error</code> = P on the eye, the <code>finish</code> line = <code>drive_straight</code>’s DEG_PER_MM trick (follow <em>for a distance</em> — that’s how missions call it), <code>kd * (error - last_error)</code> = the D from the library-day gyro turn, with <code>last_error</code> the one-line memory that makes D possible. The gate is the P version — <code>follow_line(600)</code> with kd=0; the stretch is sliding kd up until the fast curve stops overshooting, which is what wins Speed Demon. State the I-policy plainly and move on: integral fixes a <em>steady</em> offset over a <em>long</em> run; our segments are short, so I is a demo they can watch but never something the gate depends on.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-07-16">
+  <meta name="dcterms.date" content="2026-07-19">
   <title>The Earned Shortcut</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,7 +206,7 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-07-16</p>
+  <p class="date">2026-07-19</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
@@ -267,7 +267,7 @@
 <section id="break-it-the-merge" class="slide level2">
 <h2>Break it: the merge 🔥</h2>
 <div class="qbox">
-<p><span class="qtitle">Your team just picked its robot — and it’s <strong>not yours</strong>. Your <code>my_lib.py</code> thinks the wheels are 88 mm; the chosen robot’s are 87. Your teammate’s turn gain is tuned hotter. A motor sits on a different port. How many edits until <em>your</em> mission runs on <em>this</em> robot?</span></p>
+<p><span class="qtitle">Your team just picked its robot — and it’s <strong>not yours</strong>. Your <code>my_lib.py</code> thinks the wheels are 88 mm; the chosen robot’s are 87. Your teammate’s turn <code>kp</code> is tuned hotter. A motor sits on a different port. How many edits until <em>your</em> mission runs on <em>this</em> robot?</span></p>
 </div>
 <div style="display:flex;justify-content:center;align-items:center;gap:18px;margin-top:10px;">
   <div style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
@@ -311,17 +311,18 @@
 </section>
 <section id="fix-it-robotconfig-the-robot-in-one-place" class="slide level2 code-shrink">
 <h2>Fix it: <code>RobotConfig</code> — the robot in one place</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-2|3-4|5-6|7-9|11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="at">@dataclass</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-2|3-4|5-6|7-10|12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="at">@dataclass</span></span>
 <span id="cb1-2"><a></a><span class="kw">class</span> RobotConfig:</span>
 <span id="cb1-3"><a></a>    wheel_diameter: <span class="bu">int</span> <span class="op">=</span> <span class="dv">88</span>    <span class="co"># mm — MEASURE the team robot</span></span>
 <span id="cb1-4"><a></a>    axle_track: <span class="bu">int</span> <span class="op">=</span> <span class="dv">145</span>       <span class="co"># mm — wheel center to center</span></span>
 <span id="cb1-5"><a></a>    left_port: Port <span class="op">=</span> Port.A    <span class="co"># re-port a motor = one edit</span></span>
 <span id="cb1-6"><a></a>    right_port: Port <span class="op">=</span> Port.E</span>
-<span id="cb1-7"><a></a>    turn_gain: <span class="bu">float</span> <span class="op">=</span> <span class="fl">4.0</span>      <span class="co"># the tuned knobs live here too</span></span>
-<span id="cb1-8"><a></a>    straight_speed: <span class="bu">int</span> <span class="op">=</span> <span class="dv">300</span>   <span class="co"># mm/s</span></span>
-<span id="cb1-9"><a></a>    backoff_mm: <span class="bu">int</span> <span class="op">=</span> <span class="dv">50</span>        <span class="co"># the measured back-off</span></span>
-<span id="cb1-10"><a></a></span>
-<span id="cb1-11"><a></a>CFG <span class="op">=</span> RobotConfig()             <span class="co"># the ONE copy everyone reads</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a></a>    turn_kp: <span class="bu">float</span> <span class="op">=</span> <span class="fl">4.0</span>        <span class="co"># the tuned knobs live here too</span></span>
+<span id="cb1-8"><a></a>    turn_kd: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb1-9"><a></a>    straight_speed: <span class="bu">int</span> <span class="op">=</span> <span class="dv">300</span>   <span class="co"># mm/s</span></span>
+<span id="cb1-10"><a></a>    backoff_mm: <span class="bu">int</span> <span class="op">=</span> <span class="dv">50</span>        <span class="co"># the measured back-off</span></span>
+<span id="cb1-11"><a></a></span>
+<span id="cb1-12"><a></a>CFG <span class="op">=</span> RobotConfig()             <span class="co"># the ONE copy everyone reads</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
 <p>A <code>@dataclass</code> is a <strong>labeled box for facts</strong> — every physical truth about the robot, in one file (<code>robot_config.py</code>), with a name on each line. Nothing else in the team’s code is allowed to <em>know</em> a number about the robot; it has to <strong>ask <code>CFG</code></strong>.</p>
@@ -349,8 +350,8 @@
 <span id="cb2-4"><a></a></span>
 <span id="cb2-5"><a></a>DEG_PER_MM <span class="op">=</span> <span class="dv">360</span> <span class="op">/</span> (<span class="fl">3.14</span> <span class="op">*</span> CFG.wheel_diameter)</span>
 <span id="cb2-6"><a></a></span>
-<span id="cb2-7"><a></a><span class="kw">def</span> turn_to(target, gain<span class="op">=</span><span class="va">None</span>, kd<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb2-8"><a></a>    gain <span class="op">=</span> gain <span class="kw">or</span> CFG.turn_gain</span>
+<span id="cb2-7"><a></a><span class="kw">def</span> turn_to(target, kp<span class="op">=</span><span class="va">None</span>, kd<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-8"><a></a>    kp <span class="op">=</span> kp <span class="kw">or</span> CFG.turn_kp</span>
 <span id="cb2-9"><a></a>    kd <span class="op">=</span> kd <span class="kw">or</span> CFG.turn_kd</span>
 <span id="cb2-10"><a></a>    <span class="co"># …the same PD loop as ever…</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
@@ -359,7 +360,7 @@
 </div>
 </div>
 <aside class="notes">
-<p>The team exercise that proves it (from the exemplar): run the merged code with teammate A’s old constants on the chosen robot — watch the square miss; then fix ONLY robot_config.py and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap.</p>
+<p>The team exercise that proves it (from the exemplar): run the merged code with teammate A’s old constants on the chosen robot — watch the square miss; then fix ONLY robot_config.py and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap. Continuity note: squads’ own <code>my_lib.py</code> from D5 may still spell the turn knob <code>gain=</code> — fold the rename into today’s promotion and say it once: “we’ve been calling this knob the gain; its code name is <code>kp</code>, same K-family as the <code>KP</code> constants.”</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
