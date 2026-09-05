@@ -1,0 +1,41 @@
+<svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="motorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1C355E" />
+      <stop offset="100%" stop-color="#2D4D82" />
+    </linearGradient>
+    <linearGradient id="matGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E96852" />
+      <stop offset="100%" stop-color="#F28571" />
+    </linearGradient>
+  </defs>
+
+  <!-- Motor Card -->
+  <rect x="30" y="30" width="220" height="120" rx="16" fill="url(#motorGrad)" />
+  <text x="140" y="68" text-anchor="middle" font-size="14" fill="#A5B8D9" font-weight="600" letter-spacing="1">THE MOTOR SPEAKS</text>
+  <text x="140" y="112" text-anchor="middle" font-size="28" fill="#00C9A7" font-weight="bold">500 deg/s</text>
+
+  <!-- Mat Card -->
+  <rect x="550" y="30" width="220" height="120" rx="16" fill="url(#matGrad)" />
+  <text x="660" y="68" text-anchor="middle" font-size="14" fill="#FBD5CF" font-weight="600" letter-spacing="1">THE MAT SPEAKS</text>
+  <text x="660" y="112" text-anchor="middle" font-size="28" fill="#FFFFFF" font-weight="bold">~38 cm/s</text>
+
+  <!-- Wheel Translator (middle) -->
+  <circle cx="400" cy="90" r="45" fill="#FFFFFF" stroke="#625D9C" stroke-width="5"/>
+  <!-- Spokes -->
+  <line x1="400" y1="47" x2="400" y2="133" stroke="#9B8EC0" stroke-width="2" stroke-dasharray="2 2"/>
+  <line x1="357" y1="90" x2="443" y2="90" stroke="#9B8EC0" stroke-width="2" stroke-dasharray="2 2"/>
+  <line x1="369" y1="59" x2="431" y2="121" stroke="#9B8EC0" stroke-width="2" stroke-dasharray="2 2"/>
+  <line x1="369" y1="121" x2="431" y2="59" stroke="#9B8EC0" stroke-width="2" stroke-dasharray="2 2"/>
+  <!-- Center Pin -->
+  <circle cx="400" cy="90" r="8" fill="#625D9C"/>
+  <circle cx="400" cy="90" r="3" fill="#FFFFFF"/>
+  <text x="400" y="24" text-anchor="middle" font-size="15" fill="#625D9C" font-weight="bold" letter-spacing="0.5">the wheel translates</text>
+
+  <!-- Arrows -->
+  <line x1="262" y1="90" x2="320" y2="90" stroke="#1C355E" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="320,77 346,90 320,103" fill="#1C355E"/>
+  <line x1="462" y1="90" x2="520" y2="90" stroke="#1C355E" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="520,77 546,90 520,103" fill="#1C355E"/>
+</svg>
