@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>⚖️ The Beam Balance — Catch-Up Lab</title>
+<!--
+  Robot Rockstars · D2 session-2 opener · catch-up path.
+  For a student who MISSED the in-person beam-balance lesson.
+
+  SIMPLIFIED EDITION (2026-07-25). The previous version was correct but
+  text-heavy; a 9-year-old working alone bounced off the paragraphs.
+  Rules for editing this file:
+    · ONE idea per screen. If a screen needs two headings, split it.
+    · Max ~2 short sentences before the student has to touch something.
+    · Explanation lands AFTER the reveal, not before — the beam teaches,
+      the words only confirm.
+    · Never auto-play a beam move. Every move is gated behind a
+      TIP-or-LEVEL prediction. With no coach in the room, the UI is the
+      only thing forcing a commitment before the reveal.
+  Self-contained and offline: no CDN, no fonts, no storage. One file.
+-->
+<style>
+:root{
+  --navy:#1C355E; --teal:#00AE8D; --teal2:#00C9A7; --coral:#E96852;
+  --purple:#625D9C; --yellow:#FFD500; --amber:#FFB548;
+  --ink:#1C355E; --paper:#f7f9fc; --line:#dbe2ea;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#eef3f8,#e4ecf5);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);line-height:1.5}
+.wrap{max-width:780px;margin:0 auto;padding:14px 14px 90px}
+
+header{background:var(--navy);color:#fff;border-radius:16px;padding:14px 18px;margin-bottom:12px}
+header h1{margin:0;font-size:21px}
+.bar{height:10px;background:#ffffff28;border-radius:99px;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--yellow));border-radius:99px;transition:width .4s}
+.hstat{display:flex;gap:14px;margin-top:7px;font-size:12px;font-weight:700;opacity:.85}
+
+.map{display:flex;gap:4px;margin-bottom:12px}
+.pip{flex:1;height:9px;background:#fff;border:2px solid var(--line);border-radius:99px;cursor:pointer;transition:.2s}
+.pip.done{background:var(--teal);border-color:var(--teal)}
+.pip.now{background:var(--yellow);border-color:var(--navy)}
+
+.card{background:#fff;border:2px solid var(--line);border-radius:16px;padding:18px 20px 20px;margin-bottom:12px;
+  box-shadow:0 3px 14px #1c355e12}
+.card h2{margin:0 0 12px;font-size:26px;color:var(--navy);line-height:1.2}
+.lead{font-size:19px;margin:0 0 4px}
+.lead b{color:var(--navy)}
+
+.big{background:#625d9c14;border:2px dashed var(--purple);border-radius:14px;padding:16px;margin:14px 0;
+  font-size:24px;font-weight:800;text-align:center;color:var(--navy);line-height:1.35}
+.big.win{border-color:var(--teal);border-style:solid;background:#00ae8d14}
+.eq{font-family:Consolas,"SF Mono",Monaco,monospace;font-weight:800}
+.note{font-size:17px;margin:10px 0}
+
+/* ---------- beam ---------- */
+.beamwrap{background:var(--paper);border:2px solid var(--line);border-radius:14px;padding:6px 4px 10px;margin:12px 0}
+.beamwrap svg{display:block;width:100%;height:auto}
+.state{text-align:center;font-size:16px;font-weight:800;color:var(--purple);min-height:20px}
+
+.move{border:3px solid var(--purple);border-radius:14px;padding:14px 16px;margin:12px 0;background:#625d9c0a}
+.move .md{font-size:20px;font-weight:700;margin-bottom:12px;text-align:center}
+.ask{font-weight:800;font-size:16px;text-align:center;margin-bottom:10px;color:var(--purple)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+button{font-family:inherit;cursor:pointer;border-radius:12px;font-weight:800;transition:.15s}
+button:disabled{cursor:default;opacity:.5}
+.pred{background:#fff;border:3px solid var(--navy);color:var(--navy);padding:14px 26px;font-size:19px}
+.pred:hover:not(:disabled){background:var(--navy);color:#fff}
+.pred.pick{background:var(--navy);color:#fff}
+.op{background:var(--navy);border:none;color:#fff;padding:11px 18px;font-size:17px}
+.op.danger{background:var(--amber);color:var(--navy)}
+.op.ghost{background:#eef3f8;color:var(--navy);border:2px solid var(--navy)}
+
+.fb{margin-top:12px;border-radius:12px;padding:12px 15px;font-size:18px;display:none}
+.fb.show{display:block;animation:pop .25s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.fb.good{background:#00ae8d18;border-left:6px solid var(--teal)}
+.fb.bad{background:#e9685218;border-left:6px solid var(--coral)}
+.fb .tag{font-weight:800;display:block;font-size:19px;margin-bottom:2px}
+
+/* ---------- quiz ---------- */
+.opts{display:flex;flex-direction:column;gap:9px;margin:12px 0}
+.opt{text-align:left;background:var(--paper);border:3px solid var(--line);border-radius:12px;padding:13px 15px;
+  font-size:18px;color:var(--ink);font-weight:700;line-height:1.35}
+.opt:hover:not(:disabled){border-color:var(--purple)}
+.opt.correct{border-color:var(--teal);background:#00ae8d1a}
+.opt.wrong{border-color:var(--coral);background:#e968521a}
+.opt.dim{opacity:.45}
+
+/* ---------- dots ---------- */
+.dots{display:flex;justify-content:center;margin:16px 0 6px}
+.grid{display:grid;gap:10px}
+.dot{width:30px;height:30px;border-radius:50%;background:var(--purple)}
+.gl{font-size:19px;font-weight:800;color:var(--purple);text-align:center;margin-top:10px}
+
+/* ---------- picture puzzles ---------- */
+.picks{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.pick2{background:#fff;border:3px solid var(--navy);color:var(--navy);padding:12px 24px;font-size:22px}
+.pick2:hover:not(:disabled){background:var(--navy);color:#fff}
+.pick2.ok,.pick2.no{opacity:1;color:#fff}
+.pick2.ok{background:var(--teal);border-color:var(--teal)}
+.pick2.no{background:var(--coral);border-color:var(--coral)}
+
+/* ---------- decoder chips ---------- */
+.chips{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:16px 0 4px}
+.chip{font-family:Consolas,"SF Mono",Monaco,monospace;font-size:30px;font-weight:800;background:#fff;
+  border:3px solid var(--purple);color:var(--navy);border-radius:14px;padding:8px 18px;cursor:pointer;position:relative}
+.chip:hover:not(.done){background:#625d9c14}
+.chip.done{background:var(--teal);border-color:var(--teal);color:#fff}
+.chip small{display:block;font-family:inherit;font-size:11px;font-weight:800;letter-spacing:.5px;opacity:.6}
+.decode{min-height:56px;font-size:20px;font-weight:700;text-align:center;color:var(--purple);
+  padding:8px 4px;line-height:1.35}
+
+/* ---------- inputs ---------- */
+input[type=number]{font-family:Consolas,monospace;font-size:22px;font-weight:800;color:var(--navy);
+  border:3px solid var(--line);border-radius:10px;padding:9px 12px;width:150px;text-align:center}
+input:focus{outline:none;border-color:var(--purple)}
+
+.two{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.two>div{flex:1;min-width:210px;background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-size:17px}
+.two h4{margin:0 0 6px;font-size:13px;color:var(--purple);text-transform:uppercase;letter-spacing:.5px}
+.two code{font-family:Consolas,monospace;font-size:19px;font-weight:800;display:block;margin:4px 0}
+
+ul{margin:8px 0;padding-left:22px;font-size:17px}
+li{margin:6px 0}
+
+nav.foot{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.nav-b{background:var(--teal);border:none;color:#fff;padding:14px 28px;font-size:18px}
+.nav-b:hover:not(:disabled){background:var(--teal2)}
+.nav-b.back{background:#fff;color:var(--navy);border:2px solid var(--line);padding:14px 18px}
+.locked{font-size:14px;color:var(--purple);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>⚖️ The Beam Balance</h1>
+  <div class="bar"><i id="pbar"></i></div>
+  <div class="hstat">
+    <span id="hstep">1 / 16</span>
+    <span id="hpred">guesses right: 0 / 0</span>
+  </div>
+</header>
+
+<div class="map" id="map"></div>
+<div id="stage"></div>
+
+<nav class="foot">
+  <button class="nav-b back" id="back">←</button>
+  <span class="locked" id="lock"></span>
+  <button class="nav-b back" id="backToArcade" style="display:none">← back to the Arcade</button>
+  <button class="nav-b" id="next">next →</button>
+</nav>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* =====================================================================
+   1. THE BEAM ENGINE
+   A pan is a bag of counted things: {o:6} is six oranges, {t:27.6} is
+   27.6 lots of the unknown t. Its weight is the honest sum of
+   count x true-worth, so the beam tips because of arithmetic, never
+   because a script said so. The whole lesson is that the beam knows
+   things the student has not been told.
+   ===================================================================== */
+
+var GLYPH = {o:'🍊', a:'🍏', b:'🍌', m:'🍉'};
+var WORTH = {o:1, a:1, b:2, m:3, n:1, t:30/27.6};
+var LABEL = {o:'🍊', a:'🍏', b:'🍌', m:'🍉', n:'', t:'t'};
+
+function weight(pan){ var w=0; for(var k in pan) w+=pan[k]*WORTH[k]; return w; }
+
+/* Big numbers read as degrees and want to be whole (391, not 391.304);
+   small ones are turns and want their decimals (1.087). */
+function num(v){
+  if(Math.abs(v)>=100) return String(Math.round(v));
+  var r=Math.round(v*1000)/1000;
+  if(Math.abs(r-Math.round(r))<0.0005) return String(Math.round(r));
+  return String(r);
+}
+/* Can this pan be drawn as countable objects? Only if every entry is a
+   small whole number of something with a face. The robot pan (27.6 lots
+   of t) cannot be — and that failure IS the abstraction step, so we let
+   it fall through to symbols rather than faking 27.6 wheels. */
+function drawable(pan){
+  for(var k in pan){
+    if(pan[k]===0) continue;
+    if(!GLYPH[k]) return false;
+    if(pan[k]<0 || pan[k]>12 || Math.abs(pan[k]-Math.round(pan[k]))>1e-9) return false;
+  }
+  return true;
+}
+function symbolic(pan){
+  var parts=[];
+  for(var k in pan){
+    if(Math.abs(pan[k])<1e-12) continue;
+    var c=pan[k], L=LABEL[k];
+    if(!L) parts.push(num(c));
+    else if(Math.abs(c-1)<1e-12) parts.push(L);
+    else parts.push(num(c)+' × '+L);
+  }
+  return parts.length ? parts.join('  +  ') : '0';
+}
+function apply(pan, delta){
+  var out={};
+  for(var k in pan) out[k]=pan[k];
+  for(var k2 in delta) out[k2]=(out[k2]||0)+delta[k2];
+  for(var k3 in out) if(Math.abs(out[k3])<1e-12) delete out[k3];
+  return out;
+}
+function scale(pan, f){ var out={}; for(var k in pan) out[k]=pan[k]*f; return out; }
+
+function Beam(host){
+  host.innerHTML =
+    '<div class="beamwrap">'+
+    '<svg viewBox="0 0 880 245" preserveAspectRatio="xMidYMid meet" role="img" aria-label="a balance beam">'+
+      '<g class="bm" style="transition:transform .55s cubic-bezier(.34,1.3,.64,1)">'+
+        '<rect x="110" y="78" width="660" height="12" rx="6" fill="#1C355E"/>'+
+        '<line x1="228" y1="87" x2="228" y2="112" stroke="#1C355E" stroke-width="4"/>'+
+        '<line x1="652" y1="87" x2="652" y2="112" stroke="#1C355E" stroke-width="4"/>'+
+        '<rect x="104" y="112" width="248" height="76" rx="13" fill="#625D9C"/>'+
+        '<rect x="528" y="112" width="248" height="76" rx="13" fill="#00AE8D"/>'+
+        '<g class="lp"></g><g class="rp"></g>'+
+      '</g>'+
+      '<path d="M 440 84 L 408 205 L 472 205 Z" fill="#1C355E"/>'+
+      '<rect x="366" y="205" width="148" height="11" rx="5" fill="#1C355E"/>'+
+      '<text x="440" y="60" font-size="32" font-weight="800" fill="#1C355E" text-anchor="middle" class="sign">=</text>'+
+    '</svg>'+
+    '<div class="state"></div></div>';
+
+  var svg=host.querySelector('svg'), bm=host.querySelector('.bm');
+  var lp=host.querySelector('.lp'), rp=host.querySelector('.rp');
+  var sign=host.querySelector('.sign'), state=host.querySelector('.state');
+  var L={}, R={};
+
+  function paint(g, pan, cx){
+    var s='';
+    if(drawable(pan)){
+      var list=[];
+      for(var k in pan) for(var i=0;i<pan[k];i++) list.push(GLYPH[k]);
+      var per = list.length>6 ? Math.ceil(list.length/2) : list.length;
+      var rows = list.length>6 ? 2 : 1;
+      for(var n=0;n<list.length;n++){
+        var row=Math.floor(n/per), col=n%per;
+        var inRow = (row===rows-1) ? (list.length-row*per) : per;
+        var x = cx + (col-(inRow-1)/2)*32;
+        var y = 150 + (rows===1?8:0) + (row-(rows-1)/2)*30;
+        s += '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="26" text-anchor="middle">'+list[n]+'</text>';
+      }
+      if(!list.length) s = '<text x="'+cx+'" y="158" font-size="22" font-weight="800" fill="#fff" text-anchor="middle">empty</text>';
+    } else {
+      s = '<text x="'+cx+'" y="159" font-size="27" font-weight="800" fill="#fff" text-anchor="middle" '+
+          'font-family="Consolas,monospace">'+symbolic(pan)+'</text>';
+    }
+    g.innerHTML=s;
+  }
+
+  function render(){
+    paint(lp,L,228); paint(rp,R,652);
+    var lv=weight(L), rv=weight(R), diff=rv-lv;
+    var sc=Math.max(Math.abs(lv),Math.abs(rv),1);
+    var ang=Math.max(-11,Math.min(11, diff/sc*26));
+    bm.setAttribute('transform','rotate('+ang.toFixed(2)+' 440 84)');
+    var level=Math.abs(diff)<0.005;
+    sign.textContent = level ? '=' : '≠';
+    sign.setAttribute('fill', level ? '#00AE8D' : '#E96852');
+    state.textContent = level ? 'LEVEL ⚖️' : 'TIPPED 💥';
+    state.style.color = level ? '#00AE8D' : '#E96852';
+    return level;
+  }
+
+  return {
+    set:function(l,r){ L=l; R=r; return render(); },
+    move:function(d){ if(d.left) L=apply(L,d.left); if(d.right) R=apply(R,d.right); return render(); },
+    scale:function(fl,fr){ if(fl) L=scale(L,fl); if(fr) R=scale(R,fr); return render(); },
+    left:function(){return L;}, right:function(){return R;},
+    node:svg
+  };
+}
+
+/* =====================================================================
+   2. SHELL
+   ===================================================================== */
+var predOK=0, predN=0, cur=0, unlocked=[true];
+
+/* Scrolling is a nicety; any failure is swallowed, because a thrown
+   scroll used to strand a student on a step that could not be unlocked. */
+function peek(node, where){
+  try{ if(node && node.scrollIntoView) node.scrollIntoView({block:where||'center',behavior:'smooth'}); }
+  catch(e){ try{ node.scrollIntoView(); }catch(e2){} }
+}
+function toTop(){ try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){ try{ window.scrollTo(0,0); }catch(e2){} } }
+
+function score(ok){ predN++; if(ok) predOK++; paintHead(); }
+
+/* =====================================================================
+   THE WAY BACK
+   Opened from recap-arcade.html with ?from=arcade, this lab is one leg of
+   a round trip, not a destination. markDone() is called by gate leg 3 —
+   the make-up-a-distance check in step 15 — so the flag means "this
+   student converted a distance they had never seen", not "this student
+   opened the tab".
+   ===================================================================== */
+var BEAM_KEY='rockstars.beam.done';
+var FROM_ARCADE=/[?&]from=arcade\b/.test(location.search);
+function beamStore(){ try{ return window.localStorage; }catch(e){ return null; } }
+function markDone(){
+  var s=beamStore(); if(s){ try{ s.setItem(BEAM_KEY, String(Date.now())); }catch(e){} }
+  paintReturn();
+}
+function isDone(){ var s=beamStore(); if(!s) return false; try{ return !!s.getItem(BEAM_KEY); }catch(e){ return false; } }
+function paintReturn(){
+  var slot=document.getElementById('backToArcade');
+  var show = FROM_ARCADE || isDone();
+  slot.style.display = show ? '' : 'none';
+  slot.textContent = isDone() ? '✅ back to the Arcade' : '← back to the Arcade';
+}
+function toArcade(){
+  /* opened in its own tab by the arcade — closing returns focus to it */
+  if(FROM_ARCADE){ try{ window.close(); }catch(e){} }
+  setTimeout(function(){ location.href='recap-arcade.html'; }, 120);
+}
+function paintHead(){
+  document.getElementById('hstep').textContent=(cur+1)+' / '+STEPS.length;
+  document.getElementById('hpred').textContent='guesses right: '+predOK+' / '+predN;
+  document.getElementById('pbar').style.width=(cur/(STEPS.length-1)*100).toFixed(1)+'%';
+}
+function unlock(){ unlocked[cur]=true; document.getElementById('next').disabled=false;
+  document.getElementById('lock').textContent=''; }
+function lock(msg){ document.getElementById('next').disabled=true;
+  document.getElementById('lock').textContent=msg||'🔒 finish this bit first'; }
+
+function paintMap(){
+  var m=document.getElementById('map'); m.innerHTML='';
+  STEPS.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='pip'+(i===cur?' now':(unlocked[i]?' done':''));
+    d.title=(i+1)+'. '+s.title.replace(/<[^>]*>/g,'');
+    d.onclick=function(){ if(unlocked[i]||i<cur) go(i); };
+    m.appendChild(d);
+  });
+}
+
+function go(i){
+  cur=Math.max(0,Math.min(STEPS.length-1,i));
+  var s=STEPS[cur];
+  document.getElementById('stage').innerHTML='<div class="card"><h2>'+s.title+'</h2><div id="bd"></div></div>';
+  var bd=document.getElementById('bd');
+  document.getElementById('back').disabled=(cur===0);
+  document.getElementById('next').textContent=(cur===STEPS.length-1)?'↺ again':'next →';
+  if(unlocked[cur+1] || !s.gate) unlock(); else lock(s.lockMsg);
+  s.build(bd);
+  paintMap(); paintHead(); toTop();
+}
+
+/* ---- builders -------------------------------------------------------- */
+
+/* A scripted beam: every move must be PREDICTED before it is applied.
+   No move ever fires on its own — that is the whole point of this file. */
+function scripted(bd, cfg){
+  var h=document.createElement('div'); bd.appendChild(h);
+  var beam=Beam(h);
+  beam.set(cfg.start.left, cfg.start.right);
+  var slot=document.createElement('div'); bd.appendChild(slot);
+  var done=0;
+
+  function moveUI(idx){
+    var mv=cfg.moves[idx];
+    var box=document.createElement('div'); box.className='move';
+    box.innerHTML='<div class="md">'+mv.desc+'</div>'+
+      (mv.expect?'<div class="ask">Guess first! 👇</div>':'')+
+      '<div class="btns"></div><div class="fb"></div>';
+    slot.appendChild(box);
+    var btns=box.querySelector('.btns'), fb=box.querySelector('.fb');
+
+    function fire(){
+      var level = mv.scale ? beam.scale(mv.scale[0],mv.scale[1]) : beam.move(mv.delta||{});
+      peek(beam.node);
+      return level;
+    }
+    function after(ok){
+      fb.className='fb show '+(ok?'good':'bad');
+      fb.innerHTML=(mv.expect?'<span class="tag">'+(ok?'✅ You called it!':'❌ Nope!')+'</span>':'')+mv.after;
+      done++;
+      if(done<cfg.moves.length) moveUI(done);
+      else { if(cfg.end){ var e=document.createElement('div'); e.className=cfg.endClass||'big win'; e.innerHTML=cfg.end; slot.appendChild(e);} unlock(); }
+    }
+
+    if(mv.expect){
+      ['level','tip'].forEach(function(p){
+        var b=document.createElement('button'); b.className='pred';
+        b.textContent = p==='level' ? '⚖️ stays LEVEL' : '💥 it TIPS';
+        b.onclick=function(){
+          Array.prototype.forEach.call(btns.children,function(x){x.disabled=true;});
+          b.classList.add('pick');
+          var ok=(p===mv.expect); score(ok);
+          fire(); setTimeout(function(){after(ok);},450);
+        };
+        btns.appendChild(b);
+      });
+    } else {
+      var b2=document.createElement('button'); b2.className='op'; b2.textContent=mv.label||'do it ▸';
+      b2.onclick=function(){ b2.disabled=true; fire(); setTimeout(function(){after(true);},450); };
+      btns.appendChild(b2);
+    }
+    peek(box,'nearest');
+  }
+  lock(cfg.lock||'🔒 do every move first');
+  moveUI(0);
+}
+
+function quiz(bd, cfg){
+  var box=document.createElement('div');
+  box.innerHTML='<div class="big">'+cfg.q+'</div><div class="opts"></div><div class="fb"></div>';
+  bd.appendChild(box);
+  var opts=box.querySelector('.opts'), fb=box.querySelector('.fb');
+  cfg.options.forEach(function(o){
+    var b=document.createElement('button'); b.className='opt'; b.innerHTML=o.t;
+    b.onclick=function(){
+      Array.prototype.forEach.call(opts.children,function(x){x.disabled=true;x.classList.add('dim');});
+      b.classList.remove('dim'); b.classList.add(o.ok?'correct':'wrong');
+      if(!o.ok){
+        var gi=0; cfg.options.forEach(function(z,zi){ if(z.ok) gi=zi; });
+        opts.children[gi].classList.remove('dim');
+      }
+      score(!!o.ok);
+      fb.className='fb show '+(o.ok?'good':'bad');
+      fb.innerHTML='<span class="tag">'+(o.ok?'✅ Yes!':'❌ Not quite.')+'</span>'+o.why;
+      unlock();
+    };
+    opts.appendChild(b);
+  });
+  lock('🔒 pick an answer');
+}
+
+/* =====================================================================
+   3. THE LESSON — one idea per screen
+   ===================================================================== */
+var STEPS=[
+
+/* 1 ------------------------------------------------------------------ */
+/* Grounding. A student who missed class does not remember 27.6, so it is
+   re-earned here by watching the rope unroll — not asserted in a sentence. */
+{
+ title:'🎡 One turn of your wheel',
+ gate:true, lockMsg:'🔒 roll the wheel',
+ build:function(bd){
+  bd.innerHTML='<p class="lead">In class you wrapped a rope round your wheel and rolled it <b>once</b>.</p>';
+  var d=document.createElement('div');
+  d.innerHTML=
+   '<div class="beamwrap"><svg viewBox="0 0 700 200" role="img" aria-label="a wheel rolling one full turn">'+
+     '<line x1="60" y1="150" x2="660" y2="150" stroke="#dbe2ea" stroke-width="6" stroke-linecap="round"/>'+
+     '<line class="rope" x1="100" y1="150" x2="351" y2="150" stroke="#E96852" stroke-width="11" '+
+       'stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251" '+
+       'style="transition:stroke-dashoffset 2s linear"/>'+
+     '<line x1="100" y1="132" x2="100" y2="168" stroke="#1C355E" stroke-width="4"/>'+
+     '<line class="tick" x1="351" y1="132" x2="351" y2="168" stroke="#1C355E" stroke-width="4" '+
+       'opacity="0" style="transition:opacity .3s"/>'+
+     '<g class="wheel" transform="translate(100,110)" style="transition:transform 2s linear">'+
+       '<circle r="40" fill="none" stroke="#1C355E" stroke-width="9"/>'+
+       '<line x1="0" y1="-40" x2="0" y2="40" stroke="#1C355E" stroke-width="5"/>'+
+       '<line x1="-40" y1="0" x2="40" y2="0" stroke="#1C355E" stroke-width="5"/>'+
+       '<circle r="7" fill="#1C355E"/>'+
+       '<circle cx="0" cy="-40" r="9" fill="#FFD500" stroke="#1C355E" stroke-width="3"/>'+
+     '</g>'+
+     '<text class="lbl" x="225" y="190" font-size="26" font-weight="800" fill="#E96852" '+
+       'text-anchor="middle" opacity="0" style="transition:opacity .4s">27.6 cm</text>'+
+   '</svg></div>'+
+   '<div class="btns"><button class="op" id="roll">🎬 roll it one turn</button></div>'+
+   '<div class="fb" id="rfb"></div>';
+  bd.appendChild(d);
+
+  var wheel=d.querySelector('.wheel'), rope=d.querySelector('.rope');
+  var tick=d.querySelector('.tick'), lbl=d.querySelector('.lbl');
+  var btn=d.querySelector('#roll'), fb=d.querySelector('#rfb');
+  var rolled=false;
+
+  btn.onclick=function(){
+    if(!rolled){
+      wheel.setAttribute('transform','translate(351,110) rotate(360)');
+      rope.style.strokeDashoffset='0';
+      setTimeout(function(){
+        tick.setAttribute('opacity','1'); lbl.setAttribute('opacity','1');
+        fb.className='fb show good';
+        fb.innerHTML='<span class="tag">📏 One turn = 27.6 cm</span>'+
+          'That is <span class="eq">C = π × d</span> — your wheel is 8.8 cm across, and π × 8.8 = 27.6.'+
+          '<br><b>You measured this yourself. It is yours.</b>';
+        unlock();
+      },2050);
+      rolled=true; btn.textContent='↺ roll it again';
+    } else {
+      wheel.style.transition='none'; rope.style.transition='none';
+      wheel.setAttribute('transform','translate(100,110) rotate(0)');
+      rope.style.strokeDashoffset='251';
+      tick.setAttribute('opacity','0'); lbl.setAttribute('opacity','0');
+      setTimeout(function(){
+        wheel.style.transition='transform 2s linear'; rope.style.transition='stroke-dashoffset 2s linear';
+        wheel.setAttribute('transform','translate(351,110) rotate(360)');
+        rope.style.strokeDashoffset='0';
+        setTimeout(function(){ tick.setAttribute('opacity','1'); lbl.setAttribute('opacity','1'); },2050);
+      },50);
+    }
+  };
+  lock('🔒 roll the wheel');
+ }
+},
+
+/* 2 ------------------------------------------------------------------ */
+/* The hook. They are handed one answer, then asked a question it cannot
+   reach — and the WHEEL changes too, so the session-1 shortcut (13.04°/cm)
+   is dead as well, not just the 1304. Feeling stuck here is the point. */
+{
+ title:'🤨 Now a different wheel',
+ gate:true, lockMsg:'🔒 have a go first',
+ build:function(bd){
+  bd.innerHTML=
+   '<p class="lead">In class someone handed you <b>one</b> answer:</p>'+
+   '<div class="big">drive 100 cm → 1304°</div>'+
+   '<p class="lead">Now swap to a <b>bigger wheel</b> 🛞 — one turn rolls <b>36 cm</b>.</p>'+
+   '<div class="big win">Drive <b>42 cm</b>.<br>How many degrees?</div>'+
+   '<div class="btns"><input type="number" id="g42" placeholder="degrees">'+
+   '<button class="op" id="gck">check</button>'+
+   '<button class="op ghost" id="gno">🤷 no idea</button></div>'+
+   '<div class="fb" id="gfb"></div>';
+
+  var fb=bd.querySelector('#gfb');
+  var TAIL='<br><br>You were given an <b>answer</b>, not a <b>tool</b>. 🧰<br>'+
+    'This session you build the tool — out of <b>fruit</b>. No robot needed.';
+  function finish(html,ok){
+    fb.className='fb show '+(ok?'good':'bad');
+    fb.innerHTML=html+TAIL;
+    bd.querySelector('#gck').disabled=true; bd.querySelector('#gno').disabled=true;
+    bd.querySelector('#g42').disabled=true;
+    unlock();
+  }
+  bd.querySelector('#gno').onclick=function(){
+    finish('<span class="tag">🤷 Nor could most people.</span>That 1304° was for <b>one</b> distance on '+
+      '<b>one</b> wheel. Change either and it is rubbish.',false);
+  };
+  bd.querySelector('#gck').onclick=function(){
+    var box=bd.querySelector('#g42');
+    if(box.value===''){ box.focus(); return; }
+    var ok=Math.abs(+box.value-420)<=5;
+    finish(ok
+      ? '<span class="tag">😲 420° — how did you do that?!</span>Nice. Now do 17 cm. And 63. And on a wheel '+
+        'nobody has measured yet. Every time?'
+      : '<span class="tag">It is 420°.</span>Hard without a method — 1304° was for <b>one</b> distance on '+
+        '<b>one</b> wheel. Change either and it is rubbish.', ok);
+  };
+  lock('🔒 have a go first');
+ }
+},
+
+/* 3 ------------------------------------------------------------------ */
+{
+ title:'Two different kinds of =',
+ gate:true,
+ build:function(bd){
+  bd.innerHTML=
+   '<div class="two">'+
+     '<div><h4>Python ➡️ arrow</h4><code>speed = 200</code><b>Put</b> 200 in the box.</div>'+
+     '<div><h4>Maths ⚖️ balance</h4><code>27.6 × t = 30</code>Both sides <b>weigh the same</b>.</div>'+
+   '</div>'+
+   '<p class="lead">This session is all the <b>balance</b> one. ⚖️</p>';
+  quiz(bd,{
+   q:'<span class="eq">count = count + 1</span><br>Arrow or balance?',
+   options:[
+    {t:'⚖️ Balance', ok:false,
+     why:'Nothing can weigh <b>one more than itself</b>! That is how you know it must be an arrow.'},
+    {t:'➡️ Arrow', ok:true,
+     why:'Nothing can weigh one more than itself. So it must mean: take count, add 1, put it back.'}
+   ]});
+ }
+},
+
+/* 4 ------------------------------------------------------------------ */
+{
+ title:'Meet the beam 🍊',
+ build:function(bd){
+  bd.innerHTML='<p class="lead">🍊 = <b>1</b>. That is our unit.</p>';
+  var h=document.createElement('div'); bd.appendChild(h);
+  Beam(h).set({o:3},{o:3});
+  var p=document.createElement('div');
+  p.innerHTML='<div class="big">🍏 🍌 🍉 = ??<br>'+
+   '<span style="font-size:16px;font-weight:600">Nobody will tell you. You will find out.</span></div>';
+  bd.appendChild(p);
+ }
+},
+
+/* 5 ------------------------------------------------------------------ */
+{
+ title:'Take 1 off each side',
+ gate:true, lockMsg:'🔒 guess all 3 moves',
+ build:function(bd){
+  bd.innerHTML='<p class="lead">6 🍊 balance 6 🍏. Watch what stays true.</p>';
+  scripted(bd,{
+   start:{left:{o:6}, right:{a:6}},
+   moves:[
+    {desc:'Take <b>1 off each side</b>.', expect:'level', delta:{left:{o:-1},right:{a:-1}},
+     after:'Same off both sides → still level.'},
+    {desc:'Take <b>4 more off each side</b>.', expect:'level', delta:{left:{o:-4},right:{a:-4}},
+     after:'1 🍊 = 1 🍏. <b>The beam just told you an apple = an orange!</b> 🕵️'},
+    {desc:'Now put 1 🍊 on the <b>left only</b>. 😈', expect:'tip', delta:{left:{o:1}},
+     after:'Left got heavier, right did not. Of course it tips.'}
+   ],
+   lock:'🔒 guess all 3 moves',
+   end:'📏 <b>THE RULE</b><br>Do the same to <b>both</b> sides.'
+  });
+ }
+},
+
+/* 6 ------------------------------------------------------------------ */
+{
+ title:'🔥 Your rule breaks',
+ gate:true, lockMsg:'🔒 make your guess',
+ build:function(bd){
+  bd.innerHTML='<p class="lead">New puzzle: 6 🍊 = 3 🍌. Level, so it is true.</p>'+
+   '<p class="lead">Now obey <b>your own rule</b>. Same move, both sides.</p>';
+  scripted(bd,{
+   start:{left:{o:6}, right:{b:3}},
+   moves:[
+    {desc:'Take <b>1 thing</b> off the left and <b>1 thing</b> off the right.',
+     expect:'tip', delta:{left:{o:-1},right:{b:-1}},
+     after:'💥 You did exactly what your rule said… and it fell over. <b>So the rule is wrong.</b>'}
+   ],
+   lock:'🔒 no peeking — guess first',
+   end:'🤔 Why? Turn the page.'
+  });
+ }
+},
+
+/* 7 ------------------------------------------------------------------ */
+{
+ title:'Same number ≠ same amount',
+ gate:true,
+ build:function(bd){
+  bd.innerHTML=
+   '<p class="lead">A 🍌 is <b>heavier</b> than a 🍊.</p>'+
+   '<p class="lead">So taking 1 thing off each side took <b>different weights</b> off.</p>';
+  quiz(bd,{
+   q:'So what is the fixed rule?',
+   options:[
+    {t:'Do the same <b>amount</b> to both sides', ok:true,
+     why:'🎯 That is it. The beam only cares about <b>weight</b>, never about how many things you counted.'},
+    {t:'Do the same <b>number of things</b> to both sides', ok:false,
+     why:'That is the one that just broke! 1 🍌 is not the same amount as 1 🍊. The beam counts <b>weight</b>.'}
+   ]});
+  var d=document.createElement('div');
+  d.innerHTML='<div class="big win">📏 <b>THE REAL RULE</b><br>Same <b>AMOUNT</b> both sides.<br>Not same number of things.</div>';
+  bd.appendChild(d);
+ }
+},
+
+/* 8 ------------------------------------------------------------------ */
+{
+ title:'🧪 Weigh the banana',
+ gate:true, lockMsg:'🔒 find the banana',
+ build:function(bd){
+  bd.innerHTML='<p class="lead">Take 1 🍌 off the right. How many 🍊 fix it?</p>';
+  scripted(bd,{
+   start:{left:{o:6}, right:{b:3}},
+   moves:[
+    {desc:'Remove 1 🍌 from the right.', label:'− 1 🍌 ▸', delta:{right:{b:-1}},
+     after:'Tipped. Now fix it from the left.'},
+    {desc:'Take <b>1 🍊</b> off the left.', expect:'tip', delta:{left:{o:-1}},
+     after:'Not enough! A 🍌 is worth <b>more</b> than 1 🍊.'},
+    {desc:'Take <b>1 more 🍊</b> off the left.', expect:'level', delta:{left:{o:-1}},
+     after:'⚖️ Level!'}
+   ],
+   lock:'🔒 find the banana',
+   end:'🔍 <b>1 🍌 = 2 🍊</b><br><span style="font-size:16px;font-weight:600">Nobody told you. You weighed it.</span>'
+  });
+ }
+},
+
+/* 9 ------------------------------------------------------------------ */
+{
+ title:'× is just +',
+ gate:true, lockMsg:'🔒 rotate the dots',
+ build:function(bd){
+  bd.innerHTML='<div class="big">3 × 2 = 2 + 2 + 2 = 6</div>'+
+   '<p class="lead">Is <b>3 × 2</b> the same as <b>2 × 3</b>? Turn it and see. 🔄</p>';
+  var d=document.createElement('div');
+  d.innerHTML='<div class="dots"><div class="grid" id="g1" style="grid-template-columns:repeat(2,30px)"></div></div>'+
+   '<div class="gl" id="lb1">3 rows of 2 = 6</div>'+
+   '<div class="btns" style="margin-top:12px"><button class="op" id="rot">🔄 turn it sideways</button></div>'+
+   '<div class="fb" id="rfb"></div>';
+  bd.appendChild(d);
+  var g=d.querySelector('#g1'), lb=d.querySelector('#lb1');
+  for(var i=0;i<6;i++){ var x=document.createElement('div'); x.className='dot'; g.appendChild(x); }
+  var turned=false;
+  d.querySelector('#rot').onclick=function(){
+    turned=!turned;
+    g.style.gridTemplateColumns='repeat('+(turned?3:2)+',30px)';
+    lb.innerHTML = turned ? '2 rows of 3 = <b>6</b>' : '3 rows of 2 = <b>6</b>';
+    var fb=d.querySelector('#rfb');
+    fb.className='fb show good';
+    fb.innerHTML='<span class="tag">🔄 Same dots!</span>Nobody added one. You just turned the paper. '+
+      'That is why the order never matters.';
+    unlock();
+  };
+  lock('🔒 rotate the dots');
+ }
+},
+
+/* 10 ----------------------------------------------------------------- */
+{
+ title:'Double the whole beam',
+ gate:true, lockMsg:'🔒 guess both moves',
+ build:function(bd){
+  bd.innerHTML='<p class="lead">You proved it: 2 🍊 = 1 🍌.</p>';
+  scripted(bd,{
+   start:{left:{o:2}, right:{b:1}},
+   moves:[
+    {desc:'Multiply <b>both</b> pans by 2.', expect:'level', scale:[2,2],
+     after:'4 🍊 = 2 🍌. Still true!'},
+    {desc:'Now × 1.5 more — <b>both</b> pans.', expect:'level', scale:[1.5,1.5],
+     after:'6 🍊 = 3 🍌. 👀 <b>That is the puzzle that broke your rule!</b> It was this same tiny beam, blown up.'}
+   ],
+   lock:'🔒 guess both moves',
+   end:'✖️ You can <b>multiply both sides</b> by anything.'
+  });
+ }
+},
+
+/* 11 ----------------------------------------------------------------- */
+{
+ title:'Divide = solving 🎓',
+ gate:true, lockMsg:'🔒 get down to 1 melon',
+ build:function(bd){
+  bd.innerHTML='<p class="lead">2 🍉 = 6 🍊.</p>'+
+   '<p class="lead">I want to know what <b>ONE</b> 🍉 is worth.</p>';
+  scripted(bd,{
+   start:{left:{m:2}, right:{o:6}},
+   moves:[
+    {desc:'Divide <b>both</b> pans by 2.', expect:'level', scale:[0.5,0.5],
+     after:'1 🍉 = 3 🍊. You got it down to <b>ONE</b> melon. 🎓 That is what "solving" means!'}
+   ],
+   lock:'🔒 get down to 1 melon',
+   end:'🔑 <b>To find ONE of something:</b><br>divide both sides by how many you have got.'
+  });
+  var d=document.createElement('div');
+  d.innerHTML='<ul><li>Stuck with 2 melons? ÷ 2</li><li>Stuck with 5 melons? ÷ 5</li>'+
+   '<li>Stuck with <b>27.6</b> of something? 👀</li></ul>';
+  bd.appendChild(d);
+ }
+},
+
+/* 12 ----------------------------------------------------------------- */
+/* 13 ----------------------------------------------------------------
+   Symbols BEFORE the robot beam. A letter is not a new kind of thing —
+   it is the fruit they have been weighing all along, minus the picture.
+   Nothing is solved here; the only job is reading the sentence. */
+{
+ title:'❓ Solve for the picture',
+ gate:true, lockMsg:'🔒 solve all three',
+ build:function(bd){
+  bd.innerHTML='<p class="lead">No beam this time. Just the pictures.</p>'+
+   '<p class="lead">Each one is hiding a number. Find it. 🕵️</p>';
+
+  var Q=[
+   {eq:'🍌 + 🍌 + 🍌 &nbsp;=&nbsp; 6 🍊',
+    ask:'So one 🍌 = ?',
+    opts:['1 🍊','2 🍊','3 🍊'], ok:1,
+    why:'6 🍊 shared between 3 🍌. You divided both sides by 3 — the melon move.'},
+   {eq:'💧 + 💧 + 💧 + 💧 &nbsp;=&nbsp; 12 🍏',
+    ask:'So one 💧 = ?',
+    opts:['2 🍏','3 🍏','4 🍏'], ok:1,
+    why:'Not even a fruit — and it still worked. ÷ 4 on both sides. The move does not care what the picture is.'},
+   {eq:'❓ × 🍌 &nbsp;=&nbsp; 12 🍊 &nbsp;&nbsp;<span style="font-size:16px">(and 🍌 = 2 🍊)</span>',
+    ask:'How many 🍌?',
+    opts:['4','6','8'], ok:1,
+    why:'Each 🍌 is worth 2 🍊, so 6 of them make 12. 👀 Notice this one was different — the missing bit was a '+
+        '<b>how many</b>, not a weight.'}
+  ];
+
+  var slot=document.createElement('div'); bd.appendChild(slot);
+  var done=0;
+
+  function card(i){
+    var q=Q[i];
+    var box=document.createElement('div'); box.className='move';
+    box.innerHTML='<div class="md">'+q.eq+'</div><div class="ask">'+q.ask+'</div>'+
+      '<div class="btns picks"></div><div class="fb"></div>';
+    slot.appendChild(box);
+    var picks=box.querySelector('.picks'), fb=box.querySelector('.fb');
+
+    q.opts.forEach(function(o,k){
+      var b=document.createElement('button'); b.className='pred pick2'; b.innerHTML=o;
+      b.onclick=function(){
+        Array.prototype.forEach.call(picks.children,function(x){x.disabled=true;});
+        var ok=(k===q.ok);
+        b.classList.add(ok?'ok':'no');
+        if(!ok) picks.children[q.ok].classList.add('ok');
+        score(ok);
+        fb.className='fb show '+(ok?'good':'bad');
+        fb.innerHTML='<span class="tag">'+(ok?'✅ Got it.':'❌ It is '+q.opts[q.ok]+'.')+'</span>'+q.why;
+        done++;
+        if(done<Q.length){ card(done); }
+        else {
+          var e=document.createElement('div'); e.className='big win';
+          e.innerHTML='🔤 That <b>❓</b> needs a shorter name.<br>'+
+            '<span style="font-size:18px;font-weight:600">Grown-ups write a <b>letter</b> instead — like '+
+            '<span class="eq">t</span>. Exact same job: the bit you have not found yet.</span>';
+          slot.appendChild(e);
+          unlock();
+        }
+      };
+      picks.appendChild(b);
+    });
+    peek(box,'nearest');
+  }
+  card(0);
+  lock('🔒 solve all three');
+ }
+},
+
+/* 14 ----------------------------------------------------------------
+   Now the letter. Same sentence, decoded piece by piece. */
+{
+ title:'🔤 Read the robot sentence',
+ gate:true, lockMsg:'🔒 tap all 5 pieces',
+ build:function(bd){
+  bd.innerHTML=
+   '<p class="lead">Here it is with a letter instead of a picture.</p>'+
+   '<div class="big">27.6 × t = 30</div>'+
+   '<p class="lead" style="text-align:center"><b>Tap every piece to decode it.</b> 👇</p>';
+
+  var PIECES=[
+   {s:'27.6', m:'how far <b>one turn</b> rolls, in cm 🎡'},
+   {s:'×',    m:'“<b>lots of</b>” — 3 × 🍌 means 🍌 🍌 🍌'},
+   {s:'t',    m:'the <b>❓</b> from last screen: how many turns 🤷'},
+   {s:'=',    m:'both sides weigh <b>the same</b> ⚖️'},
+   {s:'30',   m:'how far we <b>want</b> to go, in cm 🎯'}
+  ];
+  var d=document.createElement('div');
+  d.innerHTML='<div class="chips"></div><div class="decode">☝️ tap one</div><div class="fb"></div>';
+  bd.appendChild(d);
+  var chips=d.querySelector('.chips'), out=d.querySelector('.decode'), fb=d.querySelector('.fb');
+  var left=PIECES.length;
+
+  PIECES.forEach(function(p){
+    var b=document.createElement('button'); b.className='chip'; b.innerHTML=p.s;
+    b.onclick=function(){
+      out.innerHTML=p.m;
+      if(!b.classList.contains('done')){
+        b.classList.add('done'); left--;
+        if(left===0){
+          fb.className='fb show good';
+          fb.innerHTML='<span class="tag">🔓 You can read it now.</span>'+
+            '<b>27.6 cm, t times over, is the same as 30 cm.</b><br>'+
+            'That is all an equation ever is — a sentence with the boring words taken out.';
+          unlock();
+        }
+      }
+    };
+    chips.appendChild(b);
+  });
+  lock('🔒 tap all 5 pieces');
+ }
+},
+
+{
+ title:'🤖 Now the robot',
+ gate:true, lockMsg:'🔒 solve the robot beam',
+ build:function(bd){
+  bd.innerHTML=
+   '<p class="lead">You can <b>read</b> it. Now <b>solve</b> it.</p>'+
+   '<div class="big">27.6 × t = 30</div>'+
+   '<p class="lead">Same as the melon: you have <b>27.6</b> of a thing, you want <b>one</b>.</p>';
+  scripted(bd,{
+   start:{left:{t:27.6}, right:{n:30}},
+   moves:[
+    {desc:'Divide <b>both</b> sides by 27.6.', expect:'level', scale:[1/27.6,1/27.6],
+     after:'t = <b>1.087 turns</b>. Solved — exactly the melon move.'},
+    {desc:'Motors count <b>degrees</b>, and 1 turn = 360°.<br>Multiply <b>both</b> sides by 360.',
+     expect:'level', scale:[360,360],
+     after:'<b>≈ 391°</b> 🎉'}
+   ],
+   lock:'🔒 solve the robot beam',
+   end:'🤖 Two moves. <b>Nobody handed you 391.</b>'
+  });
+ }
+},
+
+/* 15 ----------------------------------------------------------------- */
+{
+ title:'🧰 Your tool',
+ build:function(bd){
+  bd.innerHTML=
+   '<div class="big win">degrees = (distance ÷ 27.6) × 360</div>'+
+   '<p class="lead">Any distance in → degrees out. This is yours now.</p>'+
+   '<div class="big" id="rq">…</div>'+
+   '<div class="btns"><input type="number" id="r3" placeholder="degrees">'+
+   '<button class="op" id="c3">check</button><button class="op ghost" id="r3n">🎲 new one</button></div>'+
+   '<div class="fb" id="f3"></div>';
+
+  var f3=bd.querySelector('#f3'), want=0;
+  function roll(){
+    var d=Math.floor(Math.random()*81)+15;
+    want=Math.round(d/27.6*360);
+    bd.querySelector('#rq').innerHTML='Drive <b>'+d+' cm</b>.<br>How many degrees?';
+    bd.querySelector('#r3').value=''; f3.className='fb';
+  }
+  bd.querySelector('#r3n').onclick=roll;
+  bd.querySelector('#c3').onclick=function(){
+    var box=bd.querySelector('#r3'), got=+box.value, ok=box.value!=='' && Math.abs(got-want)<=3;
+    f3.className='fb show '+(ok?'good':'bad');
+    f3.innerHTML= ok
+      ? '<span class="tag">✅ '+want+'°</span>Do a few more — a tool you can only use once is not a tool.'
+      : '<span class="tag">❌ It is '+want+'°</span>÷ 27.6 for turns, then × 360 for degrees.';
+    /* gate leg 3 passed on a distance nobody pre-computed — that is the lesson */
+    if(ok) markDone();
+  };
+  roll();
+
+  var tail=document.createElement('div');
+  tail.innerHTML='<div class="big" style="font-size:19px">📋 <b>Back at the bench</b><br>'+
+   '<span style="font-size:17px;font-weight:600">Drive 100, 42 and 17 cm. Tape-measure what the robot really did. '+
+   'It will be a bit short — that is the wheels, not your maths.</span></div>';
+  bd.appendChild(tail);
+ }
+},
+
+/* 16 ----------------------------------------------------------------- */
+{
+ title:'🏠 Free play',
+ build:function(bd){
+  bd.innerHTML='<p class="lead">Try to break it. You cannot. 😄</p>';
+  var ctl=document.createElement('div');
+  ctl.innerHTML=
+   '<div class="btns" style="margin-bottom:8px">'+
+   '<button class="op ghost" data-p="0">6🍊=6🍏</button>'+
+   '<button class="op ghost" data-p="1">6🍊=3🍌</button>'+
+   '<button class="op ghost" data-p="2">2🍉=6🍊</button>'+
+   '<button class="op ghost" data-p="3">27.6×t=30</button></div>'+
+   '<div class="btns">'+
+   '<button class="op ghost" data-s="both">⚖️ BOTH sides</button>'+
+   '<button class="op ghost" data-s="left">😈 LEFT only</button></div>';
+  bd.appendChild(ctl);
+  var h=document.createElement('div'); bd.appendChild(h);
+  var beam=Beam(h);
+  var ops=document.createElement('div'); ops.className='btns'; bd.appendChild(ops);
+  var msg=document.createElement('div'); msg.className='fb show good'; bd.appendChild(msg);
+
+  var P=[
+   {l:{o:6}, r:{a:6}, ops:['-1','+1','x2','/2'],
+    hint:'A fair fight — 1 🍏 = 1 🍊 here.'},
+   /* No ±1 here on purpose: with oranges left and bananas right, "− 1"
+      would remove one of each — exactly what the amber OBJECT button does.
+      Two buttons doing the same thing would muddy the one puzzle whose
+      whole job is to be unambiguous. */
+   {l:{o:6}, r:{b:3}, ops:['obj','x2','/2'],
+    hint:'The one that broke the rule. Try the orange button. 😈'},
+   {l:{m:2}, r:{o:6}, ops:['-1','+1','x2','/2'],
+    hint:'Get down to ONE 🍉: divide both sides by 2.'},
+   {l:{t:27.6}, r:{n:30}, ops:['/27.6','x360','x2','/2'],
+    hint:'The robot. ÷ 27.6 then × 360, both sides.'}
+  ];
+  var LBL={'-1':'− 1','+1':'+ 1','x2':'× 2','/2':'÷ 2','/27.6':'÷ 27.6','x360':'× 360','obj':'− 1 OBJECT'};
+  var cp=0, side='both';
+
+  function unitKind(pan){ /* what "− 1" removes: the plainest thing in the pan */
+    var order=['n','o','a','b','m','t'];
+    for(var i=0;i<order.length;i++) if(pan[order[i]]) return order[i];
+    return 'o';
+  }
+  function biggestKind(pan){ /* what "− 1 OBJECT" removes: whatever is sitting there */
+    for(var k in pan) if(pan[k]>0) return k;
+    return null;
+  }
+  function say(html,ok){ msg.className='fb show '+(ok?'good':'bad'); msg.innerHTML=html; }
+
+  function drawOps(){
+    ops.innerHTML='';
+    P[cp].ops.forEach(function(o){
+      var b=document.createElement('button');
+      b.className='op'+(o==='obj'?' danger':''); b.textContent=LBL[o];
+      b.onclick=function(){ run(o); };
+      ops.appendChild(b);
+    });
+    var r=document.createElement('button'); r.className='op ghost'; r.textContent='↺ reset';
+    r.onclick=function(){ load(cp); }; ops.appendChild(r);
+  }
+  function run(o){
+    var level;
+    if(o==='x2')         level = side==='both' ? beam.scale(2,2)             : beam.scale(2,1);
+    else if(o==='/2')    level = side==='both' ? beam.scale(0.5,0.5)         : beam.scale(0.5,1);
+    else if(o==='/27.6') level = side==='both' ? beam.scale(1/27.6,1/27.6)   : beam.scale(1/27.6,1);
+    else if(o==='x360')  level = side==='both' ? beam.scale(360,360)         : beam.scale(360,1);
+    else {
+      var d={}, sgn=(o==='+1')?1:-1;
+      if(o==='obj'){
+        var kl=biggestKind(beam.left()), kr=biggestKind(beam.right());
+        d.left={}; if(kl) d.left[kl]=-1;
+        if(side==='both' && kr){ d.right={}; d.right[kr]=-1; }
+      } else {
+        var kl2=unitKind(beam.left()), kr2=unitKind(beam.right());
+        d.left={}; d.left[kl2]=sgn;
+        if(side==='both'){ d.right={}; d.right[kr2]=sgn; }
+      }
+      level=beam.move(d);
+    }
+    if(o==='obj'){
+      say(level ? '✅ Level — but check the <b>weights</b>, not the count.'
+        : '❌ Tips! 1 🍌 is worth <b>2</b> 🍊. Same number, different amount.', level);
+    } else if(side==='left'){
+      say('❌ Tips. You changed one pan only.', false);
+    } else if(level){
+      say('✅ Still level. Left '+num(weight(beam.left()))+', right '+num(weight(beam.right()))+'.', true);
+    } else {
+      say('❌ Tipped. Left '+num(weight(beam.left()))+', right '+num(weight(beam.right()))+'.', false);
+    }
+  }
+  function load(i){
+    cp=i; beam.set(Object.assign({},P[i].l), Object.assign({},P[i].r));
+    Array.prototype.forEach.call(ctl.querySelectorAll('[data-p]'),function(b,k){
+      b.className='op'+(k===i?'':' ghost');
+    });
+    drawOps(); say(P[i].hint,true);
+  }
+  Array.prototype.forEach.call(ctl.querySelectorAll('[data-p]'),function(b){
+    b.onclick=function(){ load(+b.dataset.p); };
+  });
+  Array.prototype.forEach.call(ctl.querySelectorAll('[data-s]'),function(b){
+    b.onclick=function(){
+      side=b.dataset.s;
+      Array.prototype.forEach.call(ctl.querySelectorAll('[data-s]'),function(x){
+        x.className='op'+(x.dataset.s===side?'':' ghost');
+        x.style.background = (x.dataset.s==='left'&&side==='left') ? 'var(--coral)' : '';
+      });
+    };
+  });
+  load(0);
+  Array.prototype.forEach.call(ctl.querySelectorAll('[data-s]'),function(x){
+    x.className='op'+(x.dataset.s==='both'?'':' ghost');
+  });
+
+  var tail=document.createElement('div');
+  tail.innerHTML='<p class="lead" style="text-align:center;color:var(--teal);font-weight:800;margin-top:18px">'+
+   'Next: straight lines are easy… now turn a corner. 📐</p>';
+  bd.appendChild(tail);
+ }
+}
+];
+
+/* =====================================================================
+   4. GO
+   ===================================================================== */
+document.getElementById('next').onclick=function(){
+  if(cur===STEPS.length-1){ predOK=0; predN=0; unlocked=[true]; go(0); return; }
+  unlocked[cur+1]=true; go(cur+1);
+};
+document.getElementById('back').onclick=function(){ go(cur-1); };
+document.getElementById('backToArcade').onclick=toArcade;
+paintReturn();
+go(0);
+})();
+</script>
+</body>
+</html>

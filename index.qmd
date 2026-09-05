@@ -101,6 +101,11 @@ format:
     background:#eef2f7; padding:.22rem .6rem; border-radius:999px;
   }
 
+  .rr-note{
+    margin:.9rem .2rem 0; font-size:.82rem; color:var(--muted); line-height:1.5;
+  }
+  .rr-note a{ color:var(--navy); font-weight:600; }
+
   .rr-foot{ text-align:center; color:var(--muted); margin-top:2.6rem; font-size:.85rem; }
   .rr-foot .star{ color:var(--coral); }
 
@@ -141,6 +146,13 @@ format:
         <span class="rr-play">▶ Open slides</span>
       </a>
 
+      <a class="rr-card" href="slides/beam-balance.html">
+        <span class="rr-badge b-teal">D2</span><span class="rr-card-emoji">⚖️</span>
+        <h3>The Beam Balance</h3>
+        <p>Six oranges, three bananas, and the rule that lied. Work out the degrees yourself — for any distance.</p>
+        <span class="rr-play">▶ Open slides</span>
+      </a>
+
       <a class="rr-card" href="slides/drive-a-square.html">
         <span class="rr-badge b-teal">D3</span><span class="rr-card-emoji">⬛</span>
         <h3>Drive a Square</h3>
@@ -160,6 +172,20 @@ format:
         <h3>Name Your Moves</h3>
         <p>Finish PID with D and I, then start your own move library — and win Bullseye with code <em>you</em> wrote.</p>
         <span class="rr-play">▶ Open slides</span>
+      </a>
+
+      <a class="rr-card" href="library-cheatsheet.html">
+        <span class="rr-badge b-teal">D5+</span><span class="rr-card-emoji">📄</span>
+        <h3>Library Cheat Sheet</h3>
+        <p>Every verb you own on one page — start with the driving verbs, and the gripper half fills in once you build one. Keep it open on the bench.</p>
+        <span class="rr-play">▶ Open the cheat sheet</span>
+      </a>
+
+      <a class="rr-card" href="interactives/recap-part1-days2-5.html">
+        <span class="rr-badge b-teal">D2–D5</span><span class="rr-card-emoji">🕹️</span>
+        <h3>Recap Arcade · Part 1</h3>
+        <p>Everything from Days 2–5 as short levels: press the glowing button, watch the demo, answer one question. Ends with your miss list — bring it to the coach.</p>
+        <span class="rr-play">▶ Play the recap</span>
       </a>
 
     </div>
@@ -187,15 +213,15 @@ format:
       <div class="rr-card soon">
         <span class="rr-badge b-coral">D8</span><span class="rr-card-emoji">🧰</span>
         <h3>The Earned Shortcut</h3>
-        <p>Five files become one clean <code>my_lib.py</code>, <code>RobotConfig</code> holds your robot's facts — and the pros' <code>DriveBase</code> joins the team. Then: the Gauntlet.</p>
+        <p>Scattered files become <code>movements.py</code> plus your own gripper file, a constants block holds your robot's facts — and the pros' <code>DriveBase</code> joins the team. Then: the Gauntlet.</p>
         <span class="rr-ribbon">🔒 Coming soon</span>
       </div>
 
-      <a class="rr-card" href="library-three-ways.html">
-        <span class="rr-badge b-coral">D8+</span><span class="rr-card-emoji">⚙️</span>
-        <h3>One Library, Three Engines</h3>
-        <p>Your seven verbs written three ways — <code>run()</code>, <code>dc()</code>, <code>DriveBase</code> — diff them line by line and see what the shortcut earns you.</p>
-        <span class="rr-play">▶ Open the comparison</span>
+      <a class="rr-card" href="interactives/recap-part2-days5-8.html">
+        <span class="rr-badge b-coral">D5–D8</span><span class="rr-card-emoji">🕹️</span>
+        <h3>Recap Arcade · Part 2</h3>
+        <p>Where a room lives, the eye, the line, two eyes, the wall — and the library. Six more levels, same rules: demo first, question last, miss list at the end.</p>
+        <span class="rr-play">▶ Play the recap</span>
       </a>
 
       <a class="rr-card" href="slides/mission-list.html">
@@ -220,12 +246,12 @@ format:
     <div class="rr-week-head w-purple"><span class="num">Week 3</span> Build the Mechanisms, Chain the Anchor Run ⛓️</div>
     <div class="rr-grid">
 
-      <div class="rr-card soon">
-        <span class="rr-badge b-purple">D11</span><span class="rr-card-emoji">🔌</span>
-        <h3>Cables &amp; Microphone</h3>
-        <p>Your team robot grows hands: hook the cables (30 pts) and nail the microphone (20 pts).</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
+      <a class="rr-card" href="slides/gears-and-grippers.html">
+        <span class="rr-badge b-purple">D11</span><span class="rr-card-emoji">⚙️</span>
+        <h3>Gears &amp; Grippers</h3>
+        <p>Crack open your own gripper — gears explained, then re-geared — and make it score: cables (30 pts) + microphone (20 pts).</p>
+        <span class="rr-play">▶ Open slides</span>
+      </a>
 
       <div class="rr-card soon">
         <span class="rr-badge b-purple">D12</span><span class="rr-card-emoji">🎹</span>
@@ -276,6 +302,13 @@ format:
         <p>Log failures, hunt the root cause, and keep a calibration diary.</p>
         <span class="rr-ribbon">🔒 Coming soon</span>
       </div>
+
+      <a class="rr-card" href="slides/plan-the-path.html">
+        <span class="rr-badge b-teal">D18</span><span class="rr-card-emoji">🗺️</span>
+        <h3>Plan the Path</h3>
+        <p>Turn the mat into numbers: measure your route on a map, face a heading instead of guessing a turn, and mark every place your error gets erased.</p>
+        <span class="rr-play">▶ Open slides</span>
+      </a>
 
       <div class="rr-card soon">
         <span class="rr-badge b-teal">D18</span><span class="rr-card-emoji">🎶</span>
@@ -342,6 +375,27 @@ format:
       </div>
 
     </div>
+  </section>
+
+  <!-- ============ TOOLBOX ============ -->
+  <section class="rr-week">
+    <div class="rr-week-head w-purple"><span class="num">Toolbox</span> Measure the Field 📐</div>
+    <div class="rr-grid">
+
+      <a class="rr-card" href="tools/odommap/OdomMap.html">
+        <span class="rr-badge b-purple">🗺️</span><span class="rr-card-emoji">📐</span>
+        <h3>OdomMap</h3>
+        <p>Click two points on the real mat and read the distance in mm — plus the wheel rotations to drive it. Set <strong>Wheel = 88 mm</strong>, pick <em>2026 / Elementary</em>. Handy on D9, D15 and D21.</p>
+        <span class="rr-play">▶ Open the tool</span>
+      </a>
+
+    </div>
+    <p class="rr-note">
+      OdomMap is vendored from
+      <a href="https://github.com/haing2811/OdomMap" target="_blank" rel="noopener">haing2811/OdomMap</a>
+      (MIT licensed) — a visual field distance calculator and odometry assistant built for WRO.
+      Only the 2026 Elementary mat is bundled here; other years will show a missing image.
+    </p>
   </section>
 
   <div class="rr-foot">

@@ -1,0 +1,2501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🎸 Robot Rockstars — The Recap Arcade</title>
+<style>
+:root{
+  --navy:#1C355E; --teal:#00AE8D; --teal2:#00C9A7; --coral:#E96852;
+  --purple:#625D9C; --yellow:#FFD500; --ink:#1C355E; --paper:#f7f9fc; --line:#dbe2ea;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#eef3f8,#e4ecf5);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.55}
+code,.mono{font-family:Consolas,"SF Mono",Monaco,monospace}
+.wrap{max-width:940px;margin:0 auto;padding:18px 16px 20px}
+
+/* ---------- header ---------- */
+header{background:var(--navy);color:#fff;border-radius:18px;padding:18px 22px;margin-bottom:14px;box-shadow:0 6px 24px #1c355e33}
+header h1{margin:0 0 4px;font-size:26px}
+header p{margin:0;opacity:.85;font-size:15px}
+.bar{height:12px;background:#ffffff28;border-radius:99px;margin-top:12px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal2),var(--yellow));border-radius:99px;transition:width .4s}
+.hstat{display:flex;gap:14px;flex-wrap:wrap;margin-top:9px;font-size:13px;font-weight:700;opacity:.9}
+
+/* ---------- level map ---------- */
+.map{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.pip{flex:1;min-width:88px;background:#fff;border:2px solid var(--line);border-radius:12px;padding:7px 9px;font-size:12px;font-weight:800;text-align:center;color:#9aa8ba;transition:.2s}
+.pip.done{border-color:var(--teal);color:var(--teal);background:#00ae8d12}
+.pip.now{border-color:var(--navy);color:var(--navy);background:var(--yellow);box-shadow:0 3px 0 #d4b200}
+.pip b{display:block;font-size:15px}
+
+/* ---------- cards ---------- */
+.card{background:#fff;border:2px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:14px;box-shadow:0 3px 14px #1c355e12}
+.card h2{margin:0 0 3px;font-size:22px;color:var(--navy)}
+.card h2 .day{font-size:12px;background:var(--purple);color:#fff;border-radius:99px;padding:2px 9px;vertical-align:middle;margin-left:7px;font-weight:800}
+.sub{color:var(--purple);font-size:15px;font-weight:700;margin:0 0 12px}
+.recap{background:var(--paper);border-left:5px solid var(--teal);border-radius:0 10px 10px 0;padding:11px 14px;margin:12px 0;font-size:16px}
+.recap b{color:var(--navy)}
+.recap ul{margin:6px 0 0;padding-left:20px}
+.recap li{margin:4px 0}
+pre{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 13px;overflow-x:auto;font-size:14.5px;line-height:1.6;margin:10px 0}
+
+/* ---------- questions ---------- */
+.q{border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin:14px 0;background:#fff}
+.qhead{font-weight:800;font-size:15.5px;margin-bottom:4px;color:var(--navy)}
+.qhead .n{background:var(--navy);color:#fff;border-radius:99px;padding:1px 9px;font-size:12px;margin-right:7px}
+.qbody{font-size:16px;margin-bottom:10px}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{text-align:left;background:var(--paper);border:2px solid var(--line);border-radius:10px;padding:10px 13px;font-size:16px;cursor:pointer;font-family:inherit;color:var(--ink);transition:.15s;line-height:1.45}
+.opt:hover{border-color:var(--purple);background:#625d9c0f}
+.opt.correct{border-color:var(--teal);background:#00ae8d1a;font-weight:700}
+.opt.wrong{border-color:var(--coral);background:#e968521a}
+.opt.dim{opacity:.5}
+.fb{margin-top:11px;border-radius:10px;padding:11px 14px;font-size:16px;display:none;line-height:1.5}
+.fb.show{display:block;animation:pop .25s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.fb.good{background:#00ae8d18;border-left:5px solid var(--teal)}
+.fb.bad{background:#e9685218;border-left:5px solid var(--coral)}
+.fb .tag{font-weight:800;display:block;margin-bottom:3px}
+
+/* ---------- bench gate ---------- */
+.bench{background:linear-gradient(135deg,#FFD50022,#FF7A5C18);border:2px dashed var(--coral);border-radius:14px;padding:14px 17px;margin:16px 0}
+.bench h4{margin:0 0 5px;font-size:16px;color:var(--coral)}
+.bench p{margin:0 0 10px;font-size:16px}
+.btn{background:var(--navy);color:#fff;border:none;border-radius:10px;padding:9px 20px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit}
+.btn:hover{background:#122442}
+.btn.ghost{background:#eef3f8;color:var(--navy);border:2px solid var(--navy)}
+.btn.big{width:100%;padding:13px;font-size:16px;margin-top:6px}
+
+/* ---------- interactives ---------- */
+.sim{border:2px solid var(--purple);border-radius:14px;padding:13px;margin:14px 0;background:#fbfcfe}
+.simhead{font-weight:800;color:var(--purple);font-size:14px;margin-bottom:9px;text-transform:uppercase;letter-spacing:.4px}
+.ctrl{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:9px}
+.cbtn{background:var(--navy);color:#fff;border:none;border-radius:9px;padding:6px 15px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.cbtn.p{background:var(--purple)} .cbtn.t{background:var(--teal)} .cbtn.c{background:var(--coral)}
+.cbtn.g{background:#eef3f8;color:var(--navy);border:2px solid var(--navy)}
+.chip{border-radius:99px;padding:3px 12px;font-size:13px;font-weight:700;cursor:pointer;border:2px solid var(--purple);background:#eef3f8;color:var(--purple);font-family:inherit}
+.hint{font-size:13px;color:var(--purple);font-weight:700}
+
+/* tracer */
+.trace{display:grid;grid-template-columns:1fr 250px;gap:12px;align-items:start}
+@media(max-width:700px){.trace{grid-template-columns:1fr}}
+.tline{font-family:Consolas,monospace;font-size:14px;padding:2px 9px;border-left:4px solid transparent;border-radius:5px;white-space:pre;opacity:.42;transition:.15s}
+.tline.on{opacity:1;border-left-color:var(--coral);background:#FFD50026}
+.tline.done{opacity:.72}
+.boxes{display:flex;flex-direction:column;gap:7px}
+/* a variable is a ROOM: door plate on top, one thing inside */
+.room{background:#fff;border:2px solid var(--line);border-radius:10px;overflow:hidden;transition:.2s}
+.room .plate{background:var(--navy);color:#fff;font-family:Consolas,monospace;font-size:13px;font-weight:700;padding:2px 10px;display:flex;justify-content:space-between;align-items:center}
+.room .plate .kk{font-size:11px;opacity:.7;font-weight:800;letter-spacing:.5px}
+.room .inside{font-family:Consolas,monospace;font-size:18px;font-weight:800;color:var(--navy);text-align:center;padding:7px 6px}
+.room.flash{border-color:var(--yellow);box-shadow:0 0 0 3px #FFD50055}
+.room.evict .inside{color:#c3ccd8;text-decoration:line-through}
+.room.local{border-style:dashed;border-color:var(--purple)}
+.room.local .plate{background:var(--purple)}
+.room.impostor{border-color:var(--coral)}
+.room.impostor .plate{background:var(--coral)}
+.vlabel{font-size:11px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.tmsg{grid-column:1/-1;font-size:15px;color:var(--purple);font-weight:700;min-height:38px;margin-top:6px;text-align:center}
+.brBeat{display:flex;align-items:center;gap:8px;background:var(--paper);border:2px solid var(--line);border-radius:11px;padding:5px 9px;opacity:.45;transition:.15s}
+.brBeat.on{opacity:1;border-color:var(--coral);background:#FFD50022}
+.brBeat .be{font-size:21px}
+.brBeat b{font-size:14px;color:var(--navy);display:block;line-height:1.2}
+.brBeat span.d{font-size:12px;color:var(--navy);opacity:.75;display:block;line-height:1.25}
+.brrow{display:flex;justify-content:space-between;padding:2px 9px;border-bottom:1px solid var(--line);font-family:Consolas,monospace;font-size:14px}
+.simwrap{overflow-x:auto}
+
+/* ---------- the ask strip — one short line, above the controls ----------
+   This is the ONLY instruction on screen. It never explains; it only ever
+   says which button to press. The explaining is the demo's job. ---------- */
+.ask{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:#FFD50033;border:1px solid #FFD500aa;border-radius:11px;
+  padding:8px 12px;margin-bottom:9px;font-size:16px;font-weight:700;color:var(--navy)}
+.ask.done{background:#00ae8d14;border-color:var(--teal)}
+.ask .grow{flex:1;min-width:180px;line-height:1.4}
+.ask .dots{display:flex;gap:5px;flex:none}
+.ask .dot{width:9px;height:9px;border-radius:99px;background:#0002}
+.ask .dot.on{background:var(--navy)}
+.ask.done .dot.on{background:var(--teal)}
+
+/* the cued control: the only live one, and it says so */
+.cue{position:relative;box-shadow:0 0 0 3px #FFD500cc;animation:cuePulse 1.5s ease-in-out infinite}
+@keyframes cuePulse{0%,100%{box-shadow:0 0 0 3px #FFD500cc}50%{box-shadow:0 0 0 6px #FFD50055}}
+.ctrl button:disabled,.ctrl input:disabled{opacity:.32;cursor:not-allowed;filter:grayscale(.5)}
+
+/* ---------- one box: live commentary, then the takeaway ----------
+   The sim writes its beat-by-beat line into .tmsg as it always did. The
+   takeaway is appended BELOW it, inside the same box, and only when the
+   demo itself signals that it has finished moving. --------------------- */
+.say{background:var(--paper);border:2px solid var(--line);border-radius:12px;
+  padding:9px 13px;margin-top:10px}
+.trace .say{grid-column:1/-1}
+.say .tmsg{margin-top:0;text-align:left;min-height:0}
+.tell{display:none}
+.tell.show{display:block;margin-top:9px;padding-top:9px;border-top:2px dashed var(--line);
+  font-size:16.5px;line-height:1.5;color:var(--ink);font-weight:400;animation:pop .3s ease-out}
+.tell .tag{display:block;font-size:11.5px;font-weight:800;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--teal);margin-bottom:3px}
+.tell code{background:#fff;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:15px}
+.tell b{color:var(--navy)}
+
+.qtitle{font-weight:800;font-size:18px;color:var(--navy);margin:20px 0 6px;border-top:2px dashed var(--line);padding-top:16px}
+.lnk{display:inline-block;margin-top:9px;background:var(--teal);color:#fff;text-decoration:none;font-weight:800;border-radius:9px;padding:8px 13px;font-size:15px}
+.lnk:hover{background:#00967a}
+
+/* ---------- persistent footer nav ---------- */
+.foot{position:sticky;bottom:0;z-index:20;display:flex;gap:10px;align-items:center;
+  background:#ffffffee;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border:2px solid var(--line);border-radius:14px;padding:9px 12px;margin-top:14px;
+  box-shadow:0 -4px 20px #1c355e22}
+.foot .nb{border:none;border-radius:10px;padding:12px 22px;font-size:16px;font-weight:800;
+  cursor:pointer;font-family:inherit;background:var(--teal);color:#fff;flex:none}
+.foot .nb:hover:not(:disabled){filter:brightness(.93)}
+.foot .nb:disabled{opacity:.3;cursor:not-allowed}
+.foot .nb.back{background:#fff;color:var(--navy);border:2px solid var(--line);padding:12px 16px}
+.foot .nb.skip{background:#eef3f8;color:var(--purple);border:2px solid var(--line);font-size:14.5px;padding:11px 15px}
+.foot .lock{flex:1;text-align:center;font-size:14px;color:var(--purple);font-weight:700;line-height:1.35;min-width:0}
+@media(max-width:560px){.foot{padding:8px}.foot .nb{padding:11px 14px;font-size:15px}.foot .lock{font-size:12.5px}}
+
+/* ---------- resume ---------- */
+.resume{background:#FFD50026;border:2px solid #FFD500aa;border-radius:13px;padding:13px 16px;margin-bottom:12px}
+.resume b{color:var(--navy)}
+.resume .row{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+
+/* ---------- report ---------- */
+.report{background:#fff;border:3px solid var(--navy);border-radius:18px;padding:22px;margin-top:16px}
+.report h2{margin:0 0 4px;color:var(--navy)}
+.score{font-size:46px;font-weight:900;color:var(--teal);line-height:1}
+.miss{background:#e9685212;border-left:5px solid var(--coral);border-radius:0 10px 10px 0;padding:10px 14px;margin:9px 0;font-size:15px}
+.miss b{color:var(--coral)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line)}
+th{background:var(--paper);color:var(--navy);font-weight:800}
+.hide{display:none}
+@media print{.btn,.cbtn,.chip,.map,.bar,.sim,.foot,.resume{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>🎸 The Recap Arcade</h1>
+  <p>Day 2 to Day 8. Twelve short levels. Press the glowing button, watch, read one line, move on.</p>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="hstat">
+    <span id="hsLevel">Level 1 of 12</span>
+    <span id="hsFirst">First try: 0 / 0</span>
+    <span id="hsSave">💾 Your progress is saved on this computer.</span>
+  </div>
+</header>
+
+<div class="map" id="map"></div>
+
+<div id="resumeSlot"></div>
+
+<div class="card" id="intro">
+  <h2>How this works</h2>
+  <div class="recap">
+    <ul>
+      <li><b>Press the glowing button.</b> Only one button works at a time, so there is nothing to hunt for and nothing to get wrong.</li>
+      <li><b>Then watch, and read the box underneath.</b> The demo talks while it moves, and tells you what it meant the moment it stops.</li>
+      <li><b>Questions come last.</b> Only your first try counts. Retry all you like.</li>
+      <li><b>Each level ends at your robot.</b> Go and run it.</li>
+    </ul>
+  </div>
+  <p style="font-size:16px;margin:10px 0 0">At the end you get your <b>miss list</b>. Bring it to the coach.</p>
+  <button class="btn big" onclick="start()">▶ Start Level 1</button>
+</div>
+
+<div id="game"></div>
+<div id="reportSlot"></div>
+
+<nav class="foot hide" id="foot">
+  <button class="nb back" id="navBack" onclick="navBack()">←</button>
+  <span class="lock" id="navHint"></span>
+  <button class="nb" id="navNext" onclick="navNext()">next →</button>
+</nav>
+
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="nmCar">
+    <rect x="-14" y="-30" width="28" height="54" rx="8" fill="var(--car,#1C355E)"/>
+    <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
+    <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
+    <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
+    <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
+    <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
+    <circle cy="-30" r="4" fill="#FFD500"/>
+  </g>
+  <g id="nmCarMini">
+    <rect x="-14" y="-30" width="28" height="54" rx="8" fill="var(--car,#1C355E)"/>
+    <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
+    <circle cy="-30" r="4" fill="#FFD500"/>
+  </g>
+</defs></svg>
+
+<script>
+/* ============================================================
+   CONTENT — 12 levels, D2–D8. Split into the two student sittings by
+   tools/split-recap.py (Part 1 = levels 1–6, Part 2 = levels 7–12);
+   regenerate BOTH part files after editing anything below.
+   ============================================================ */
+var LEVELS = [
+{
+ id:1, day:"D2", pip:"Rooms", title:"Rooms and name plates",
+ sub:"A variable is a room that holds one thing.",
+ sim:"rooms",
+ steps:[
+  {ask:"Press <b>▶ next line</b> four times.", cue:['rmNext'], when:'line', hits:4,
+   at:function(){ return window.rmAt(); }, need:4,
+   show:function(){ window.rmReset(); for(var i=0;i<4;i++) window.rmStep(); },
+   tell:"<code>=</code> is an <b>arrow</b>, not the word <i>equals</i>: it <b>puts</b> a thing in a room and throws out whatever was there — and a capital letter makes a <b>different</b> room, in silence."},
+  {ask:"Keep pressing — the program changes by itself.", cue:['rmNext'], when:'line', hits:4,
+   at:function(){ return window.rmAt(); }, need:8,
+   show:function(){ window.rmReset(); for(var i=0;i<8;i++) window.rmStep(); },
+   tell:"<code>b = a</code> copies <b>what is inside</b> <code>a</code>, right then. It does not join the two doors."}
+ ],
+ qs:[
+  {q:"<pre>speed = 200\nspeed = 400\nprint(speed)</pre>What prints?",
+   opts:["400","200","600"], a:0,
+   good:"One room, one thing inside. 400 moved in and 200 was thrown out.",
+   bad:{1:"That was thrown out on line 2.",2:"The arrow never adds. It replaces."}},
+  {q:"<pre>speed = 200\nSpeed = 400\nprint(speed)</pre>What prints?",
+   opts:["200","400","an error about the capital S"], a:0,
+   good:"Capital <b>S</b> built a second room. You filled that one and printed the other.",
+   bad:{1:"400 went into <code>Speed</code>. You printed <code>speed</code>.",2:"Python says nothing. That is what makes this bug so mean."}},
+  {q:"<pre>a = 5\nb = a\na = 9\nprint(b)</pre>What prints?",
+   opts:["5","9","a"], a:0,
+   good:"<code>b = a</code> copied what was in <code>a</code> right then. The rooms are not connected.",
+   bad:{1:"Line 3 only changed room <code>a</code>. Nothing reached <code>b</code>.",2:"It prints what is inside, not a name."}}
+ ],
+ bench:"Type <code>Left.run(300)</code> instead of <code>left.run(300)</code>. Read the error out loud. Then fix the capital."
+},
+{
+ id:2, day:"D2", pip:"The beam", title:"The beam balance",
+ sub:"Do the same AMOUNT to both sides.",
+ sim:"beamlink",
+ steps:[
+  {ask:"Open the lab — or say you already did it in class.", cue:['bmOpen','bmSkip'], when:['open','skip'],
+   tell:"On paper <code>=</code> is a <b>beam balance</b> ⚖️ — both sides weigh the same. Do the same <b>amount</b> to <b>both</b> pans and it stays level.<br>Same <b>count</b> is not the same amount: <b>6🍊 = 3🍌</b> tips if you take one <i>object</i> off each side."},
+  {ask:"Press the purple button <b>twice</b>.", cue:['bmBtn'], when:'solve', hits:2,
+   act:function(){ if(window.bmReset) window.bmReset(); },
+   show:function(){ window.bmSolve(); window.bmSolve(); },
+   tell:"<b>degrees = (distance ÷ C) × 360</b> — any distance, any wheel, for the rest of the season. Nobody handed you 391."}
+ ],
+ qs:[
+  {q:"<b>6 🍊 = 3 🍌</b> balances. You take <b>one object</b> off each side. What happens?",
+   opts:["It tips — you removed different <i>amounts</i>","It stays level — same thing on both sides","It tips — you may never subtract on a balance"], a:0,
+   good:"Same <b>count</b>, different <b>amount</b>. 5 oranges on the left, 4 oranges' worth on the right.",
+   bad:{1:"That is the rule that broke. Same count is not the same amount.",2:"Subtracting is fine. Subtracting <i>unequal weights</i> is not."}},
+  {q:"A wheel is <b>62.4 mm</b> across. How far does it roll in <b>one turn</b>?",
+   opts:["about 19.6 cm","about 6.24 cm","about 39.2 cm"], a:0,
+   good:"C = π × 6.24 cm ≈ <b>19.6 cm</b>.",
+   bad:{1:"That is the width of the wheel, not the distance it rolls.",2:"That is π × <i>double</i> the diameter. The diameter goes in once."}},
+  {q:"Your small wheel rolls <b>17.6 cm</b> in one turn. How many <b>motor degrees</b> for <b>40 cm</b>?",
+   opts:["about 818°","about 522°","about 227°"], a:0,
+   good:"40 ÷ 17.6 = 2.27 turns. × 360 ≈ <b>818°</b>.",
+   bad:{1:"522° is 40 ÷ 27.6 — that is the <b>big</b> wheel. Use the wheel you actually have.",2:"2.27 is the number of <b>turns</b>. You still owe the × 360."}},
+  {q:"Same <b>19.6 cm</b> wheel. How many degrees for <b>30 cm</b>?",
+   opts:["about 551°","about 235°","about 360°"], a:0,
+   good:"30 ÷ 19.6 = 1.53 turns. × 360 ≈ <b>551°</b>.",
+   bad:{1:"That is 19.6 ÷ 30 — the division upside down. Ask: how many wheels-worth fit into 30 cm?",2:"One turn only takes you 19.6 cm. 30 cm needs more than one turn."}},
+  {q:"Which <code>=</code> is a <b>beam balance</b>?",
+   opts:["<code>27.6 × t = 30</code> on the whiteboard","<code>speed = 200</code> inside your Python file","Both — <code>=</code> always means balance"], a:0,
+   good:"On paper it <b>states</b> that two things weigh the same. In Python it <b>does</b> something — it puts 200 into a room.",
+   bad:{1:"That one is the arrow. It is an instruction, not a statement.",2:"Same costume, two different animals."}}
+ ],
+ bench:"Pick a distance nobody has used — <b>42 cm</b>. Do the beam on paper: ÷ 27.6, then × 360. Write your answer down <b>before</b> you run it (about <b>548°</b>). Then <code>run_angle</code> it and tape-measure."
+},
+{
+ id:3, day:"D2", pip:"Degrees", title:"Count degrees, not seconds",
+ sub:"Time lies. Degrees don't.",
+ sim:"battery",
+ steps:[
+  {ask:"Press <b>▶ race</b>.", cue:['baRace'], when:'race', wait:true,
+   act:function(){ window.baMode('time'); var s=document.getElementById('baSpd'); if(s)s.value=700; window.baSet(700); },
+   show:function(){ window.baGo(); },
+   tell:"<code>run_time</code> asks for a speed the tired battery <b>cannot hold</b> — and the clock stops it anyway. Seconds lie."},
+  {ask:"Press <b>🐢 ask for 200</b>.", cue:['baSlow'], wait:true,
+   when:function(t){ return t.indexOf('speed:')===0 && parseInt(t.slice(6),10)<=350; },
+   show:function(){ var s=document.getElementById('baSpd'); if(s)s.value=200; window.baSet(200); },
+   tell:"They match — because you are <b>under</b> the tired battery's ceiling. <b>Nothing in the code tells you which side of that ceiling you are on.</b> That is the whole problem."},
+  {ask:"Click <b>run_angle(speed, 720)</b>.", cue:['baA'], when:'mode:angle', wait:true,
+   show:function(){ window.baMode('angle'); },
+   tell:"720° is 720° on any battery — a tired one just takes <b>longer</b>. And you already own the converter: <b>degrees = (distance ÷ 27.6) × 360</b>."}
+ ],
+ qs:[
+  {q:"Same <code>run_time</code> program at a <b>high</b> speed, full battery then flat battery. The robot travels <b>two different distances</b>. Why?",
+   opts:["The battery cannot hold that speed","The gyro drifts once the battery runs low","The wheels shrink a little as the battery drains"], a:0,
+   good:"The clock never changed. The <b>motor</b> did — it fell below the speed you asked for, and 2 seconds ran out regardless.",
+   bad:{1:"This program never reads the gyro.",2:"The wheel is the one thing that stayed the same. That is why counting its degrees works."}},
+  {q:"At <b>200°/s</b> both batteries land in the <b>same place</b>. So is <code>run_time</code> safe after all?",
+   opts:["No — you got lucky, and luck is not a test","Yes — <code>run_time</code> is fine as long as you go slowly","No — they only look equal, but they differ slightly"], a:0,
+   good:"It works in the classroom, then fails at the competition on a half-drained battery. A test that passes by luck is not a test.",
+   bad:{1:"Slow today. But the ceiling <b>drops as the battery drains</b>, so a speed that was safe this morning may not be by the last round.",2:"They really are equal here. That is what makes the trap so convincing."}},
+  {q:"You want a tool motor to buzz <b>for 2 seconds</b> to shake a cable loose. Distance does not matter. Which one?",
+   opts:["<code>run_time</code> — the job is a length of time","<code>run_angle</code> — degrees are always safer","<code>run_until_stalled</code> — drive it into a stop"], a:0,
+   good:"\"Count degrees\" is for <b>distance</b> jobs. This job is measured in seconds.",
+   bad:{1:"\"Always\" is the trap. Here you do not care how far it moves.",2:"That is for running into something until it jams."}}
+ ],
+ bench:"Drive the same <code>run_time</code> straight on a tired battery — first at <b>300°/s</b>, then at <b>900°/s</b> — and tape-measure both against the full-battery run. The slow pair may match; the fast pair should not. <b>That gap is the ceiling.</b>"
+},
+{
+ id:4, day:"D3", pip:"Loops", title:"Loops, and the square that walked away",
+ sub:"Do the block again and again — but a turn is not a distance.",
+ sim:"squarestep",
+ steps:[
+  {ask:"Press <b>▶ next line</b> three times.", cue:['sqNext'], when:'line', hits:3, wait:true,
+   at:function(){ return window.sqAt(); }, need:3,
+   act:function(){ window.sqMode('watch'); },
+   show:function(){ window.sqMode('watch'); window.sqAll(); },
+   tell:"<code>for side in range(4):</code> means <b>run the two lines below me, 4 times</b>. You wrote the moves <b>once</b>."},
+  {ask:"Press <b>▶▶ run it all</b>.", cue:['sqAll'], when:'all', wait:true,
+   /* stepped to the last corner already? then this step is done — pressing
+      "run it all" on a closed square is a no-op that would hang the level */
+   at:function(){ return window.sqAt(); }, need:12,
+   show:function(){ window.sqAll(); },
+   tell:"Four laps of the same two lines make a square. The <code>side</code> room counted the laps for you."},
+  {ask:"Click <b>🤞 guessed turns</b> — it runs itself.", cue:['sqGuess'], when:'mode:guess', wait:true,
+   show:function(){ window.sqRun('guess'); },
+   tell:"Wheels <b>slip</b> when the robot spins, so counted wheel degrees cannot tell you which way you are <b>pointing</b>. A turn is not a distance."},
+  {ask:"Now click <b>👀 gyro-watched turns</b>.", cue:['sqWatch'], when:'mode:watch', wait:true,
+   show:function(){ window.sqRun('watch'); },
+   tell:"<code>while heading() &lt; 90: wait(5)</code> — keep <b>asking</b> until the answer is yes.<br><b>for</b> = a known count. <b>while</b> = a door you keep re-asking."}
+ ],
+ qs:[
+  {q:"You want a <b>hexagon</b>: 6 sides. What number goes in <code>turn(...)</code> at each corner?",
+   opts:["60","120","90"], a:0,
+   good:"360 ÷ 6 = 60°. Every shape's corner is 360 ÷ number of sides.",
+   bad:{1:"That is the hexagon's <i>inside</i> angle. The robot turns the <i>outside</i> one.",2:"That is a square: 360 ÷ 4."}},
+  {q:"Your gyro-watched turn is told to stop at 90°. It stops at <b>94°</b> every single time, the same way. What is going on?",
+   opts:["Momentum — it keeps rolling after \"stop\"","The gyro is broken and needs replacing","The code should say 86 instead of 90"], a:0,
+   good:"The loop checks the <b>gap</b> and never the <b>speed</b>. Day 4 fixes it: arrive slowly.",
+   bad:{1:"A broken gyro gives random numbers. The same 4° every time is physics.",2:"That hides it for one angle and breaks every other angle."}}
+ ],
+ bench:"Change the <code>4</code> in <code>range(4)</code> to <code>3</code>, then <code>5</code>, then <code>8</code> — and change the turn to 360 ÷ that number. One idea, three shapes. Then print the heading right after a turn and find your own overshoot."
+},
+{
+ id:5, day:"D4", pip:"error × KP", title:"speed = error × KP",
+ sub:"The bigger the gap, the harder the push.",
+ sim:"beat",
+ steps:[
+  {ask:"Press <b>▶ next beat</b> four times. Read the lit card each time.", cue:['brNext'], when:'beat', hits:4,
+   act:function(){ window.brSet(4); },
+   show:function(){ window.brSet(4); for(var i=0;i<4;i++) window.brStep(); },
+   tell:"Four beats, over and over — then straight back to <b>ASK</b>. That circle <i>is</i> the loop."},
+  {ask:"Press <b>⟳ whole pass</b> three times. Watch the two numbers.", cue:['brPassB'], when:'pass', hits:3,
+   /* the door may already have closed during free play, and a finished turn
+      cannot run another pass — rewind to the end of step 1 before asking */
+   act:function(){ if(window.brDone&&window.brDone()){ window.brSet(4); for(var i=0;i<4;i++) window.brStep(); } },
+   /* absolute, not incremental: replays step 1 first so ← rewind lands here exactly */
+   show:function(){ window.brSet(4); for(var i=0;i<4;i++) window.brStep(); for(var j=0;j<3;j++) window.brPass(); },
+   tell:"<code>push = error × KP</code>. Far away → big push. Close → small push. Arrived → <b>no push</b>, so it slides to a stop by itself, at <b>any</b> angle."},
+  {ask:"Click <b>😴 kp = 1</b>.", cue:['brChip1'], when:'kp:1', wait:true,
+   show:function(){ window.brSet(1); },
+   tell:"Too little push. Near the end it drops below friction and the robot <b>parks short</b> — nothing dramatic happens, and that <i>is</i> the failure."},
+  {ask:"Click <b>🔥 kp = 20</b>.", cue:['brChip20'], when:'kp:20', wait:true,
+   show:function(){ window.brSet(20); },
+   tell:"The door only checks the <b>gap</b>, never the <b>speed</b>. Something has to brake <b>before</b> arrival — that is the next level."}
+ ],
+ qs:[
+  {q:"In <code>speed = error × KP</code>, what is <b>error</b>?",
+   opts:["How far you still are from the target","How many mistakes are still in your code","How much charge the battery has lost"], a:0,
+   good:"It is a <b>gap</b>, not a fault. It shrinks to zero as you arrive, so the push fades out.",
+   bad:{1:"Nothing to do with bugs.",2:"The battery is not in the formula at all."}},
+  {q:"You set <code>KP = 1</code>. What does the robot do?",
+   opts:["Creeps in and parks short","Overshoots wildly and zig-zags","Refuses to move at all"], a:0,
+   good:"Near the target the push drops below friction and it stops early.",
+   bad:{1:"That is <code>KP = 20</code>. Too much push, not too little.",2:"It moves. Far away the gap is big, so even KP=1 pushes."}}
+ ],
+ bench:"Run <code>gyro_turn_p</code> at <code>kp=4</code>, then <code>kp=1</code>, then <code>kp=20</code>. Watch the real robot do what the animation did."
+},
+{
+ id:6, day:"D5", pip:"KD brake", title:"KD — the brake",
+ sub:"Watch how fast the gap is closing, and ease off early.",
+ sim:"pd",
+ steps:[
+  {ask:"Press <b>🔔 kp 20 · kd 0</b> and let it finish.", cue:['pdChip1'], when:'chip:1', wait:true,
+   show:function(){ window.pdSet(1); },
+   tell:"A hot engine with <b>no brake</b>. This is yesterday's P, exactly."},
+  {ask:"Now press <b>🛑 kp 20 · kd 0.5</b>. Same engine.", cue:['pdChip2'], when:'chip:2', wait:true,
+   show:function(){ window.pdSet(2); },
+   tell:"KD did not slow the robot down — it stopped it <b>wasting time swinging past</b>. Overshooting <i>costs</i> you passes."},
+  {ask:"Press <b>▶ next beat</b> until <b>📉 SENSE</b> lights up.", cue:['pdNext'], when:'beat', hits:3,
+   act:function(){ window.pdSet(0); },
+   show:function(){ window.pdSet(0); for(var i=0;i<3;i++) window.pdStep(); },
+   tell:"<code>change = (error − last_error) / 0.005</code> — <b>how fast</b> the gap is closing. While it closes, <code>change</code> is <b>negative</b>, so the brake <b>subtracts</b> from the push. It only pulls while you are still rushing in."},
+  {ask:"Press <b>🌊 kp 4 · kd 1.6</b>.", cue:['pdChip3'], when:'chip:3', wait:true,
+   show:function(){ window.pdSet(3); },
+   tell:"<b>KD is a dial, not a free upgrade.</b>"}
+ ],
+ qs:[
+  {q:"Same hot engine, brake off (🔔) then on (🛑). What did adding the brake cost you?",
+   opts:["Nothing — it was faster <b>and</b> steadier","It arrived slower — the price of accuracy","It only helped because KP was lowered too"], a:0,
+   good:"41 passes with the brake, against 63 passes of ringing without it. Overshooting <b>costs</b> time.",
+   bad:{1:"Watch the pass counter: 63 → 41.",2:"KP stayed at 20 for both chips. Only KD changed."}},
+  {q:"Your line follower <b>weaves</b> left-right-left-right, and it gets worse the faster you go. Which knob, which way?",
+   opts:["KD <b>up</b> — more brake","KP <b>up</b> — push harder through the weave","KD <b>down</b> — less brake"], a:0,
+   good:"Weaving is overshooting, over and over. KD eases off <i>before</i> arrival.",
+   bad:{1:"More push makes an overshoot bigger.",2:"Backwards. Less brake means more wobble."}},
+  {q:"Your gyro turn creeps in and <b>parks 2° short</b>. Which knob, which way?",
+   opts:["KP <b>up</b> — more push","KD <b>up</b> — brake harder","Nothing — 2° is close enough"], a:0,
+   good:"Tiny gap × small KP = a push too weak to move a real robot.",
+   bad:{1:"KD slows the arrival. It would stop even shorter.",2:"It will not pile up — <code>turn_to</code> aims at the zero, so the next corner erases it. But you drive the next half-metre 2° off, and that lands you ~17 mm sideways."}}
+ ],
+ bench:"Two runs: <code>turn_to(90, kp=20, kd=0)</code>, then the same turn with <code>kd=0.5</code>. Count the wobbles and time both."
+},
+{
+ id:7, day:"D5", pip:"Globals", title:"Where a room lives",
+ sub:"Read a global anywhere. Change it only at the top.",
+ sim:"scope",
+ steps:[
+  {ask:"Press <b>▶ next line</b>.", cue:['scNext'], when:'line',
+   at:function(){ return window.scAt(); }, need:1,
+   show:function(){ window.scReset(); window.scStep(); },
+   tell:"A <b>global</b> room, built at the top of the file. Every function below can <b>read</b> it."},
+  {ask:"Keep pressing until a <b>dashed room</b> appears.", cue:['scNext'], when:'line', hits:3,
+   at:function(){ return window.scAt(); }, need:4,
+   show:function(){ window.scReset(); for(var i=0;i<4;i++) window.scStep(); },
+   tell:"Assigning a name <b>inside</b> a <code>def</code> builds a <b>brand-new local room</b> — even when a global already wears that plate."},
+  {ask:"Press <b>▶ next line</b> twice more, to the end.", cue:['scNext'], when:'line', hits:2,
+   at:function(){ return window.scAt(); }, need:6,
+   show:function(){ window.scReset(); for(var i=0;i<6;i++) window.scStep(); },
+   tell:"<b>Read a global anywhere. Change it only at the top.</b>"}
+ ],
+ qs:[
+  {q:"<pre>KP = 4                  # top of the file\n\ndef make_it_sharper():\n    KP = 12             # \"turn it up\"\n\nmake_it_sharper()\nturn_to(90)             # ...still lazy 😤</pre>Why did nothing change?",
+   opts:["It filled a <b>local</b> room, not the global one","<code>make_it_sharper</code> was never actually called","<code>turn_to</code> does not read KP at all"], a:0,
+   good:"Assign a name inside a <code>def</code> and Python builds a fresh local room, even if a global already wears that plate.",
+   bad:{1:"It is called on the next line. It ran fine — it just filled the wrong room.",2:"It does. That is why changing the real KP works."}},
+  {q:"You want <b>every</b> verb to use <code>KP = 12</code>. Where does that line go?",
+   opts:["At the top of the file","Inside the def that needs it","Anywhere — Python works it out"], a:0,
+   good:"Read a global anywhere. Change it only at the top.",
+   bad:{1:"That builds a local room that dies when the call ends.",2:"Python has one clear rule: assigning inside a def makes a local."}}
+ ],
+ bench:"Do the bug on purpose: set <code>KP = 12</code> inside a def, call it, run a turn, watch nothing change. Then move that line to the top and run it again."
+},
+{
+ id:8, day:"D6", pip:"The eye", title:"The robot opens its eyes",
+ sub:"A number you did not measure yourself is a guess.",
+ sim:"cal",
+ steps:[
+  {ask:"Press <b>👁 look at both ends</b>.", cue:['caLookB'], when:'look', wait:true,
+   act:function(){ window.caSurf('mat'); },
+   show:function(){ window.caAim('white'); window.caAim('black'); },
+   tell:"The eye is a <b>flashlight plus a light meter</b>. It shines its own LED and measures the <b>echo</b> — <code>reflection()</code>, 0 to 100."},
+  {ask:"Press <b>🎚️ take the middle</b>.", cue:['caSplitB'], when:'split',
+   /* changing surface in free play wipes both readings — and the takeaway
+      before this one openly invites it — so re-measure whatever is showing;
+      splitting nothing just prints a warning and reads as a dead button */
+   act:function(){ window.caAim('white'); window.caAim('black'); },
+   show:function(){ window.caAim('white'); window.caAim('black'); window.caSplit(); },
+   tell:"The middle is the only number comfortably far from <b>both</b> ends, so a whisker of noise cannot flip your answer."},
+  {ask:"You are on a glossy table now. Press <b>😈 keep yesterday's 50</b>.", cue:['caStaleB'], when:'stale',
+   act:function(){ window.caSurf('gloss'); window.caAim('white'); window.caAim('black'); },
+   show:function(){ window.caSurf('gloss'); window.caAim('white'); window.caAim('black'); window.caStale(); },
+   tell:"The sensor is fine. <b>The number belongs to the surface, not the sensor</b> — so you measure it again every single session."}
+ ],
+ qs:[
+  {q:"You calibrate and get white <b>80</b>, black <b>24</b>. What do you put in <code>THRESHOLD</code>?",
+   opts:["52","24","80"], a:0,
+   good:"(80 + 24) ÷ 2 = <b>52</b>. Far from both ends.",
+   bad:{1:"Sitting exactly on black means a whisker of noise flips your answer.",2:"Same problem at the other end — it would call almost everything 'line'."}},
+  {q:"Yesterday's <code>THRESHOLD = 50</code>, and today the follower drives straight over the line on a glossy mat. What is wrong?",
+   opts:["Glossy black still reads about 60","The sensor is broken or dirty","<code>THRESHOLD</code> should always be <code>60</code>"], a:0,
+   good:"Your split point is in the wrong place. On this surface the middle is about 78, not 50.",
+   bad:{1:"It reads fine — glossy just bounces more light back from everything.",2:"There is no universal right number. You measure it, every surface."}}
+ ],
+ bench:"Print <code>left_eye.reflection()</code> in a loop. Log white and black on the mat, then on paper, then on something glossy. Write every number in your logbook next to the surface it came from."
+},
+{
+ id:9, day:"D6", pip:"The line", title:"Following the line",
+ sub:"error × KP, for the third time.",
+ sim:"line",
+ steps:[
+  {ask:"Click <b>bang-bang</b>.", cue:['lfBB'], when:'mode:bb', wait:true,
+   show:function(){ window.lfMode('bb'); },
+   tell:"Only <b>two</b> answers: hard left or hard right. It cannot do gentle, so it wobbles even when it is nearly perfect."},
+  {ask:"Click <b>P</b>.", cue:['lfP'], when:'mode:p', wait:true,
+   show:function(){ window.lfMode('p'); },
+   tell:"<code>error = reflection() − THRESHOLD</code>, then <code>push = error × KP</code> — <b>the same formula as your turn</b>. A small mistake gets a small correction."},
+  {ask:"Click <b>PD</b>.", cue:['lfPD'], when:'mode:pd', wait:true,
+   show:function(){ window.lfMode('pd'); },
+   tell:"D again: it watches <b>how fast</b> the error is closing and eases off early. Same two knobs, <b>third home</b>."}
+ ],
+ qs:[
+  {q:"For the line follower, what is <code>error</code>?",
+   opts:["<code>reflection() − THRESHOLD</code>","How many times it fell off the line","How far away the next turn is"], a:0,
+   good:"Measure a gap, multiply by KP. Third home for the same formula.",
+   bad:{1:"Nothing is counting mistakes.",2:"The eye cannot see ahead. It only reads the patch right under it."}},
+  {q:"Why is <b>bang-bang</b> worse than <b>P</b>?",
+   opts:["It has only two answers","It takes longer to write and read","It needs two colour sensors, not one"], a:0,
+   good:"A hair off gets the same violent yank as being miles off.",
+   bad:{1:"It is the shorter code. Simpler to write, worse to drive.",2:"One eye is enough for either."}}
+ ],
+ bench:"Run your follower at KD = 0, then at your tuned KD, at the same speed. Time both over the same stretch of line."
+},
+{
+ id:10, day:"D6", pip:"Two eyes", title:"Two eyes, one straight arrival",
+ sub:"Each eye stops its own wheel.",
+ sim:"squareup",
+ steps:[
+  {ask:"Press <b>▶ creep onto the junction</b>.", cue:['wsGoB'], when:'go', wait:true,
+   show:function(){ window.wsGo(); },
+   tell:"The first eye to see black stops <b>its own wheel</b> — and only that one. The other keeps creeping, so the robot <b>pivots itself flat</b>."},
+  {ask:"Run it once more. Watch the pivot at the end.", cue:['wsGoB'], when:'go', wait:true,
+   show:function(){ window.wsGo(); },
+   tell:"That is <code>square_on_line()</code>. The line is a real, unmoving thing, so it <b>throws away</b> the drift you arrived with instead of carrying it into the next leg."}
+ ],
+ qs:[
+  {q:"The robot arrives at the junction crooked. Which wheel stops first?",
+   opts:["Whichever eye sees black first","The left one, every single time","Both stop at the same moment"], a:0,
+   good:"Each eye stops its own wheel. The lagging wheel keeps creeping, so the robot pivots itself flat.",
+   bad:{1:"It depends which way you are skewed.",2:"If they stopped together, the robot would stay crooked."}},
+  {q:"Why is that worth the time it costs?",
+   opts:["It wipes out the error you arrived with","It makes the rest of the run faster","The WRO rules require it at junctions"], a:0,
+   good:"Every leg adds a little error. Squaring throws it away instead of carrying it into the next leg.",
+   bad:{1:"It is a pause — it costs time and buys accuracy.",2:"Nothing in the rules mentions it. It is a technique."}}
+ ],
+ bench:"Start the robot crooked three different ways and run <code>square_on_line()</code> each time. Check the heading afterwards."
+},
+{
+ id:11, day:"D7", pip:"Walls", title:"Stop, square, react",
+ sub:"No spare port — so the motor becomes the sensor.",
+ sim:"wall",
+ steps:[
+  {ask:"Press <b>▶ drive_to_wall()</b>. Watch the <b>speed trace</b>, not the robot.", cue:['waStraight'], when:'go:straight', wait:true,
+   show:function(){ window.waGo('straight'); },
+   tell:"<b>Six ports, all full</b> — 2 drive + 2 tool motors + 2 colour sensors, so there is <b>no port left</b> for a distance sensor. The drive motors <b>become</b> the touch sensor, and <code>duty_limit=50</code> keeps the reading crisp and the LEGO alive."},
+  {ask:"Press <b>▶ arrive crooked → wall_square()</b>.", cue:['waCrooked'], when:'go:crooked', wait:true,
+   show:function(){ window.waGo('crooked'); },
+   tell:"Push until <b>both</b> motors stall and the bumper is flat. Now the <b>wall itself</b> tells you your heading, and <code>reset_heading(0)</code> writes that over whatever drift had built up."}
+ ],
+ qs:[
+  {q:"Why bump into walls instead of using a distance sensor?",
+   opts:["All six hub ports are already full","Distance sensors are banned by WRO","Bumping is more accurate than measuring"], a:0,
+   good:"Every mechanism idea has to be argued against that budget.",
+   bad:{1:"They are legal. You just have nowhere to plug one in.",2:"Bumping is cruder. It wins because a wall is a hard, known fact and you have no choice."}},
+  {q:"Why does <code>wall_square()</code> make a long mission <b>more</b> reliable?",
+   opts:["It wipes out the error you built up","It makes the rest of the run go faster","The WRO rules require it at walls"], a:0,
+   good:"Every leg adds a little error. A wall throws that error <b>away</b> instead of carrying it into the next leg.",
+   bad:{1:"It is a pause, so it costs time. It buys accuracy with that time.",2:"Nothing in the rules mentions it. It is a technique."}}
+ ],
+ bench:"Run <code>drive_to_wall()</code> from three different distances and check the gap with a ruler each time. Then start it <i>crooked</i> and watch <code>wall_square()</code> straighten it."
+},
+{
+ id:12, day:"D8", pip:"Library", title:"One module, one earned shortcut",
+ sub:"Five files, one bug, fixed five times.",
+ sim:"duel",
+ steps:[
+  {ask:"Press <b>▶ run them clean</b>.", cue:['duRunB'], when:'run', wait:true,
+   show:function(){ window.duRun(); },
+   tell:"On an easy run you cannot tell them apart. All your verbs move into <code>my_lib.py</code> with the constants at the top — fix a number <b>once</b>, and every program gets it."},
+  {ask:"Now press <b>😈 knock them BOTH</b>.", cue:['duKnockB'], when:'knock', wait:true,
+   show:function(){ window.duKnock(); },
+   tell:"<code>DriveBase</code> is a <b>professional PID</b>, already written — plus <code>drive.use_gyro(True)</code>. Same three letters inside as yours. It wins on <b>polish</b>, not magic."}
+ ],
+ qs:[
+  {q:"<code>DriveBase</code> needs <code>axle_track</code>, the distance between the wheels. What for?",
+   opts:["To turn wheel motion into an angle","To know how heavy the robot is","To check the robot fits the 250 mm limit"], a:0,
+   good:"Wide-set wheels travel further to sweep the same angle than narrow-set ones.",
+   bad:{1:"Weight is not in there. It is pure geometry.",2:"Nothing in the code checks the rules. That is your job at check-in."}},
+  {q:"<code>DriveBase</code> replaces exactly <b>two</b> of your verbs. Which two?",
+   opts:["<code>drive_straight</code> and <code>turn_to</code>","<code>follow_line</code> and <code>square_on_line</code>","All of them"], a:0,
+   good:"It ships a better <code>straight()</code> and <code>turn()</code>. Everything else stays yours, because it knows nothing about your sensors.",
+   bad:{1:"It has no idea a colour sensor exists.",2:"Most of your library is untouched. That is why building it first was worth it."}},
+  {q:"What does <code>drive.use_gyro(True)</code> change?",
+   opts:["It steers by the gyro, not the wheels","It switches the gyro sensor on","It makes the robot drive faster overall"], a:0,
+   good:"Wheels lie when they slip. The gyro reports which way you are actually pointing.",
+   bad:{1:"The gyro is always running. This changes what <code>DriveBase</code> listens to.",2:"If anything it is a touch slower, because it corrects as it goes."}}
+ ],
+ bench:"Open <code>my_lib.py</code>. Change one number in the constants block. Run three <i>different</i> programs and confirm all three changed."
+}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+/* phase: 'learn' → 'quiz' → 'bench', then on to the next level.
+   Inside 'learn', `done` is the step in focus and `stage` is where that step is:
+     todo  — waiting for the child to press the CUED control. Everything else in
+             the demo is disabled, and no forward button exists.
+     run   — they pressed it; the demo is moving and narrating itself. We are
+             waiting for the demo to tell US it has stopped (simDone).
+     ready — the takeaway has landed in the demo's own message box, every control
+             is unlocked for free play, and the forward button appears. */
+var state={lvl:0, phase:'learn', done:0, stage:'todo', hits:0,
+           first:{ok:0,total:0}, misses:[], answered:{}};
+function $(id){return document.getElementById(id);}
+
+/* ============================================================
+   SAVED PROGRESS
+   These are shared classroom laptops, so nothing is ever restored
+   silently — loadSave() only offers, resume() is what commits.
+   The signature pins a save to the content it was made against, so
+   editing LEVELS can never drop a child into the wrong level.
+   ============================================================ */
+var SAVE_KEY='rockstars.arcade.v1';
+var BEAM_KEY='rockstars.beam.done';
+function SIG(){ return LEVELS.map(function(L){return L.id+':'+L.day+':'+L.qs.length;}).join('|'); }
+function store(){ try{ return window.localStorage; }catch(e){ return null; } }
+
+function save(){
+  var s=store(); if(!s) return;
+  try{
+    s.setItem(SAVE_KEY, JSON.stringify({
+      sig:SIG(), lvl:state.lvl, phase:state.phase, done:state.done, stage:state.stage,
+      first:state.first, misses:state.misses, answered:state.answered, t:Date.now()
+    }));
+  }catch(e){}
+}
+function loadSave(){
+  var s=store(); if(!s) return null;
+  try{
+    var raw=s.getItem(SAVE_KEY); if(!raw) return null;
+    var d=JSON.parse(raw);
+    if(!d || d.sig!==SIG()) { s.removeItem(SAVE_KEY); return null; }
+    if(typeof d.lvl!=='number' || d.lvl<0 || d.lvl>LEVELS.length) return null;
+    return d;
+  }catch(e){ return null; }
+}
+function clearSave(){ var s=store(); if(s){ try{ s.removeItem(SAVE_KEY); }catch(e){} } }
+function beamDone(){ var s=store(); if(!s) return false; try{ return !!s.getItem(BEAM_KEY); }catch(e){ return false; } }
+
+function ago(t){
+  var m=Math.round((Date.now()-t)/60000);
+  if(m<2) return 'a moment ago';
+  if(m<60) return m+' minutes ago';
+  var h=Math.round(m/60); if(h<24) return h+(h===1?' hour ago':' hours ago');
+  var d=Math.round(h/24); return d+(d===1?' day ago':' days ago');
+}
+
+function offerResume(){
+  var d=loadSave();
+  if(!d || (d.lvl===0 && d.phase==='learn' && d.done===0 && !d.first.total)) return;
+  var where = d.lvl>=LEVELS.length ? 'the miss list' : ('Level '+(d.lvl+1)+' — '+LEVELS[d.lvl].title);
+  $('resumeSlot').innerHTML=
+    '<div class="resume"><b>🔖 Somebody was partway through on this computer</b> ('+ago(d.t)+').<br>'+
+    'They stopped at <b>'+where+'</b>, with '+d.first.ok+' / '+d.first.total+' right on the first try.'+
+    '<div class="row"><button class="btn" onclick="resume()">↩ That was me — carry on</button>'+
+    '<button class="btn ghost" onclick="freshStart()">🆕 Not me — start fresh</button></div></div>';
+}
+function resume(){
+  var d=loadSave(); if(!d) return freshStart();
+  state.lvl=d.lvl; state.phase=d.phase||'learn'; state.done=d.done||0;
+  state.stage=d.stage||'todo'; if(state.stage==='run') state.stage='todo';
+  state.hits=0;
+  state.first=d.first; state.misses=d.misses||[]; state.answered=d.answered||{};
+  $('resumeSlot').innerHTML=''; $('intro').classList.add('hide');
+  if(state.lvl>=LEVELS.length){ drawMap(); return report(); }
+  renderLevel();
+}
+function freshStart(){
+  clearSave();
+  state={lvl:0, phase:'learn', done:0, stage:'todo', hits:0,
+         first:{ok:0,total:0}, misses:[], answered:{}};
+  $('resumeSlot').innerHTML=''; $('reportSlot').innerHTML=''; $('game').innerHTML='';
+  $('intro').classList.remove('hide'); $('foot').classList.add('hide');
+  drawMap(); window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---- animation janitor ----------------------------------------------------
+   Every sim lives inside #game, and #game is wiped on each level change. Any
+   frame or timer still queued at that moment would wake up and write to a node
+   that no longer exists, throwing on every tick for the rest of the session.
+   So: record what we queue, and cancel it all before the wipe.            ---- */
+var RAFS=[], TIMERS=[];
+var _raf=window.requestAnimationFrame.bind(window), _caf=window.cancelAnimationFrame.bind(window);
+var _st=window.setTimeout.bind(window), _ct=window.clearTimeout.bind(window);
+window.requestAnimationFrame=function(cb){ var id=_raf(cb); RAFS.push(id); if(RAFS.length>200) RAFS=RAFS.slice(-100); return id; };
+window.setTimeout=function(cb,ms){ var id=_st(cb,ms); TIMERS.push(id); if(TIMERS.length>100) TIMERS=TIMERS.slice(-50); return id; };
+function killAnimations(){
+  for(var i=0;i<RAFS.length;i++) _caf(RAFS[i]);
+  for(var j=0;j<TIMERS.length;j++) _ct(TIMERS[j]);
+  RAFS=[]; TIMERS=[];
+}
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+function drawMap(){
+  $('map').innerHTML = LEVELS.map(function(L,i){
+    var cls = i<state.lvl ? 'done' : (i===state.lvl ? 'now' : '');
+    return '<div class="pip '+cls+'"><b>'+(i<state.lvl?'✓':L.id)+'</b>'+L.pip+'</div>';
+  }).join('');
+  $('prog').style.width = (state.lvl/LEVELS.length*100)+'%';
+  $('hsLevel').textContent = state.lvl>=LEVELS.length ? 'Complete' : ('Level '+(state.lvl+1)+' of '+LEVELS.length);
+  $('hsFirst').textContent = 'First try: '+state.first.ok+' / '+state.first.total;
+}
+
+function start(){ $('intro').classList.add('hide'); $('resumeSlot').innerHTML=''; renderLevel(); }
+
+function renderLevel(){
+  killAnimations();
+  if(state.lvl>=LEVELS.length){ return report(); }
+  var L=LEVELS[state.lvl];
+  var h='<div class="card" id="lvl'+L.id+'">';
+  h+='<h2>'+L.title+'<span class="day">'+L.day+'</span></h2>';
+  h+='<p class="sub">'+L.sub+'</p>';
+  h+='<div id="simSlot"></div>';
+  h+='<div id="quizWrap" class="hide">';
+  h+='<div class="qtitle">✍️ Your turn — '+L.qs.length+' question'+(L.qs.length>1?'s':'')+'</div>';
+  L.qs.forEach(function(q,qi){
+    h+='<div class="q" id="q'+L.id+'_'+qi+'">';
+    h+='<div class="qhead"><span class="n">Q'+(qi+1)+'</span></div>';
+    h+='<div class="qbody">'+q.q+'</div>';
+    h+='<div class="opts">';
+    if(!q._order) q._order = shuffle(q.opts.map(function(_,i){return i;}));
+    q._order.forEach(function(oi){
+      h+='<button class="opt" id="o'+L.id+'_'+qi+'_'+oi+'" onclick="pick('+L.id+','+qi+','+oi+')">'+q.opts[oi]+'</button>';
+    });
+    h+='</div><div class="fb" id="f'+L.id+'_'+qi+'"></div></div>';
+  });
+  h+='</div>';
+  h+='<div class="bench hide" id="bench'+L.id+'"><h4>🔧 Before you move on — go to your robot</h4><p>'+L.bench+'</p></div>';
+  h+='</div>';
+  $('game').innerHTML=h;
+  state.hits=0;
+  gotoStep(state.done, state.phase==='learn' ? state.stage : 'ready');
+  if(state.phase!=='learn'){ $('quizWrap').classList.remove('hide'); repaintAnswers(L); }
+  if(state.phase==='bench'){ $('bench'+L.id).classList.remove('hide'); }
+  renderAsk();
+  drawMap();
+  paintNav();
+  save();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* Re-apply every answer already given, so ← back into a finished quiz
+   shows the feedback the child earned instead of a blank slate. */
+function repaintAnswers(L){
+  L.qs.forEach(function(q,qi){
+    var rec=state.answered[L.id+'_'+qi];   /* stored 1-based so index 0 stays truthy */
+    if(!rec) return;
+    paintAnswer(L, qi, rec-1);
+  });
+}
+
+/* ============================================================
+   THE COACH — one instruction, one demo, one takeaway.
+
+   The old build had two voices: each sim's own event-driven message
+   line, and a second paragraph below the demo released on a blind
+   setTimeout. They said much the same thing, a second apart, in two
+   different places — which is exactly why nothing felt in time.
+
+   There is now ONE voice. The sim keeps writing its beat-by-beat
+   commentary into its own .tmsg, untouched, because that text is
+   already emitted at the instant the thing happens. The step's
+   takeaway is appended UNDERNEATH it, inside the same box, and only
+   when the demo itself calls simDone(). No timers, no guessed
+   durations, nothing to fall out of step with.
+
+   The coach's only remaining job is to say which button to press —
+   and to make sure that is the only button that CAN be pressed.
+   ============================================================ */
+var coachMuted=false;
+
+/* which sim function counts as which action */
+var HOOKS={
+  rooms:      {rmStep:'line'},
+  battery:    {baGo:'race', baMode:function(m){return 'mode:'+m;}, baSet:function(v){return 'speed:'+v;}},
+  beamlink:   {bmOpen:'open', bmSkip:'skip', bmSolve:'solve'},
+  squarestep: {sqLine:'line', sqAll:'all', sqMode:function(m){return 'mode:'+m;}},
+  beat:       {brStep:'beat', brPass:'pass', brPlay:'play', brSet:function(k){return 'kp:'+k;}},
+  pd:         {pdStep:'beat', pdPass:'pass', pdPlay:'play', pdSet:function(i){return 'chip:'+i;}},
+  scope:      {scStep:'line'},
+  cal:        {caLook:'look', caAim:'aim', caSplit:'split', caStale:'stale', caSurf:function(k){return 'surf:'+k;}},
+  line:       {lfMode:function(m){return 'mode:'+m;}, lfGo:'run'},
+  squareup:   {wsGo:'go'},
+  wall:       {waGo:function(m){return 'go:'+m;}},
+  duel:       {duRun:'run', duKnock:'knock', duNudge:'nudge'}
+};
+
+function wrapHooks(kind){
+  var H=HOOKS[kind]; if(!H) return;
+  Object.keys(H).forEach(function(fn){
+    var orig=window[fn], tagger=H[fn];
+    if(typeof orig!=='function' || orig.__coached) return;
+    var wrapped=function(){
+      var out=orig.apply(this,arguments);
+      /* Some sims (rooms, squarestep) rebuild their own control row and message
+         line when you switch program or mode, which would throw away the docked
+         takeaway box and the cue ring. Re-establish both before reacting. */
+      resync();
+      var tag=(typeof tagger==='function')?tagger.apply(null,arguments):tagger;
+      coachHit(tag);
+      return out;
+    };
+    wrapped.__coached=true;
+    window[fn]=wrapped;
+  });
+}
+
+/* Mute is saved and restored, never forced back to false: gotoStep() mounts a
+   sim from inside its own muted block, and an unconditional unmute here would
+   let the replay's own clicks register as the child's and run the level away. */
+function mountSim(kind){
+  killAnimations();
+  var wasMuted=coachMuted;
+  coachMuted=true;
+  buildSim(kind,'simSlot');
+  wrapHooks(kind);
+  dockTell();
+  coachMuted=wasMuted;
+  renderAsk();
+}
+
+function coachPrep(i){
+  var st=LEVELS[state.lvl].steps[i]; if(!st) return;
+  if(st.sim) mountSim(st.sim);
+  if(st.act){ var wasMuted=coachMuted; coachMuted=true; try{ st.act(); }catch(e){} coachMuted=wasMuted; }
+}
+
+/* ============================================================
+   ONE BOX — the sim's own line, then the takeaway under it.
+   Done generically so no sim has to know the coach exists: after a
+   sim is built we find its .tmsg, wrap it in a panel, and hang an
+   empty .tell beneath. The sim goes on writing to .tmsg exactly as
+   before; only the coach ever touches .tell.
+   ============================================================ */
+function dockTell(){
+  var slot=$('simSlot'); if(!slot) return;
+  var msg=slot.querySelector('.tmsg'); if(!msg || msg.parentNode.className==='say') return;
+  var say=document.createElement('div'); say.className='say';
+  msg.parentNode.insertBefore(say, msg);
+  say.appendChild(msg);
+  var tell=document.createElement('div'); tell.className='tell'; tell.id='stepTell';
+  say.appendChild(tell);
+}
+
+/* The takeaway lands in the demo's own box, directly under the line the demo
+   just wrote. Same place the child was already looking. */
+function showTell(html){
+  var t=$('stepTell'); if(!t) return;
+  t.className='tell show';
+  t.innerHTML='<span class="tag">so what</span>'+html;
+}
+function hideTell(){ var t=$('stepTell'); if(t){ t.className='tell'; t.innerHTML=''; } }
+
+/* Called after any hooked sim function: re-dock the takeaway box and re-assert
+   the lock, so a sim that redraws its own shell cannot strand the coach. */
+function resync(){
+  if(state.phase!=='learn') return;
+  var had=$('stepTell'), keep=had && had.className.indexOf('show')>=0 ? had.innerHTML : null;
+  dockTell();
+  var t=$('stepTell');
+  if(t && keep && !t.innerHTML){ t.className='tell show'; t.innerHTML=keep; }
+  if(state.stage==='todo'){
+    var st=LEVELS[state.lvl].steps[state.done];
+    if(st) lockTo(st.cue);
+  } else unlockAll();
+  renderAsk();
+}
+
+/* ============================================================
+   CONTROL LOCKING — the cued button is the only live one.
+   A demo with six live buttons invites wandering, and a wander that
+   does not match `when` is silently ignored, which reads as "broken".
+   So during a todo step everything is disabled except the cue; once
+   the takeaway has landed, the whole demo unlocks for free play.
+   ============================================================ */
+function eachControl(fn){
+  var slot=$('simSlot'); if(!slot) return;
+  var n=slot.querySelectorAll('.ctrl button, .ctrl input');
+  for(var i=0;i<n.length;i++) fn(n[i]);
+}
+function lockTo(ids){
+  var want=ids||[];
+  eachControl(function(el){
+    var on = want.indexOf(el.id)>=0;
+    el.disabled = !on;
+    el.classList.toggle('cue', on);
+  });
+}
+function unlockAll(){
+  eachControl(function(el){ el.disabled=false; el.classList.remove('cue'); });
+}
+
+/* ============================================================
+   THE ONLY SYNC POINT.
+   Every sim calls window.simDone() at the moment it actually stops
+   moving — the end of a race, the settle after a coast, the frame
+   where phase turns 'done'. That call, and nothing else, releases
+   the takeaway. A demo that runs 41 passes and one that runs 537
+   therefore both land their line exactly on arrival.
+   ============================================================ */
+window.simDone=function(){
+  if(state.phase!=='learn' || state.stage!=='run') return;
+  landStep();
+};
+
+function landStep(){
+  var L=LEVELS[state.lvl], st=L.steps[state.done];
+  state.stage='ready';
+  if(st && st.tell) showTell(st.tell);
+  unlockAll();
+  renderAsk(); paintNav(); save();
+}
+
+function askInner(){
+  var L=LEVELS[state.lvl];
+  var at=state.done, atEnd=(at>=L.steps.length), h='';
+  var lit = atEnd ? L.steps.length : (at + (state.stage==='ready'?1:0));
+  var dots='<span class="dots">';
+  for(var d=0;d<L.steps.length;d++) dots+='<span class="dot'+(d<lit?' on':'')+'"></span>';
+  dots+='</span>';
+
+  if(atEnd)
+    return '<span class="grow">✅ That is the whole idea — press <b>✍️ questions →</b> below.</span>'+dots;
+
+  var st=L.steps[at], need=st.hits||1, have=state.hits;
+  /* a tape-measured step counts LINES ALREADY RUN, not presses since it armed */
+  if(st.at && !st.wait){ need=st.need; have=Math.min(stepAt(st),need); }
+  if(state.stage==='todo'){
+    var cnt = need>1 ? ' <b>('+have+' of '+need+')</b>' : '';
+    h='<span class="grow">👆 '+st.ask+cnt+'</span>';
+  } else if(state.stage==='run'){
+    h='<span class="grow">👀 watch — the demo is talking to you</span>';
+  } else {
+    h='<span class="grow">✅ read the box below, then press <b>next →</b>. Play with the demo as much as you like first.</span>';
+  }
+  return h+dots;
+}
+
+function renderAsk(){
+  var slot=$('simSlot'); if(!slot) return;
+  var host=slot.querySelector('.sim'); if(!host) return;
+  var box=host.querySelector('.ask');
+  if(!box){
+    box=document.createElement('div'); box.className='ask';
+    /* Always a direct child of .sim, straight after the heading. Some sims keep
+       their .ctrl inside a sub-shell they rebuild on a tab switch, so anchoring
+       to .ctrl would both throw and lose the strip. */
+    var head=host.querySelector('.simhead');
+    if(head && head.nextSibling) host.insertBefore(box, head.nextSibling);
+    else if(head) host.appendChild(box);
+    else host.insertBefore(box, host.firstChild);
+  }
+  box.className='ask'+(state.stage==='ready'?' done':'');
+  box.innerHTML=askInner();
+}
+
+/* Forward is deliberately light: the demo the child just watched must NOT be
+   torn down and replayed underneath them. Only rewinding rebuilds. */
+function advanceStep(){
+  var L=LEVELS[state.lvl];
+  if(state.done>=L.steps.length) return openQuiz();
+  state.done++; state.hits=0; state.stage='todo';
+  hideTell();
+  if(state.done>=L.steps.length){
+    state.stage='ready'; unlockAll(); renderAsk(); paintNav(); return save();
+  }
+  coachPrep(state.done);
+  armStep();
+}
+
+/* Put the step on deck: cue its button, lock everything else. A step with no
+   `when` has nothing to press, so it lands immediately. */
+/* ============================================================
+   ABSOLUTE PROGRESS — where the tape IS, not how often it was pressed.
+   A stepper demo (the rooms, the scope, the square) has a finite tape, and
+   free play in the previous step's 'ready' window is allowed to wind that
+   tape forward. A step that counts presses from the moment it armed then
+   asks for lines that have already run, so the only way out is to press a
+   dead button — the "press next, then redo the next line" bug.
+   A step carrying at()/need is judged on the tape instead: already past it
+   lands the instant the step arms, part-way past it asks only for the lines
+   that are genuinely left. Animated steps (wait:true) still count presses,
+   because their progress only lands a frame later, but they get the
+   arm-time check for free — which is what unsticks "run it all" after the
+   child has already stepped the square to its last corner.
+   ============================================================ */
+function stepAt(st){ try{ return st.at(); }catch(e){ return 0; } }
+function stepSatisfied(st){ return !!(st && st.at && stepAt(st) >= st.need); }
+
+function matchWhen(st,tag){
+  var w=st.when, ok;
+  if(typeof w==='function')      ok=w(tag);
+  else if(w instanceof Array)    ok=w.indexOf(tag)>=0;
+  else                           ok=(w===tag);
+  return !!ok;
+}
+
+function armStep(){
+  var st=LEVELS[state.lvl].steps[state.done];
+  if(!st.when){ state.stage='run'; return landStep(); }
+  if(stepSatisfied(st)){ state.stage='run'; return landStep(); }  /* tape is already there */
+  lockTo(st.cue);
+  renderAsk(); paintNav(); save();
+}
+
+/* Rewind / restore. Every step's show() is written absolute — it resets its sim
+   and replays from the top — so landing anywhere is: mount the sim clean, replay
+   the last step that should already have happened, then prep what is on deck.
+   'ready' means step k has run and its takeaway is showing; 'todo' means it has not. */
+function gotoStep(k,stage){
+  var L=LEVELS[state.lvl];
+  k=Math.max(0,Math.min(L.steps.length,k));
+  var atEnd=(k>=L.steps.length);
+  state.done=k; state.hits=0;
+  state.stage = atEnd ? 'ready' : (stage||'todo');
+
+  coachMuted=true;
+  try{
+    if(L.sim) mountSim(L.sim);
+    var upto = atEnd ? L.steps.length-1 : (state.stage==='todo' ? k-1 : k);
+    var s=L.steps[upto];
+    if(s && s.show){ try{ s.show(); }catch(e){} }
+  }catch(e){}
+  coachMuted=false;
+
+  hideTell();
+  if(!atEnd && state.stage==='todo'){
+    coachPrep(k);
+    return armStep();
+  }
+  if(!atEnd && L.steps[k].tell) showTell(L.steps[k].tell);
+  unlockAll();
+  renderAsk(); paintNav();
+}
+
+function coachHit(tag){
+  if(coachMuted || !tag) return;
+  if(state.phase!=='learn') return;
+  var L=LEVELS[state.lvl]; if(!L) return;
+  if(state.stage!=='todo'){                                   /* already running, or free play */
+    /* ONE BUTTON, ALL THE WAY DOWN. On a stepper the tape is the progress bar,
+       so a child who just keeps pressing "next line" walks into the next step
+       by itself and its takeaway lands in order — no detour through next →. */
+    if(state.stage==='ready'){
+      var nx=L.steps[state.done+1];
+      if(nx && nx.at && !nx.wait && nx.when && matchWhen(nx,tag) && stepSatisfied(nx)) advanceStep();
+    }
+    return;
+  }
+  var st=L.steps[state.done]; if(!st || !st.when) return;
+  if(!matchWhen(st,tag)) return;
+  state.hits++;
+  var landed = (st.at && !st.wait) ? stepSatisfied(st) : (state.hits >= (st.hits||1));
+  if(!landed){ renderAsk(); paintNav(); return; }
+
+  /* Last press taken. A demo that animates gets to finish talking first and
+     calls simDone() itself; an instant one (a tab, a threshold, a room) has
+     nothing to wait for, so it lands on the spot. */
+  state.stage='run';
+  unlockAll();
+  renderAsk(); paintNav();
+  if(!st.wait) landStep();
+}
+
+function openQuiz(){
+  state.phase='quiz'; state.stage='ready';
+  state.done=LEVELS[state.lvl].steps.length;
+  unlockAll(); renderAsk();
+  $('quizWrap').classList.remove('hide');
+  $('quizWrap').scrollIntoView({behavior:'smooth',block:'start'});
+  paintNav(); save();
+}
+
+function quizDone(L){ return L.qs.every(function(_,i){ return state.answered[L.id+'_'+i]; }); }
+
+/* the visual half of answering — split out so ← back can replay it silently */
+function paintAnswer(L,qi,oi){
+  var q=L.qs[qi], right=(oi===q.a);
+  for(var i=0;i<q.opts.length;i++){
+    var b=$('o'+L.id+'_'+qi+'_'+i); if(!b) continue;
+    b.className='opt'+(i===q.a?' correct':(i===oi?' wrong':' dim'));
+  }
+  var fb=$('f'+L.id+'_'+qi); if(!fb) return;
+  fb.className='fb show '+(right?'good':'bad');
+  fb.innerHTML = right
+    ? '<span class="tag">✅ Yes</span>'+q.good
+    : '<span class="tag">❌ Not quite</span>'+(q.bad[oi]||'')+'<div style="margin-top:8px;padding-top:8px;border-top:1px solid #0002"><b>The answer:</b> '+q.good+'</div>';
+}
+
+function pick(lid,qi,oi){
+  var L=LEVELS.filter(function(x){return x.id===lid;})[0];
+  var q=L.qs[qi], key=lid+'_'+qi, fresh=!state.answered[key];
+  if(fresh){
+    state.answered[key]=oi+1;              /* 1-based: keeps option 0 truthy */
+    state.first.total++;
+    if(oi===q.a){ state.first.ok++; }
+    else { state.misses.push({lvl:L.title, day:L.day, q:q.q, chose:q.opts[oi], right:q.opts[q.a]}); }
+  }
+  paintAnswer(L,qi,oi);
+  drawMap(); paintNav(); save();
+}
+
+function openBench(){
+  var L=LEVELS[state.lvl];
+  state.phase='bench';
+  $('bench'+L.id).classList.remove('hide');
+  $('bench'+L.id).scrollIntoView({behavior:'smooth',block:'center'});
+  paintNav(); save();
+}
+
+function nextLevel(){
+  state.lvl++; state.phase='learn'; state.done=0; state.stage='todo';
+  state.hits=0;
+  if(state.lvl>=LEVELS.length){ killAnimations(); $('game').innerHTML=''; save(); report(); }
+  else renderLevel();
+}
+
+/* ============================================================
+   THE FOOTER — the only place "forward" ever lives.
+   There is no skip. While a step is waiting to be done, or while
+   its explanation is still landing, the forward button is not on
+   screen at all: the demo is the only way on. It appears when the
+   demo has finished saying what it had to say.
+   ============================================================ */
+function paintNav(){
+  var f=$('foot'), b=$('navBack'), n=$('navNext'), hint=$('navHint');
+  if(state.lvl>=LEVELS.length){ f.classList.add('hide'); return; }
+  f.classList.remove('hide');
+  var L=LEVELS[state.lvl], last=(state.lvl===LEVELS.length-1);
+  b.disabled = (state.lvl===0 && state.phase==='learn' && state.done===0 && state.stage==='todo');
+  n.disabled = false; n.className='nb'; n.style.visibility='visible';
+
+  if(state.phase==='learn'){
+    var atEnd=(state.done>=L.steps.length), st=L.steps[state.done];
+    if(atEnd){
+      n.textContent='✍️ questions →';
+      hint.innerHTML='That is the whole idea — now prove it.';
+    } else if(state.stage==='todo'){
+      var need=st.hits||1, have=state.hits;
+      if(st.at && !st.wait){ need=st.need; have=Math.min(stepAt(st),need); }
+      n.style.visibility='hidden';
+      hint.innerHTML='👆 Press the glowing button'+(need>1?' — <b>'+have+' of '+need+'</b>':'');
+    } else if(state.stage==='run'){
+      n.style.visibility='hidden';
+      hint.innerHTML='💡 watch the demo';
+    } else {
+      n.textContent = (state.done===L.steps.length-1) ? '✍️ questions →' : 'next →';
+      hint.innerHTML='';
+    }
+  } else if(state.phase==='quiz'){
+    var ok=quizDone(L);
+    n.disabled=!ok;
+    n.textContent='🔧 bench →';
+    var left=L.qs.filter(function(_,i){ return !state.answered[L.id+'_'+i]; }).length;
+    hint.innerHTML = ok ? 'All answered. Only your <b>first</b> try counted.'
+                        : '🔒 '+left+' question'+(left>1?'s':'')+' still to go';
+  } else {
+    n.textContent = last ? '🎤 my miss list →' : 'next level →';
+    hint.innerHTML='Run it on the robot — then come back.';
+  }
+}
+
+function navNext(){
+  var L=LEVELS[state.lvl];
+  if(state.phase==='learn'){
+    if(state.stage!=='ready') return;                       /* button is not on screen */
+    if(state.done>=L.steps.length-1) return openQuiz();      /* last note read */
+    return advanceStep();
+  }
+  if(state.phase==='quiz'){ if(quizDone(L)) openBench(); return; }
+  nextLevel();
+}
+
+/* Back unwinds the same ladder it climbed: a finished step goes back to being
+   an unfinished one, and only then does it step to the note before it. */
+function navBack(){
+  var L=LEVELS[state.lvl];
+  if(state.phase==='bench'){
+    state.phase='quiz';
+    $('bench'+L.id).classList.add('hide');
+    $('quizWrap').scrollIntoView({behavior:'smooth',block:'start'});
+    return paintNav(), save();
+  }
+  if(state.phase==='quiz'){
+    state.phase='learn';
+    $('quizWrap').classList.add('hide');
+    gotoStep(L.steps.length-1,'ready');
+    $('simSlot').scrollIntoView({behavior:'smooth',block:'center'});
+    return save();
+  }
+  if(state.done>=L.steps.length){ gotoStep(L.steps.length-1,'ready'); return save(); }
+  /* Only a step with something to click can be un-done: for a step that narrates
+     on arrival, 'todo' is a state that cannot exist, and sending it there would
+     just restart the narration for ever. Those step straight back instead. */
+  var cur=L.steps[state.done];
+  if(state.stage!=='todo' && cur && cur.when){ gotoStep(state.done,'todo'); return save(); }
+  if(state.done>0){ gotoStep(state.done-1,'ready'); return save(); }
+  /* step 0, nothing done → back into the previous level, at its bench */
+  if(state.lvl>0){
+    state.lvl--; state.phase='bench';
+    state.done=LEVELS[state.lvl].steps.length-1; state.stage='ready';
+    renderLevel();
+  }
+}
+
+function report(){
+  drawMap();
+  $('foot').classList.add('hide');
+  var pct = state.first.total ? Math.round(state.first.ok/state.first.total*100) : 0;
+  var h='<div class="report">';
+  h+='<h2>🎤 Your miss list</h2>';
+  h+='<p class="sub">Show this to the coach. Screenshot it or press Ctrl+P.</p>';
+  h+='<div class="score">'+state.first.ok+' / '+state.first.total+'</div>';
+  h+='<p style="margin:4px 0 14px;font-weight:700;color:var(--purple)">'+pct+'% right on the first try</p>';
+  if(!state.misses.length){
+    h+='<div class="recap"><b>Nothing missed on a first try.</b> Now go prove it on the robot.</div>';
+  } else {
+    h+='<p style="font-weight:800;font-size:16px">Go back over these '+state.misses.length+':</p>';
+    state.misses.forEach(function(m){
+      h+='<div class="miss"><b>'+m.day+' · '+m.lvl+'</b><br>'+
+         '<div style="margin:6px 0">'+m.q+'</div>'+
+         '<div style="font-size:14px"><b>You picked:</b> '+m.chose+'<br><b>Right answer:</b> '+m.right+'</div></div>';
+    });
+    var days={};
+    state.misses.forEach(function(m){ days[m.day]=(days[m.day]||0)+1; });
+    h+='<h3 style="margin-top:18px;color:var(--navy)">Where to spend your bench time</h3><table><tr><th>Day</th><th>Missed</th></tr>';
+    Object.keys(days).sort().forEach(function(d){ h+='<tr><td>'+d+'</td><td>'+days[d]+'</td></tr>'; });
+    h+='</table>';
+  }
+  h+='<p style="font-size:14px;color:var(--purple);font-weight:700;margin-top:16px">'+
+     'This list stays on this computer until somebody starts over.</p>';
+  h+='<button class="btn big" onclick="freshStart()">↺ Play again — wipes this list</button>';
+  h+='</div>';
+  $('reportSlot').innerHTML=h;
+  save();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* Coming back from the beam lab's tab: if it recorded a finish, that counts as
+   having done step 1 — the child should not have to reopen the tab to move on. */
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState!=='visible') return;
+  var L=LEVELS[state.lvl];
+  if(L && L.sim==='beamlink' && state.phase==='learn' && state.stage==='todo' && state.done===0 && beamDone())
+    coachHit('skip');
+});
+
+/* ---- boot ---- */
+drawMap();
+offerResume();
+
+/* ============================================================
+   INTERACTIVES
+   ============================================================ */
+var NM={
+  el:function(id){return document.getElementById(id);},
+  pt:function(a,R){var r=a*Math.PI/180;return (R*Math.sin(r)).toFixed(1)+' '+(-R*Math.cos(r)).toFixed(1);},
+  arcD:function(a1,a2,R){if(a2-a1<0.5)return '';return 'M '+NM.pt(a1,R)+' A '+R+' '+R+' 0 '+((a2-a1)>180?1:0)+' 1 '+NM.pt(a2,R);}
+};
+
+function buildSim(kind,slot){
+  if(kind==='rooms')    roomsSim(slot);
+  if(kind==='battery')  batterySim(slot);
+  if(kind==='beamlink') beamLinkSim(slot);
+  if(kind==='squarestep')squareStepSim(slot);
+  if(kind==='beat')     beatSim(slot);
+  if(kind==='pd')       pdSim(slot);
+  if(kind==='scope')    scopeSim(slot);
+  if(kind==='cal')      calSim(slot);
+  if(kind==='wall')     wallSim(slot);
+  if(kind==='line')     lineSim(slot);
+  if(kind==='squareup') squareUpSim(slot);
+  if(kind==='duel')     duelSim(slot);
+}
+
+/* the play button was removed from the beat/PD sims (their chips play for you),
+   so every write to it has to survive the element being absent. */
+function playBtn(id,txt){ var b=NM.el(id); if(b) b.innerHTML=txt; }
+
+function roomHTML(name,val,cls){
+  return '<div class="room '+(cls||'')+'"><div class="plate"><span>'+name+'</span><span class="kk">room</span></div>'+
+         '<div class="inside">'+val+'</div></div>';
+}
+
+/* ---- 1. the rooms tracer (D2) ------------------------------------------
+   ONE control, and only one: ▶ next line. There are two little programs
+   here, and the second one used to sit behind a tab the child had to find.
+   It no longer does — when the first program runs out of lines, the next
+   press swaps the panel over by itself and keeps going. Eight presses of
+   the same button, one short sentence each. Nothing to hunt for.
+   ------------------------------------------------------------------------ */
+function roomsSim(slot){
+  var PROG={
+    caps:{
+      label:'program 1 of 2 \u00b7 \ud83d\udd20 capitals',
+      code:['speed = 200','speed = 400','Speed = 999','print(speed)'],
+      steps:[
+        {r:[{n:'speed',v:200,c:'flash'}],
+         m:'Room <b>speed</b> built. <b>200</b> inside.'},
+        {r:[{n:'speed',v:400,c:'flash'}],
+         m:'<b>400</b> moved in. The 200 is <b>gone</b> \u2014 nothing was added.'},
+        {r:[{n:'speed',v:400,c:''},{n:'Speed',v:999,c:'flash impostor'}],
+         m:'\ud83d\udca5 Capital <b>S</b> \u2014 Python built a <b>second room</b> and said nothing.'},
+        {r:[{n:'speed',v:400,c:'flash'},{n:'Speed',v:999,c:'impostor'}],
+         m:'Prints <b>400</b>. You filled <code>Speed</code>; you read <code>speed</code>.'}
+      ],
+      start:'Press <b>\u25b6 next line</b>. A room only exists once a line builds it.',
+      end:'Finished. <b>Two</b> rooms. Only one of them got printed.'
+    },
+    copy:{
+      label:'program 2 of 2 \u00b7 \ud83d\udcc4 copying',
+      code:['a = 5','b = a','a = 9','print(b)'],
+      steps:[
+        {r:[{n:'a',v:5,c:'flash'}],
+         m:'<b>New program</b>, same button. Room <b>a</b> built, <b>5</b> inside.'},
+        {r:[{n:'a',v:5,c:''},{n:'b',v:5,c:'flash'}],
+         m:'<b>b</b> got a <b>copy</b> of the 5. The two doors are <b>not</b> linked.'},
+        {r:[{n:'a',v:9,c:'flash'},{n:'b',v:5,c:''}],
+         m:'<b>9</b> replaced the 5 in <b>a</b>. Watch <b>b</b> \u2014 it did not move.'},
+        {r:[{n:'a',v:9,c:''},{n:'b',v:5,c:'flash'}],
+         m:'Prints <b>5</b>. <b>b</b> still holds the copy it took on line 2.'}
+      ],
+      start:'Second program. Same button.',
+      end:'Finished. Two rooms, two <b>different</b> numbers. <code>=</code> copies a value; it never links doors.'
+    }
+  };
+  var ORDER=['caps','copy'];
+  var cur='caps';
+
+  function shell(){
+    var P=PROG[cur];
+    return '<div class="ctrl">'+
+      '<button class="cbtn" id="rmNext" onclick="rmStep()">\u25b6 next line</button>'+
+      '<span class="hint">'+P.label+'</span>'+
+      '</div>'+
+      '<div class="trace"><div id="rcode">'+
+      P.code.map(function(c,i){return '<div class="tline" id="rl'+i+'">'+c+'</div>';}).join('')+'</div>'+
+      '<div><div class="vlabel">\ud83d\udeaa the rooms</div><div class="boxes" id="rrooms"></div></div>'+
+      '<div class="tmsg" id="rmsg"></div></div>';
+  }
+  $(slot).innerHTML='<div class="sim"><div class="simhead">\u25b6 Be the computer \u2014 one line at a time</div>'+
+    '<div id="rmShell">'+shell()+'</div></div>';
+
+  window.rmS={pc:0,rooms:[]};
+
+  function paint(m){
+    var s=window.rmS;
+    NM.el('rrooms').innerHTML = s.rooms.length
+      ? s.rooms.map(function(r){return roomHTML(r.n,r.v,r.c);}).join('')
+      : '<div style="font-size:13px;color:#9aa8ba">no rooms yet</div>';
+    NM.el('rmsg').innerHTML=m;
+    setTimeout(function(){ var n=document.querySelectorAll('#rrooms .room'); for(var i=0;i<n.length;i++) n[i].classList.remove('flash'); },400);
+  }
+
+  /* Internal, unhooked. The coach only ever hears about rmStep(), so an
+     automatic program swap in the middle of a step cannot be mistaken for
+     the child pressing something. */
+  function doProg(k){
+    cur=k;
+    NM.el('rmShell').innerHTML=shell();
+    window.rmS={pc:0,rooms:[]};
+    paint(PROG[k].start);
+  }
+  function doStep(){
+    var P=PROG[cur], s=window.rmS;
+    if(s.pc>=P.steps.length){
+      var i=ORDER.indexOf(cur);
+      if(i<ORDER.length-1){ doProg(ORDER[i+1]); return doStep(); }  /* next program, same press */
+      NM.el('rmsg').innerHTML=P.end; return;
+    }
+    for(var k=0;k<P.code.length;k++){ NM.el('rl'+k).className='tline'+(k===s.pc?' on':(k<s.pc?' done':'')); }
+    var st=P.steps[s.pc];
+    s.rooms=st.r.map(function(x){return {n:x.n,v:x.v,c:x.c};});
+    s.pc++;
+    paint(st.m);
+  }
+
+  window.rmPaint=paint;
+  window.rmStep=function(){ doStep(); };
+  window.rmReset=function(){ doProg('caps'); };            /* back to the very first line */
+  window.rmProg=function(k){ doProg(k); };
+  window.rmAll=function(){ var g=0; while(g++<40){ var last=(cur===ORDER[ORDER.length-1] && window.rmS.pc>=PROG[cur].steps.length); if(last) break; doStep(); } };
+  /* lines run since the very first one, across both programs: 0..8 */
+  window.rmAt=function(){
+    var n=0, i=ORDER.indexOf(cur);
+    for(var k=0;k<i;k++) n+=PROG[ORDER[k]].steps.length;
+    return n + (window.rmS?window.rmS.pc:0);
+  };
+
+  doProg('caps');
+}
+
+/* ---- 2. full battery vs flat battery (D2) ----
+   HONEST MODEL: Pybricks run_time/run_angle are SPEED-REGULATED. The motor holds the
+   speed you asked for until it hits the battery's ceiling, then it saturates.
+     full battery ceiling ~1050 deg/s   ·   tired battery ceiling ~430 deg/s
+   Under the ceiling both batteries land identically — which is the real trap. --------- */
+function batterySim(slot){
+  /* PXDEG is chosen so the widest run_time result (900 °/s × 2 s = 1800°) still fits
+     the track, and the run_angle goal line sits at a genuine 720° from the start. */
+  var FULL_CEIL=1050, FLAT_CEIL=380, PXDEG=0.40, X0=60, GOAL_DEG=720, GOAL=X0+GOAL_DEG*PXDEG;
+  $(slot).innerHTML='<div class="sim"><div class="simhead">▶ Same program, two batteries, one speed dial</div>'+
+  '<div class="ctrl">'+
+  '<button class="chip" id="baT" onclick="baMode(\'time\')">run_time(speed, 2000)</button>'+
+  '<button class="chip" id="baA" onclick="baMode(\'angle\')">run_angle(speed, 720)</button>'+
+  '<button class="cbtn t" id="baRace" onclick="baGo()">▶ race</button>'+
+  /* Buttons for the two speeds the lesson actually needs. Dragging a range input
+     to a target value is the hardest thing on a classroom trackpad, and missing
+     it by one notch changes the answer. The slider stays, for free play. */
+  '<button class="cbtn g" id="baSlow" onclick="baSet(200)">🐢 ask for 200</button>'+
+  '<button class="cbtn g" id="baFast" onclick="baSet(700)">🔥 ask for 700</button>'+
+  '<span class="hint">asked-for speed <input id="baSpd" type="range" min="150" max="900" step="50" value="500" oninput="baSet(this.value)" style="width:120px;accent-color:#1C355E"> <b id="baSpdV">500</b> °/s</span>'+
+  '</div>'+
+  '<div class="simwrap"><svg width="820" height="238" viewBox="0 0 820 238" style="display:block">'+
+  '<rect x="0" y="14" width="820" height="80" rx="12" fill="#eef3f8"/>'+
+  '<rect x="0" y="104" width="820" height="80" rx="12" fill="#eef3f8"/>'+
+  '<text x="12" y="34" font-size="14" font-weight="800" fill="var(--navy)">🔋 full battery</text>'+
+  '<text x="12" y="124" font-size="14" font-weight="800" fill="var(--coral)">🪫 tired battery</text>'+
+  '<text id="baR1" x="812" y="34" font-size="13" font-weight="800" fill="var(--navy)" text-anchor="end"></text>'+
+  '<text id="baR2" x="812" y="124" font-size="13" font-weight="800" fill="var(--coral)" text-anchor="end"></text>'+
+  '<line id="baGoal" x1="'+GOAL+'" y1="18" x2="'+GOAL+'" y2="180" stroke="#00AE8D" stroke-width="4" stroke-dasharray="7 6" opacity="0"/>'+
+  '<text id="baGoalT" x="'+GOAL+'" y="192" font-size="11.5" font-weight="800" fill="#00AE8D" text-anchor="middle" opacity="0">720° = 2 wheel turns</text>'+
+  '<g id="baB1" transform="translate(60,68)"><g transform="rotate(90) scale(0.42)"><use href="#nmCarMini" style="--car:#1C355E"/></g></g>'+
+  '<g id="baB2" transform="translate(60,158)"><g transform="rotate(90) scale(0.42)"><use href="#nmCarMini" style="--car:#E96852"/></g></g>'+
+  '<line id="baM1" x1="0" y1="20" x2="0" y2="56" stroke="#1C355E" stroke-width="4" opacity="0"/>'+
+  '<line id="baM2" x1="0" y1="110" x2="0" y2="146" stroke="#E96852" stroke-width="4" opacity="0"/>'+
+  /* ceiling gauge */
+  '<text x="12" y="212" font-size="12.5" font-weight="800" fill="var(--navy)">what each battery can actually hold →</text>'+
+  '<rect x="300" y="200" width="500" height="15" rx="7" fill="#dbe2ea"/>'+
+  '<rect x="300" y="200" width="181" height="15" rx="7" fill="#E9685255"/>'+
+  '<line x1="481" y1="196" x2="481" y2="219" stroke="#E96852" stroke-width="3"/>'+
+  '<text x="481" y="234" font-size="11.5" font-weight="800" fill="#E96852" text-anchor="middle">tired ceiling 380</text>'+
+  '<line x1="800" y1="196" x2="800" y2="219" stroke="#1C355E" stroke-width="3"/>'+
+  '<text x="782" y="234" font-size="11.5" font-weight="800" fill="#1C355E" text-anchor="end">full ceiling 1050</text>'+
+  '<polygon id="baPin" points="0,-8 6,2 -6,2" transform="translate(538,196)" fill="#FFD500" stroke="#1C355E" stroke-width="2"/>'+
+  '</svg></div>'+
+  '<div class="tmsg" id="baMsg">Pick a program, then press race.</div></div>';
+
+  (function(){
+    var el=NM.el, mode='time', raf=null, asked=500;
+    function actual(ceil){ return Math.min(asked, ceil); }
+    window.baSet=function(v){
+      asked=parseInt(v,10); el('baSpdV').textContent=asked;
+      var sl=el('baSpd'); if(sl) sl.value=asked;          /* buttons move the slider too */
+      el('baPin').setAttribute('transform','translate('+(300+(asked/1050)*500).toFixed(0)+',196)');
+      window.baGo();
+    };
+    window.baMode=function(m){
+      mode=m;
+      [['time','baT'],['angle','baA']].forEach(function(p){
+        var on=(m===p[0]), b=el(p[1]);
+        b.style.background=on?'#625D9C':'#eef3f8'; b.style.color=on?'#fff':'#625D9C';
+      });
+      el('baGoal').setAttribute('opacity', m==='angle'?'1':'0');
+      el('baGoalT').setAttribute('opacity', m==='angle'?'1':'0');
+      window.baGo();
+    };
+    window.baGo=function(){
+      if(raf)cancelAnimationFrame(raf);
+      var vA=actual(FULL_CEIL), vB=actual(FLAT_CEIL);
+      var goalDeg=GOAL_DEG;
+      var A={x:X0,v:vA,done:false,t:0}, B={x:X0,v:vB,done:false,t:0}, t=0, last=null;
+      el('baM1').setAttribute('opacity','0'); el('baM2').setAttribute('opacity','0');
+      el('baR1').textContent='holding '+vA+' °/s'+(vA<asked?' ⚠ capped':'');
+      el('baR2').textContent='holding '+vB+' °/s'+(vB<asked?' ⚠ capped':'');
+      el('baMsg').innerHTML='running…'; el('baMsg').style.color='#625D9C';
+      function frame(now){
+        var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now; t+=dt;
+        var show=Math.min(dt*2.2,0.11);                   // animation is time-compressed
+        [[A,'baB1','baM1',68],[B,'baB2','baM2',158]].forEach(function(p){
+          var s=p[0]; if(s.done) return;
+          s.t+=show; s.x=X0+s.v*s.t*PXDEG;
+          if(mode==='time' ? s.t>=2 : (s.v*s.t)>=goalDeg){
+            s.done=true;
+            if(mode==='time'){ s.t=2; s.x=X0+s.v*2*PXDEG;
+              el(p[2]).setAttribute('x1',s.x); el(p[2]).setAttribute('x2',s.x); el(p[2]).setAttribute('opacity','1'); }
+            else { s.x=GOAL; }
+          }
+          el(p[1]).setAttribute('transform','translate('+s.x.toFixed(1)+','+p[3]+')');
+        });
+        if(A.done&&B.done){
+          raf=null; done(A,B,vA,vB); return;
+        }
+        raf=requestAnimationFrame(frame);
+      }
+      function done(A,B,vA,vB){
+        var m,c;
+        if(mode==='time'){
+          if(vA===vB){
+            m='😯 <b>Same place.</b> Both batteries could hold '+vA+'°/s, so 2 seconds bought the same distance.<br>'+
+              '<b>This is the trap, not the fix.</b> You are under the tired battery\'s ceiling — and nothing in your code knows where that ceiling is. Drag the speed up.';
+            c='#625D9C';
+          } else {
+            var pct=Math.round((1-vB/vA)*100);
+            m='❌ <b>Two different places.</b> You asked for '+asked+'°/s. The full battery held it; the tired one <b>topped out at '+vB+'</b> — so it fell <b>'+pct+'% short</b> in the same 2 seconds.<br>Seconds lie.';
+            c='#E96852';
+          }
+        } else {
+          var tA=(goalDeg/vA).toFixed(2), tB=(goalDeg/vB).toFixed(2);
+          m='✅ <b>Same place, every time.</b> Both counted 720° of wheel'+
+            (vA===vB?'' : ' — the tired one just took <b>'+tB+' s</b> against <b>'+tA+' s</b>')+'.<br>'+
+            'The wheel does not care about the battery. Count degrees.';
+          c='#00AE8D';
+        }
+        el('baMsg').innerHTML=m; el('baMsg').style.color=c;
+        window.simDone();          /* both cars have parked — the takeaway may land */
+      }
+      raf=requestAnimationFrame(frame);
+    };
+    window.baSet(500); window.baMode('time');
+  })();
+}
+
+/* ---- 3. the beam, in one link and two moves (D2) ---------------------------
+   The full lesson lives in beam-balance-catchup.html (see decision #32) — this
+   is the review stub: open the lab, or replay the two moves that turn the robot
+   sentence into degrees. No second copy of the beam machinery to maintain.  --- */
+function beamLinkSim(slot){
+  var ST=[
+    {l:'27.6 × t', r:'30', btn:'▶ ÷ 27.6 both sides',
+     msg:'The robot sentence: <b>27.6 cm, t times over, is 30 cm</b>. Two moves and it becomes degrees.'},
+    {l:'t', r:'1.087', btn:'▶ × 360 both sides',
+     msg:'÷ 27.6 on <b>both</b> pans → <b>t = 1.087 turns</b>. Still level, because you did the same amount to each side.'},
+    {l:'360 × t', r:'391', btn:'↺ start again',
+     msg:'× 360 on <b>both</b> pans → <b>391°</b>. And <code>360 × t</code> <i>is</i> the degree count the motor wants. 🎯'}
+  ];
+  $(slot).innerHTML='<div class="sim"><div class="simhead">⚖️ On paper, = is a beam balance</div>'+
+  '<div class="ctrl">'+
+  '<button class="cbtn t" id="bmOpen" onclick="bmOpen()">⚖️ Open the Beam Balance lab ↗</button>'+
+  '<button class="cbtn g" id="bmSkip" onclick="bmSkip()">✓ did it in class</button>'+
+  '<button class="cbtn p" id="bmBtn" onclick="bmSolve()">▶ ÷ 27.6 both sides</button></div>'+
+  '<div class="simwrap" style="text-align:center">'+
+  '<svg width="520" height="180" viewBox="0 0 560 180" style="display:block;margin:0 auto;max-width:100%">'+
+  '<g><rect x="70" y="58" width="420" height="11" rx="5" fill="#1C355E"/>'+
+  '<line x1="150" y1="67" x2="150" y2="94" stroke="#1C355E" stroke-width="4"/>'+
+  '<line x1="410" y1="67" x2="410" y2="94" stroke="#1C355E" stroke-width="4"/>'+
+  '<rect x="62" y="94" width="176" height="44" rx="10" fill="#625D9C"/>'+
+  '<rect x="322" y="94" width="176" height="44" rx="10" fill="#00AE8D"/>'+
+  '<text id="bmL" x="150" y="122" font-size="19" font-family="Consolas,monospace" font-weight="800" fill="#fff" text-anchor="middle"></text>'+
+  '<text id="bmR" x="410" y="122" font-size="19" font-family="Consolas,monospace" font-weight="800" fill="#fff" text-anchor="middle"></text></g>'+
+  '<path d="M 280 64 L 254 154 L 306 154 Z" fill="#1C355E"/>'+
+  '<rect x="238" y="154" width="84" height="9" rx="4" fill="#1C355E"/>'+
+  '<text x="280" y="42" font-size="26" font-weight="800" fill="#00AE8D" text-anchor="middle">=</text>'+
+  '</svg></div>'+
+  '<div class="tmsg" id="bmMsg"></div></div>';
+  (function(){
+    var el=NM.el, i=0;
+    function paint(){
+      el('bmL').textContent=ST[i].l; el('bmR').textContent=ST[i].r;
+      el('bmBtn').innerHTML=ST[i].btn;
+      el('bmMsg').innerHTML=ST[i].msg;
+      el('bmMsg').style.color = i===2 ? '#00AE8D' : '#625D9C';
+    }
+    /* ?from=arcade tells the lab to grow a way back here when it finishes */
+    window.bmOpen=function(){ try{ window.open('beam-balance-catchup.html?from=arcade','_blank'); }catch(e){} };
+    /* The lab is a whole session of its own. A child who sat through it in class
+       must have a door out of this step that is not "open the tab again". */
+    window.bmSkip=function(){};
+    window.bmSolve=function(){ i=(i+1)%3; paint(); };
+    /* The tape WRAPS (i+1)%3, so a poke during free play silently re-aims the
+       whole step: "press it twice" would land on 27.6 × t while the takeaway
+       talks about 391. Rewinding when the step arms keeps the two in step. */
+    window.bmReset=function(){ i=0; paint(); };
+    paint();
+  })();
+}
+
+/* ---- 5. the beat-stepper (D4) ---- */
+function beatSim(slot){
+  $(slot).innerHTML=
+  '<div class="sim"><div class="simhead">▶ Step the loop — you are the robot\'s brain</div>'+
+  '<div class="ctrl">'+
+  '<button class="cbtn" id="brNext" onclick="brStep()">▶ next beat</button>'+
+  '<button class="cbtn p" id="brPassB" onclick="brPass()">⟳ whole pass</button>'+
+  '<span style="font-size:13px;font-weight:800;margin-left:4px">the knob:</span>'+
+  '<button class="chip" id="brChip4" onclick="brSet(4)">✅ kp = 4</button>'+
+  '<button class="chip" id="brChip1" onclick="brSet(1)">😴 kp = 1</button>'+
+  '<button class="chip" id="brChip20" onclick="brSet(20)">🔥 kp = 20</button></div>'+
+  '<div style="display:flex;justify-content:center;align-items:flex-start;gap:14px;flex-wrap:wrap">'+
+  '<div style="width:210px;display:flex;flex-direction:column;gap:5px">'+
+  '<div id="brB0" class="brBeat"><span class="be">🚪</span><span><b>ASK</b><span class="d">still more than 1° to go?</span></span></div>'+
+  '<div id="brB1" class="brBeat"><span class="be">📏</span><span><b>MEASURE</b><span class="d">how big is the gap?</span></span></div>'+
+  '<div id="brB2" class="brBeat"><span class="be">🦵</span><span><b>PUSH</b><span class="d">push sized to the gap</span></span></div>'+
+  '<div id="brB3" class="brBeat"><span class="be">😴</span><span><b>BLINK</b><span class="d">sleep 5 ms — the car moves</span></span></div>'+
+  '<div style="text-align:center;font-size:12px;color:var(--purple);font-weight:800">↻ …and back to ASK</div></div>'+
+  '<div style="background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:9px 11px;font-family:Consolas,monospace;font-size:12.5px;line-height:1.55">'+
+  '<div id="brC0" class="tline">def gyro_turn_p(target, kp=4):</div>'+
+  '<div id="brC1" class="tline">    hub.imu.reset_heading(0)</div>'+
+  '<div id="brC2" class="tline">    while abs(target - hub.imu.heading()) &gt; 1:</div>'+
+  '<div id="brC3" class="tline">        error = target - hub.imu.heading()</div>'+
+  '<div id="brC4" class="tline">        left.run(kp * error)</div>'+
+  '<div id="brC5" class="tline">        right.run(-kp * error)</div>'+
+  '<div id="brC6" class="tline">        wait(5)</div>'+
+  '<div id="brC7" class="tline">    left.stop(); right.stop()</div></div>'+
+  '<div style="display:flex;align-items:center;gap:9px">'+
+  '<svg width="132" height="132" viewBox="-105 -105 210 210" style="flex:none">'+
+  '<circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>'+
+  '<line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/>'+
+  '<path id="brArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"/>'+
+  '<g id="brCar"><use href="#nmCar" style="--car:#625D9C"/></g></svg>'+
+  '<div style="font-size:14px">'+
+  '<div class="brrow"><span>gap (°)</span><b id="brRGap">–</b></div>'+
+  '<div class="brrow"><span>push (°/s)</span><b id="brRCmd">–</b></div>'+
+  '<div style="padding:4px 9px;font-weight:800;font-family:Consolas,monospace">pass #<span id="brPassN" style="color:var(--purple)">0</span></div>'+
+  '</div></div></div>'+
+  '<div class="tmsg" id="brMsg"></div></div>';
+
+  (function(){
+    var el=NM.el, SD=0.005, F=1.2, LAG=0.1, CAP=650;
+    var kp=4,s=null,raf=null,coastT=null,playing=false;
+    var LINES={setup:[0,1],ask:[2],measure:[3],push:[4,5],blink:[6],exit:[7]};
+    var CARDS={ask:0,measure:1,push:2,blink:3};
+    function fresh(){return {h:0,v:0,err:null,cmd:0,cmdc:0,pc:0,passes:0,peak:0,done:false};}
+    function beatOf(pc){return pc===0?'setup':pc===1?'ask':pc===2?'measure':pc===3?'push':pc===4?'blink':'exit';}
+    function msg(t,c){if(playing)return;el('brMsg').innerHTML=t;el('brMsg').style.color=c||'#625D9C';}
+    function row(id,txt,fl){var e=el(id);e.textContent=txt;if(fl&&!playing){e.style.background='#FFD50088';setTimeout(function(){e.style.background='transparent';},300);}}
+    function highlight(){
+      var b=playing?null:beatOf(s.pc);
+      for(var i=0;i<4;i++){el('brB'+i).className='brBeat'+((b&&CARDS[b]===i)?' on':'');}
+      for(var j=0;j<8;j++){el('brC'+j).className='tline'+((b&&LINES[b].indexOf(j)>=0)?' on':'');}
+    }
+    function drawBot(){
+      el('brCar').setAttribute('transform','rotate('+s.h.toFixed(1)+')');
+      if(s.peak>90){el('brArc').setAttribute('d',NM.arcD(90,s.peak,94));el('brArc').setAttribute('opacity','1');}
+    }
+    function doBeat(){
+      if(s.done)return;
+      var pc=s.pc;
+      if(pc===0){s.h=0;drawBot();msg('called <b>gyro_turn_p(90, kp='+kp+')</b> — gyro zeroed');s.pc=1;}
+      else if(pc===1){
+        var gap=Math.abs(90-s.h); row('brRGap',gap.toFixed(1),1);
+        if(gap>1){s.passes++;el('brPassN').textContent=s.passes;msg('🚪 <b>ASK</b> — gap is '+gap.toFixed(1)+'°, bigger than 1? <b>YES</b> → run the body again');s.pc=2;}
+        else{msg('🚪 <b>ASK</b> — gap is '+gap.toFixed(1)+'°, not bigger than 1. The door <b>closes</b>','#00AE8D');s.pc=5;}
+      }
+      else if(pc===2){s.err=90-s.h;row('brRGap',s.err.toFixed(1),1);msg('📏 <b>MEASURE</b> — error = 90 − '+s.h.toFixed(1)+' = <b>'+s.err.toFixed(1)+'°</b>');s.pc=3;}
+      else if(pc===3){
+        s.cmd=kp*s.err;s.cmdc=Math.max(-CAP,Math.min(CAP,s.cmd));
+        var over=Math.abs(s.cmd)>CAP; row('brRCmd',s.cmd.toFixed(0)+(over?' ⚠':''),1);
+        msg('🦵 <b>PUSH</b> — push = '+kp+' × '+s.err.toFixed(1)+' = <b>'+s.cmd.toFixed(0)+'</b>'+(over?' — motor maxes out at ±'+CAP+'! ⚠':(Math.abs(s.cmd)<80?' — small gap, gentle push':' — big gap, big push')));
+        s.pc=4;
+      }
+      else if(pc===4){
+        s.v+=(s.cmdc-s.v)*LAG;s.h+=s.v*F*SD;if(s.h>s.peak)s.peak=s.h;drawBot();
+        msg('😴 <b>BLINK</b> — wait(5): the code sleeps, the wheels keep spinning — now at <b>'+s.h.toFixed(1)+'°</b>');
+        s.pc=1;
+      }
+      else if(pc===5){finish();return;}
+      highlight();
+    }
+    function finish(){
+      s.done=true;playing=false;playBtn('brPlayB','▶▶ play');s.pc=5;highlight();
+      var exitV=s.v;
+      function coast(){
+        var moved=false;
+        for(var i=0;i<3;i++){if(Math.abs(s.v)>=1){s.v*=0.55;s.h+=s.v*F*SD;moved=true;}}
+        if(s.h>s.peak)s.peak=s.h;drawBot();
+        if(moved){coastT=setTimeout(coast,30);}
+        else{
+          coastT=null;
+          var hot=s.peak>91.5||Math.abs(exitV)>30, lazy=!hot&&s.passes>450,t,col;
+          if(hot){t='🔔 flew out to <b>'+s.peak.toFixed(1)+'°</b>, settled at '+s.h.toFixed(1)+'° after <b>'+s.passes+'</b> passes.<br>The door checks the <b>gap</b>, never the <b>speed</b>. Something has to brake <i>before</i> arrival. That is <b>KD</b>.';col='#E96852';}
+          else if(lazy){t='😴 the door finally closed after <b>'+s.passes+'</b> passes. Every push a whisper.<br>On a real robot that fading push slips below friction and <b>parks short</b>.';col='#625D9C';}
+          else{t='✅ door closed after <b>'+s.passes+'</b> passes, landed at <b>'+s.h.toFixed(1)+'°</b>.<br>It never <b>counted</b> to 90. It kept <b>CHECKING</b> until the gap got small 🧠';col='#00AE8D';}
+          el('brMsg').innerHTML=t;el('brMsg').style.color=col;
+          window.simDone();   /* 63 passes or 450 — the takeaway lands on arrival, not on a timer */
+        }
+      }
+      coast();
+    }
+    function pass(){if(s.pc===0)doBeat();do{doBeat();}while(!s.done&&s.pc!==1);}
+    window.brDone=function(){return !!(s&&s.done);};
+    window.brStep=function(){if(playing)window.brPlay();doBeat();};
+    window.brPass=function(){if(playing)window.brPlay();pass();};
+    window.brPlay=function(){
+      if(s.done)return;
+      playing=!playing;playBtn('brPlayB',playing?'⏸ pause':'▶▶ play');highlight();
+      if(playing){
+        el('brMsg').innerHTML='⏩ fast-forward — the real robot does this ~200× a second';el('brMsg').style.color='#625D9C';
+        (function frame(){if(!playing||s.done)return;var n=s.passes>300?12:s.passes>120?6:1;for(var i=0;i<n&&!s.done;i++)pass();if(playing&&!s.done)raf=requestAnimationFrame(frame);})();
+      }
+    };
+    window.brReset=function(){
+      if(raf)cancelAnimationFrame(raf);raf=null;if(coastT)clearTimeout(coastT);coastT=null;playing=false;s=fresh();
+      playBtn('brPlayB','▶▶ play');el('brPassN').textContent='0';row('brRGap','–');row('brRCmd','–');
+      el('brCar').setAttribute('transform','rotate(0)');el('brArc').setAttribute('opacity','0');el('brArc').setAttribute('d','');
+      el('brMsg').innerHTML='Press <b>▶ next beat</b> to call the function. Each click runs the <b>lit beat</b>. <b>You</b> are the robot\'s brain 🧠';
+      el('brMsg').style.color='#625D9C';highlight();
+    };
+    window.brSet=function(k){
+      kp=k;
+      var chips={4:['brChip4','#00AE8D'],1:['brChip1','#625D9C'],20:['brChip20','#E96852']};
+      for(var key in chips){var c=el(chips[key][0]),on=(+key===k);c.style.background=on?chips[key][1]:'#eef3f8';c.style.color=on?'#fff':chips[key][1];c.style.borderColor=chips[key][1];}
+      window.brReset(); if(k!==4) window.brPlay();
+    };
+    window.brSet(4);
+  })();
+}
+
+/* ---- 5b. the BRAKE: P alone vs P+D (D5) — ported from name-your-moves.qmd ----
+   Same physics constants as beatSim, plus the D term the curriculum actually teaches:
+     change = (error - last_error) / 0.005      # a speed, °/s
+     push   = kp*error + kd*change
+   Landmarks this reproduces: kp4·kd0.5 → 278 passes, lands 89.0° ·
+   kp20·kd0 → rings to 100.7° · kp20·kd0.5 → peak 89.9° in 41 passes ·
+   kp4·kd1.6 → crawls in over 537 passes.                                    -------- */
+function pdSim(slot){
+  $(slot).innerHTML=
+  '<div class="sim"><div class="simhead">▶ The brake — one click, one story</div>'+
+  '<div class="ctrl">'+
+  '<button class="cbtn" id="pdNext" onclick="pdStep()">▶ next beat</button>'+
+  '</div>'+
+  '<div class="ctrl">'+
+  '<button class="chip" id="pdChip0" onclick="pdSet(0)">✅ kp 4 · kd 0.5</button>'+
+  '<button class="chip" id="pdChip1" onclick="pdSet(1)">🔔 kp 20 · kd 0</button>'+
+  '<button class="chip" id="pdChip2" onclick="pdSet(2)">🛑 kp 20 · kd 0.5</button>'+
+  '<button class="chip" id="pdChip3" onclick="pdSet(3)">🌊 kp 4 · kd 1.6</button>'+
+  '</div>'+
+  '<div style="display:flex;justify-content:center;align-items:flex-start;gap:14px;flex-wrap:wrap">'+
+  '<div style="width:212px;display:flex;flex-direction:column;gap:5px">'+
+  '<div id="pdB0" class="brBeat"><span class="be">🚪</span><span><b>ASK</b><span class="d">still more than 1° to go?</span></span></div>'+
+  '<div id="pdB1" class="brBeat"><span class="be">📏</span><span><b>MEASURE</b><span class="d">how big is the gap?</span></span></div>'+
+  '<div id="pdB2" class="brBeat"><span class="be">📉</span><span><b>SENSE — new!</b><span class="d">how FAST is it closing?</span></span></div>'+
+  '<div id="pdB3" class="brBeat"><span class="be">🦵</span><span><b>PUSH</b><span class="d">engine kp·error + brake kd·change</span></span></div>'+
+  '<div id="pdB4" class="brBeat"><span class="be">😴</span><span><b>BLINK</b><span class="d">sleep 5 ms — the car moves</span></span></div>'+
+  '<div style="text-align:center;font-size:12px;color:var(--purple);font-weight:800">↻ …and back to ASK</div></div>'+
+  '<div style="background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:9px 11px;font-family:Consolas,monospace;font-size:12.5px;line-height:1.55">'+
+  '<div id="pdC0" class="tline">def gyro_turn_pd(target, kp=4, kd=0.5):</div>'+
+  '<div id="pdC1" class="tline">    hub.imu.reset_heading(0)</div>'+
+  '<div id="pdC2" class="tline">    last_error = target</div>'+
+  '<div id="pdC3" class="tline">    while abs(target - hub.imu.heading()) &gt; 1:</div>'+
+  '<div id="pdC4" class="tline">        error = target - hub.imu.heading()</div>'+
+  '<div id="pdC5" class="tline">        change = (error - last_error) / 0.005</div>'+
+  '<div id="pdC6" class="tline">        last_error = error</div>'+
+  '<div id="pdC7" class="tline">        left.run(kp * error + kd * change)</div>'+
+  '<div id="pdC8" class="tline">        right.run(-(kp * error + kd * change))</div>'+
+  '<div id="pdC9" class="tline">        wait(5)</div>'+
+  '<div id="pdC10" class="tline">    left.stop(); right.stop()</div></div>'+
+  '<div style="display:flex;align-items:center;gap:9px">'+
+  '<svg width="132" height="132" viewBox="-105 -105 210 210" style="flex:none">'+
+  '<circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>'+
+  '<line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/>'+
+  '<path id="pdArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"/>'+
+  '<g id="pdCar"><use href="#nmCar" style="--car:#625D9C"/></g></svg>'+
+  '<div style="font-size:14px">'+
+  '<div class="brrow"><span>gap (°)</span><b id="pdRGap">–</b></div>'+
+  '<div class="brrow"><span>change (°/s)</span><b id="pdRChg">–</b></div>'+
+  '<div class="brrow"><span>push (°/s)</span><b id="pdRCmd">–</b></div>'+
+  '<div style="padding:4px 9px;font-weight:800;font-family:Consolas,monospace">pass #<span id="pdPassN" style="color:var(--purple)">0</span></div>'+
+  '</div></div></div>'+
+  '<div class="tmsg" id="pdMsg"></div></div>';
+
+  (function(){
+    var el=NM.el, SD=0.005, F=1.2, LAG=0.1, CAP=650;
+    var PRESETS=[{kp:4,kd:0.5,id:'pdChip0',col:'#00AE8D'},{kp:20,kd:0,id:'pdChip1',col:'#E96852'},
+                 {kp:20,kd:0.5,id:'pdChip2',col:'#1C355E'},{kp:4,kd:1.6,id:'pdChip3',col:'#625D9C'}];
+    var kp=4,kd=0.5,s=null,raf=null,coastT=null,playing=false;
+    var LINES={setup:[0,1,2],ask:[3],measure:[4],sense:[5,6],push:[7,8],blink:[9],exit:[10]};
+    var CARDS={ask:0,measure:1,sense:2,push:3,blink:4};
+    function fresh(){return {h:0,v:0,err:null,chg:0,lastErr:90,cmd:0,cmdc:0,pc:0,passes:0,peak:0,done:false};}
+    function beatOf(pc){return pc===0?'setup':pc===1?'ask':pc===2?'measure':pc===3?'sense':pc===4?'push':pc===5?'blink':'exit';}
+    function msg(t,c){if(playing)return;el('pdMsg').innerHTML=t;el('pdMsg').style.color=c||'#625D9C';}
+    function row(id,txt,fl){var e=el(id);e.textContent=txt;if(fl&&!playing){e.style.background='#FFD50088';setTimeout(function(){e.style.background='transparent';},300);}}
+    function highlight(){
+      var b=playing?null:beatOf(s.pc);
+      for(var i=0;i<5;i++){el('pdB'+i).className='brBeat'+((b&&CARDS[b]===i)?' on':'');}
+      for(var j=0;j<11;j++){el('pdC'+j).className='tline'+((b&&LINES[b].indexOf(j)>=0)?' on':'');}
+    }
+    function drawBot(){
+      el('pdCar').setAttribute('transform','rotate('+s.h.toFixed(1)+')');
+      if(s.peak>90){el('pdArc').setAttribute('d',NM.arcD(90,s.peak,94));el('pdArc').setAttribute('opacity','1');}
+    }
+    function doBeat(){
+      if(s.done)return;
+      var pc=s.pc;
+      if(pc===0){s.h=0;s.lastErr=90;drawBot();msg('called <b>gyro_turn_pd(90, kp='+kp+', kd='+kd+')</b> — gyro zeroed, and the memory starts <b>full</b>: last_error = 90');s.pc=1;}
+      else if(pc===1){
+        var gap=Math.abs(90-s.h); row('pdRGap',gap.toFixed(1),1);
+        if(gap>1){s.passes++;el('pdPassN').textContent=s.passes;msg('🚪 <b>ASK</b> — gap is '+gap.toFixed(1)+'°, bigger than 1? <b>YES</b> → run the body again');s.pc=2;}
+        else{msg('🚪 <b>ASK</b> — gap is '+gap.toFixed(1)+'°, not bigger than 1. The door <b>closes</b>','#00AE8D');s.pc=6;}
+      }
+      else if(pc===2){s.err=90-s.h;row('pdRGap',s.err.toFixed(1),1);msg('📏 <b>MEASURE</b> — error = 90 − '+s.h.toFixed(1)+' = <b>'+s.err.toFixed(1)+'°</b>');s.pc=3;}
+      else if(pc===3){
+        var delta=s.err-s.lastErr;
+        s.chg=delta/SD; s.lastErr=s.err; row('pdRChg',s.chg.toFixed(0),1);
+        msg('📉 <b>SENSE</b> — the gap moved <b>'+delta.toFixed(2)+'°</b> in 5 ms, so it is closing at <b>'+s.chg.toFixed(0)+' °/s</b>'+
+            (s.chg<-1?' — <b>negative</b>, because the gap is shrinking':(Math.abs(s.chg)<1?' — pass 1 has nothing to compare against yet, so change = 0':'')));
+        s.pc=4;
+      }
+      else if(pc===4){
+        var eng=kp*s.err, brk=kd*s.chg;
+        s.cmd=eng+brk; s.cmdc=Math.max(-CAP,Math.min(CAP,s.cmd));
+        var over=Math.abs(s.cmd)>CAP; row('pdRCmd',s.cmd.toFixed(0)+(over?' ⚠':''),1);
+        msg('🦵 <b>PUSH</b> — '+kp+'×'+s.err.toFixed(1)+' '+(brk<0?'− '+Math.abs(brk).toFixed(0):'+ '+brk.toFixed(0))+
+            ' = <b>'+s.cmd.toFixed(0)+'</b>'+(over?' — capped at ±'+CAP+' ⚠':(brk<-1?' — <b>the brake is trimming the engine</b>':(kd===0?' — no brake at all':''))));
+        s.pc=5;
+      }
+      else if(pc===5){
+        s.v+=(s.cmdc-s.v)*LAG;s.h+=s.v*F*SD;if(s.h>s.peak)s.peak=s.h;drawBot();
+        msg('😴 <b>BLINK</b> — wait(5): the code sleeps, the wheels keep spinning — now at <b>'+s.h.toFixed(1)+'°</b>');
+        s.pc=1;
+      }
+      else if(pc===6){finish();return;}
+      highlight();
+    }
+    function finish(){
+      s.done=true;playing=false;playBtn('pdPlayB','▶▶ play');s.pc=6;highlight();
+      var exitV=s.v;
+      function coast(){
+        var moved=false;
+        for(var i=0;i<3;i++){if(Math.abs(s.v)>=1){s.v*=0.55;s.h+=s.v*F*SD;moved=true;}}
+        if(s.h>s.peak)s.peak=s.h;drawBot();
+        if(moved){coastT=setTimeout(coast,30);}
+        else{
+          coastT=null;
+          /* Classify by what actually happened on screen: overshoot past the target is a
+             ring; a clean landing that took hundreds of passes is a crawl. A HOT engine
+             that lands clean is the whole sell of D, so it gets its own line. */
+          var rang=s.peak>91.5, crawl=!rang&&s.passes>400, tamed=!rang&&!crawl&&kp>=12&&kd>0, t,col;
+          if(rang){t='🔔 <b>kd = '+kd+' — no brake at all.</b> Rang out to <b>'+s.peak.toFixed(1)+'°</b> and flew through the door still spinning, after <b>'+s.passes+'</b> passes.<br>This is yesterday\'s P, exactly. Now press 🛑 — <b>same kp = '+kp+'</b>, brake switched back on.';col='#E96852';}
+          else if(crawl){t='🌊 <b>Too much brake.</b> Landed clean at '+s.h.toFixed(1)+'°, but it took <b>'+s.passes+'</b> passes — it starts braking so early the last degrees crawl.<br>KD is a <b>dial</b>, not a free upgrade.';col='#625D9C';}
+          else if(tamed){t='🛑 <b>The same hot engine — tamed.</b> kp is still <b>'+kp+'</b>, but peak was only '+s.peak.toFixed(1)+'° and it was done in <b>'+s.passes+'</b> passes.<br>Compare that with 🔔: <b>63 passes of ringing, against '+s.passes+' clean ones.</b> D did not slow the robot down — it stopped it <b>wasting time swinging past</b> 🧠';col='#1C355E';}
+          else{t='✅ <b>One clean glide.</b> Peak '+s.peak.toFixed(1)+'°, landed '+s.h.toFixed(1)+'°, <b>'+s.passes+'</b> passes — no ring, no crawl.<br>Now try 🔔 to see what happens when you delete the brake.';col='#00AE8D';}
+          el('pdMsg').innerHTML=t;el('pdMsg').style.color=col;
+          window.simDone();   /* 41 passes or 537 — either way, the line lands exactly here */
+        }
+      }
+      coast();
+    }
+    function pass(){if(s.pc===0)doBeat();do{doBeat();}while(!s.done&&s.pc!==1);}
+    window.pdStep=function(){if(playing)window.pdPlay();doBeat();};
+    window.pdPass=function(){if(playing)window.pdPlay();pass();};
+    window.pdPlay=function(){
+      if(s.done)return;
+      playing=!playing;playBtn('pdPlayB',playing?'⏸ pause':'▶▶ play');highlight();
+      if(playing){
+        el('pdMsg').innerHTML='⏩ fast-forward — the real robot does this ~200× a second';el('pdMsg').style.color='#625D9C';
+        (function frame(){if(!playing||s.done)return;var n=s.passes>300?12:s.passes>120?6:1;for(var i=0;i<n&&!s.done;i++)pass();if(playing&&!s.done)raf=requestAnimationFrame(frame);})();
+      }
+    };
+    window.pdReset=function(){
+      if(raf)cancelAnimationFrame(raf);raf=null;if(coastT)clearTimeout(coastT);coastT=null;playing=false;s=fresh();
+      playBtn('pdPlayB','▶▶ play');el('pdPassN').textContent='0';row('pdRGap','–');row('pdRChg','–');row('pdRCmd','–');
+      el('pdCar').setAttribute('transform','rotate(0)');el('pdArc').setAttribute('opacity','0');el('pdArc').setAttribute('d','');
+      el('pdMsg').innerHTML='Same door, same beats — <b>one new beat</b>: 📉 SENSE reads how <b>fast</b> the gap is closing. Press <b>▶ next beat</b>.';
+      el('pdMsg').style.color='#625D9C';highlight();
+    };
+    window.pdSet=function(i){
+      kp=PRESETS[i].kp; kd=PRESETS[i].kd;
+      PRESETS.forEach(function(p,j){
+        var c=el(p.id),on=(j===i);
+        c.style.background=on?p.col:'#eef3f8'; c.style.color=on?'#fff':p.col; c.style.borderColor=p.col;
+      });
+      window.pdReset(); if(i!==0) window.pdPlay();
+    };
+    window.pdSet(0);
+  })();
+}
+
+/* ---- 6. global rooms vs local rooms (D5) ---- */
+function scopeSim(slot){
+  $(slot).innerHTML=
+  '<div class="sim"><div class="simhead">▶ Two places a room can be</div>'+
+  '<div class="ctrl">'+
+  '<button class="cbtn" id="scNext" onclick="scStep()">▶ next line</button>'+
+  '<button class="cbtn g" id="scResetB" onclick="scReset()">↺ reset</button>'+
+  '</div>'+
+  '<div class="trace"><div>'+
+  ['KP = 4                     # top of file',
+   '',
+   'def make_it_sharper():',
+   '    KP = 12                # "turn it up"',
+   '',
+   'make_it_sharper()',
+   'turn_to(90)                # ...still lazy 😤'
+  ].map(function(c,i){return '<div class="tline" id="sl'+i+'">'+(c||'&nbsp;')+'</div>';}).join('')+'</div>'+
+  '<div><div class="vlabel">🌍 global — top of the file</div><div class="boxes" id="sgl"></div>'+
+  '<div class="vlabel" style="margin-top:10px">📦 local — inside the call</div><div class="boxes" id="sloc"></div></div>'+
+  '<div class="tmsg" id="smsg">Press <b>▶ next line</b>.</div></div></div>';
+  window.scS={pc:0};
+  window.scPaint=function(g,l,m){
+    NM.el('sgl').innerHTML  = g ? roomHTML('KP',g,'flash')       : '<div style="font-size:13px;color:#9aa8ba">empty</div>';
+    NM.el('sloc').innerHTML = l ? roomHTML('KP',l,'local flash') : '<div style="font-size:13px;color:#9aa8ba">nothing built</div>';
+    NM.el('smsg').innerHTML=m;
+    setTimeout(function(){var n=document.querySelectorAll('#sgl .room,#sloc .room');for(var i=0;i<n.length;i++)n[i].classList.remove('flash');},400);
+  };
+  window.scStep=function(){
+    var s=window.scS, steps=[
+      [0,'4',null,'A <b>global</b> room called <b>KP</b> is built, holding <b>4</b>. Every verb below can read it.'],
+      [2,'4',null,'The <code>def</code> line only names the function. Nothing inside has run yet.'],
+      [5,'4',null,'Now we <b>call</b> it. Step again to go inside.'],
+      [3,'4','12','💥 Here it is. Assigning <code>KP</code> <b>inside</b> a def builds a <b>brand-new local room</b> (dashed). The global still holds <b>4</b>.'],
+      [5,'4',null,'The call ended. The local room was <b>knocked down</b>. Nothing in it survives.'],
+      [6,'4',null,'<code>turn_to</code> reads the <b>global</b> KP, still <b>4</b>. That is why nothing changed. 😤<br><b>Read a global anywhere. Change it only at the top.</b>']
+    ];
+    if(s.pc>=steps.length){ NM.el('smsg').innerHTML='Done. The fix is zero new code: put <code>KP = 12</code> at the top of the file.'; return; }
+    var st=steps[s.pc];
+    for(var i=0;i<7;i++){ NM.el('sl'+i).className='tline'+(i===st[0]?' on':''); }
+    window.scPaint(st[1],st[2],st[3]);
+    s.pc++;
+  };
+  window.scReset=function(){ window.scS={pc:0}; for(var i=0;i<7;i++) NM.el('sl'+i).className='tline'; window.scPaint(null,null,'Press <b>▶ next line</b>.'); };
+  window.scAt=function(){ return window.scS?window.scS.pc:0; };   /* lines run: 0..6 */
+  window.scReset();
+}
+
+/* ---- 6b. calibrate the eye (D6) — from pd-line-following.qmd -----------------
+   Three surfaces, each with its OWN white/black pair. The glossy failure is the
+   one the slides call out: glossy black still reads ~60, so a stale THRESHOLD of
+   50 is never crossed and the follower drives straight over the line.  ---------- */
+function calSim(slot){
+  var SURF={
+    mat:   {label:'🟦 matte mat',   white:78, black:22, note:'the printed mat you follow on'},
+    paper: {label:'📄 white paper', white:92, black:31, note:'brighter paper, so BOTH ends read higher'},
+    gloss: {label:'✨ glossy table',white:95, black:60, note:'shiny — even the black bounces a lot back'}
+  };
+  var order=['mat','gloss'];
+  $(slot).innerHTML='<div class="sim"><div class="simhead">🎚️ Calibrate the eye — measure both ends, take the middle</div>'+
+  '<div class="ctrl">'+order.map(function(k){return '<button class="chip" id="caS'+k+'" onclick="caSurf(\''+k+'\')">'+SURF[k].label+'</button>';}).join('')+
+  '</div>'+
+  '<div class="simwrap" style="text-align:center">'+
+  '<svg width="560" height="242" viewBox="0 0 560 242" style="display:block;margin:0 auto">'+
+  /* readout sits on its own row so the eye never covers it */
+  '<rect x="20" y="8" width="196" height="34" rx="9" fill="#eef3f8" stroke="#1C355E" stroke-width="2"/>'+
+  '<text x="31" y="30" font-size="13.5" font-family="Consolas,monospace" font-weight="800" fill="#1C355E">reflection() = <tspan id="caNum" fill="#E96852">–</tspan></text>'+
+  /* the eye */
+  '<g id="caEye" transform="translate(140,88)">'+
+  '<rect x="-24" y="-30" width="48" height="46" rx="8" fill="#1C355E"/>'+
+  '<circle cy="10" r="8" fill="#FFD500"/>'+
+  '<path id="caBeam" d="M -13 16 L 13 16 L 26 44 L -26 44 Z" fill="#FFD500" opacity="0.35"/>'+
+  '</g>'+
+  '<rect id="caWhite" x="20" y="128" width="240" height="80" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="2"/>'+
+  '<rect id="caBlack" x="300" y="128" width="240" height="80" rx="10" fill="#101820"/>'+
+  '<text x="140" y="230" id="caWL" font-size="12" font-weight="800" fill="#9aa8ba" text-anchor="middle">white — click to aim</text>'+
+  '<text x="420" y="230" id="caBL" font-size="12" font-weight="800" fill="#7d8895" text-anchor="middle">black — click to aim</text>'+
+  '</svg></div>'+
+  '<div class="ctrl" style="justify-content:center">'+
+  '<button class="cbtn g" id="caLookB" onclick="caLook()">👁 look at both ends</button>'+
+  '<button class="cbtn t" id="caSplitB" onclick="caSplit()">🎚️ take the middle</button>'+
+  '<button class="cbtn c" id="caStaleB" onclick="caStale()">😈 keep yesterday\'s 50</button></div>'+
+  '<div class="tmsg" id="caMsg"></div></div>';
+
+  (function(){
+    var el=NM.el, cur='mat', seen={};
+    function paint(){
+      var S=SURF[cur];
+      el('caWhite').setAttribute('fill', cur==='gloss'?'#ffffff':(cur==='paper'?'#fdfdfd':'#f4f6f8'));
+      el('caBlack').setAttribute('fill', cur==='gloss'?'#4a5560':'#101820');
+      el('caWL').textContent='white — '+(seen.white!=null?'read '+seen.white:'not measured yet');
+      el('caBL').textContent='black — '+(seen.black!=null?'read '+seen.black:'not measured yet');
+      el('caWL').setAttribute('fill', seen.white!=null?'#00AE8D':'#9aa8ba');
+      el('caBL').setAttribute('fill', seen.black!=null?'#00C9A7':'#7d8895');
+    }
+    window.caSurf=function(k){
+      cur=k; seen={};
+      order.forEach(function(t){var b=el('caS'+t),on=(t===k);b.style.background=on?'#625D9C':'#eef3f8';b.style.color=on?'#fff':'#625D9C';});
+      el('caNum').textContent='–';
+      el('caMsg').innerHTML='<b>'+SURF[k].label+'</b> — '+SURF[k].note+'. Aim at <b>both</b> ends before you split.';
+      el('caMsg').style.color='#625D9C';
+      paint();
+    };
+    window.caAim=function(which){
+      var S=SURF[cur], v=S[which];
+      seen[which]=v;
+      el('caEye').setAttribute('transform','translate('+(which==='white'?140:420)+',88)');
+      el('caNum').textContent=v;
+      el('caMsg').innerHTML='The eye is shining at the '+which+' and getting <b>'+v+'</b> back.'+
+        (seen.white!=null&&seen.black!=null?' Both ends measured — now press <b>🎚️ take the middle</b>.':' Now aim at the other end.');
+      el('caMsg').style.color='#625D9C';
+      paint();
+    };
+    window.caSplit=function(){
+      if(seen.white==null||seen.black==null){
+        el('caMsg').innerHTML='⚠️ You cannot split what you have not measured. Aim at <b>both</b> ends first.';
+        el('caMsg').style.color='#E96852'; return;
+      }
+      var S=SURF[cur], th=Math.round((seen.white+seen.black)/2);
+      el('caMsg').innerHTML='✅ <code>THRESHOLD = ('+seen.white+' + '+seen.black+') / 2 = <b>'+th+'</b></code><br>'+
+        'Comfortably clear of both ends: black is '+(th-seen.black)+' below it, white is '+(seen.white-th)+' above it. '+
+        (cur==='gloss'?'Note how far this is from 50 — a stale 50 would be <b>below the black reading</b>.':'Change surface and watch this number move.');
+      el('caMsg').style.color='#00AE8D';
+    };
+    window.caStale=function(){
+      var S=SURF[cur], ok=S.black<50;
+      el('caMsg').innerHTML= ok
+        ? '🤞 <b>Got away with it.</b> Black reads '+S.black+', still under 50, so <code>reflection() &lt; 50</code> is true on the line. It works — but only by <b>'+(50-S.black)+'</b>. Try the glossy table.'
+        : '❌ <b>Black reads '+S.black+'.</b> <code>reflection() &lt; 50</code> is <b>never true</b> — not on the white, not on the black. The robot is certain there is no line anywhere and drives straight over it.<br>The sensor is fine. <b>Your split point is stale.</b>';
+      el('caMsg').style.color= ok ? '#625D9C' : '#E96852';
+    };
+    /* One press, both ends. Two separate aim buttons meant a child could press
+       one, see a number, and reasonably think they were finished — and then the
+       split button scolded them. The eye now walks white → black by itself. */
+    window.caLook=function(){
+      window.caAim('white');
+      setTimeout(function(){
+        if(!el('caEye')) return;                 /* sim was torn down mid-look */
+        window.caAim('black');
+        window.simDone();
+      },700);
+    };
+    window.caSurf('mat');
+  })();
+}
+
+/* ---- 7. race all three followers (D6) — from pd-line-following.qmd ---- */
+function lineSim(slot){
+  $(slot).innerHTML='<div class="sim"><div class="simhead">▶ Race all three followers</div>'+
+  '<div class="ctrl">'+
+  '<button class="chip" id="lfBB" onclick="lfMode(\'bb\')">bang-bang</button>'+
+  '<button class="chip" id="lfP" onclick="lfMode(\'p\')">P</button>'+
+  '<button class="chip" id="lfPD" onclick="lfMode(\'pd\')">PD</button>'+
+  '<button class="cbtn t" id="lfRun" onclick="lfGo()">▶ run</button>'+
+  '<span class="hint">KD <input type="range" min="0" max="8" step="0.2" value="4" oninput="lfSet(\'kd\',this.value)" style="width:90px;accent-color:#E96852"> <b id="lfKdv">4.0</b></span></div>'+
+  '<div class="simwrap"><svg width="820" height="180" viewBox="0 0 880 240" style="display:block;background:#f2f5f9;border-radius:14px">'+
+  '<path id="lfLine" d="" fill="none" stroke="#101820" stroke-width="10" stroke-linecap="round"/>'+
+  '<polyline id="lfPath" points="" fill="none" stroke="#00C9A7" stroke-width="3"/>'+
+  '<g id="lfBot" transform="translate(40,120) rotate(90)"><g transform="scale(0.5)"><use href="#nmCarMini"/></g></g>'+
+  '<text id="lfTag" x="440" y="28" font-size="17" font-weight="800" text-anchor="middle" fill="#625D9C">PD — reads far AND fast</text>'+
+  '</svg></div>'+
+  '<div class="tmsg" id="lfMsg">Run all three. Then pick PD and drag <b>KD to 0</b> — D is the only difference.</div></div>';
+  (function(){
+    var raf=null,last=null,mode='pd',V=200,KP=1.2,KD=4.0,el=NM.el;
+    var X0=40,X1=840,midY=120,G=0.6;
+    function edgeY(x){ if(x<300) return midY; return midY + 70*Math.sin((x-300)/90); }
+    function drawLine(){
+      var d='M '+X0+' '+edgeY(X0).toFixed(1);
+      for(var x=X0+6;x<=X1;x+=6) d+=' L '+x.toFixed(1)+' '+edgeY(x).toFixed(1);
+      el('lfLine').setAttribute('d',d);
+    }
+    var TAGS={bb:['bang-bang — only two answers','#E96852'],p:['P — reads how FAR off','#00AE8D'],pd:['PD — reads far AND fast','#625D9C']};
+    function setBtns(){
+      [['bb','lfBB'],['p','lfP'],['pd','lfPD']].forEach(function(pair){
+        var on=mode===pair[0], b=el(pair[1]);
+        b.style.background=on?'#625D9C':'#eef3f8'; b.style.color=on?'#fff':'#625D9C';
+      });
+      el('lfTag').textContent=TAGS[mode][0]; el('lfTag').setAttribute('fill',TAGS[mode][1]);
+    }
+    window.lfMode=function(m){ mode=m; setBtns(); window.lfGo(); };
+    window.lfSet=function(k,v){
+      if(k==='kd'){ KD=parseFloat(v); el('lfKdv').textContent=parseFloat(v).toFixed(1); }
+    };
+    window.lfGo=function(){
+      var x=X0,y=edgeY(X0),th=0,lastErr=0,wApplied=0,pts=[]; last=null;
+      /* worst excursion off the line, in px — the number that makes "it wobbles"
+         a measurement instead of an adjective */
+      var worst=0;
+      el('lfPath').setAttribute('points','');
+      el('lfMsg').innerHTML='running…'; el('lfMsg').style.color='#625D9C';
+      function frame(now){
+        var dt=last?Math.min((now-last)/1000,0.04):0.016; last=now;
+        var sd=0.006,n=Math.max(1,Math.round(dt/sd));
+        for(var i=0;i<n && x<X1;i++){
+          var e=(edgeY(x)-y)*G;
+          if(e>50)e=50; if(e<-50)e=-50;
+          var wDesired;
+          if(mode==='bb'){ wDesired=(e>0?1:-1)*3.2; }
+          else if(mode==='p'){ wDesired=KP*e*0.09; }
+          else { wDesired=KP*e*0.09 + KD*(e-lastErr)*0.09; }
+          lastErr=e;
+          wApplied += (wDesired-wApplied)*0.30;
+          th += wApplied*sd*6;
+          if(th>1.2)th=1.2; if(th<-1.2)th=-1.2;
+          y += V*Math.tan(th)*sd; x += V*sd;
+          if(y<20)y=20; if(y>220)y=220;
+          if(x>X0+40){ var off=Math.abs(y-edgeY(x)); if(off>worst) worst=off; }
+        }
+        pts.push(x.toFixed(1)+','+y.toFixed(1));
+        el('lfPath').setAttribute('points',pts.join(' '));
+        el('lfPath').setAttribute('stroke', mode==='bb'?'#E96852':(mode==='p'?'#00AE8D':'#00C9A7'));
+        el('lfBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(90+th*57.3).toFixed(1)+')');
+        if(x<X1){ raf=requestAnimationFrame(frame); }
+        else { raf=null; verdict(worst); }
+      }
+      /* This sim used to finish in silence, so it was the one level where the
+         demo said nothing and a paragraph elsewhere had to speak for it. */
+      function verdict(w){
+        var mm=(w*0.9).toFixed(0), m, c;
+        if(mode==='bb'){ m='🔴 <b>Wandered up to '+mm+' mm off</b> the line. Only two answers — hard left, hard right — so it is <b>always</b> correcting too much.'; c='#E96852'; }
+        else if(mode==='p'){ m='🟢 <b>Down to '+mm+' mm off.</b> The correction is now sized to the mistake. Still a slow weave on the bends, though.'; c='#00AE8D'; }
+        else { m='🔵 <b>'+mm+' mm off, and the weave is gone.</b> KD eased off <i>before</i> arrival. Drag KD to 0 and run again — that wobble is what D was buying you.'; c='#625D9C'; }
+        el('lfMsg').innerHTML=m; el('lfMsg').style.color=c;
+        window.simDone();
+      }
+      if(raf)cancelAnimationFrame(raf); drawLine(); raf=requestAnimationFrame(frame);
+    };
+    drawLine(); setBtns();
+  })();
+}
+
+/* ---- 8. square_on_line — two eyes at a junction (D6) — from pd-line-following.qmd ---- */
+function squareUpSim(slot){
+  $(slot).innerHTML='<div class="sim"><div class="simhead">▶ square_on_line() — arrive crooked, leave square</div>'+
+  '<div class="ctrl"><button class="cbtn p" id="wsGoB" onclick="wsGo()">▶ creep onto the junction</button></div>'+
+  '<div class="simwrap" style="text-align:center">'+
+  '<svg width="420" height="240" viewBox="0 0 420 240" style="display:block;margin:0 auto;background:#f2f5f9;border-radius:14px">'+
+  '<rect x="0" y="60" width="420" height="14" fill="#101820"/>'+
+  '<text x="378" y="52" font-size="13" fill="#625D9C" font-weight="800" text-anchor="middle">junction</text>'+
+  '<g id="wsBot" transform="translate(210,178) rotate(-16)">'+
+  '<rect x="-26" y="-30" width="52" height="70" rx="8" fill="#1C355E"/>'+
+  '<circle cx="-16" cy="-30" r="6" fill="#FFD500" stroke="#fff" stroke-width="2"/>'+
+  '<circle cx="16" cy="-30" r="6" fill="#FFD500" stroke="#fff" stroke-width="2"/></g>'+
+  '</svg></div>'+
+  /* the commentary used to be an SVG <text>, which meant it could not hold
+     markup and had nowhere to put the takeaway underneath it */
+  '<div class="tmsg" id="wsMsg">Two eyes, and each one stops its own wheel.</div></div>';
+  (function(){
+    var raf=null,last=null,LINEY=67,el=NM.el;
+    function say(t,c){ el('wsMsg').innerHTML=t; el('wsMsg').style.color=c||'#625D9C'; }
+    window.wsGo=function(){
+      var cx=210,cy=178,th=-0.28,phase='drive',px=0,py=0,sgn=1; last=null;
+      say('Creeping up — and it is arriving <b>skewed</b>…');
+      function eyeWorld(lx,ly){ return {x: cx+lx*Math.cos(th)-ly*Math.sin(th), y: cy+lx*Math.sin(th)+ly*Math.cos(th)}; }
+      function frame(now){
+        var dt=last?Math.min((now-last)/1000,0.04):0.016; last=now;
+        if(phase==='drive'){
+          cy -= 70*Math.cos(th)*dt; cx += 70*Math.sin(th)*dt;
+          var le=eyeWorld(-16,-30), re=eyeWorld(16,-30);
+          if(le.y<=LINEY || re.y<=LINEY){
+            var leftLeads = le.y<=LINEY;
+            px=(leftLeads?le:re).x; py=LINEY;
+            sgn = th<0 ? 1 : -1; phase='pivot';
+            say('The <b>'+(leftLeads?'left':'right')+'</b> eye hits the line first — <b>that</b> wheel parks. The other one is still creeping.','#E96852');
+          }
+        } else if(phase==='pivot'){
+          var dth=sgn*0.9*dt;
+          if((sgn>0 && th+dth>=0) || (sgn<0 && th+dth<=0)){ dth=-th; phase='done'; }
+          var ox=cx-px, oy=cy-py, c=Math.cos(dth), s=Math.sin(dth);
+          cx=px+ox*c-oy*s; cy=py+ox*s+oy*c; th+=dth;
+        }
+        el('wsBot').setAttribute('transform','translate('+cx.toFixed(1)+','+cy.toFixed(1)+') rotate('+(th*57.3).toFixed(1)+')');
+        if(phase==='done'){
+          raf=null;
+          say('✅ <b>Squared.</b> The second eye found the line, the pivot stopped itself, and the heading is back to <b>0°</b> — the error it arrived with is gone.','#00AE8D');
+          window.simDone();
+          return;
+        }
+        raf=requestAnimationFrame(frame);
+      }
+      if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+    };
+  })();
+}
+
+/* ---- 8b. the motor IS the touch sensor (D7) — from stop-patrol-react.qmd -----
+   Two runs. drive_to_wall: roll at APPROACH_SPEED until the speed trace collapses
+   (that collapse IS run_until_stalled returning), then back off BACKOFF_MM.
+   wall_square: arrive crooked, one corner touches first, keep pushing until BOTH
+   motors stall — the wall has now told you your heading, so reset_heading(0).  --- */
+function wallSim(slot){
+  /* APPROACH is the real 150 °/s from the slides; SCALE only converts it into a
+     watchable number of pixels per second (~240 px/s → about 1.8 s to the wall). */
+  var WALLX=560, APPROACH=150, BACKOFF=50, SCALE=1.6, BACKOFF_PX=76;
+  $(slot).innerHTML='<div class="sim"><div class="simhead">▶ No distance sensor — so drive into it and feel the jam</div>'+
+  '<div class="ctrl">'+
+  '<button class="cbtn t" id="waStraight" onclick="waGo(\'straight\')">▶ drive_to_wall()</button>'+
+  '<button class="cbtn p" id="waCrooked" onclick="waGo(\'crooked\')">▶ arrive crooked → wall_square()</button>'+
+  '</div>'+
+  '<div class="simwrap"><svg width="760" height="290" viewBox="0 0 760 290" style="display:block;background:#f2f5f9;border-radius:14px">'+
+  '<rect x="'+WALLX+'" y="20" width="26" height="150" fill="#625D9C"/>'+
+  '<text x="'+(WALLX+13)+'" y="14" font-size="12.5" font-weight="800" fill="#625D9C" text-anchor="middle">wall</text>'+
+  '<line id="waMark" x1="0" y1="24" x2="0" y2="166" stroke="#00AE8D" stroke-width="3" stroke-dasharray="6 5" opacity="0"/>'+
+  '<text id="waMarkT" x="0" y="182" font-size="12" font-weight="800" fill="#00AE8D" text-anchor="middle" opacity="0"></text>'+
+  '<g id="waBot" transform="translate(90,95)">'+
+  '<rect x="-34" y="-26" width="68" height="52" rx="8" fill="#1C355E"/>'+
+  '<rect x="32" y="-24" width="7" height="48" rx="3" fill="#FFD500"/>'+
+  '</g>'+
+  /* speed trace */
+  '<rect x="30" y="196" width="700" height="76" rx="10" fill="#fff" stroke="#dbe2ea" stroke-width="2"/>'+
+  '<text x="40" y="212" font-size="12" font-weight="800" fill="#1C355E">left motor speed (°/s)</text>'+
+  '<line x1="30" y1="266" x2="730" y2="266" stroke="#dbe2ea" stroke-width="2"/>'+
+  '<polyline id="waTrace" points="" fill="none" stroke="#00AE8D" stroke-width="3"/>'+
+  '<text id="waStall" x="700" y="212" font-size="13" font-weight="800" fill="#E96852" text-anchor="end" opacity="0">stalled() → True</text>'+
+  '</svg></div>'+
+  '<div class="tmsg" id="waMsg">The drive motors are the only touch sensor you have. Press a button.</div></div>';
+
+  (function(){
+    var el=NM.el, raf=null, last=null;
+    function msg(t,c){el('waMsg').innerHTML=t; el('waMsg').style.color=c||'#625D9C';}
+    window.waGo=function(mode){
+      if(raf)cancelAnimationFrame(raf);
+      var x=90, y=95, th=(mode==='crooked'? -13 : 0), v=APPROACH, pts=[], t=0;
+      var phase='drive', lStall=false, rStall=false, pivotDir=0, backTarget=0;
+      last=null;
+      el('waTrace').setAttribute('points',''); el('waTrace').setAttribute('stroke','#00AE8D');
+      el('waStall').setAttribute('opacity','0');
+      el('waMark').setAttribute('opacity','0'); el('waMarkT').setAttribute('opacity','0');
+      msg(mode==='crooked'
+        ? 'Rolling in at <b>'+APPROACH+'°/s</b>, and deliberately <b>crooked</b>. One corner will touch first.'
+        : 'Rolling in at <b>APPROACH_SPEED = '+APPROACH+'°/s</b> with <code>duty_limit=50</code>. Nothing knows the wall is there.');
+      /* corner x positions in world space */
+      function corners(){
+        var r=th*Math.PI/180, c=Math.cos(r), s=Math.sin(r);
+        return {
+          l:{x:x+34*c-(-26)*s},   // front-left corner
+          r:{x:x+34*c-( 26)*s}    // front-right corner
+        };
+      }
+      function pushTrace(speed){
+        t+=1; var px=30+Math.min(t*1.6,698), py=266-Math.max(0,Math.min(speed,APPROACH))/APPROACH*48;
+        pts.push(px.toFixed(1)+','+py.toFixed(1));
+        el('waTrace').setAttribute('points',pts.join(' '));
+      }
+      function frame(now){
+        var dt=last?Math.min((now-last)/1000,0.04):0.016; last=now;
+        var c=corners();
+        if(phase==='drive'){
+          var lead=Math.max(c.l.x,c.r.x);
+          if(lead<WALLX){ var r=th*Math.PI/180; x+=v*SCALE*Math.cos(r)*dt; y+=v*SCALE*Math.sin(r)*dt; pushTrace(v); }
+          else {
+            v=Math.max(0,v-APPROACH*3.2*dt); pushTrace(v);
+            if(v<=2){
+              v=0;
+              if(mode==='straight'){
+                phase='stalled'; el('waStall').setAttribute('opacity','1'); el('waTrace').setAttribute('stroke','#E96852');
+                msg('💥 <b>The speed collapsed to zero.</b> That crash <b>is</b> the wall — <code>run_until_stalled()</code> has just returned.<br>No sensor read it. The motor <b>was</b> the sensor.','#E96852');
+                setTimeout(function(){ phase='back'; backTarget=x-BACKOFF_PX; v=APPROACH;
+                  msg('↩️ Now <code>drive_straight(−BACKOFF_MM)</code> — a <b>measured</b> 5 cm back, not a guess.'); },1200);
+              } else {
+                // crooked: one corner is on the wall, pivot the other in
+                phase='pivot'; pivotDir = th<0 ? 1 : -1;
+                el('waStall').setAttribute('opacity','1');
+                msg('One corner is jammed, the other is still rolling — so only <b>one</b> motor has stalled. <code>wall_square()</code> keeps pushing until <b>both</b> do.','#E96852');
+              }
+            }
+          }
+        } else if(phase==='pivot'){
+          var dth=pivotDir*26*dt;
+          if((pivotDir>0 && th+dth>=0)||(pivotDir<0 && th+dth<=0)){ dth=-th; }
+          th+=dth;
+          var cc=corners(); var over=Math.max(cc.l.x,cc.r.x)-WALLX;
+          if(over>0) x-=over;                       // stay flush against the wall
+          pushTrace(0);
+          if(Math.abs(th)<0.3){
+            th=0; phase='squared';
+            el('waTrace').setAttribute('stroke','#00AE8D');
+            msg('📐 <b>Both</b> motors stalled — the bumper is flat on the wall. The <b>wall itself</b> just told you your heading, so <code>hub.imu.reset_heading(0)</code> writes that truth back over whatever drift had built up.','#00AE8D');
+            setTimeout(function(){ phase='back'; backTarget=x-BACKOFF_PX; v=APPROACH; },1400);
+          }
+        } else if(phase==='back'){
+          x-=v*SCALE*dt; pushTrace(v);
+          if(x<=backTarget){
+            phase='done'; v=0; pushTrace(0);
+            el('waMark').setAttribute('x1',x+40); el('waMark').setAttribute('x2',x+40); el('waMark').setAttribute('opacity','1');
+            el('waMarkT').setAttribute('x',x+40); el('waMarkT').textContent='exactly 5 cm, every run';
+            el('waMarkT').setAttribute('opacity','1');
+            msg(mode==='straight'
+              ? '✅ Parked <b>exactly 5 cm</b> off the wall. Run it from any starting distance and you finish in the <b>same place</b> — the wall is a hard, known fact, so it <b>erases</b> the error you arrived with instead of passing it on.'
+              : '✅ Arrived crooked, left square, parked <b>exactly 5 cm</b> off — and the gyro is honest again. This is why this humble verb outlives almost everything else in your library.','#00AE8D');
+            window.simDone();
+          }
+        }
+        el('waBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+th.toFixed(1)+')');
+        if(phase!=='done'){ raf=requestAnimationFrame(frame); } else raf=null;
+      }
+      raf=requestAnimationFrame(frame);
+    };
+  })();
+}
+
+/* ---- 9. your verb vs the pro's (D8) — from drivebase-shortcut.qmd ---- */
+function duelSim(slot){
+  $(slot).innerHTML='<div class="sim"><div class="simhead">🥊 Your verb vs the pro\'s</div>'+
+  '<div class="ctrl">'+
+  '<button class="cbtn t" id="duRunB" onclick="duRun()">▶ run them clean</button>'+
+  '<button class="cbtn c" id="duKnockB" onclick="duKnock()">😈 run them, and knock them BOTH</button></div>'+
+  '<div class="simwrap"><svg width="820" height="240" viewBox="0 0 820 240" style="display:block">'+
+  '<rect x="0" y="20" width="820" height="95" rx="12" fill="#eef3f8"/>'+
+  '<rect x="0" y="125" width="820" height="95" rx="12" fill="#eef3f8"/>'+
+  '<text x="14" y="44" font-size="14" font-weight="800" fill="#625D9C">YOURS — drive_straight</text>'+
+  '<text x="14" y="149" font-size="14" font-weight="800" fill="#00AE8D">PRO — drive.straight</text>'+
+  '<line x1="720" y1="28" x2="720" y2="108" stroke="#00AE8D" stroke-width="4"/>'+
+  '<line x1="720" y1="133" x2="720" y2="213" stroke="#00AE8D" stroke-width="4"/>'+
+  '<text x="720" y="16" font-size="13" fill="#00AE8D" font-weight="800" text-anchor="middle">1 m 🎯</text>'+
+  '<polyline id="duT1" points="" fill="none" stroke="#625D9C" stroke-width="3"/>'+
+  '<polyline id="duT2" points="" fill="none" stroke="#00C9A7" stroke-width="3"/>'+
+  '<g id="duB1" transform="translate(60,68)"><g transform="rotate(90) scale(0.45)"><use href="#nmCarMini" style="--car:#625D9C"/></g></g>'+
+  '<g id="duB2" transform="translate(60,173)"><g transform="rotate(90) scale(0.45)"><use href="#nmCarMini" style="--car:#00AE8D"/></g></g>'+
+  '</svg></div>'+
+  '<div class="tmsg" id="duMsg">Two buttons. Run them clean first, then run them with a knock.</div></div>';
+  (function(){
+    var raf=null,last=null,nudgeReq=false,el=NM.el;
+    function fresh(y){ return {x:60,y:y,h:0,done:false,pts:['60,'+y],nudged:false}; }
+    /* knock=true kicks both cars itself, half way down the track. The old build
+       asked the child to hit a second button "while they are moving" — press it
+       early or late and nothing visible happened, which reads as a broken demo. */
+    function race(knock){
+      var A=fresh(68),B=fresh(173),t=0; last=null; nudgeReq=false;
+      el('duT1').setAttribute('points',A.pts[0]); el('duT2').setAttribute('points',B.pts[0]);
+      el('duMsg').innerHTML= knock ? 'running… watch for the knock' : 'running… clean, nothing will touch them';
+      el('duMsg').style.color='#625D9C';
+      function step(s,dt,heal,laneY){
+        if(s.done) return;
+        var sp=(720-s.x)*2.4+8; if(sp>300)sp=300;
+        if(nudgeReq && !s.nudged && s.x>300){ s.h=(laneY<100?22:-22); s.nudged=true; }
+        s.h -= s.h*heal*dt;
+        var r=s.h*Math.PI/180;
+        s.x+=sp*Math.cos(r)*dt; s.y+=sp*Math.sin(r)*dt;
+        s.pts.push(s.x.toFixed(1)+','+s.y.toFixed(1));
+        if(s.x>=719) s.done=true;
+      }
+      function frame(now){
+        var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now; t+=dt;
+        /* heal rates tuned so YOURS lands ≈1.6 cm off and the PRO ≈0.5 cm off after a
+           22° kick — i.e. yours meets the curriculum's own ±2 cm at 1.0 m bar. */
+        if(knock && !A.nudged && A.x>300) nudgeReq=true;
+        step(A,dt,9.0,68); step(B,dt,22.0,173);
+        if(A.nudged&&B.nudged) nudgeReq=false;
+        el('duT1').setAttribute('points',A.pts.join(' '));
+        el('duT2').setAttribute('points',B.pts.join(' '));
+        el('duB1').setAttribute('transform','translate('+A.x.toFixed(1)+','+A.y.toFixed(1)+') rotate('+A.h.toFixed(1)+')');
+        el('duB2').setAttribute('transform','translate('+B.x.toFixed(1)+','+B.y.toFixed(1)+') rotate('+B.h.toFixed(1)+')');
+        if((A.done&&B.done)||t>8){
+          raf=null;
+          /* 660 px of track is labelled 1 m, so 1 px ≈ 1.515 mm. Report what actually happened. */
+          var MM=1000/660;
+          var eA=Math.abs(A.y-68)*MM/10, eB=Math.abs(B.y-173)*MM/10;
+          if(!A.nudged && !B.nudged){
+            el('duMsg').innerHTML='Both drove a clean metre — but nothing knocked them off, so there was <b>nothing to heal</b>. '+
+              'You cannot tell these two apart on an easy run.<br>Now press <b>😈 run them, and knock them BOTH</b>.';
+            el('duMsg').style.color='#625D9C';
+          } else {
+            el('duMsg').innerHTML='<b>Both healed.</b> Yours landed <b>'+eA.toFixed(1)+' cm</b> off the line 👏 · the pro landed <b>'+eB.toFixed(1)+' cm</b> off 🤝<br>'+
+              'Same three letters inside. The pro wins on <b>polish</b>, not on magic — and only by '+Math.abs(eA-eB).toFixed(1)+' cm.';
+            el('duMsg').style.color='#00AE8D';
+          }
+          window.simDone();
+        } else raf=requestAnimationFrame(frame);
+      }
+      if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
+    }
+    window.duRun=function(){ race(false); };
+    window.duKnock=function(){ race(true); };
+    window.duNudge=function(){ nudgeReq=true; };
+  })();
+}
+
+/* ---- 4. step the loop, one line at a time (D3) -----------------------------
+   Literal numbers, no constants to get lost in. Guessed turns overshoot every
+   corner by a few degrees (wheel slip), so the square walks away; the watched
+   turn asks the gyro and closes the shape.                                 --- */
+function squareStepSim(slot){
+  var X0=140, Y0=244, SIDE=104, DRIFT=8;
+  $(slot).innerHTML='<div class="sim"><div class="simhead">▶ Be the computer — one line, one move</div>'+
+  '<div class="ctrl">'+
+  '<button class="chip" id="sqGuess" onclick="sqRun(\'guess\')">🤞 guessed turns</button>'+
+  '<button class="chip" id="sqWatch" onclick="sqRun(\'watch\')">👀 gyro-watched turns</button>'+
+  '<span style="width:8px"></span>'+
+  '<button class="cbtn" id="sqNext" onclick="sqLine()">▶ next line</button>'+
+  '<button class="cbtn t" id="sqAll" onclick="sqAll()">▶▶ run it all</button></div>'+
+  '<div class="trace"><div id="sqCode"></div>'+
+  '<div><div class="vlabel">🚪 the rooms</div><div class="boxes" id="sqRooms"></div>'+
+  '<div class="simwrap" style="margin-top:8px"><svg width="250" height="196" viewBox="0 0 420 330" style="display:block;background:#eef3f8;border-radius:12px">'+
+  '<circle cx="'+X0+'" cy="'+Y0+'" r="7" fill="#1C355E"/>'+
+  '<text x="'+X0+'" y="'+(Y0+26)+'" font-size="15" fill="#1C355E" text-anchor="middle" font-weight="700">start</text>'+
+  '<polyline id="sqTrace" points="" fill="none" stroke="#00C9A7" stroke-width="5" stroke-linejoin="round"/>'+
+  '<g id="sqBot" transform="translate('+X0+','+Y0+')"><g transform="scale(0.55)"><use href="#nmCarMini"/></g></g>'+
+  '</svg></div></div>'+
+  '<div class="tmsg" id="sqMsg"></div></div></div>';
+
+  (function(){
+    var el=NM.el, mode='watch', S=null, raf=null, pumping=false;
+    function code(){
+      return ['for side in range(4):',
+              '    drive_straight(30)',
+              mode==='guess' ? '    turn(90)          # counted degrees'
+                             : '    turn_to(90)       # asks the gyro'];
+    }
+    function paintCode(on){
+      var c=code();
+      el('sqCode').innerHTML=c.map(function(t,i){
+        return '<div class="tline'+(i===on?' on':'')+'" id="sqL'+i+'">'+t+'</div>';
+      }).join('');
+    }
+    function rooms(){
+      el('sqRooms').innerHTML=roomHTML('side',S.i,'')+roomHTML('heading',Math.round(S.h+90)+'°','');
+    }
+    function msg(t,c){ el('sqMsg').innerHTML=t; el('sqMsg').style.color=c||'#625D9C'; }
+    function drawBot(){
+      el('sqBot').setAttribute('transform','translate('+S.x.toFixed(1)+','+S.y.toFixed(1)+') rotate('+(S.h+90).toFixed(1)+')');
+      el('sqTrace').setAttribute('points',S.pts.join(' '));
+    }
+    function anim(dur,tick,end){
+      S.busy=true; var t=0,last=null;
+      function frame(now){
+        var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now; t+=dt;
+        var k=Math.min(t/dur,1); tick(k); drawBot();
+        if(k<1){ raf=requestAnimationFrame(frame); }
+        else { raf=null; S.busy=false; if(end) end();
+               /* the car has stopped moving — safe for the takeaway to land */
+               if(!pumping) window.simDone(); }
+      }
+      raf=requestAnimationFrame(frame);
+    }
+    function doLine(){
+      if(!S || S.busy || S.done) return;
+      if(S.pc===0){
+        paintCode(0); rooms();
+        msg('🚪 <b>for side in range(4)</b> — lap <b>'+(S.i+1)+' of 4</b>. side = <b>'+S.i+'</b>. Run the two lines below me.');
+        S.pc=1; return;
+      }
+      if(S.pc===1){
+        paintCode(1);
+        msg('🚗 <b>drive_straight(30)</b> — roll forward 30 cm. Counting wheel degrees works fine here.');
+        var sx=S.x, sy=S.y, r=S.h*Math.PI/180;
+        anim(0.7,function(k){
+          S.x=sx+SIDE*k*Math.cos(r); S.y=sy+SIDE*k*Math.sin(r);
+          S.pts.push(S.x.toFixed(1)+','+S.y.toFixed(1));
+        },function(){ S.pc=2; });
+        return;
+      }
+      if(S.pc===2){
+        paintCode(2);
+        var amt = mode==='guess' ? 90+DRIFT : 90;
+        msg(mode==='guess'
+          ? '↩️ <b>turn(90)</b> — it counts <b>wheel</b> degrees. But the wheels <b>slip</b> when the robot spins, so it really turned about <b>'+amt+'°</b>.'
+          : '↩️ <b>turn_to(90)</b> — <code>while heading() &lt; 90: wait(5)</code>. Keep asking the gyro until the answer is yes. Lands on <b>90°</b>.',
+          mode==='guess'?'#E96852':'#00AE8D');
+        var sh=S.h;
+        anim(0.6,function(k){ S.h=sh+amt*k; rooms(); },function(){
+          S.i++; S.pc=0; rooms();
+          if(S.i>=4){ finish(); }
+        });
+        return;
+      }
+    }
+    function finish(){
+      S.done=true; pumping=false; paintCode(-1);
+      var gap=Math.hypot(S.x-X0,S.y-Y0)/SIDE*30;
+      setTimeout(function(){ window.simDone(); },0);   /* after the verdict is painted */
+      if(mode==='guess'){
+        el('sqTrace').setAttribute('stroke','#E96852');
+        msg('😬 <b>It never closes.</b> Finished about <b>'+gap.toFixed(0)+' cm</b> from the start. The <b>sides</b> were fine — the <b>corners</b> were not. A turn is not a distance.','#E96852');
+      } else {
+        el('sqTrace').setAttribute('stroke','#00C9A7');
+        msg('🎯 <b>Snaps shut.</b> Four laps of the same two lines, and the gyro watched every corner.','#00AE8D');
+      }
+    }
+    window.sqLine=function(){ doLine(); };
+    window.sqAll=function(){
+      if(pumping) return; pumping=true;
+      (function pump(){
+        if(!S||S.done){ pumping=false; return; }
+        if(!S.busy) doLine();
+        setTimeout(pump,140);
+      })();
+    };
+    window.sqReset=function(){
+      if(raf)cancelAnimationFrame(raf); raf=null; pumping=false;
+      S={x:X0,y:Y0,h:-90,i:0,pc:0,pts:[X0+','+Y0],busy:false,done:false};
+      el('sqTrace').setAttribute('stroke','#00C9A7');
+      paintCode(-1); rooms(); drawBot();
+      msg('Press <b>▶ next line</b>. Say what the car will do <b>before</b> you click.');
+    };
+    window.sqMode=function(m){
+      mode=m;
+      [['guess','sqGuess'],['watch','sqWatch']].forEach(function(p){
+        var on=(m===p[0]), b=el(p[1]);
+        b.style.background=on?'#625D9C':'#eef3f8'; b.style.color=on?'#fff':'#625D9C';
+      });
+      window.sqReset();
+    };
+    /* One click, not two: picking a corner style also drives the square. The
+       old flow made the child click a chip and THEN find "run it all", and a
+       chip pressed on its own just sat there looking broken. */
+    window.sqRun=function(m){ window.sqMode(m); window.sqAll(); };
+    /* lines of the square already run — 3 per lap, 12 once the shape has closed */
+    window.sqAt=function(){ return (!S)?0:(S.done?12:S.i*3+S.pc); };
+    window.sqMode('watch');
+  })();
+}
+
+
+drawMap();
+</script>
+</body>
+</html>

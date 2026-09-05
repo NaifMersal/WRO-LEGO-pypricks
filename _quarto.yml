@@ -11,6 +11,32 @@ project:
   render:
     - "**/*.qmd"
     - "!slides_template/*.qmd"
+  # Standalone student-facing interactives. They are hand-written .html, not .qmd,
+  # so Quarto will not pick them up on its own — list them here or the decks that
+  # iframe them get a broken frame in output/.
+  resources:
+    - interactives/beam-balance-catchup.html
+    # The recap arcade, three ways. The master carries all 12 levels; the two
+    # part files are GENERATED from it by tools/split-recap.py and split at
+    # level 7, so each sitting keeps its own localStorage key. All three must
+    # ship — Part 2 was missing from this list for the whole first cohort and
+    # therefore never reached a student.
+    - interactives/recap-arcade.html
+    - interactives/recap-part1-days2-5.html
+    - interactives/recap-part2-days5-8.html
+    # 🔒 The Skills Check does NOT ship, and neither half of it may be added here.
+    # build-pages.py writes BOTH pages — exam.html and its answer-key twin
+    # coach.html — into docs/exam/web/, which is git-ignored and outside
+    # `resources:`, so Quarto neither renders nor copies them. The exam is opened
+    # from disk (or the room LAN) on the day. The page used to publish, and it
+    # carried the live endpoint, the exam secret and the students' names.
+    #
+    # The bench simulator (tools/robot_sim/, ~5.6 MB of inlined Brython) is
+    # likewise coach-side only and not distributed, so it is not listed either.
+    #
+    # Vendored single-page field tool + its logos and mat image. The whole
+    # folder must ship, not just the .html — it loads Logo/* and GameField/*.
+    - tools/odommap/**
 
 execute:
   echo: false
