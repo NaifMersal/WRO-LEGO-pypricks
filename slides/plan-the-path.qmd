@@ -1,0 +1,457 @@
+---
+title: "Plan the Path"
+subtitle: "Day 18 · Robot Rockstars · SPIKE Prime + Pybricks"
+date: today
+format: revealjs
+---
+
+# A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+You own every verb the robot needs. Today you decide **where they point** — on paper, before the wheels move.
+
+## What you already own
+
+| Verb | What it does |
+|---|---|
+| 🧭 `reset_heading(0)` | "the way I'm facing now is zero" |
+| 📏 `drive_straight(mm)` | drive straight; negative = backward |
+| 🎯 `turn_to(heading)` | turn until you **face** that heading |
+
+::: {.fragment .fade-up}
+🤔 Three verbs, and a mat with twelve jobs on it. The verbs are solved. **The order and the numbers are not.**
+:::
+
+⏱️ **Time: 10 minutes**
+
+::: {.notes}
+Open by making the inventory feel finished — the driving problem is *closed*, and that is exactly why today is a planning day, not a coding day. Nothing new gets typed for the first hour. If a squad is itching to code, point at the gate: today's deliverable is a written path with marked reset points, and squads that plan first will out-run squads that type first. Keep `turn_to` visible on the board all session; the whole day hangs off the word **face**.
+:::
+
+## Today's job
+
+::: {.fragment .fade-up}
+- Turn the mat into **numbers** — a measured path, not a guessed one
+- Learn where the robot's error gets **erased**, and put those points on purpose
+- Read a heading off a **map** and paste it into `turn_to()` without it lying to you
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Every run you have ever done started with someone guessing a distance and tuning it by eye. Today you stop guessing. 📐
+:::
+:::
+
+# B. Break It {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+Plan a route the way it *feels* natural — and watch the plan fall apart before the robot even leaves the bench.
+
+## Write me a route 📝
+
+::: {.qbox}
+[Squad task, 4 minutes: on the mat printout, write the instructions to get from the start area to the **microphone** and back. Any words you like.]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+Almost every squad writes something like this:
+
+```text
+go forward a bit
+turn right
+go forward until you're near the mic
+turn left a little
+grab it
+```
+:::
+
+::: {.notes}
+Do NOT correct anything yet — collect three or four squads' routes on the board verbatim, including the vague ones. The vagueness is the lesson and it has to be *theirs*. Expect "a bit", "until you're near", "a little", and — the one you are hunting for — **"turn right"**. Circle every relative turn word you see; leave the circles up, you will come back to them in two slides. Resist the urge to hand out the fix here.
+:::
+
+## Quick quiz 🚨
+
+::: {.qbox}
+[Your route says **turn right 90**, four times, around a rectangle. Each turn lands **3° hot**. Where is the robot pointing at the end?]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+**12° off** — and it *stays* 12° off. Nothing in the plan ever measures the mistake, so nothing can ever give it back. The fourth side is driving into the weeds.
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+You met this exact bug on the square day. 🧠 The cure was the same then: stop saying **turn 90 more**, start saying **face 90**.
+:::
+:::
+
+::: {.notes}
+This is a callback, not new material — the blind square from *Drive a Square* failed for precisely this reason, and the "targets that climb" payoff at the end of that day is the fix. Make them say the number: 3 + 3 + 3 + 3 = 12, and the plan has no place to notice. Then land the sentence that runs the rest of the day: *a relative turn banks its mistake; an absolute turn hands it back.* If a squad protests "but I'd just tune the 90 to 87" — excellent, take it seriously, then ask what happens when the batteries drop and the scrub changes. Tuning a relative turn fixes one mat on one day.
+:::
+
+## The word you can't write down ✍️
+
+::: {.fragment .fade-up}
+"Turn right" is not an instruction. It's an instruction **plus a secret** — *where you were already pointing*.
+
+```python
+turn_right(90)        # 90 from... where? the plan doesn't say
+turn_to(90)           # face 90. no secret.
+```
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+A plan full of relative turns can only be read **in order, from the start**. Miss one step, and every number after it is wrong. 😬
+:::
+:::
+
+::: {.notes}
+Push on the "in order, from the start" line — it is the practical cost and they will feel it within the hour. With relative turns you cannot start a run in the middle to test one segment, you cannot reorder two jobs to save time, and you cannot debug step 7 without running steps 1 through 6. All three of those are things they will want to do *today*. Absolute headings make every step independently testable, which is the real reason the competition code uses them; error-absorption is the bonus.
+:::
+
+# C. A Map With a Zero {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+If "face 90" is the plan, something has to decide **which way 90 is**. That's a map's job.
+
+## Meet the field tool 🗺️
+
+[`tools/odommap/OdomMap.html`]{.qtitle} — opens in a browser, works offline, and has the real **2026 RoboMission Elementary** mat in it.
+
+::: {.fragment .fade-up}
+| Mode | What it gives you |
+|---|---|
+| 📏 **Normal** | click two points → distance in mm, wheel rotations |
+| 🧭 **Odometry** | set an origin **and a zero direction** → every point as (x, y) |
+| 🛣️ **Route** | click a multi-leg detour → total length |
+:::
+
+::: {.fragment .fade-up}
+The mat is **2362 × 1143 mm**. Set **Wheel = 88 mm** — the same number that lives in your `ROBOT FACTS`.
+:::
+
+::: {.notes}
+Have the tool already open on the projector and one laptop per squad — this is a hands-on block, not a demo. The wheel field matters: it converts every measured distance into wheel rotations, and if a squad's robot has a different wheel they must type *their* number, not 88. Point out that 88 also lives in `code/movements.py` under `ROBOT FACTS` — same fact, two places, and the mat tool is the one that is allowed to be approximate because the mat is flat and the robot is not.
+:::
+
+## The bar IS the compass 🧭
+
+::: {.fragment .fade-up}
+In **Odometry mode** you click twice:
+
+1. **the origin** — "this corner is (0, 0)"
+2. **the bar** — you swing an arrow and click. *"This direction is zero."*
+:::
+
+::: {.fragment .fade-up}
+```{=html}
+<div style="display:flex;justify-content:center;align-items:center;gap:50px;flex-wrap:wrap;">
+  <svg width="290" height="290" viewBox="-140 -140 280 280" xmlns="http://www.w3.org/2000/svg">
+    <circle r="118" fill="#eef3f8" stroke="#1C355E" stroke-width="4"/>
+    <line x1="-118" y1="0" x2="118" y2="0" stroke="#cdd8e6" stroke-width="2"/>
+    <line x1="0" y1="-118" x2="0" y2="118" stroke="#cdd8e6" stroke-width="2"/>
+    <text x="0" y="-124" text-anchor="middle" font-size="19" font-weight="800" fill="#1C355E">0&#176;</text>
+    <text x="130" y="7" text-anchor="middle" font-size="19" font-weight="800" fill="#00AE8D">90&#176;</text>
+    <text x="0" y="140" text-anchor="middle" font-size="19" font-weight="800" fill="#1C355E">180&#176;</text>
+    <text x="-132" y="7" text-anchor="middle" font-size="19" font-weight="800" fill="#E96852">&#8722;90&#176;</text>
+    <path id="pcArc" d="" fill="none" stroke="#FFD500" stroke-width="11" stroke-linecap="round"/>
+    <g id="pcBar">
+      <line x1="0" y1="0" x2="0" y2="-100" stroke="#625D9C" stroke-width="8" stroke-linecap="round"/>
+      <polygon points="0,-118 -11,-94 11,-94" fill="#625D9C"/>
+    </g>
+    <circle r="8" fill="#1C355E"/>
+  </svg>
+  <div style="text-align:left;">
+    <div style="font-family:Consolas,monospace;font-size:23px;color:#1C355E;background:#eef3f8;border-radius:10px;padding:14px 22px;">
+      heading: <span id="pcVal" style="font-weight:800;color:#625D9C;font-size:30px;">0</span>&#176;
+    </div>
+    <div id="pcSnap" style="font-family:Consolas,monospace;font-size:15px;color:#00AE8D;font-weight:800;min-height:22px;margin-top:6px;">&#8203;</div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;max-width:330px;">
+      <button onclick="pcNudge(-15)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:7px 16px;font-size:19px;font-weight:700;cursor:pointer;">&#8630; &#8722;15&#176;</button>
+      <button onclick="pcNudge(15)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:7px 16px;font-size:19px;font-weight:700;cursor:pointer;">+15&#176; &#8631;</button>
+      <button onclick="pcSet(90)" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:17px;font-weight:700;cursor:pointer;">turn_to(90)</button>
+      <button onclick="pcSet(180)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:17px;font-weight:700;cursor:pointer;">turn_to(180)</button>
+    </div>
+    <div id="pcMsg" style="font-size:16px;color:#625D9C;font-weight:700;margin-top:10px;max-width:330px;min-height:44px;">swing the bar, then press a <b>turn_to</b> button &#8212; watch where it lands</div>
+  </div>
+</div>
+<script>
+(function(){
+  var h = 0;
+  function el(id){ return document.getElementById(id); }
+  function norm(a){ while(a>180)a-=360; while(a<-180)a+=360; return a; }
+  function draw(){
+    el('pcBar').setAttribute('transform','rotate('+h.toFixed(1)+')');
+    el('pcVal').textContent = h.toFixed(0);
+    var near = null, majors = [0,90,180,-90];
+    for(var i=0;i<majors.length;i++){ if(Math.abs(norm(h-majors[i])) < 10){ near = majors[i]; } }
+    el('pcSnap').innerHTML = near===null ? '&#8203;' : '&#8681; snaps to ' + near + '&#176;';
+  }
+  window.pcNudge = function(d){
+    h = norm(h + d); el('pcArc').setAttribute('d','');
+    el('pcMsg').innerHTML = 'the bar points <b>' + h.toFixed(0) + '&#176;</b> &#8212; this is where the robot is <i>now</i>';
+    draw();
+  };
+  window.pcSet = function(t){
+    var from = h, turned = norm(t - from);
+    var r = 100, a0 = (from-90)*Math.PI/180, a1 = (from+turned-90)*Math.PI/180;
+    var large = Math.abs(turned) > 180 ? 1 : 0, sweep = turned > 0 ? 1 : 0;
+    el('pcArc').setAttribute('d','M '+(r*Math.cos(a0)).toFixed(1)+' '+(r*Math.sin(a0)).toFixed(1)+
+      ' A '+r+' '+r+' 0 '+large+' '+sweep+' '+(r*Math.cos(a1)).toFixed(1)+' '+(r*Math.sin(a1)).toFixed(1));
+    h = t; draw();
+    el('pcMsg').innerHTML = 'was <b>'+from.toFixed(0)+'&#176;</b> &#8594; turned <b>'+turned.toFixed(0)+
+      '&#176;</b> &#8594; now <b>'+t+'&#176;</b><br><span style="color:#00AE8D;">the turn changed. the destination did not.</span>';
+  };
+  draw();
+})();
+</script>
+```
+:::
+
+::: {.notes}
+Run this from their predictions, every time: swing the bar somewhere ugly like 47°, ask "if I call `turn_to(90)`, how far does it turn?" — collect numbers, *then* click. Do it again from −120°. The yellow arc is the amount turned and it changes every time; the bar always finishes on the label. Say the sentence out loud and make them say it back: **the turn changed, the destination did not.** That is the whole of `turn_to` in one line. The snap hint (within 10°) mirrors the real tool — OdomMap grabs 0/90/180/−90 so a hand-swung bar still lands on a clean axis; tell them to *use* that, because a mat laid square to the table has no business having a 3° origin.
+:::
+
+## Zero is a decision, not a fact
+
+::: {.fragment .fade-up}
+```python
+reset_heading(0)      # "the way I'm facing NOW is zero"
+```
+:::
+
+::: {.fragment .fade-up}
+Placing the bar in the tool and calling `reset_heading(0)` on the mat are **the same act**, done in two places:
+
+| On the map | On the mat |
+|---|---|
+| click the origin | put the robot in the start area |
+| swing the bar, click | point it, `reset_heading(0)` |
+| every point is now (x, y) | every `turn_to` is now a promise |
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Point the bar **the way the robot faces at the start**, and the map's numbers *are* your code's numbers. Point it anywhere else and you'll be adding an offset in your head all day. 😵
+:::
+:::
+
+::: {.notes}
+This is the slide that earns the day. Make the pairing physical: one student places the real robot in the start area while another places the origin and bar in the tool, and the room checks they agree. The failure mode to name out loud — a squad sets the bar along the mat's long edge because it looks tidy, but starts the robot facing across the short edge, and now every heading in their plan is 90° out. It will *look* like a code bug for an hour. Nobody will find it in the code, because it is not in the code.
+:::
+
+# D. Two Maps, Two Zeros {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+There is a second set of headings on this mat — and it does **not** agree with yours.
+
+## The trap 🪤
+
+::: {.fragment .fade-up}
+The coach's optimizer (`tools/route_optimizer/field_data.py`) also stores headings. It uses a **different zero**.
+:::
+
+::: {.fragment .fade-up}
+```{=html}
+<div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:6px;">
+  <div style="text-align:center;">
+    <div style="font-weight:800;color:#00AE8D;font-size:19px;margin-bottom:4px;">&#127760; map &amp; robot</div>
+    <svg width="185" height="185" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg">
+      <circle r="80" fill="#eef3f8" stroke="#00AE8D" stroke-width="4"/>
+      <line x1="0" y1="0" x2="0" y2="-72" stroke="#00AE8D" stroke-width="8"/>
+      <polygon points="0,-84 -9,-64 9,-64" fill="#00AE8D"/>
+      <text x="0" y="-88" text-anchor="middle" font-size="17" font-weight="800" fill="#00AE8D">0&#176;</text>
+      <text x="92" y="6" text-anchor="middle" font-size="15" font-weight="700" fill="#1C355E">90</text>
+      <text x="0" y="99" text-anchor="middle" font-size="15" font-weight="700" fill="#1C355E">180</text>
+      <path d="M 34 -20 A 40 40 0 0 1 34 20" fill="none" stroke="#1C355E" stroke-width="3"/>
+      <polygon points="34,22 28,10 40,12" fill="#1C355E"/>
+    </svg>
+    <div style="font-family:Consolas,monospace;font-size:15px;color:#1C355E;">0 = <b>up</b> &#183; clockwise</div>
+  </div>
+  <div style="display:flex;align-items:center;font-size:34px;font-weight:800;color:#E96852;">&#8800;</div>
+  <div style="text-align:center;">
+    <div style="font-weight:800;color:#E96852;font-size:19px;margin-bottom:4px;">&#128202; field_data.py</div>
+    <svg width="185" height="185" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg">
+      <circle r="80" fill="#eef3f8" stroke="#E96852" stroke-width="4"/>
+      <line x1="0" y1="0" x2="72" y2="0" stroke="#E96852" stroke-width="8"/>
+      <polygon points="84,0 64,-9 64,9" fill="#E96852"/>
+      <text x="92" y="6" text-anchor="middle" font-size="17" font-weight="800" fill="#E96852">0&#176;</text>
+      <text x="0" y="99" text-anchor="middle" font-size="15" font-weight="700" fill="#1C355E">90</text>
+      <text x="-90" y="6" text-anchor="middle" font-size="15" font-weight="700" fill="#1C355E">180</text>
+      <path d="M 20 34 A 40 40 0 0 1 -20 34" fill="none" stroke="#1C355E" stroke-width="3"/>
+      <polygon points="-22,34 -10,28 -12,40" fill="#1C355E"/>
+    </svg>
+    <div style="font-family:Consolas,monospace;font-size:15px;color:#1C355E;">0 = <b>right</b> &#183; toward +Y</div>
+  </div>
+</div>
+```
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+Both spin the same way round. They just **start counting in different places** — exactly **90° apart**.
+:::
+:::
+
+::: {.notes}
+Do not skip this because it looks like plumbing — it is the single most expensive silent bug available on this mat, and it costs 15 anchor points with no error message. The reason the two differ is honest, not sloppy: `field_data.py` is desktop code doing geometry in image coordinates (origin top-left, x right, y **down**), where "angle from +X" is the natural convention; the robot is a robot, and a robot's zero is *the way it is facing*. Neither is wrong. They are simply two frames, and the only sin is forgetting which one a number came from.
+:::
+
+## One line of arithmetic 🧮
+
+::: {.fragment .fade-up}
+```python
+map_heading = field_heading + 90
+```
+:::
+
+::: {.fragment .fade-up}
+Check it on the two you can see:
+
+| field_data.py | direction | map & robot |
+|---|---|---|
+| `0°` | → right | `90°` |
+| `90°` | ↓ down | `180°` |
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+🏷️ **Label every heading you write down.** A number with no frame attached is not a measurement — it's a rumour.
+:::
+:::
+
+::: {.notes}
+Derive it with them on the board rather than asserting it; two rows is enough and the table gives both. Then make the rule of thumb stick — in their notebooks, every heading gets a tag: `190 (map)` or `100 (field)`. Coaches: this is also the review question to ask any squad that reports "the cable keeps landing sideways" — the first thing to check is not the mechanism, it is which frame the number came from. The conversion is a `+ 90` in one direction and a `− 90` in the other; if a squad writes the minus version, that is correct too, and worth praising.
+:::
+
+# E. The Cable That Must Lie Down {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+A real 30-point job that a relative turn simply **cannot describe**.
+
+## Measure it yourself 📐
+
+::: {.fragment .fade-up}
+| The grey area | The cable |
+|---|---|
+| **79.7 × 207.2 mm** | **128 mm** long (2× Technic Brick 1×16) |
+:::
+
+::: {.qbox}
+[Can the cable lie **across** the short side of the area?]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+**No.** 128 − 79.7 = **48.3 mm too long.** It has to go the long way. The orientation isn't a choice you get to make — the geometry already made it. 🔒
+:::
+:::
+
+::: {.notes}
+Give them the two numbers and let them find the 48.3 themselves — it takes fifteen seconds and it converts an abstract rule into something they proved. This is the same "measure, don't guess" move as the wheel diameter on D2. The consequence to draw out next is the one that surprises people: because the two grey areas are *mirrored*, a mechanism that lays both cables with the same motion gets exactly one of them right, every single time, and the scoresheet just quietly says 15 instead of 30.
+:::
+
+## Two areas, mirrored 🪞
+
+::: {.fragment .fade-up}
+```python
+CABLE_HEADING_DEG = {          # tools/route_optimizer/field_data.py
+    "cable_upper": 100.0,      # field frame!
+    "cable_lower":  80.0,      # field frame!
+}
+```
+:::
+
+::: {.fragment .fade-up}
+Both sit **±10° from vertical**, tilted **20° apart** from each other. Convert before you use them:
+
+| | field | **+ 90** | map & robot |
+|---|---|---|---|
+| upper | 100.0° | → | **190°** |
+| lower | 80.0° | → | **170°** |
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Yaw tolerance is **±31°** — generous. A rough approach still scores **if it aims at the right heading**. Paste `100` straight into `turn_to()` and you're **90° out**: sideways, and 128 mm won't fit in 79.7. 💸
+:::
+:::
+
+::: {.notes}
+Land the arithmetic slowly — 190 and 170 are both ±10 from 180, which is straight down the mat, and that is the sanity check they should run on every converted number: does the answer point somewhere the mat actually agrees with? The ±31° tolerance is the good news and the trap in one figure: it is wide enough to forgive a sloppy drive, which is *why* a 90° frame error is so nasty — it is far outside tolerance, so it never half-works and never teaches you gradually. It just fails, cleanly, at 15 points. Tie it back to the anchor: cables are 30 of the ~135, and half of 30 is the difference between a gate that passes and one that doesn't.
+:::
+
+## So the verb takes a heading
+
+::: {.fragment .fade-up}
+```python
+def push_cable(heading):       # NOT a fixed move
+    turn_to(heading)           # 190 for upper, 170 for lower
+    ...
+```
+:::
+
+::: {.fragment .fade-up}
+- One verb, two cables, **two numbers** — not two verbs, and definitely not one
+- The heading is a **fact about the mat**, so it lives with the other mat facts
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+Try writing this with a relative turn. You can't — "turn 20" only means something if you already know where you were. The mat doesn't care where you were. 🤷
+:::
+:::
+
+::: {.notes}
+This closes the loop opened in section B: the circled "turn right" phrases on the board are now provably unwritable for this job. Note the design point for the stronger squads — `push_cable` takes a **parameter** rather than existing twice, which is the same lesson as `drive_straight(distance_mm)`: when two jobs differ only by a number, the number becomes an argument. Do not let anyone hard-code 190 inside the verb and write a second copy for 170; that is the exact habit the library was built to kill.
+:::
+
+# F. Lab & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+## Lab: draw the anchor run 🖍️
+
+::: {.fragment .fade-up}
+On your mat printout, mark **every** one of these:
+
+1. 🏁 the **origin** and the **zero direction** (the same one your code will reset to)
+2. 📍 each job in order — instruments **45** · cables **30** · avoidance **40** · mic **20**
+3. 🧭 the **heading** for every leg, tagged `(map)`
+4. 🩹 every **reset point** — a wall square or a line, where error goes back to zero
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Rule of thumb from the optimizer: don't dead-reckon more than about **3 m** without erasing error somewhere. 🧽
+:::
+:::
+
+::: {.notes}
+Circulate with the printouts and hunt for three specific things. One: an unlabelled heading — ask "map or field?" and enjoy the pause. Two: a long stretch with no reset point, which is where their run will actually die on competition day. Three: a fragile step placed late, after points are already banked — the ordering principle is *never put a shaky step where its failure costs points you already earned*. The ~3 m figure comes from the optimizer's dead-reckoning cap; it is a planning heuristic, not a hard rule, and squads with a well-tuned gyro will beat it. Time-box this hard at 25 minutes or it eats the session.
+:::
+
+## Competition: Cartographers 🗺️
+
+::: {.qbox}
+[The judge names a job on the mat. **90 seconds** to hand back: the heading to face it (tagged), the distance in mm, and the nearest reset point you'd use.]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+Score: **1 point** per correct number · **+2** if the frame tag is right · **−2** for an untagged heading 😈
+:::
+
+::: {.notes}
+Run three rounds so every squad gets a different job and nobody wins on one lucky memorised number. The −2 is deliberately harsh and you should announce it cheerfully — an untagged heading is worse than no heading, because the untagged one gets used. Judges: accept any heading within the ±31° yaw tolerance for cable jobs, and within ±10° elsewhere; you are scoring the *plan*, not their gyro. If a squad hands back a field-frame number correctly tagged `(field)` plus the conversion, that is full marks — the tag is the skill.
+:::
+
+## You're done today when… {.smaller}
+
+::: {.callout-important}
+## Gate
+Your squad has a **written path plan** for the ~135 anchor run: every leg's heading **tagged with its frame**, every distance in mm off the map, and **every reset point marked** — and you can convert a `field_data.py` heading to a robot heading without looking it up.
+:::
+
+::: {.fragment .fade-up}
+Next: the plan stops being paper. 🎵
+:::
+
+::: {.notes}
+The gate is a paper deliverable on purpose — no robot has to run for a squad to pass, which is what makes this day survivable when the hardware is misbehaving. Photograph every squad's printout before they leave; those photos are the reference for the segment-integration sessions and they *will* lose the paper. Anyone who finishes early: hand them the Route mode of the tool and ask for a measured detour around an avoidance object with the 130 mm clearance respected — that is real work the run needs and it is genuinely hard to eyeball.
+:::

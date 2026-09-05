@@ -1,0 +1,464 @@
+---
+title: "The Beam Balance"
+subtitle: "Day 2 · session 2 opener · Robot Rockstars · SPIKE Prime + Pybricks"
+date: today
+format: revealjs
+---
+
+# A. Where We Stopped {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+You got **1304°** out of me. Today you learn to get it **yourself** — for any distance.
+
+## Yesterday's two numbers
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**What you measured**
+
+- One wheel turn rolls **27.6 cm**
+- $C = \pi \times d$ — you unrolled the rope
+:::
+
+::: {.column width="50%"}
+**What I handed you**
+
+- $360 \div 27.6 \approx 13.04°$ per cm
+- $100 \times 13.04 \approx 1304°$
+:::
+
+::::
+
+. . .
+
+::: {.cardbox}
+Be honest: you **followed** that. You did not **invent** it. So what happens on the mat in Week 4 when the number isn't 100 cm — it's 42 cm, then 17, then 63? You need the **tool**, not the answer. 🧰
+:::
+
+⏱️ **Time: 5 minutes** · no laptops yet
+
+## Same symbol, two jobs
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### In Python ➡️
+
+```{.python}
+speed = 200
+```
+
+"**Put** 200 in the room called speed."
+
+An **arrow**. It *does* something.
+:::
+
+::: {.column width="50%"}
+### On paper ⚖️
+
+$$27.6 \times t = 30$$
+
+"These two weigh **the same**."
+
+A **balance**. It *states* something.
+:::
+
+::::
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+Today is entirely about the **paper** one. Every time you see `=` on the whiteboard for the next hour, picture a beam with two pans — and picture it **tipping** the moment you cheat.
+:::
+:::
+
+::: {.notes}
+This distinction is the single most common source of confusion when beginners meet algebra alongside a first programming language, and this cohort is meeting both in the same week. Say it out loud, then keep pointing at it: the whiteboard `=` and the editor `=` are different animals wearing the same costume. Do not skip the callout — the arcade recap re-tests exactly this.
+:::
+
+# B. Build the Beam {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+Unplugged. Real objects, real tipping. **No screens in this section.**
+
+## The prop
+
+::: {.callout-important}
+## What's on the table
+A balance (or a ruler resting on a pencil), and **bricks as fruit**:
+
+- 🍊 **orange** = one 2×4 brick — *this is our unit*
+- 🍌 **banana** = two bricks stuck together
+- 🍉 **melon** = three bricks stuck together
+:::
+
+- Everything today is counted **in oranges**. A banana is worth 2. A melon is worth 3.
+- The students don't know those numbers yet. **They work them out from the beam.**
+
+::: {.notes}
+Coach prep: if no pan balance is in the kit, a 30 cm ruler across a round pencil works, or draw the beam on the whiteboard and place bricks in two taped-off "pans" while you declare level/tipped. A physical tip is worth a lot here — the whole lesson runs on the memory of watching it fall. Do NOT reveal banana=2 and melon=3; those are the answers to sections D and F. Build the fruit ahead of time so bricks can't be counted at a glance — tape over the studs if your group is sharp-eyed.
+:::
+
+# C. Take One Off Each Side {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+The first move. It has a name you already know.
+
+## 6 oranges balance 6 apples
+
+::: {.qbox}
+[🍊🍊🍊🍊🍊🍊 &nbsp;⚖️&nbsp; 🍏🍏🍏🍏🍏🍏]{.qtitle}
+
+I take **one orange** off the left and **one apple** off the right. Hands up: does it **tip**, or stay **level**?
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+**Level.** Take the same away from both sides and the beam doesn't care. That is what **subtraction** means on a balance. Now do it four more times — you're down to **1 🍊 = 1 🍏**.
+:::
+:::
+
+⏱️ **Time: 6 minutes**
+
+## Now the other direction
+
+- Put **one orange back** on the left and **one apple back** on the right → still level. That's **plus**.
+- Put one orange on the left **only** → 💥 **it tips.** Everyone sees it.
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+### The rule — first draft
+**Whatever you do to one side, do to the other side too.**
+
+Write it on the board. We are going to catch it lying in about four minutes. 🕵️
+:::
+:::
+
+::: {.notes}
+Deliberately let them write down the sloppy version. The rule as stated here is the one almost every textbook gives, and it is exactly wrong enough to break in section D. Break it → feel it → fix it applies to *rules*, not just code.
+:::
+
+# D. 🔥 The Rule Breaks {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
+
+Same move. Same rule. The beam falls over.
+
+## New puzzle: 6 oranges balance 3 bananas
+
+::: {.qbox}
+[🍊🍊🍊🍊🍊🍊 &nbsp;⚖️&nbsp; 🍌🍌🍌]{.qtitle}
+
+Follow **your own rule**. Take **one thing** off each side. Still level?
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox}
+### 💥 It tips. Hard.
+Five oranges on the left. Two bananas on the right. **Let them watch it fall before you say a word.**
+:::
+:::
+
+⏱️ **Time: 10 minutes**
+
+## So why did it work the *first* time?
+
+::: {.incremental}
+- 6 oranges balanced 6 **apples**. Same count on both sides…
+- …so **one apple had to weigh exactly one orange.** The beam told us that for free.
+- Removing 1 orange and 1 apple removed **the same weight** from each pan. ✅
+- But a **banana is heavier** than an orange. Removing one of each removed **different weights**. ❌
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+### The rule — final version
+Do the same **amount** to both sides — **not** the same **number of objects**.
+:::
+:::
+
+::: {.notes}
+This is the highest-value slide in the deck. The object-vs-amount confusion is the exact failure that shows up years later as "I cancelled the x from both sides." Land it now, cheaply, with bricks. If a student objects that they can't know a banana weighs 2 oranges yet — perfect, that's section F's job, and you should say so out loud: "hold that complaint, you're about to be able to answer it."
+:::
+
+## 🧪 Bench it: find the banana
+
+- 6 🍊 = 3 🍌. **Take away one banana from the right.** What must you take off the left to keep it level?
+- Try 1 orange. Tips. Try 2 oranges. **Level.**
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+**One banana = two oranges** — and nobody told you. You *weighed* it. The beam is a machine for finding things out. 🔍
+:::
+:::
+
+# E. Multiplication Is Just Adding {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Before we can multiply a beam, we should agree what multiplying **is**.
+
+## What "3 apples" actually means
+
+$$3 \text{ apples} \;=\; \text{apple} + \text{apple} + \text{apple}$$
+
+. . .
+
+$$3 \times 2 \;=\; 2 + 2 + 2 \;=\; 6$$
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+**Multiplication is a shortcut for adding the same thing over and over.** That's the whole definition. Nothing deeper is hiding.
+:::
+:::
+
+⏱️ **Time: 10 minutes**
+
+## But wait — is $3 \times 2$ the same as $2 \times 3$?
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**3 rows of 2**
+
+```
+● ●
+● ●
+● ●
+```
+
+$2 + 2 + 2 = 6$
+:::
+
+::: {.column width="50%"}
+**2 rows of 3**
+
+```
+● ● ●
+● ● ●
+```
+
+$3 + 3 = 6$
+:::
+
+::::
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+### Turn the paper sideways 🔄
+It's the **same dots**. Nobody added one, nobody took one away — you just **rotated it**. That's why the order never matters.
+:::
+:::
+
+::: {.notes}
+Hand out squared paper or use bricks in a rectangle and physically rotate it 90°. This beats every algebraic argument for commutativity at this age: it is a *proof they can see*, and it takes eight seconds. Resist the temptation to prove it by splitting numbers into ones — that argument is correct but it loses the room.
+:::
+
+## Multiply the whole beam
+
+::: {.qbox}
+[2 oranges balance 1 banana. &nbsp; **Double both pans.** &nbsp; Still level?]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+- $2\,🍊 = 1\,🍌$ &nbsp;→&nbsp; $4\,🍊 = 2\,🍌$ ✅
+- Triple it: $6\,🍊 = 3\,🍌$ — **that's the puzzle from section D.** Same beam all along.
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+You can **multiply both sides** by anything and the beam stays level — because you did the same amount to each. Multiply one side only and it tips, same as always.
+:::
+:::
+
+# F. Sharing the Beam {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+
+The move that gets you **what you actually want**.
+
+## What is ONE melon worth?
+
+::: {.qbox}
+[🍉🍉 &nbsp;⚖️&nbsp; 🍊🍊🍊🍊🍊🍊]{.qtitle}
+
+Two melons balance six oranges. I don't want two melons. **I want one.**
+:::
+
+::: {.fragment .fade-up}
+### Split both pans into 2 equal groups
+
+$$\frac{2\,🍉}{2} = \frac{6\,🍊}{2} \qquad\Longrightarrow\qquad 1\,🍉 = 3\,🍊$$
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+That's **division** — and notice what just happened. You didn't only divide. You got the beam down to **one of the thing you were asking about**. That is what grown-ups call **solving**. You've been doing it for ten minutes. 🎓
+:::
+:::
+
+⏱️ **Time: 12 minutes**
+
+## The move you will use for the rest of your life
+
+::: {.cardbox .purple}
+### To find **one** of something
+Divide **both** sides by **how many you've got**.
+:::
+
+::: {.fragment .fade-up}
+- Stuck with 2 melons? Divide both sides by **2**.
+- Stuck with 5 melons? Divide both sides by **5**.
+- Stuck with **27.6 of something**? …you can already see where this is going. 👀
+:::
+
+::: {.notes}
+Do not present division as "the opposite of multiplication" and then re-derive the melon result separately — that spends the budget twice on one idea. Division IS the isolate-the-unknown move, taught in one breath. The last bullet is the hinge into section G; pause on it and let someone say 27.6 out loud before you advance.
+:::
+
+# G. Now Do It to the Robot {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
+
+Same beam. The fruit is just wearing a different costume.
+
+## The real question
+
+::: {.qbox}
+[One wheel turn rolls **27.6 cm**. You want to drive **30 cm**. How many **motor degrees**?]{.qtitle}
+:::
+
+::: {.fragment .fade-up}
+Call the number of turns $t$ — that's the thing you don't know yet.
+
+$$27.6 \times t \;=\; 30$$
+
+**"27.6 oranges' worth of turns balances 30."** It's the melon puzzle with worse handwriting.
+:::
+
+::: {.notes}
+Insist that they name the unknown *before* touching it. "The thing I don't know yet gets a letter" is the entire conceptual leap into algebra, and it costs nothing here because the beam has already made the unknown feel like a physical object sitting in a pan.
+:::
+
+## Solve it on the beam
+
+::: {.incremental}
+- I'm stuck with **27.6** of them. Divide **both** sides by 27.6:
+  $$t = \frac{30}{27.6} \approx 1.087 \text{ turns}$$
+- But the motor doesn't count turns — it counts **degrees**. One turn is **360°**. So multiply **both** sides by 360:
+  $$360 \times t = 360 \times 1.087 \approx \mathbf{391°}$$
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Two moves. ÷ 27.6 on both sides, × 360 on both sides. **Nobody handed you 391.** ✅
+:::
+:::
+
+## Write your own formula
+
+::: {.cardbox .purple}
+$$\text{degrees} \;=\; \frac{\text{distance}}{27.6} \times 360$$
+:::
+
+::: {.fragment .fade-up}
+### Or, for any wheel on Earth
+$$\text{degrees} \;=\; \frac{\text{distance}}{\pi \times d} \times 360$$
+
+Put **any** distance in. Get degrees out. This is the tool. 🧰
+:::
+
+## Same answer, two roads
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Yesterday — the recipe**
+
+$360 \div 27.6 \approx 13.04°$/cm
+
+$30 \times 13.04 \approx 391°$
+:::
+
+::: {.column width="50%"}
+**Today — the beam**
+
+$t = 30 \div 27.6 \approx 1.087$
+
+$1.087 \times 360 \approx 391°$
+:::
+
+::::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+**Identical.** Yesterday's shortcut was this beam with the working rubbed out. Now you know why it's allowed — and you can rebuild it when you forget it. 🔁
+:::
+:::
+
+## 🎯 Prove it — three distances
+
+::: {.callout-important}
+## At your bench
+Do all three **on paper first**, then run them and tape-measure.
+
+| Distance | Your degrees | Measured |
+|:--|:--|:--|
+| 100 cm | ? | |
+| 42 cm | ? | |
+| 17 cm | ? | |
+:::
+
+::: {.fragment .fade-up}
+Answers: **1304°**, **548°**, **222°**. Notice 1304 — that's yesterday's number, and today it's **yours**.
+:::
+
+⏱️ **Time: 12 minutes**
+
+::: {.notes}
+Rounding: 42/27.6 × 360 = 547.8, and 17/27.6 × 360 = 221.7. Accept anything within a degree or two — the point is the method, and the encoder can't tell the difference anyway. Expect the measured column to be slightly short on every row; that's backlash and coast, which is D3's and D4's business, not a mistake in their algebra. Say so, or they'll distrust the maths they just built.
+:::
+
+## Today's gate
+
+::: {.callout-important}
+## You're done when…
+- You can take a beam from $27.6 \times t = 30$ to **391°** with **no help**
+- You can explain why removing **one object** from each side of $6\,🍊 = 3\,🍌$ makes it **tip**
+- You can produce the degrees for a distance **I make up on the spot**
+:::
+
+::: {.fragment .fade-up}
+Next: your robot drives lovely straight lines — and then we ask it to turn a corner. 📐
+:::
+
+::: {.notes}
+Gate leg two is the one to actually check per student; legs one and three will pass for students who have merely memorised a recipe, and leg two won't. Ask it as a one-line oral question at the bench. Then tease D3: the sides of the square will hold beautifully with today's degree maths, and the corners will still walk away — because a turn is not a distance.
+:::
+
+# 🏠 Explore at Home {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #9B8EC0)"}
+
+Optional replays — **nothing tomorrow depends on these.** 🎮
+
+## 🏠 The Catch-Up Lab ⚖️
+
+::: {.callout-important}
+## If you missed this session — start here
+[**⚖️ Open the Beam Balance Catch-Up Lab →**](../interactives/beam-balance-catchup.html)
+
+The whole lesson, on your own, in about 45 minutes. Every beam move is locked behind a **tip-or-level prediction**, so you still get to break the rule yourself instead of watching someone else break it. No robot needed until the last step.
+:::
+
+- **Missed the class?** Work all 13 steps. It ends with the same gate you'd have been asked at the bench.
+- **Were you here?** Jump to the last step — the free-play beam with every button unlocked.
+
+```{=html}
+<iframe src="../interactives/beam-balance-catchup.html" title="Beam Balance Catch-Up Lab"
+        style="width:100%;height:430px;border:2px solid #1C355E;border-radius:12px;background:#eef3f8;"
+        loading="lazy"></iframe>
+```
+
+::: {.notes}
+This replaces the old three-button appendix sim, which existed in two hand-maintained copies (here and in `recap-arcade.html`) and has now drifted into one file, iframed. Per #22 the **live** lesson stays unplugged — bricks on a real balance — and this is the make-up route for an absent student plus optional replay for everyone else. Its beam runs honest arithmetic (`count × true-worth` per pan) and renders the pans as *countable fruit*, which is what makes object-vs-amount visible: 6 🍊 and 3 🍌 sit level while looking nothing alike. The robot puzzle deliberately can't draw 27.6 wheels, so that pan degrades to `27.6 × t` — the abstraction step, shown rather than asserted. If you send an absent student here, still check gate leg two orally when they're back; the lab makes them type it and self-mark, which is weaker than you asking.
+:::
+
+## 🏠 Take it further
+
+- Invent a fruit worth **4** oranges. Write a beam for it. Can a friend solve it?
+- $5\,🍉 = ?\,🍊$ — you know one melon is 3 oranges. Multiply both sides.
+- Work **backwards**: your robot drove **391°**. How far did it go? Same beam, other direction.
+
+::: {.fragment .fade-up}
+::: {.cardbox .purple}
+The beam works both ways. That's the point of a **balance** — it never cared which side you started from. ⚖️
+:::
+:::

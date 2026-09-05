@@ -141,6 +141,185 @@ Recap by asking, not telling: "walk me through `gyro_turn_p` — what does `kp` 
 Run it before the fragment. The red arc painted past the tick is the overshoot made physical — point at it. Elicit the diagnosis in their words: "the number hit 90 — why didn't it stop?" Because the wheels were still spinning fast; P read error 0 and cut power, but momentum carried it past, then P yanked it back, and round it goes. This is exactly the D3 coast — but now P can't two-speed its way out, because a hot KP is what won the race yesterday. Set up the need: we want something that notices the error is *dropping fast* and eases off early. Don't name D yet.
 :::
 
+## Step it: be the robot 🚶 {.smaller}
+
+```{=html}
+<style>
+.brBeat{display:flex;align-items:center;gap:9px;background:#f7f9fc;border:2px solid #dbe2ea;border-radius:12px;padding:6px 10px;opacity:.45;transition:opacity .15s, border-color .15s, background .15s;}
+.brBeat.on{opacity:1;border-color:#E96852;background:#FFD50022;}
+.brBeat .be{font-size:23px;}
+.brBeat b{font-size:15px;color:#1C355E;display:block;line-height:1.2;}
+.brBeat span.d{font-size:12.5px;color:#1C355E;opacity:.75;display:block;line-height:1.25;}
+.brln{opacity:.45;padding:1px 8px;border-left:4px solid transparent;border-radius:6px;white-space:pre;}
+.brln.on{opacity:1;border-left-color:#E96852;background:#FFD50022;}
+.brrow{display:flex;justify-content:space-between;padding:2px 10px;border-bottom:1px solid #dbe2ea;}
+.brrow b{transition:background .25s;border-radius:4px;padding:0 4px;}
+</style>
+<div style="width:960px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
+    <button onclick="brStep()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:6px 18px;font-size:17px;font-weight:700;cursor:pointer;">▶ next beat</button>
+    <button onclick="brPass()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">⟳ whole pass</button>
+    <button id="brPlayB" onclick="brPlay()" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">▶▶ play</button>
+    <button onclick="brReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:5px 14px;font-size:17px;font-weight:700;cursor:pointer;">↺ reset</button>
+    <button id="brCodeB" onclick="brCode()" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:10px;padding:5px 14px;font-size:16px;font-weight:700;cursor:pointer;font-family:Consolas,monospace;">{ } hide the code</button>
+    <span style="font-size:14px;color:#1C355E;font-weight:800;margin-left:6px;">the knob:</span>
+    <button id="brChip4" onclick="brSet(4)" style="background:#00AE8D;color:#fff;border:2px solid #00AE8D;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">✅ kp = 4</button>
+    <button id="brChip1" onclick="brSet(1)" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">😴 kp = 1</button>
+    <button id="brChip20" onclick="brSet(20)" style="background:#eef3f8;color:#E96852;border:2px solid #E96852;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">🔥 kp = 20</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:flex-start;gap:16px;">
+    <div style="width:235px;display:flex;flex-direction:column;gap:6px;">
+      <div id="brB0" class="brBeat"><span class="be">🚪</span><span><b>ASK</b><span class="d">still more than 1° to go?</span></span></div>
+      <div id="brB1" class="brBeat"><span class="be">📏</span><span><b>MEASURE</b><span class="d">how far is left?</span></span></div>
+      <div id="brB2" class="brBeat"><span class="be">🦵</span><span><b>PUSH</b><span class="d">push sized to the gap</span></span></div>
+      <div id="brB3" class="brBeat"><span class="be">😴</span><span><b>BLINK</b><span class="d">sleep 5 ms — the car moves</span></span></div>
+      <div style="text-align:center;font-size:13px;color:#625D9C;font-weight:800;">↻ …and back to ASK — again!</div>
+    </div>
+    <div id="brCodeCol" style="display:block;background:#f7f9fc;border:1px solid #dbe2ea;border-radius:12px;padding:10px 12px;font-family:Consolas,monospace;font-size:13px;line-height:1.55;color:#1C355E;">
+<div id="brC0" class="brln">def gyro_turn_p(target, kp=4):</div>
+<div id="brC1" class="brln">    hub.imu.reset_heading(0)</div>
+<div id="brC2" class="brln">    while abs(target - hub.imu.heading()) &gt; 1:</div>
+<div id="brC3" class="brln">        error = target - hub.imu.heading()</div>
+<div id="brC4" class="brln">        left.run(kp * error)</div>
+<div id="brC5" class="brln">        right.run(-kp * error)</div>
+<div id="brC6" class="brln">        wait(5)</div>
+<div id="brC7" class="brln">    left.stop(); right.stop()</div>
+    </div>
+    <div style="width:330px;display:flex;align-items:center;gap:10px;">
+      <svg width="150" height="150" viewBox="-105 -105 210 210" style="display:block;flex:none;">
+        <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
+        <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/>
+        <path id="brArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"/>
+        <g id="brCar"><use href="#nmCar" style="--car:#625D9C"/></g>
+      </svg>
+      <div style="font-family:Consolas,monospace;font-size:15px;color:#1C355E;flex:1;">
+        <div class="brrow"><span>gap (°)</span><b id="brRGap">–</b></div>
+        <div class="brrow"><span>push (°/s)</span><b id="brRCmd">–</b></div>
+        <div style="padding:4px 10px;font-weight:800;">loop pass <span style="color:#625D9C;">#</span><span id="brPassN" style="color:#625D9C;">0</span></div>
+      </div>
+    </div>
+  </div>
+  <div id="brMsg" style="text-align:center;font-size:16px;color:#625D9C;font-weight:700;min-height:52px;margin-top:8px;">press <b>▶ next beat</b> to call the function — then the <b>lit beat</b> runs on each click. <b>you</b> are the robot's brain 🧠</div>
+</div>
+<script>
+(function(){
+  var el=NM.el, SD=0.005, F=1.2, LAG=0.1, CAP=650;
+  var kp=4, s=null, raf=null, coastT=null, playing=false, codeOn=true;
+  var LINES={setup:[0,1], ask:[2], measure:[3], push:[4,5], blink:[6], exit:[7]};
+  var CARDS={ask:0, measure:1, push:2, blink:3};
+  function fresh(){ return {h:0,v:0,err:null,cmd:0,cmdc:0,pc:0,passes:0,peak:0,done:false}; }
+  function beatOf(pc){ return pc===0?'setup':pc===1?'ask':pc===2?'measure':pc===3?'push':pc===4?'blink':'exit'; }
+  function msg(t,c){ if(playing)return; el('brMsg').innerHTML=t; el('brMsg').style.color=c||'#625D9C'; }
+  function row(id,txt,fl){ var e=el(id); e.textContent=txt; if(fl&&!playing){ e.style.background='#FFD50088'; setTimeout(function(){e.style.background='transparent';},300); } }
+  function highlight(){
+    var b=playing?null:beatOf(s.pc);
+    for(var i=0;i<4;i++){ el('brB'+i).className='brBeat'+((b&&CARDS[b]===i)?' on':''); }
+    for(var j=0;j<8;j++){ el('brC'+j).className='brln'+((b&&LINES[b].indexOf(j)>=0)?' on':''); }
+  }
+  function drawBot(){
+    el('brCar').setAttribute('transform','rotate('+s.h.toFixed(1)+')');
+    if(s.peak>90){ el('brArc').setAttribute('d',NM.arcD(90,s.peak,94)); el('brArc').setAttribute('opacity','1'); }
+  }
+  function doBeat(){
+    if(s.done) return;
+    var pc=s.pc;
+    if(pc===0){ s.h=0; drawBot(); msg('called <b>gyro_turn_p(90, kp='+kp+')</b> — gyro zeroed: the car points 0°, the target tick is 90°'); s.pc=1; }
+    else if(pc===1){
+      var gap=Math.abs(90-s.h);
+      row('brRGap',gap.toFixed(1),1);
+      if(gap>1){ s.passes++; el('brPassN').textContent=s.passes; msg('🚪 <b>ASK</b> — the while line is a <b>door</b>: gap is '+gap.toFixed(1)+'° — bigger than 1? <b>YES</b> → run the body again'); s.pc=2; }
+      else { msg('🚪 <b>ASK</b> — gap is '+gap.toFixed(1)+'° — NOT bigger than 1. The door <b>closes</b>: stop the motors','#00AE8D'); s.pc=5; }
+    }
+    else if(pc===2){ s.err=90-s.h; row('brRGap',s.err.toFixed(1),1); msg('📏 <b>MEASURE</b> — error = 90 − '+s.h.toFixed(1)+' = <b>'+s.err.toFixed(1)+'°</b> — how FAR is left'); s.pc=3; }
+    else if(pc===3){
+      s.cmd=kp*s.err; s.cmdc=Math.max(-CAP,Math.min(CAP,s.cmd));
+      var over=Math.abs(s.cmd)>CAP;
+      row('brRCmd',s.cmd.toFixed(0)+(over?' ⚠':''),1);
+      msg('🦵 <b>PUSH</b> — push = '+kp+' × '+s.err.toFixed(1)+' = <b>'+s.cmd.toFixed(0)+'</b>'+(over?' — the motor maxes out at ±'+CAP+'! ⚠':(Math.abs(s.cmd)<80?' — tiny gap, gentle push':' — big gap, big push')));
+      s.pc=4;
+    }
+    else if(pc===4){
+      s.v+=(s.cmdc-s.v)*LAG; s.h+=s.v*F*SD; if(s.h>s.peak)s.peak=s.h;
+      drawBot();
+      msg('😴 <b>BLINK</b> — wait(5): the code sleeps, the wheels spin — the car turned to <b>'+s.h.toFixed(1)+'°</b>… back to 🚪 ASK');
+      s.pc=1;
+    }
+    else if(pc===5){ finish(); return; }
+    highlight();
+  }
+  function finish(){
+    s.done=true; playing=false; el('brPlayB').innerHTML='▶▶ play'; s.pc=5; highlight();
+    var exitV=s.v;
+    function coast(){
+      var moved=false;
+      for(var i=0;i<3;i++){ if(Math.abs(s.v)>=1){ s.v*=0.55; s.h+=s.v*F*SD; moved=true; } }
+      if(s.h>s.peak)s.peak=s.h; drawBot();
+      if(moved){ coastT=setTimeout(coast,30); }
+      else{
+        coastT=null;
+        var hot = s.peak>91.5 || Math.abs(exitV)>30, lazy = !hot && s.passes>450, t, col;
+        if(hot){
+          t='🔔 rang out to <b>'+s.peak.toFixed(1)+'°</b>'+(Math.abs(exitV)>30?' and flew out the door <b>still spinning '+Math.abs(exitV).toFixed(0)+' °/s</b>':'')+' — settled at '+s.h.toFixed(1)+'° after <b>'+s.passes+'</b> passes<br>the door checks the <b>gap</b>, never the <b>speed</b> — something must brake <i>before</i> arrival…'; col='#E96852';
+        } else if(lazy){
+          t='😴 door finally closed after <b>'+s.passes+'</b> passes — every push a whisper<br>on a REAL robot that fading push slips below friction and parks <b>short</b> — nothing dramatic ever happens, and <i>that</i> is the failure'; col='#625D9C';
+        } else {
+          t='✅ door closed after <b>'+s.passes+'</b> passes — landed at <b>'+s.h.toFixed(1)+'°</b><br>it never <b>counted</b> to 90 — it kept <b>CHECKING</b> until the gap got small 🧠'; col='#00AE8D';
+        }
+        el('brMsg').innerHTML=t; el('brMsg').style.color=col;
+      }
+    }
+    coast();
+  }
+  function pass(){ if(s.pc===0) doBeat(); do{ doBeat(); }while(!s.done && s.pc!==1); }
+  window.brStep=function(){ if(playing)window.brPlay(); doBeat(); };
+  window.brPass=function(){ if(playing)window.brPlay(); pass(); };
+  window.brPlay=function(){
+    if(s.done)return;
+    playing=!playing;
+    el('brPlayB').innerHTML=playing?'⏸ pause':'▶▶ play';
+    highlight();
+    if(playing){
+      el('brMsg').innerHTML='⏩ fast-forward — the real robot does this ~200× a second'; el('brMsg').style.color='#625D9C';
+      function frame(){ if(!playing||s.done)return; var n=s.passes>300?12:s.passes>120?6:1; for(var i=0;i<n&&!s.done;i++)pass(); if(playing&&!s.done)raf=requestAnimationFrame(frame); }
+      raf=requestAnimationFrame(frame);
+    }
+  };
+  window.brReset=function(){
+    if(raf)cancelAnimationFrame(raf); raf=null; if(coastT)clearTimeout(coastT); coastT=null; playing=false; s=fresh();
+    el('brPlayB').innerHTML='▶▶ play'; el('brPassN').textContent='0';
+    row('brRGap','–'); row('brRCmd','–');
+    el('brCar').setAttribute('transform','rotate(0)'); el('brArc').setAttribute('opacity','0'); el('brArc').setAttribute('d','');
+    el('brMsg').innerHTML='press <b>▶ next beat</b> to call the function — then the <b>lit beat</b> runs on each click. <b>you</b> are the robot\'s brain 🧠'; el('brMsg').style.color='#625D9C';
+    highlight();
+  };
+  window.brCode=function(){
+    codeOn=!codeOn;
+    el('brCodeCol').style.display=codeOn?'block':'none';
+    el('brCodeB').textContent=codeOn?'{ } hide the code':'{ } show the code';
+  };
+  window.brSet=function(k){
+    kp=k;
+    var chips={4:['brChip4','#00AE8D'],1:['brChip1','#625D9C'],20:['brChip20','#E96852']};
+    for(var key in chips){ var c=el(chips[key][0]), on=(+key===k); c.style.background=on?chips[key][1]:'#eef3f8'; c.style.color=on?'#fff':chips[key][1]; }
+    window.brReset();
+    if(k!==4) window.brPlay();
+  };
+  window.brReset();
+})();
+</script>
+```
+
+::: {.fragment .fade-up .incremental}
+- The `while` line is a **door**, not a countdown — every pass it re-asks *"is the gap still > 1?"* The loop never counts to 90; it keeps **checking**
+- Every push is a number **you** computed — `kp × gap`: far → hard push, close → gentle, arrived → zero
+- 😴 `kp = 1`: every push a **whisper** — the pass counter balloons to 715; a real robot's fading push slips below friction and **parks short**
+- 🔥 `kp = 20`: the door checks the **gap**, never the **speed** — it blows past and flies out **still spinning**. Something must brake *before* arrival…
+:::
+
+::: {.notes}
+This is the bridge from the logic they already say out loud to the code — run it BEFORE any new letters, on code they own: it steps `gyro_turn_p` (the P turn they built) beat by beat, nothing new. The code sits alongside from the start, and every beat lights its card AND its line — ASK is the while line (a door, not a countdown), MEASURE is the error line, PUSH is `kp * error` mirrored on two wheels, BLINK is `wait(5)`. For the very first pass you can `{ }` hide the code and run it in pure words, then bring it back — the words snap onto the lines. Ritual: each click is one beat; before every click of the first two passes the squad says the lit beat's sentence in their own words ("still far? how far? push how hard? blink") — THEN click and check the numbers. Landmarks at kp=4: pass 1 — gap 90.0, push 4×90 = 360; pass 2 — gap 89.8, push 359; keep stepping and the pushes shrink every pass — far→fast, close→gentle, in numbers *they* computed. Then `⟳ whole pass` a few times and ▶▶ play to the end: **143 passes, lands 89.1°** (inside the 1° door), no drama. Land the sentence and make them say it back: *the loop never COUNTED to 90 — it kept CHECKING until the gap got small.* Then the knob's two cracks, one chip each (both auto-play): 😴 **kp = 1** — every push a whisper, nothing dramatic ever happens, and the counter balloons to **715 passes** (5× the tuned run); on a real robot that fading push slips below friction and **parks short** — crack #2, the cue for I later this morning. 🔥 **kp = 20** — the push computes **1800** but the motor caps at ±650, it rings out to **~101°** and flies out the door at ~91° **still swinging back ~85 °/s** — the door checks the gap, never the speed; that's why a hot kp lands crooked, not just late. Ask "what would YOU add so it eases off *before* arriving?" and let the next slide answer with D. The sim is deliberate slow motion (the real hub runs this ~200×/s); illustrative, never gated.
+:::
+
 ## Name it: D damps 🛑 {.code-shrink}
 
 ```{.python code-line-numbers="|1|3|4|5|6-7|8|10"}
@@ -159,189 +338,185 @@ def gyro_turn_pd(target, kp=4, kd=0.5):
 
 ::: {.fragment .fade-up .incremental}
 - P reads where you ARE. D reads how fast you're closing
+- `last_error` is the loop's only **memory** — always one heartbeat behind `error`, so the very first pass sees `change = 0`
 - Watch `error` fall `90 → 55 → 30`: each tick `change` is *negative* (`−35`, then `−25`) — the gap is closing fast
 - D catches that and **eases off early — it taps the brake *before* you arrive**, so the turn glides in instead of ringing. That's **D — derivative**, the second letter of **PID**
 :::
 
 ::: {.notes}
-Anticipation is the whole idea — say it that way: P only knows the gap's *size* right now; D knows the gap is *shrinking* and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick's error, subtract to get the *change* (a speed, °/s), feed it in. Sign check out loud on the card's numbers — as the robot closes, `error` shrinks each tick, so `change` is negative, so it trims the command down → gentle arrival. `kd` is a new knob, same as `kp` was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They'll feel both on the next slide. `gyro_turn_pd` stays on `run()` (see the D4 proportional-turn note on `run()` vs `motor.dc()`); worth knowing for coaches — and it pays off again at the D8 reveal, where the pro controller actuates one layer *deeper*, by torque/effort.
+The loop skeleton (door → measure → push → blink) was just walked beat by beat on the previous slide — don't re-teach it; spend the minutes only on the three NEW lines. Anticipation is the whole idea — say it that way: P only knows the gap's *size* right now; D knows the gap is *shrinking* and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick's error, subtract to get the *change* (a speed, °/s), feed it in. Sign check out loud on the card's numbers — as the robot closes, `error` shrinks each tick, so `change` is negative, so it trims the command down → gentle arrival. `kd` is a new knob, same as `kp` was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They'll feel both on the next slide. `gyro_turn_pd` stays on `run()` (see the D4 proportional-turn note on `run()` vs `motor.dc()`); worth knowing for coaches — and it pays off again at the D8 reveal, where the pro controller actuates one layer *deeper*, by torque/effort.
 :::
 
-## Step it: be the robot 🔍 {.smaller}
+## Step it: feel the brake 🛑 {.smaller}
 
 ```{=html}
-<style>
-.svln{opacity:.4;padding:1px 8px;border-left:4px solid transparent;border-radius:6px;white-space:pre;transition:opacity .12s;}
-.svln.on{opacity:1;border-left-color:#E96852;background:#FFD50022;}
-.svln.dim{opacity:.35;} .svln.body{opacity:.8;}
-.svrow{display:flex;justify-content:space-between;padding:2px 10px;border-bottom:1px solid #dbe2ea;}
-.svrow b{transition:background .25s;border-radius:4px;padding:0 4px;}
-</style>
-<div style="width:965px;margin:0 auto;">
-  <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
-    <button onclick="svStep()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">▶ step one line</button>
-    <button onclick="svPass()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">⟳ whole pass</button>
-    <button id="svPlayB" onclick="svPlay()" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">▶▶ play</button>
-    <button onclick="svReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:5px 14px;font-size:17px;font-weight:700;cursor:pointer;">↺ reset</button>
-    <span style="font-size:16px;color:#1C355E;font-weight:700;margin-left:8px;">kp: <b id="svKpV">4</b></span>
-    <input id="svKpR" type="range" min="1" max="20" step="1" value="4" oninput="svKp(this.value)" style="width:110px;accent-color:#E96852;">
-    <span style="font-size:16px;color:#1C355E;font-weight:700;">kd: <b id="svKdV">0.5</b></span>
-    <input id="svKdR" type="range" min="0" max="1.6" step="0.1" value="0.5" oninput="svKd(this.value)" style="width:110px;accent-color:#00AE8D;">
+<div style="width:990px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
+    <button onclick="bdStep()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:16px;font-weight:700;cursor:pointer;">▶ next beat</button>
+    <button onclick="bdPass()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">⟳ whole pass</button>
+    <button id="bdPlayB" onclick="bdPlay()" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">▶▶ play</button>
+    <button onclick="bdReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:5px 12px;font-size:16px;font-weight:700;cursor:pointer;">↺ reset</button>
+    <span style="font-size:14px;color:#1C355E;font-weight:800;margin-left:6px;">one click, one story:</span>
+    <button id="bdChip0" onclick="bdSet(0)" style="background:#00AE8D;color:#fff;border:2px solid #00AE8D;border-radius:14px;padding:3px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">✅ kp 4 · kd 0.5</button>
+    <button id="bdChip1" onclick="bdSet(1)" style="background:#eef3f8;color:#E96852;border:2px solid #E96852;border-radius:14px;padding:3px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">🔔 kp 20 · kd 0</button>
+    <button id="bdChip2" onclick="bdSet(2)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:14px;padding:3px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">🛑 kp 20 · kd 0.5</button>
+    <button id="bdChip3" onclick="bdSet(3)" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:14px;padding:3px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">🌊 kp 4 · kd 1.6</button>
   </div>
-  <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
-    <span style="font-size:14px;color:#1C355E;font-weight:800;">one click, one crack ⚡</span>
-    <button onclick="svPreset(4,0.5)" style="background:#eef3f8;color:#00AE8D;border:2px solid #00AE8D;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">✅ tuned · kp 4 · kd 0.5</button>
-    <button onclick="svPreset(20,0)" style="background:#eef3f8;color:#E96852;border:2px solid #E96852;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">🔥 too hot · kp 20 · kd 0</button>
-    <button onclick="svPreset(1,0.5)" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">😴 too low · kp 1</button>
-    <button onclick="svPreset(4,1.6)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">🌊 kd too high · kd 1.6</button>
-  </div>
-  <div style="display:flex;justify-content:center;align-items:flex-start;gap:18px;">
-    <div style="background:#f7f9fc;border:1px solid #dbe2ea;border-radius:12px;padding:10px 12px;font-family:Consolas,monospace;font-size:14px;line-height:1.55;color:#1C355E;width:552px;">
-<div id="svL0" class="svln">def gyro_turn_pd(target, kp, kd):</div>
-<div id="svL1" class="svln">    hub.imu.reset_heading(0)</div>
-<div id="svL2" class="svln">    last_error = target</div>
-<div id="svL3" class="svln">    while abs(target - hub.imu.heading()) > 1:<span id="svNote" style="font-size:11.5px;font-weight:800;margin-left:8px;"></span></div>
-<div id="svL4" class="svln">        error = target - hub.imu.heading()</div>
-<div id="svL5" class="svln">        change = (error - last_error) / 0.005</div>
-<div id="svL6" class="svln">        last_error = error</div>
-<div id="svL7" class="svln">        left.run(kp * error + kd * change)</div>
-<div id="svL8" class="svln">        right.run(-(kp * error + kd * change))</div>
-<div id="svL9" class="svln">        wait(5)</div>
-<div id="svL10" class="svln">    left.stop(); right.stop()</div>
+  <div style="display:flex;justify-content:center;align-items:flex-start;gap:14px;">
+    <div style="width:218px;display:flex;flex-direction:column;gap:5px;">
+      <div id="bdB0" class="brBeat"><span class="be">🚪</span><span><b>ASK</b><span class="d">still more than 1° to go?</span></span></div>
+      <div id="bdB1" class="brBeat"><span class="be">📏</span><span><b>MEASURE</b><span class="d">how far is left?</span></span></div>
+      <div id="bdB2" class="brBeat"><span class="be">📉</span><span><b>SENSE — new!</b><span class="d">how fast is it closing? remember</span></span></div>
+      <div id="bdB3" class="brBeat"><span class="be">🦵</span><span><b>PUSH</b><span class="d">engine kp·error + brake kd·change</span></span></div>
+      <div id="bdB4" class="brBeat"><span class="be">😴</span><span><b>BLINK</b><span class="d">sleep 5 ms — the car moves</span></span></div>
+      <div style="text-align:center;font-size:12.5px;color:#625D9C;font-weight:800;">↻ …and back to ASK — again!</div>
     </div>
-    <div style="width:375px;">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <svg width="150" height="150" viewBox="-105 -105 210 210" style="display:block;flex:none;">
-          <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
-          <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/>
-          <path id="svArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"/>
-          <g id="svCar"><use href="#nmCar" style="--car:#625D9C"/></g>
-        </svg>
-        <div style="font-family:Consolas,monospace;font-size:15px;color:#1C355E;flex:1;">
-          <div class="svrow"><span>heading</span><b id="svRHead">?</b></div>
-          <div class="svrow"><span>error</span><b id="svRErr">–</b></div>
-          <div class="svrow"><span>change</span><b id="svRChg">–</b></div>
-          <div class="svrow"><span>last_error</span><b id="svRLast">–</b></div>
-          <div class="svrow"><span>push (°/s)</span><b id="svRCmd">–</b></div>
-          <div style="padding:4px 10px;font-weight:800;">loop pass <span style="color:#625D9C;">#</span><span id="svPassN" style="color:#625D9C;">0</span></div>
-        </div>
+    <div style="background:#f7f9fc;border:1px solid #dbe2ea;border-radius:12px;padding:9px 11px;font-family:Consolas,monospace;font-size:12.5px;line-height:1.5;color:#1C355E;">
+<div id="bdC0" class="brln">def gyro_turn_pd(target, kp=4, kd=0.5):</div>
+<div id="bdC1" class="brln">    hub.imu.reset_heading(0)</div>
+<div id="bdC2" class="brln">    last_error = target</div>
+<div id="bdC3" class="brln">    while abs(target - hub.imu.heading()) &gt; 1:</div>
+<div id="bdC4" class="brln">        error = target - hub.imu.heading()</div>
+<div id="bdC5" class="brln">        change = (error - last_error) / 0.005</div>
+<div id="bdC6" class="brln">        last_error = error</div>
+<div id="bdC7" class="brln">        left.run(kp * error + kd * change)</div>
+<div id="bdC8" class="brln">        right.run(-(kp * error + kd * change))</div>
+<div id="bdC9" class="brln">        wait(5)</div>
+<div id="bdC10" class="brln">    left.stop(); right.stop()</div>
+    </div>
+    <div style="width:320px;display:flex;align-items:center;gap:10px;">
+      <svg width="145" height="145" viewBox="-105 -105 210 210" style="display:block;flex:none;">
+        <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
+        <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"/>
+        <path id="bdArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"/>
+        <g id="bdCar"><use href="#nmCar" style="--car:#625D9C"/></g>
+      </svg>
+      <div style="font-family:Consolas,monospace;font-size:14px;color:#1C355E;flex:1;">
+        <div class="brrow"><span>gap (°)</span><b id="bdRGap">–</b></div>
+        <div class="brrow"><span>change (°/s)</span><b id="bdRChg">–</b></div>
+        <div class="brrow"><span>push (°/s)</span><b id="bdRCmd">–</b></div>
+        <div style="padding:3px 10px;font-weight:800;">loop pass <span style="color:#625D9C;">#</span><span id="bdPassN" style="color:#625D9C;">0</span></div>
       </div>
-      <div id="svMsg" style="font-size:14.5px;color:#625D9C;font-weight:700;min-height:64px;margin-top:6px;">the highlighted line runs on your next click — <b>you</b> are the robot's brain 🧠</div>
     </div>
   </div>
+  <div id="bdMsg" style="text-align:center;font-size:15.5px;color:#625D9C;font-weight:700;min-height:48px;margin-top:7px;">same loop, one new beat — press <b>▶ next beat</b> and watch 📉 SENSE feed the brake 🧠</div>
 </div>
 <script>
 (function(){
   var el=NM.el, SD=0.005, F=1.2, LAG=0.1, CAP=650;
+  var PRESETS=[{kp:4,kd:0.5,id:'bdChip0',col:'#00AE8D'},{kp:20,kd:0,id:'bdChip1',col:'#E96852'},{kp:20,kd:0.5,id:'bdChip2',col:'#1C355E'},{kp:4,kd:1.6,id:'bdChip3',col:'#625D9C'}];
   var kp=4, kd=0.5, s=null, raf=null, coastT=null, playing=false;
-  function fresh(){ return {h:0,v:0,lastErr:null,err:null,change:null,cmd:null,cmdc:0,pc:0,passes:0,peak:0,done:false}; }
-  function msg(t,c){ if(playing)return; el('svMsg').innerHTML=t; el('svMsg').style.color=c||'#625D9C'; }
-  function note(t,ok){ var n=el('svNote'); n.textContent=t; n.style.color=ok?'#00AE8D':'#E96852'; }
+  var LINES={setup:[0,1,2], ask:[3], measure:[4], sense:[5,6], push:[7,8], blink:[9], exit:[10]};
+  var CARDS={ask:0, measure:1, sense:2, push:3, blink:4};
+  function fresh(){ return {h:0,v:0,err:null,lastErr:90,change:0,cmd:0,cmdc:0,pc:0,passes:0,peak:0,done:false}; }
+  function beatOf(pc){ return pc===0?'setup':pc===1?'ask':pc===2?'measure':pc===3?'sense':pc===4?'push':pc===5?'blink':'exit'; }
+  function msg(t,c){ if(playing)return; el('bdMsg').innerHTML=t; el('bdMsg').style.color=c||'#625D9C'; }
   function row(id,txt,fl){ var e=el(id); e.textContent=txt; if(fl&&!playing){ e.style.background='#FFD50088'; setTimeout(function(){e.style.background='transparent';},300); } }
-  function highlight(){ for(var i=0;i<=10;i++){ var L=el('svL'+i); L.className='svln'+(playing?(i>=3&&i<=9?' body':' dim'):(i===s.pc?' on':'')); } }
-  function drawBot(){
-    el('svCar').setAttribute('transform','rotate('+s.h.toFixed(1)+')');
-    if(s.peak>90){ el('svArc').setAttribute('d',NM.arcD(90,s.peak,94)); el('svArc').setAttribute('opacity','1'); }
+  function highlight(){
+    var b=playing?null:beatOf(s.pc);
+    for(var i=0;i<5;i++){ el('bdB'+i).className='brBeat'+((b&&CARDS[b]===i)?' on':''); }
+    for(var j=0;j<11;j++){ el('bdC'+j).className='brln'+((b&&LINES[b].indexOf(j)>=0)?' on':''); }
   }
-  function doLine(){
+  function drawBot(){
+    el('bdCar').setAttribute('transform','rotate('+s.h.toFixed(1)+')');
+    if(s.peak>90){ el('bdArc').setAttribute('d',NM.arcD(90,s.peak,94)); el('bdArc').setAttribute('opacity','1'); }
+  }
+  function doBeat(){
     if(s.done) return;
     var pc=s.pc;
-    if(pc===0){ msg('called: <b>gyro_turn_pd(90, kp='+kp+', kd='+kd+')</b> — the knobs are set'); s.pc=1; }
-    else if(pc===1){ s.h=0; row('svRHead','0.0°',1); drawBot(); msg('gyro zeroed — heading now means <i>degrees turned so far</i>'); s.pc=2; }
-    else if(pc===2){ s.lastErr=90; row('svRLast','90.0',1); msg('the loop\'s <b>memory</b> starts full: last_error = target = 90'); s.pc=3; }
+    if(pc===0){ s.h=0; s.lastErr=90; drawBot(); msg('called <b>gyro_turn_pd(90, kp='+kp+', kd='+kd+')</b> — gyro zeroed, and the memory starts FULL: last_error = 90'); s.pc=1; }
+    else if(pc===1){
+      var gap=Math.abs(90-s.h);
+      row('bdRGap',gap.toFixed(1),1);
+      if(gap>1){ s.passes++; el('bdPassN').textContent=s.passes; msg('🚪 <b>ASK</b> — the door: gap is '+gap.toFixed(1)+'° — bigger than 1? <b>YES</b> → run the body again'); s.pc=2; }
+      else { msg('🚪 <b>ASK</b> — gap is '+gap.toFixed(1)+'° — NOT bigger than 1. The door <b>closes</b>: stop the motors','#00AE8D'); s.pc=6; }
+    }
+    else if(pc===2){ s.err=90-s.h; row('bdRGap',s.err.toFixed(1),1); msg('📏 <b>MEASURE</b> — error = 90 − '+s.h.toFixed(1)+' = <b>'+s.err.toFixed(1)+'°</b> — how FAR is left'); s.pc=3; }
     else if(pc===3){
-      var e=90-s.h, ok=Math.abs(e)>1;
-      note('abs(90−'+s.h.toFixed(1)+')='+Math.abs(e).toFixed(1)+(ok?' >1 ✓ again!':' ≤1 ✗ exit'), ok);
-      if(ok){ s.passes++; el('svPassN').textContent=s.passes; msg('the while line is a <b>door</b>: gap is '+Math.abs(e).toFixed(1)+'°, still &gt; 1 — run the body again'); s.pc=4; }
-      else { msg('gap ≤ 1° — the door <b>closes</b>: jump past the body','#00AE8D'); s.pc=10; }
+      var prev=s.lastErr;
+      s.change=(s.err-prev)/SD; s.lastErr=s.err;
+      row('bdRChg',s.change.toFixed(0),1);
+      msg('📉 <b>SENSE</b> — change = ('+s.err.toFixed(1)+' − '+prev.toFixed(1)+') / 0.005 = <b>'+s.change.toFixed(0)+' °/s</b>'+(s.passes===1?' — first pass: memory = target, nothing to compare yet':(s.change<0?' — negative: the gap is <b>closing</b>':''))+' · memory updated');
+      s.pc=4;
     }
-    else if(pc===4){ s.err=90-s.h; row('svRErr',s.err.toFixed(1),1); msg('error = 90 − '+s.h.toFixed(1)+' = <b>'+s.err.toFixed(1)+'</b> — how FAR is left'); s.pc=5; }
+    else if(pc===4){
+      var eng=kp*s.err, brk=kd*s.change;
+      s.cmd=eng+brk; s.cmdc=Math.max(-CAP,Math.min(CAP,s.cmd));
+      var over=Math.abs(s.cmd)>CAP;
+      row('bdRCmd',s.cmd.toFixed(0)+(over?' ⚠':''),1);
+      msg('🦵 <b>PUSH</b> — '+kp+'×'+s.err.toFixed(1)+' + '+kd+'×('+s.change.toFixed(0)+') = '+eng.toFixed(0)+' '+(brk<0?'− '+Math.abs(brk).toFixed(0):'+ '+brk.toFixed(0))+' = <b>'+s.cmd.toFixed(0)+'</b>'+(over?' — capped at ±'+CAP+'! ⚠':(brk<-1?' — the brake trims the engine':'')));
+      s.pc=5;
+    }
     else if(pc===5){
-      s.change=(s.err-s.lastErr)/SD;
-      row('svRChg',s.change.toFixed(0)+' °/s',1);
-      msg('change = ('+s.err.toFixed(1)+' − '+s.lastErr.toFixed(1)+') / 0.005 = <b>'+s.change.toFixed(0)+' °/s</b> — how FAST it\'s closing');
-      s.pc=6;
-    }
-    else if(pc===6){ s.lastErr=s.err; row('svRLast',s.lastErr.toFixed(1),1); msg('memory updated — next pass, <i>this</i> error is the old one'); s.pc=7; }
-    else if(pc===7){
-      s.cmd=kp*s.err+kd*s.change;
-      s.cmdc=Math.max(-CAP,Math.min(CAP,s.cmd));
-      row('svRCmd',s.cmd.toFixed(0)+(Math.abs(s.cmd)>CAP?' ⚠':''),1);
-      msg('push = '+kp+'×'+s.err.toFixed(1)+' + '+kd+'×('+s.change.toFixed(0)+') = <b>'+s.cmd.toFixed(0)+'</b>'+(Math.abs(s.cmd)>CAP?' — motor maxes out at ±'+CAP+'! ⚠':''));
-      s.pc=8;
-    }
-    else if(pc===8){ msg('same push, mirrored — that\'s what spins it in place'); s.pc=9; }
-    else if(pc===9){
       s.v+=(s.cmdc-s.v)*LAG; s.h+=s.v*F*SD; if(s.h>s.peak)s.peak=s.h;
-      row('svRHead',s.h.toFixed(1)+'°',1); drawBot();
-      msg('wait(5): the code sleeps, the <b>world moves</b> — the robot turned to '+s.h.toFixed(1)+'°');
-      s.pc=3;
+      drawBot();
+      msg('😴 <b>BLINK</b> — wait(5): the code sleeps, the wheels spin — the car turned to <b>'+s.h.toFixed(1)+'°</b>… back to 🚪 ASK');
+      s.pc=1;
     }
-    else if(pc===10){ finish(); return; }
+    else if(pc===6){ finish(); return; }
     highlight();
   }
   function finish(){
-    s.done=true; playing=false; el('svPlayB').innerHTML='▶▶ play'; s.pc=10; highlight();
+    s.done=true; playing=false; el('bdPlayB').innerHTML='▶▶ play'; s.pc=6; highlight();
     var exitV=s.v;
     function coast(){
       var moved=false;
       for(var i=0;i<3;i++){ if(Math.abs(s.v)>=1){ s.v*=0.55; s.h+=s.v*F*SD; moved=true; } }
-      row('svRHead',s.h.toFixed(1)+'°'); if(s.h>s.peak)s.peak=s.h; drawBot();
+      if(s.h>s.peak)s.peak=s.h; drawBot();
       if(moved){ coastT=setTimeout(coast,30); }
       else{
-        coastT=null; playing=false;
-        var t='✅ loop done after <b>'+s.passes+'</b> passes — landed at <b>'+s.h.toFixed(1)+'°</b>';
-        if(s.peak>91.5) t+=', after ringing out to '+s.peak.toFixed(1)+'° 🔔';
-        if(Math.abs(exitV)>30) t+='<br>😱 it left the loop <b>still spinning '+Math.abs(exitV).toFixed(0)+' °/s</b> — the door only checks the gap, not the speed';
-        el('svMsg').innerHTML=t; el('svMsg').style.color=(s.peak>91.5||Math.abs(exitV)>30)?'#E96852':'#00AE8D';
+        coastT=null;
+        var ring=s.peak>91.5, crawl=!ring&&s.passes>450, t, col;
+        if(ring){ t='🔔 kd = 0 deleted the brake — rang out to <b>'+s.peak.toFixed(1)+'°</b> and flew out the door still spinning — yesterday\'s P, exactly'; col='#E96852'; }
+        else if(crawl){ t='🌊 door closed after <b>'+s.passes+'</b> passes — D braked so early the last degrees arrived at a <b>crawl</b><br>damping is a dial, not a free upgrade'; col='#625D9C'; }
+        else if(kp>=20){ t='🛑 SAME hot kp = 20 — but the brake trimmed every push: <b>no ring</b>, peak '+s.peak.toFixed(1)+'°, done in <b>'+s.passes+'</b> passes<br>D doesn\'t slow the robot — it <b>tames</b> it'; col='#1C355E'; }
+        else { t='✅ door closed after <b>'+s.passes+'</b> passes — landed <b>'+s.h.toFixed(1)+'°</b>, one clean glide<br>every time the gap closed fast, the brake trimmed the push — the glide was <b>engineered</b>'; col='#00AE8D'; }
+        el('bdMsg').innerHTML=t; el('bdMsg').style.color=col;
       }
     }
     coast();
   }
-  function pass(){ do{ doLine(); }while(!s.done && s.pc!==3); }
-  window.svStep=function(){ if(playing)window.svPlay(); doLine(); };
-  window.svPass=function(){ if(playing)window.svPlay(); pass(); };
-  window.svPlay=function(){
+  function pass(){ if(s.pc===0) doBeat(); do{ doBeat(); }while(!s.done && s.pc!==1); }
+  window.bdStep=function(){ if(playing)window.bdPlay(); doBeat(); };
+  window.bdPass=function(){ if(playing)window.bdPlay(); pass(); };
+  window.bdPlay=function(){
     if(s.done)return;
     playing=!playing;
-    el('svPlayB').innerHTML=playing?'⏸ pause':'▶▶ play';
+    el('bdPlayB').innerHTML=playing?'⏸ pause':'▶▶ play';
     highlight();
     if(playing){
-      el('svMsg').innerHTML='⏩ fast-forward — the real robot does this ~200× a second'; el('svMsg').style.color='#625D9C';
-      function frame(){ if(!playing||s.done)return; var n=s.passes>240?6:1; for(var i=0;i<n&&!s.done;i++)pass(); if(playing&&!s.done)raf=requestAnimationFrame(frame); }
+      el('bdMsg').innerHTML='⏩ fast-forward — the real robot does this ~200× a second'; el('bdMsg').style.color='#625D9C';
+      function frame(){ if(!playing||s.done)return; var n=s.passes>300?12:s.passes>120?6:1; for(var i=0;i<n&&!s.done;i++)pass(); if(playing&&!s.done)raf=requestAnimationFrame(frame); }
       raf=requestAnimationFrame(frame);
     }
   };
-  window.svReset=function(){
+  window.bdReset=function(){
     if(raf)cancelAnimationFrame(raf); raf=null; if(coastT)clearTimeout(coastT); coastT=null; playing=false; s=fresh();
-    el('svPlayB').innerHTML='▶▶ play'; el('svPassN').textContent='0'; note('',1);
-    row('svRHead','?'); row('svRErr','–'); row('svRChg','–'); row('svRLast','–'); row('svRCmd','–');
-    el('svCar').setAttribute('transform','rotate(0)'); el('svArc').setAttribute('opacity','0'); el('svArc').setAttribute('d','');
-    el('svMsg').innerHTML='the highlighted line runs on your next click — <b>you</b> are the robot\'s brain 🧠'; el('svMsg').style.color='#625D9C';
+    el('bdPlayB').innerHTML='▶▶ play'; el('bdPassN').textContent='0';
+    row('bdRGap','–'); row('bdRChg','–'); row('bdRCmd','–');
+    el('bdCar').setAttribute('transform','rotate(0)'); el('bdArc').setAttribute('opacity','0'); el('bdArc').setAttribute('d','');
+    el('bdMsg').innerHTML='same loop, one new beat — press <b>▶ next beat</b> and watch 📉 SENSE feed the brake 🧠'; el('bdMsg').style.color='#625D9C';
     highlight();
   };
-  window.svKp=function(v){ kp=parseFloat(v); el('svKpV').textContent=v; window.svReset(); };
-  window.svKd=function(v){ kd=parseFloat(v); el('svKdV').textContent=v; window.svReset(); };
-  window.svPreset=function(kpv,kdv){
-    kp=kpv; kd=kdv;
-    el('svKpR').value=kpv; el('svKpV').textContent=kpv;
-    el('svKdR').value=kdv; el('svKdV').textContent=kdv;
-    window.svReset(); window.svPlay();
+  window.bdSet=function(i){
+    kp=PRESETS[i].kp; kd=PRESETS[i].kd;
+    for(var j=0;j<4;j++){ var c=el(PRESETS[j].id), on=(j===i); c.style.background=on?PRESETS[j].col:'#eef3f8'; c.style.color=on?'#fff':PRESETS[j].col; }
+    window.bdReset();
+    if(i>0) window.bdPlay();
   };
-  window.svReset();
+  window.bdReset();
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up .incremental}
-- The `while` line is a **door**, not a countdown — every pass it re-asks *"is the gap still > 1?"*
-- `last_error` is the loop's only **memory**, always one heartbeat behind `error` — that's why pass #1's `change` is `0`
-- 🔥 `error` goes **negative**, the push **flips sign**, and it flies through the door **still spinning** — yesterday's ring, caught line by line
-- 😴 every push is a whisper — the **pass counter balloons** · 🌊 too much `kd` brakes so early it **crawls the last degrees**
+- Same door, same beats — **one new beat**: 📉 SENSE reads how FAST the gap is closing; `last_error` is the memory it compares against (pass #1: nothing to compare — `change = 0`)
+- The push is now **engine + brake**: `kp × error` drives toward the target, `kd × change` pulls back while the gap is closing fast — a *negative* number doing the braking
+- 🔔 `kd = 0`: yesterday's ring, beat by beat · 🛑 hot `kp = 20` **with** the brake: no ring, done in 41 passes · 🌊 `kd = 1.6`: brakes so early it **crawls** in — a dial, not a free upgrade
 :::
 
 ::: {.notes}
-Same code as the last slide, now under a microscope — and *they* are the CPU. Ritual: the highlighted line is the one that runs on the next click; before every click of pass #1, squads predict out loud what it does and what number it writes. Landmark numbers at the defaults (kp 4, kd 0.5): pass 1 — `change` is **0** (ask why! `last_error = target` on the line above means the first pass sees no change), push 360. Pass 2 — error 89.8, change −43 °/s, push 338. Then `⟳ whole pass` a few times — watch `last_error` trail `error` by exactly one beat — then ▶▶ play to the end: ~278 passes, lands 89.0°, the while-note flips to ✗. Land the sentence: *the loop never counted to 90 — it kept CHECKING until the gap got small.* Then the preset chips break it on demand — one crack per click, each sets the sliders and auto-plays. 🔥 **too hot** (kp 20, kd 0): the push computes **1800** but the motor caps at ±650 — extra kp buys nothing but trouble. It blows past (arc paints to ~101°), `error` goes negative, the push flips sign — hit ⏸ in the ring zone (or ▶ step, which auto-pauses) so they read a negative error flow through the formula. Bonus crack: it flies out the door at ~90.3° **still swinging back at ~85 °/s** — the `> 1` test is a door, not a brake, and a fast robot flies through it; that's why a hot kp lands crooked, not just late. 😴 **too low** (kp 1): nothing dramatic ever happens — *that's* the failure. Every push is a whisper and the pass counter balloons past **1,100** (~4× the tuned 278); on a real robot that fading push slips below friction and **parks short** — crack #2, and the cue for I later this morning. 🌊 **kd too high** (1.6): D brakes so hard so early that the last degrees arrive at a crawl (~540 passes) — damping is a dial, not a free upgrade; ✅ is the sweet spot they can always come home to. The sim is deliberate slow motion (the real hub runs this ~200×/s) with readable numbers; illustrative, never gated.
+Same ritual as the P stepper — the squads already own four of the five beats, so all attention goes to 📉 SENSE, the one new beat (two lines: compute `change`, update the memory). Landmarks at the ✅ tuned chip (kp 4, kd 0.5): pass 1 — change **0** (ask why! `last_error = target` before the loop means the first pass sees no change), push 360; pass 2 — error 89.8, change −43 °/s, push = 359 − 21 = **338** — the brake already trimming. Hand-step the first two passes, watch `last_error` trail `error` by exactly one beat, then ▶▶ play: **278 passes, lands 89.0°**, one clean glide. Then the story chips (each auto-plays): 🔔 **kp 20 · kd 0** — brake deleted: rings to ~101° and flies out still swinging — the previous slide's crack, now with the D lines sitting right there doing nothing; 🛑 **kp 20 · kd 0.5** — the SAME hot engine with the brake back on: **no ring, peak 89.9°, done in 41 passes** — D doesn't slow the robot, it *tames* it; this chip is the sell. 🌊 **kp 4 · kd 1.6** — brakes so hard so early the last degrees crawl in over **537 passes** — damping is a dial, and ✅ is home. Sign-check out loud at PUSH: while closing, `change` is negative, so `kd × change` SUBTRACTS — the brake only pulls while the gap is shrinking fast. Next slide races P vs PD continuously — the same story at full speed, in the diary view.
 :::
 
 ## Feel it: same turn, calmed 🎢
