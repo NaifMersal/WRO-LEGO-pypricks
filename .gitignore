@@ -1,9 +1,61 @@
+# ── What this file is doing ───────────────────────────────────────────────────
+# This repo is public. It tracks the SITE SOURCES only: the Quarto pages, the
+# reveal.js decks, the standalone interactives, the vendored field tool, and the
+# four gold-reference Pybricks programs the cheat sheet links.
+#
+# Everything coach-side stays out: the planning documents, the decision log, the
+# Skills Check machinery, the student photos and results, the route/sim tooling.
+# Two of those (docs/, robots_images/) hold children's names, faces and marks —
+# the rules below are what stops a stray `git add .` from publishing them.
+# Read README.md § "What is not here" before loosening anything.
+
+# ── Build output and tooling noise ────────────────────────────────────────────
 /.quarto/
+output/
 **/*.quarto_ipynb
 __pycache__/
-output/
-code/
-docs/
-tools/
+.venv/
+# jsdom, installed ad-hoc for tools/audit-recap.js (there is no package.json)
+node_modules/
+package-lock.json
+
+# ── Agent configuration — local, and not everyone's ───────────────────────────
 /CLAUDE.md
+/AGENTS.md
 /.claude/
+/.agents/
+
+# ── Coach-only: planning, student data, the exam ──────────────────────────────
+# docs/ carries the bootcamp plan, the decision log, the WRO rules PDF, the deck
+# assets, and docs/exam/ — which holds the answer key, the per-student marks and
+# both generated exam pages.
+docs/
+robots_images/
+
+# Belt and braces for the exam pages, wherever they are generated. exam.html
+# once published from the repo root carrying the live /exec URL, the exam secret
+# and the students' first names. Neither page may be tracked or listed under
+# `resources:` in _quarto.yml. See docs/exam/web/README.md.
+exam.html
+coach.html
+
+# Scraped text of WRO's copyrighted rules PDF; the README links WRO's own
+# download page instead.
+/extracted_rules_text.txt
+
+# ── Coach tooling stays out — except the field tool the site ships ────────────
+# `tools/` cannot be punctured once excluded as a directory, so exclude its
+# entries and re-include the one folder. tools/robot_sim/ (the Brython bench)
+# and tools/route_optimizer/ are deliberately not distributed.
+tools/*
+!tools/odommap/
+
+# ── Gold-reference programs: the four the cheat sheet links, nothing else ─────
+# library-cheatsheet.qmd declares exactly these four under `resources:` and
+# offers them as downloads; without them those links 404. code/.venv/,
+# code/archive/, and the mission and object-test harnesses stay out.
+code/*
+!code/movements.py
+!code/claw_gripper.py
+!code/lift_gripper.py
+!code/grip_test.py
