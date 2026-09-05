@@ -1,0 +1,22 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Naif Mersal
+
+The curriculum content in this repository — the reveal.js decks under `slides/`,
+the Quarto pages `index.qmd` and `library-cheatsheet.qmd`, and the standalone
+interactives under `interactives/` — is licensed under the Creative Commons
+Attribution 4.0 International License.
+
+You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, link to the license, and
+indicate if changes were made.
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+
+The source code in this repository (`code/`, and the scripts embedded in the
+interactives) is licensed separately under the MIT License — see LICENSE.
+
+THIS MATERIAL IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND. Third-party
+material bundled here keeps its own license and copyright — see the
+"Licence and attribution" section of README.md.

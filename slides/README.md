@@ -12,6 +12,11 @@ curriculum never breaks file paths or rendered URLs.
 Curriculum source: `docs/Robot_Rockstars_Bootcamp_Plan.md` — the week-by-week day table and the
 D1–D25 authoring map.
 
+> 📁 **`docs/` is coach-side and is not in this repository.** The plan, the decision log and the
+> robot specs are the working record of a live cohort and are not distributed, so every `docs/…`
+> path cited here and in the decks resolves only on the coach's own machine. See the root
+> `README.md` § *What is not here, and why*.
+
 Kid-facing landing page: root `index.qmd` → `output/index.html` — a colorful card grid of all 25
 sessions (D1–D7 and D9 link to their decks; the rest show "Coming soon"). Update its cards when
 a planned deck goes live.

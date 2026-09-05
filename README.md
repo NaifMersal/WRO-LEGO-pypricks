@@ -1,38 +1,106 @@
 # Robot Rockstars 🎸🤖
 
-Welcome to the **Robot Rockstars** repository! The bootcamp is designed to take beginners from a box of LEGO SPIKE Prime components to a competition-ready robot for the **WRO 2026 RoboMission Elementary** season (*"Robot Rockstars"*).
+A five-week youth robotics bootcamp that takes beginners from a box of LEGO to a competition-ready
+robot for the **WRO 2026 RoboMission Elementary** season (*"Robot Rockstars"*), on **LEGO SPIKE
+Prime programmed in Python with [Pybricks](https://pybricks.com/)**.
 
-All programming is written in **Python using the Pybricks firmware/API**, offering professional-grade motor and gyro control out of the box.
-
-
-## 🛠️ Technology Stack & Requirements
-
-*   **Hardware:**
-    *   LEGO SPIKE Prime Core Set (45678)
-    *   LEGO SPIKE Prime Expansion Set (45681)
-*   **Firmware:**
-    *   [Pybricks](https://pybricks.com/) (replaces standard SPIKE Hub OS with standard MicroPython + Pybricks APIs).
-*   **Tools:**
-    *   [Pybricks Code Editor](https://code.pybricks.com/) (browser-based or desktop version).
-    *   [Quarto](https://quarto.org/) (for compiling slides and index page).
+**▶ The course portal is the thing to look at: <https://naifmersal.github.io/WRO-LEGO-pypricks/>** —
+a card grid of all 25 sessions, each opening a reveal.js deck, plus the recap arcade and the field
+tool.
 
 ---
 
-## 📐 Domain Invariants & Rules
+## 📦 What is in this repository
 
-When modifying the code or curriculum planning documents, keep the following hard constraints in mind:
-1.  **Robot Constraints (General Rules §5):** Start dimensions must be $\le 250 \times 250 \times 250$ mm. Total weight must be $\le 1.5$ kg. Only one robot/controller hub. **No wireless link** between components (Bluetooth/Wi-Fi off; program downloaded via cable).
-2.  **6-Port Budget:** The stock LEGO Advanced Driving Base fills all 6 ports (2 large drive motors, 2 medium tool motors, 2 color sensors). **No ultrasonic/distance sensor is used.** Wall detection is handled via motor-stall detection and gyro orientation resetting.
-3.  **Pedagogy — "Break it $\rightarrow$ Feel it $\rightarrow$ Fix it":** Introduce concepts live in class. Open with a naive approach that fails visibly (e.g., drift on open-loop driving), let the students feel the limitation, then introduce the technical solution (e.g., gyro-based straight driving) as the rescue.
-4.  **Anchor-First Scoring:** Prioritize securing a reliable **~135-point anchor run** (Instruments + Cables + Bonus by avoidance + Microphone) with no active color sensing first. Then layer on the two fixed color notes (+40 points) for a gated **~175-point run** by Week 4. Randomization (+80 points) is treated as a Week-5 stretch goal.
+| Path | What it is |
+|:--|:--|
+| `index.qmd` | The kid-facing landing page — the card grid of all 25 sessions. |
+| `slides/` | One reveal.js deck per curriculum day, named by **topic**, never by day number. `slides/README.md` is the day → deck map. |
+| `library-cheatsheet.qmd` | Every verb the students own, on one page. Handed out at D5. |
+| `interactives/` | Hand-written standalone HTML the decks link or iframe: the Recap Arcade (master + its two generated sittings) and the Beam Balance catch-up lab. |
+| `code/` | The four gold-reference Pybricks programs the cheat sheet offers as downloads — `movements.py`, `claw_gripper.py`, `lift_gripper.py`, `grip_test.py`. |
+| `tools/odommap/` | Vendored field measuring tool (see attribution below), used coach-side for route planning and student-facing in the path-planning session. |
+| `slides_template/` | Shared branding and the deck scaffold: SCSS theme, logo, splash filter. |
+| `handouts/` | Printables. |
+
+**One layout rule:** repo root = Quarto site pages · `slides/` = reveal decks · `interactives/` =
+hand-written standalone HTML. Put a new page in the matching place and list it in `_quarto.yml` if
+it is not a `.qmd`.
+
+## 🚫 What is not here, and why
+
+This repo is public, so it carries the **site sources only**. The coach side is kept out
+deliberately, and `.gitignore` enforces it:
+
+- **The planning documents** — the bootcamp plan, the decision log, the robot specs, the WRO rules.
+  They are the working record of a live cohort and are not distributed. Decks and READMEs still
+  cite them by path (`docs/…`); those references will not resolve in a clone.
+- **Student data** — photographs, names, exam scripts and marks. The students are children.
+- **The Skills Check** — the exam page, its answer key, the Apps Script endpoint and the results.
+  The exam page is generated coach-side and opened from disk on the day; it is **not** published,
+  and must never be added to `resources:` in `_quarto.yml`.
+- **The rest of `tools/`** — the Brython bench simulator, the route optimiser, the spec extractor.
+
+If you are the coach and you are looking for those, they are on your own disk, not in this history.
+
+## 🛠️ Requirements
+
+- **Hardware** — LEGO SPIKE Prime Core Set (45678) + Expansion Set (45681).
+- **Firmware** — [Pybricks](https://pybricks.com/), which replaces the SPIKE Hub OS with
+  MicroPython + the Pybricks API. Flash it once per hub, then write code in the
+  [Pybricks Code Editor](https://code.pybricks.com/).
+- **Site build** — [Quarto](https://quarto.org/) ≥ 1.8.26.
+
+```bash
+quarto preview          # live-reload the whole site
+quarto render           # build into output/
+quarto preview index.qmd   # just the portal
+```
+
+`output/` is generated and ignored; the built site is published to the `gh-pages` branch.
 
 ---
 
-## 🚀 Getting Started
+## 📐 Domain invariants
 
--  To view the course portal locally, compile the Quarto index:
-    ```bash
-    quarto preview index.qmd
-    ```
+Constraints that recur through every deck and must not drift:
 
--  To run code on a SPIKE Prime, flash Pybricks firmware onto your hub, open the [Pybricks Code Editor](https://code.pybricks.com/).
+1. **Robot limits (WRO General Rules §5).** ≤ 250 × 250 × 250 mm at the start · ≤ 1.5 kg · one
+   controller hub · **no wireless link between components** (Bluetooth/Wi-Fi off, program
+   downloaded by cable) · one physical start/stop button.
+2. **The 4-motor cap binds before the port budget — and which one you mean matters.** The *stock*
+   LEGO Education Advanced Driving Base fills all 6 hub ports (2 large drive + 2 medium tool motors
+   + 2 colour sensors), leaving nothing for a distance sensor. **This build is not the stock kit:**
+   it runs **one** colour sensor, so **port A is free** — while its four motors sit exactly at
+   Elementary's **maximum of 4** (§5.2.8). Wall detection is by motor-stall detection and gyro
+   heading, not by a distance sensor.
+3. **Pedagogy — "break it → feel it → fix it".** Everything is delivered live in class, with no
+   pre-work dependency. Open with a naive approach that fails visibly (open-loop drift), let the
+   students feel the limitation, and introduce the technique as the rescue.
+4. **Anchor-first scoring.** The foundation is the **~135-point anchor run with no colour sensing**
+   (instruments 45 + cables 30 + bonus-by-avoidance 40 + microphone 20), and **~135 locked to ×20
+   ≥ 90 % is the gated five-week deliverable**. The two fixed notes (+40 → ~175) are a **D24
+   stretch** taken only after the lock passes; the four randomized notes (+80) and 255-point
+   consistency open the continuation season. Never trade a reliable gated run for a shakier full
+   one.
+
+The WRO rules themselves are not redistributed here — get them from
+[World Robot Olympiad](https://wro-association.org/competition/season-2026/).
+
+---
+
+## ⚖️ Licence and attribution
+
+- **Code** (`code/`, and the scripts inside the interactives) — [MIT](LICENSE).
+- **Curriculum content** (`slides/`, `index.qmd`, `library-cheatsheet.qmd`, `interactives/`) —
+  [CC BY 4.0](LICENSE-CONTENT).
+
+Third-party material keeps its own terms:
+
+- **OdomMap** (`tools/odommap/`) — vendored from [haing2811/OdomMap](https://github.com/haing2811/OdomMap),
+  MIT licensed, © the upstream author. Its `LICENSE` ships alongside it. Only the files this
+  bootcamp needs are included; other years and categories were dropped.
+- **World Robot Olympiad** — the RoboMission rules, the game description and the field/mat artwork
+  are WRO's. They are referenced and measured against here, not relicensed or redistributed.
+- **LEGO**, **SPIKE** and **Pybricks** are trademarks of their respective owners. This project is
+  not affiliated with, endorsed by, or sponsored by the LEGO Group, WRO, or Pybricks.
