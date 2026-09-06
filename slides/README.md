@@ -45,7 +45,7 @@ a planned deck goes live.
 | D6 | [pd-line-following.qmd](pd-line-following.qmd) | The robot opens its eyes: reflection reads + per-surface threshold + first `if/elif`, bang-bang → P line-following (third `error × KP`) + junction squaring (the gate); `kd` stretch; `follow_line` + `square_on_line` (two eyes — the one-eye robot squares on a wall) into `movements.py` |
 | D7 | [stop-patrol-react.qmd](stop-patrol-react.qmd) | Motor-as-sensor (`run_until_stalled` + measured back-off), patrol loop (reusing the calibrated eye), `drive_to_wall` + `wall_square` into `movements.py`, anchor-first scoring map |
 | D8 | [drivebase-shortcut.qmd](drivebase-shortcut.qmd) *(⚠️ still carries a Draft Day section — old-D10 content; removing it is **open decision #5**, a coach call)* | Library consolidation into one module (Good Practices) + the `ROBOT FACTS` block + the earned `DriveBase` reveal/migration — including the payoff that their hand-built `turn(angle, absolute=False)` *is* Pybricks' signature, so the verb gets deleted — + *Gauntlet* on the migrated library |
-| D16 | [mission-list.qmd](mission-list.qmd) *(authored for D9; **deferred to D16** per the plan — kept in this table because it closes the Week-2 library arc. The Week-4 table below also lists a D16; that table is stale, see its banner.)* | Lists (index/iterate/append), steps as functions, the blocking mission runner over the migrated library, end-of-week benchmarks + gold-reference validation, *Setlist* |
+| D16 | *(planned — deck TBD)* **The deck authored for this day was withdrawn from the site on 2026-09-06; recover it with `git show 5c9994d:slides/mission-list.qmd`.** Kept in this table because it closes the Week-2 library arc; the Week-4 table below also lists a D16 and that table is stale, see its banner. | Lists (index/iterate/append), steps as functions, the blocking mission runner over the migrated library, end-of-week benchmarks + gold-reference validation, *Setlist* |
 | D10 | *(planned — deck TBD)* | Draft Day morning: team split + robot selection + `ROBOT FACTS` merge onto the selected robot, *Mini Mission* finale → mechanism build #1 kicks off (cables + microphone) |
 
 ## Week 3 — Build the Mechanisms, Chain the Anchor Run
@@ -66,14 +66,13 @@ a planned deck goes live.
 > planning + robot consolidation · D19 instruments + avoidance · D20 chain the anchor**, and the
 > **gated deliverable is the ~135 anchor at ×20 ≥ 90 %** (#30) — ~175 is a D24 stretch, taken
 > only after the lock passes. **The planned-deck rows below have not been re-dated against that;
-> do it before authoring any of them.** *(`plan-the-path.qmd` itself was authored against the
-> plan's D18, so its own subtitle is correct.)*
+> do it before authoring any of them.**
 
 | Day | Deck | Topic |
 |:--:|---|---|
 | D16 | `lock-the-anchor.qmd` *(planned)* | Anchor ≤ 2:00, ×10 clean |
 | D17 | `reliability-root-cause.qmd` *(planned)* | Failure logging, root-cause, calibration log |
-| D18 | [plan-the-path.qmd](plan-the-path.qmd) | 🗺️ **Mission planning on the map** (#42): route-in-your-own-words break-it → the 12° that never comes back → `tools/odommap/` odometry mode as `reset_heading(0)` made visible → **both heading frames named** (map/Pybricks 0 = up clockwise vs `field_data.py` 0 = +X, `map = field + 90`) → the forced cable orientation (128 mm vs 79.7 mm; 100°/80° field = **190°/170°** robot) → path plan with marked reset points, *Cartographers* |
+| D18 | *(planned — deck TBD)* **The deck authored for this day was withdrawn from the site on 2026-09-06; recover it with `git show 5c9994d:slides/plan-the-path.qmd`.** | 🗺️ **Mission planning on the map** (#42): route-in-your-own-words break-it → the 12° that never comes back → `tools/odommap/` odometry mode as `reset_heading(0)` made visible → **both heading frames named** (map/Pybricks 0 = up clockwise vs `field_data.py` 0 = +X, `map = field + 90`) → the forced cable orientation (128 mm vs 79.7 mm; 100°/80° field = **190°/170°** robot) → path plan with marked reset points, *Cartographers* |
 | D18 | `fixed-notes-tech-summary.qmd` *(planned)* | Fixed notes (+40 → ~175 **as a D24 stretch**, not a gate), Technical Summary draft |
 | D19 | `robustness-hsv.qmd` *(planned)* | HSV calibration, retry logic, venue hardening |
 | D20 | `reliability-checkpoint.qmd` *(planned)* | Week-4 gate: **~135 anchor chained end-to-end, ≥ 5/10 clean (pre-lock)** — the ×20 lock is Week 5's job |

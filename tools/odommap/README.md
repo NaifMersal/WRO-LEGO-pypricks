@@ -10,9 +10,9 @@ the app will show a missing image.
 
 ## Usage
 
-Coach tooling for route planning; also used **student-facing** in the
-path-planning session (`slides/plan-the-path.qmd`), where the odometry-mode
-origin bar is the concrete picture of `reset_heading(0)`.
+Coach tooling for route planning. The odometry-mode origin bar is the concrete
+picture of `reset_heading(0)`, which makes it a useful thing to put on a screen
+when a squad is arguing about where zero is.
 
 1. Open `OdomMap.html` in a browser (works fully offline).
 2. Pick **2026 / Elementary**, set **Wheel (mm) = 88** (the gold reference's

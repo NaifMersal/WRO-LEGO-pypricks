@@ -224,13 +224,6 @@ format:
         <span class="rr-play">▶ Play the recap</span>
       </a>
 
-      <a class="rr-card" href="slides/mission-list.html">
-        <span class="rr-badge b-coral">D16</span><span class="rr-card-emoji">🎵</span>
-        <h3>The Setlist</h3>
-        <p>Turn a whole mission into a list, then let a three-line runner play it, reorder it, grow it.</p>
-        <span class="rr-play">▶ Open slides</span>
-      </a>
-
       <div class="rr-card soon">
         <span class="rr-badge b-coral">D10</span><span class="rr-card-emoji">🤝</span>
         <h3>Draft Day</h3>
@@ -302,13 +295,6 @@ format:
         <p>Log failures, hunt the root cause, and keep a calibration diary.</p>
         <span class="rr-ribbon">🔒 Coming soon</span>
       </div>
-
-      <a class="rr-card" href="slides/plan-the-path.html">
-        <span class="rr-badge b-teal">D18</span><span class="rr-card-emoji">🗺️</span>
-        <h3>Plan the Path</h3>
-        <p>Measure your route on a map, face a heading instead of guessing a turn, and mark every place your error gets erased.</p>
-        <span class="rr-play">▶ Open slides</span>
-      </a>
 
       <div class="rr-card soon">
         <span class="rr-badge b-teal">D18</span><span class="rr-card-emoji">🎶</span>

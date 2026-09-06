@@ -11,6 +11,7 @@ project:
   render:
     - "**/*.qmd"
     - "!slides_template/*.qmd"
+    - "!docs/"
   # Standalone student-facing interactives. They are hand-written .html, not .qmd,
   # so Quarto will not pick them up on its own — list them here or the decks that
   # iframe them get a broken frame in output/.

@@ -633,7 +633,7 @@ The target is **built from the loop variable**, so the coast stops piling up: ov
 :::
 
 ::: {.notes}
-Stretch material — gate nobody on it. It's the payoff of the earlier "keep spinning → 360, 450, 720" trap AND the first time an expression (`90 * (side + 1)`) does work inside a loop. The insight — absolute targets absorb per-corner error instead of accumulating it — is a real WRO technique they'll meet again in mission code. If time is short, demo it coach-side in 2 minutes, then move on — the next slide (Any Shape) is the one that feeds Shape Shifter. Forward hook for coaches: this is the seed of the library's `turn(…, absolute=True)`, which drops the per-turn reset entirely when the library is written (*Name Your Moves*), and it is quoted back to them at *Plan the Path*, where headings get read straight off a map of the mat.
+Stretch material — gate nobody on it. It's the payoff of the earlier "keep spinning → 360, 450, 720" trap AND the first time an expression (`90 * (side + 1)`) does work inside a loop. The insight — absolute targets absorb per-corner error instead of accumulating it — is a real WRO technique they'll meet again in mission code. If time is short, demo it coach-side in 2 minutes, then move on — the next slide (Any Shape) is the one that feeds Shape Shifter. Forward hook for coaches: this is the seed of the library's `turn(…, absolute=True)`, which drops the per-turn reset entirely when the library is written (*Name Your Moves*), and it comes back when headings get read straight off a map of the mat.
 :::
 
 ## Any shape, two numbers 🔺⬣
