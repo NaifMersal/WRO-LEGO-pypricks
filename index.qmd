@@ -101,6 +101,19 @@ format:
     background:#eef2f7; padding:.22rem .6rem; border-radius:999px;
   }
 
+  /* Weeks with no deck yet: one muted strip, not a grid of cards nobody can open */
+  .rr-soon{
+    margin:1rem .2rem 0; padding:.9rem 1.15rem; border-radius:16px;
+    border:2px dashed #d9e1ea; background:#fbfcfe;
+    color:var(--muted); font-size:.93rem; line-height:1.6;
+  }
+  .rr-soon b{ color:#55627a; font-weight:700; }
+  .rr-soon .tag{
+    display:inline-flex; align-items:center; gap:.3rem; margin-right:.45rem;
+    font-weight:700; font-size:.78rem; color:#8a95a8; white-space:nowrap;
+    background:#eef2f7; padding:.2rem .6rem; border-radius:999px;
+  }
+
   .rr-note{
     margin:.9rem .2rem 0; font-size:.82rem; color:var(--muted); line-height:1.5;
   }
@@ -174,20 +187,6 @@ format:
         <span class="rr-play">▶ Open slides</span>
       </a>
 
-      <a class="rr-card" href="library-cheatsheet.html">
-        <span class="rr-badge b-teal">D5+</span><span class="rr-card-emoji">📄</span>
-        <h3>Library Cheat Sheet</h3>
-        <p>Every verb you own on one page. The gripper half fills in once you build one. Keep it open on the bench.</p>
-        <span class="rr-play">▶ Open the cheat sheet</span>
-      </a>
-
-      <a class="rr-card" href="interactives/recap-part1-days2-5.html">
-        <span class="rr-badge b-teal">D2–D5</span><span class="rr-card-emoji">🕹️</span>
-        <h3>Recap Arcade · Part 1</h3>
-        <p>Days 2–5 as short levels: watch the demo, answer one question. Ends with a miss list to bring to the coach.</p>
-        <span class="rr-play">▶ Play the recap</span>
-      </a>
-
     </div>
   </section>
 
@@ -217,21 +216,9 @@ format:
         <span class="rr-play">▶ Open slides</span>
       </a>
 
-      <a class="rr-card" href="interactives/recap-part2-days5-8.html">
-        <span class="rr-badge b-coral">D5–D8</span><span class="rr-card-emoji">🕹️</span>
-        <h3>Recap Arcade · Part 2</h3>
-        <p>Six more levels: where a room lives, the eye, the line, two eyes, the wall, the library. Demo first, question last, miss list at the end.</p>
-        <span class="rr-play">▶ Play the recap</span>
-      </a>
-
-      <div class="rr-card soon">
-        <span class="rr-badge b-coral">D10</span><span class="rr-card-emoji">🤝</span>
-        <h3>Draft Day</h3>
-        <p>Teams form, one robot is chosen, the configs merge, and the first mechanism build begins.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
     </div>
+
+    <p class="rr-soon"><span class="tag">🔒 Coming soon</span><b>Draft Day (D10):</b> teams form, one robot is chosen, the configs merge, and the first mechanism build begins.</p>
   </section>
 
   <!-- ============ WEEK 3 ============ -->
@@ -246,35 +233,9 @@ format:
         <span class="rr-play">▶ Open slides</span>
       </a>
 
-      <div class="rr-card soon">
-        <span class="rr-badge b-purple">D12</span><span class="rr-card-emoji">🎹</span>
-        <h3>Instruments &amp; Dodging</h3>
-        <p>Mechanism #2: place the instruments (45 pts) and grab the avoidance bonus (+40).</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
-      <div class="rr-card soon">
-        <span class="rr-badge b-purple">D13</span><span class="rr-card-emoji">🧩</span>
-        <h3>Into the Runner</h3>
-        <p>Drop the first scoring segments into your mission runner.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
-      <div class="rr-card soon">
-        <span class="rr-badge b-purple">D14</span><span class="rr-card-emoji">⛓️</span>
-        <h3>Chain It Up</h3>
-        <p>Fold the remaining segments into one growing run, wall-squaring between tasks.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
-      <div class="rr-card soon">
-        <span class="rr-badge b-purple">D15</span><span class="rr-card-emoji">🏟️</span>
-        <h3>Full Anchor Run</h3>
-        <p>Connect every piece into the whole ~135-point run, start to finish.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
     </div>
+
+    <p class="rr-soon"><span class="tag">🔒 Coming soon</span><b>Still to come (D12–D15):</b> mechanism #2 places the instruments (45 pts) and grabs the avoidance bonus (+40), the first scoring segments drop into your mission runner, and every piece chains into the whole ~135-point anchor run.</p>
   </section>
 
   <!-- ============ WEEK 4 ============ -->
@@ -282,42 +243,9 @@ format:
     <div class="rr-week-head w-teal"><span class="num">Week 4</span> Make It Reliable 🎯</div>
     <div class="rr-grid">
 
-      <div class="rr-card soon">
-        <span class="rr-badge b-teal">D21</span><span class="rr-card-emoji">⏱️</span>
-        <h3>Lock the Anchor</h3>
-        <p>Run under 2:00, and land it clean 10 times in a row.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
-      <div class="rr-card soon">
-        <span class="rr-badge b-teal">D17</span><span class="rr-card-emoji">🔍</span>
-        <h3>Find the Bug</h3>
-        <p>Log failures, hunt the root cause, and keep a calibration diary.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
-      <div class="rr-card soon">
-        <span class="rr-badge b-teal">D18</span><span class="rr-card-emoji">🎶</span>
-        <h3>The Fixed Notes</h3>
-        <p>Add the green and red notes (+40 → ~175) as a <em>stretch</em>, and draft your Technical Summary.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
-      <div class="rr-card soon">
-        <span class="rr-badge b-teal">D19</span><span class="rr-card-emoji">🛡️</span>
-        <h3>Venue-Proof It</h3>
-        <p>HSV colour calibration, retry logic, and hardening for a strange room.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
-      <div class="rr-card soon">
-        <span class="rr-badge b-teal">D20</span><span class="rr-card-emoji">✅</span>
-        <h3>Reliability Check</h3>
-        <p>The gate: hit the ~135 anchor run, 20 tries, 90%+ of the time.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
-
     </div>
+
+    <p class="rr-soon"><span class="tag">🔒 Coming soon</span>Log the failures and hunt the root cause, plan the route on a map of the mat, harden the robot for a strange room, and add the green and red notes as a <em>stretch</em>. Then the gate: the <b>~135 anchor run, 20 tries, 90%+ of the time.</b></p>
   </section>
 
   <!-- ============ WEEK 5 ============ -->
@@ -325,40 +253,36 @@ format:
     <div class="rr-week-head w-coral"><span class="num">Week 5</span> Color, Notes &amp; the Mock Qualifier 🏆</div>
     <div class="rr-grid">
 
-      <div class="rr-card soon">
-        <span class="rr-badge b-coral">D21</span><span class="rr-card-emoji">🌈</span>
-        <h3>Randomized Notes</h3>
-        <p>Map colours to targets and chase the four surprise notes (+80 stretch).</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
+    </div>
 
-      <div class="rr-card soon">
-        <span class="rr-badge b-coral">D22</span><span class="rr-card-emoji">🎙️</span>
-        <h3>Interview Ready</h3>
-        <p>Finish the Technical Summary. Both teammates ready to talk about the robot.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
+    <p class="rr-soon"><span class="tag">🔒 Coming soon</span>Map colours to targets and chase the four surprise notes, finish the Technical Summary until both teammates can talk about the robot, run a mock qualifier with check-in and the Surprise Rule, push for the full 255, and show it off.</p>
+  </section>
 
-      <div class="rr-card soon">
-        <span class="rr-badge b-coral">D23</span><span class="rr-card-emoji">🥊</span>
-        <h3>Mock Qualifier</h3>
-        <p>Practice check-in and the Surprise Rule, then go head-to-head.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
+  <!-- ============ REFERENCE & PRACTICE ============ -->
+  <section class="rr-week">
+    <div class="rr-week-head w-teal"><span class="num">Reference</span> Keep These Open 📄</div>
+    <div class="rr-grid">
 
-      <div class="rr-card soon">
-        <span class="rr-badge b-coral">D24</span><span class="rr-card-emoji">💯</span>
-        <h3>Chase the 255</h3>
-        <p>Push for the full 255 points and lock in your strongest setup.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
+      <a class="rr-card" href="library-cheatsheet.html">
+        <span class="rr-badge b-teal">D5+</span><span class="rr-card-emoji">📄</span>
+        <h3>Library Cheat Sheet</h3>
+        <p>Every verb you own on one page. The gripper half fills in once you build one. Keep it open on the bench.</p>
+        <span class="rr-play">▶ Open the cheat sheet</span>
+      </a>
 
-      <div class="rr-card soon">
-        <span class="rr-badge b-coral">D25</span><span class="rr-card-emoji">🎉</span>
-        <h3>Showcase Day</h3>
-        <p>Pick the team, plan what's next, and show off your robot.</p>
-        <span class="rr-ribbon">🔒 Coming soon</span>
-      </div>
+      <a class="rr-card" href="interactives/recap-part1-days2-5.html">
+        <span class="rr-badge b-teal">D2–D5</span><span class="rr-card-emoji">🕹️</span>
+        <h3>Recap Arcade · Part 1</h3>
+        <p>Days 2–5 as short levels: watch the demo, answer one question. Ends with a miss list to bring to the coach.</p>
+        <span class="rr-play">▶ Play the recap</span>
+      </a>
+
+      <a class="rr-card" href="interactives/recap-part2-days5-8.html">
+        <span class="rr-badge b-coral">D5–D8</span><span class="rr-card-emoji">🕹️</span>
+        <h3>Recap Arcade · Part 2</h3>
+        <p>Six more levels: where a room lives, the eye, the line, two eyes, the wall, the library. Demo first, question last, miss list at the end.</p>
+        <span class="rr-play">▶ Play the recap</span>
+      </a>
 
     </div>
   </section>

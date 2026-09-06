@@ -18,8 +18,9 @@ D1–D25 authoring map.
 > `README.md` § *What is not here, and why*.
 
 Kid-facing landing page: root `index.qmd` → `output/index.html` — a colorful card grid of all 25
-sessions (D1–D7 and D9 link to their decks; the rest show "Coming soon"). Update its cards when
-a planned deck goes live.
+sessions. **D1–D8 and D11 link to their decks; every other day shows "Coming soon."** The cheat
+sheet and the two recap arcades sit in their own *Reference & Practice* section at the end, so a
+week section holds day decks only. Update the cards when a planned deck goes live.
 
 ## Week 1 — Build, Drive, Sense
 
