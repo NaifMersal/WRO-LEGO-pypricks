@@ -303,7 +303,7 @@ Design rule: **let the mechanism forgive what the driving can't guarantee.** ±5
 This slide is the difference between a build that works once and a mechanism that gates at ≥8/10. The funnel is tolerance engineering a 9-year-old can hold: the robot will *never* arrive perfectly, so build a mouth that makes imperfect arrivals perfect enough. Over-travel is its twin in code. Pros design the mechanism around the *worst* expected approach, not the best. The ±5 mm number is a design target to test against, not a rule — nudge their aim off on purpose and see if the funnel saves it. The third trick is the gear challenge coming home: torque where the push needs force, speed where the claw needs reach.
 :::
 
-## Break it: the claw that got shoved 💥
+## Break it: the claw that got shoved 💥 {.smaller}
 
 ::: {.qbox}
 [Close the claw. Now **shove it back open with your hand**, with the program still running.]{.qtitle}
@@ -311,29 +311,18 @@ This slide is the difference between a build that works once and a mechanism tha
 Two squads, same nudge, one word different:
 
 ```{.python}
-gripper.run_angle(300, 150)     # squad A
-gripper.run_target(300, 150)    # squad B
+claw.run_angle(300, 150)     # squad A
+claw.run_target(300, 150)    # squad B
 ```
 
 Run it again. **Do the two claws land in the same place?** 👀
 :::
 
 ::: {.fragment .fade-up}
-::: {.cardbox .coral}
-**No.** Squad A is 150° past the shove. Squad B went **back to the same spot it always uses.**
-
-Same nudge. One verb forgave you. 🤔
-:::
+**No.** Squad A is 150° past the shove; squad B went back to the same spot it always uses. Same nudge, and one verb forgave you. 🤔
 :::
 
-::: {.notes}
-Five minutes, and it must be *felt*, not told — the slide dies if you announce the answer. Get real predictions on the board first; most of the room will guess both claws end up wrong, because "I moved it with my hand" feels like it must break something. Then the reveal question: **counts from where, exactly?** `run_angle` counts from *here* — wherever the claw happens to be the instant the line runs, nudge included. `run_target` counts from a **zero**, and does not care how the claw got where it is. Do NOT resolve which is "better" yet — that's the next slide, and it lands harder as a table they fill in.
-
-Two staging notes. Keep the program running (a loop with a button wait, or the REPL) — that is what makes squad B recover. And make the shove big and obvious, 30–40°; a 5° nudge looks like noise. If a squad's claw is heavily geared down, their hand-shove may back-drive the gears rather than the motor — have them nudge the motor's own axle instead.
-:::
-
-## Move **by**, or move **to** 📐
-
+::: {.fragment .fade-up}
 |  | `run_angle(300, 150)` | `run_target(300, 150)` |
 |---|---|---|
 | you say | "turn **150° more**" | "go **to** 150" |
@@ -341,26 +330,21 @@ Two staging notes. Keep the program running (a loop with a button wait, or the R
 | run it twice | moves **again**, 300 total | second one does **nothing** |
 | after a shove | inherits the shove ❌ | drives it back out ✅ |
 
-::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-You already own this pair. **`robot.turn(90, absolute=True)` is a compass. `run_angle` is a steering wheel.** 🧭
-
-Wheels roll forever, so *by* is fine. A claw has **a place it must be**, so mechanisms use **`run_target`**.
-:::
-:::
-
-::: {.fragment .fade-up}
-::: {.cardbox .purple}
-⚠️ **`run_target` ignores the sign of the speed.** The target decides the direction. `run_target(-300, 0)` and `run_target(300, 0)` do the **same thing**, so to go the other way, change the *target*, not the speed.
+**`robot.turn(90, absolute=True)` is a compass. `run_angle` is a steering wheel.** 🧭 Wheels roll forever, so *by* is fine. A claw has **a place it must be**, so mechanisms use **`run_target`**. Its one trap is on your cheat sheet.
 :::
 :::
 
 ::: {.notes}
-Build the table live, one row at a time, from what they just watched. Row 3 is the cheapest to prove and the most convincing: run either line twice and `run_angle` walks the claw across the room while `run_target` sits there refusing to move because it has already arrived.
+Ten minutes, and it must be *felt*, not told — the slide dies if you announce the answer. Get real predictions on the board first; most of the room will guess both claws end up wrong, because "I moved it with my hand" feels like it must break something. Then the reveal question: **counts from where, exactly?** `run_angle` counts from *here* — wherever the claw happens to be the instant the line runs, nudge included. `run_target` counts from a **zero**, and does not care how the claw got where it is. Hold the room in the confusion before you advance the fragment.
+
+Two staging notes. Keep the program running (a loop with a button wait, or the REPL) — that is what makes squad B recover. And make the shove big and obvious, 30–40°; a 5° nudge looks like noise. If a squad's claw is heavily geared down, their hand-shove may back-drive the gears rather than the motor — have them nudge the motor's own axle instead.
+
+**Then build the table live, one row at a time, from what they just watched** — it lands far harder filled in with the room than read off the screen. Row 3 is the cheapest to prove and the most convincing: run either line twice and `run_angle` walks the claw across the room while `run_target` sits there refusing to move because it has already arrived.
 
 The absolute-turn callback is the sentence of the slide, and it is a genuine callback: the square day taught exactly this on the gyro, and the checkpoint's hardest question turned on it. Say the general rule out loud, because it is the transferable one: **a relative move inherits every mistake before it; an absolute move forgets them.** That is also why `movements.py` deliberately has no "turn 90 from here" verb.
 
-The purple fragment is a real trap that costs an afternoon, because every other verb they own — `run_angle`, `run`, `run_until_stalled` — taught them "negative means the other way", and this one quietly doesn't. Show it: `run_target(-300, 0)` from an open claw *closes* it, exactly like the positive version, because 0 is on the same side either way.
+**Say the sign trap out loud even though it is no longer on the slide** — it costs an afternoon, it is on their cheat sheet, and this is the moment it makes sense: `run_target` **ignores the sign of the speed**, because the *target* picks the direction. Every other verb they own — `run_angle`, `run`, `run_until_stalled` — taught them "negative means the other way", and this one quietly doesn't. Show it: `run_target(-300, 0)` from an open claw *closes* it, exactly like the positive version, because 0 is on the same side either way. Point at the cheat sheet as you say it, so they learn where the answer lives.
 :::
 
 ## So whose zero is it? 💥
@@ -421,36 +405,9 @@ Blanks: `duty_limit=40` and `reset_angle(0)`. They already own `run_until_stalle
 
 Line 4 is the one they'll want to delete — make them keep it. The gear train is still under load the instant the stall is detected, and reading the angle before it unwinds bakes a few degrees of backlash into zero, every run, in the same direction. Systematic error, not noise, and systematic errors survive into competition. Line 6 is why the claw ends up *open and ready* rather than clamped shut — `READY_ANGLE` is a number they choose (wide enough for the biggest thing they carry), not one they measure.
 
-Assign it now as a hard habit: `home()` is line one of every mission program from today onward, no exceptions, enforced at the gate. It costs one second.
-:::
-
-## Try to break the homing 🔨
-
-::: {.qbox}
-[Four ways it goes wrong. **Stage each one.**]{.qtitle}
-:::
-
-| Break it | What you see |
-|---|---|
-| home the **wrong direction** | zero lands at *open*, and nothing closes again |
-| `duty_limit` too **high** | you **hear** the teeth skip, a stripped gear 🔊 |
-| `duty_limit` too **low** | zero lands somewhere new, so homing is a lie |
-| skip the `wait(200)` | zero drifts, always the same way |
-
-::: {.fragment .fade-up}
-::: {.cardbox .coral}
-Every one of these **passes on your desk.** That's why you stage them on purpose. 🎭
-:::
-:::
-
-::: {.notes}
-Squads split the four and stage them for each other — a competition-grade debugging drill, not a demo, so protect ten minutes for it.
-
-**Supervise the `duty_limit` rows.** Let them hear a real skip at `duty_limit=100` on a re-geared claw *once*, briefly, then stop it; the sound is worth more than any warning, and it's the same lesson the heavy-lift break-it opened the day with — torque has consequences at both ends of the chain. Do not let anyone sit at 100 for more than a second, and don't run this on a build you can't afford to re-teeth. The low side is subtler and more valuable: at 15 the jaws stop short of actually meeting, `reset_angle(0)` fires anyway, and now zero is *almost* right — worse than obviously wrong, because it passes on the bench and fails on the mat. Tie it back: a tuning knob found by feel, exactly like KP.
-
 **Say the scope line deliberately** — `duty_limit` lives in `home()` and nowhere else, because it is a *percentage of whatever power is available today*, which is the same objection they already accepted against `dc()`. Finding a rigid stop can afford that sloppiness; deciding how hard to squeeze an object cannot. That distinction is the hinge the rest of the session turns on.
 
-The wrong-direction row is the most common: they flip a sign, the claw homes to *open*, zero lands at the wrong end of the travel, and every `grab()` afterwards asks the motor to drive somewhere it already is. It reconnects to the sign rule in their gripper file — positive must mean **opening**, and if it doesn't, you flip `Direction`, not the numbers. Collect the four "what you'd see" answers on the board — that list is a diagnostic sheet for the rest of the season.
+Assign it now as a hard habit: `claw.home()` is line one of every mission program from today onward, no exceptions, enforced at the gate. It costs one second. The four ways homing goes wrong are staged in the build block, not here — don't pre-empt them.
 :::
 
 ## Break it: the claw that lets go 💥
@@ -459,7 +416,7 @@ The wrong-direction row is the most common: they flip a sign, the claw homes to 
 [Grip it by **stalling**. Then take the robot for a ride.]{.qtitle}
 
 ```{.python}
-gripper.run_until_stalled(-300, then=Stop.HOLD, duty_limit=50)
+claw.run_until_stalled(-300, then=Stop.HOLD, duty_limit=50)
 drive_straight(600)
 robot.turn(90, absolute=True)
 ```
@@ -536,14 +493,7 @@ def holding():
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-So ask the **same question twice**. 🚚
-
-```{.python}
-claw.grab()                 # got it HERE?
-drive_straight(600)
-if not claw.holding():      # still got it THERE?
-    print("dropped it, skip the placing")
-```
+So ask the **same question twice**: once at `claw.grab()`, and again after the drive. Same function, no second verb. 🚚
 :::
 :::
 
@@ -557,34 +507,6 @@ Notice how little there is to hold in your head now: the jaws meet at **0**, so 
 Why asking late is possible at all is the dividend from the previous slide: because `grab()` leaves the claw actively squeezing, the load reading stays meaningful for the whole carry. Under a stall-and-hold grip the motor had already relaxed, so "do I still have it?" had no signal to read. That is competition thinking arriving early — a run that discovers an empty claw *before* the placing manoeuvre skips it and banks the time. Get every squad to add the second call to one mission leg today.
 
 Nice bonus if you have a minute — ask what `holding()` should say for a squashy object versus a rigid one, and let them find that both margins are TUNE knobs, not constants handed down.
-:::
-
-## Ten grabs, not one 🔬
-
-::: {.qbox}
-[Run `grip_test.py`. Same object, same claw, **ten times**.]{.qtitle}
-
-Then write your **spread** on the board, not your angle.
-:::
-
-| spread | verdict |
-|---|---|
-| under 10° | build a run on it ✅ |
-| 10–25° | your claw **rocks** in its mounting 🔧 |
-| over 25° | fix the **build**, not the code 💀 |
-
-::: {.fragment .fade-up}
-::: {.cardbox .coral}
-It also grabs five times by **stalling**, right next to five by **torque**. Don't take my word for it, read the two spreads. 📊
-:::
-:::
-
-::: {.notes}
-One reading always looks fine, so a single number cannot tell you whether your claw is competition-grade. Spread can. Make the board column say *spread*, not *angle* — the room comparing spreads is a completely different conversation, because a wide spread is a **build** defect and points at a specific fix (the claw rocks, the mount flexes, the object rolls before the jaws arrive) rather than at a number to fiddle with. Hold the line on the bottom row when someone wants to tune their way out of a 30° spread.
-
-The angle column is now directly readable: it is how far the object holds the jaws open, measured from shut. So the smallest number in the table is also the answer to "where does `AIR_MARGIN` go?" — comfortably under it. That is the only number the test asks them to write down, besides `GRIP_LOAD_MIN`.
-
-Budget: about two minutes per squad, and they should run it more than once — ideally now and again at the end of the day on a tired battery, which is what makes the stall-versus-torque column honest. If the two spreads come out close on a fresh battery, say so plainly rather than overselling; the effect grows as the battery sags, and a coach who oversells a result the students can see is fine loses the argument they actually need to win.
 :::
 
 ## Two new jobs, and **no** new verbs 📦 {.code-shrink}
@@ -621,21 +543,35 @@ The blanks are the point — the structure is given (their level), the *numbers*
 Filing rule: driving verbs live in `movements.py`; `home`, `grab`, `release`, `let_go` and `holding` live in a gripper file — `claw_gripper.py` and/or `lift_gripper.py`, one per mechanism the robot actually carries; **the cable and the mic live in the mission program**, as steps, because they are the mission and nothing else.
 :::
 
-## Build block: make it gate 🔧
+## Build block: make it gate 🔧 {.smaller}
 
 ::: {.callout-important}
 ## Until the competition: build, tune, log
 
 - 🔌 Pusher: cable **upright in grey**, from 3 different approach angles
 - 🎤 Carry claw: mic **upright in target**, release and retreat
+- 🔬 Ten grabs with `grip_test.py`. Write your **spread**, not your angle: under 10° build a run on it, 10–25° your claw rocks in its mounting, over 25° fix the **build**, not the code
 - 📋 **Log every rep.** Today's log is tonight's Accuracy score
 :::
 
-- Start every attempt with `home()`. Position truth first, no exceptions
+**Stage all four ways homing goes wrong.** Every one of them passes on your desk, which is why you break it on purpose. 🎭
+
+| Break it | What you see |
+|---|---|
+| home the **wrong direction** | zero lands at *open*, and nothing closes again |
+| `duty_limit` too **high** | you **hear** the teeth skip, a stripped gear 🔊 |
+| `duty_limit` too **low** | zero lands somewhere new, so homing is a lie |
+| skip the `wait(200)` | zero drifts, always the same way |
+
+- Start every attempt with `claw.home()`. Position truth first, no exceptions
 - Miss? Say **which trick failed**: funnel, over-travel, or ratio. Then fix *that*
 
 ::: {.notes}
-The longest block of the day — protect it. Teams work on their competition robots; the parts donor pool is open under the usual rules. Coach circulates with one diagnostic question only: "which trick failed?" — forcing the funnel/over-travel/ratio vocabulary to do diagnostic work on every miss. The rep log is not busywork: the daily head-to-head scores Accuracy from logged practice runs, and the week's exit gate (both cables upright ≥8/10, mic in-target upright) is just this log grown up. If the coupling question from Act A bites here — a squad finds the mic claw disturbing the cable claw mid-sequence — that's the day's best possible problem: solve it on the real mission, with the coach watching the design conversation happen.
+The longest block of the day — protect it, and note it now carries three jobs, not one. Teams work on their competition robots; the parts donor pool is open under the usual rules. Coach circulates with one diagnostic question only: "which trick failed?" — forcing the funnel/over-travel/ratio vocabulary to do diagnostic work on every miss. The rep log is not busywork: the daily head-to-head scores Accuracy from logged practice runs, and the week's exit gate (both cables upright ≥8/10, mic in-target upright) is just this log grown up. If the coupling question from Act A bites here — a squad finds the mic claw disturbing the cable claw mid-sequence — that's the day's best possible problem: solve it on the real mission, with the coach watching the design conversation happen.
+
+**The homing table is a drill, not a demo — protect ten minutes for it.** Squads split the four and stage them for each other. **Supervise the `duty_limit` rows.** Let them hear a real skip at `duty_limit=100` on a re-geared claw *once*, briefly, then stop it; the sound is worth more than any warning, and it's the same lesson the heavy-lift break-it opened the day with — torque has consequences at both ends of the chain. Do not let anyone sit at 100 for more than a second, and don't run this on a build you can't afford to re-teeth. The low side is subtler and more valuable: at 15 the jaws stop short of actually meeting, `reset_angle(0)` fires anyway, and now zero is *almost* right — worse than obviously wrong, because it passes on the bench and fails on the mat. Tie it back: a tuning knob found by feel, exactly like KP. The wrong-direction row is the most common: they flip a sign, the claw homes to *open*, and every `grab()` afterwards asks the motor to drive somewhere it already is — the fix is to flip `Direction` in their gripper file, not the numbers. Collect the four "what you'd see" answers on the board; that list is a diagnostic sheet for the rest of the season.
+
+**On `grip_test.py`:** one reading always looks fine, so a single number cannot tell you whether a claw is competition-grade. Spread can. Make the board column say *spread*, not *angle* — a wide spread is a **build** defect and points at a specific fix (the claw rocks, the mount flexes, the object rolls before the jaws arrive) rather than at a number to fiddle with, so hold the line on the bottom row when someone wants to tune their way out of a 30° spread. The angle it reports is how far the object holds the jaws open, measured from shut, so the smallest number is also the answer to "where does `AIR_MARGIN` go?" — comfortably under it. The test also grabs five times by **stalling** right next to five by **torque**: have them read the two spreads rather than take the previous slides on faith. Budget two minutes per squad, and have them run it twice — now, and again at the end of the day on a tired battery, which is what makes the stall-versus-torque column honest. If the two spreads come out close on a fresh battery, say so plainly rather than overselling; the effect grows as the battery sags, and a coach who oversells a result the students can see is fine loses the argument they actually need to win.
 :::
 
 # D. Compete & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
@@ -664,7 +600,7 @@ First W3 head-to-head on a real mechanism, landing on the competition robots as 
 
 - You can trace **motor → claw** and say the **ratio and direction** at every gear, with no notes
 - Your re-geared gripper **proved its goal**, either the lift or the stopwatch
-- `home()` runs **first, every time**, and you can say what breaks without it
+- `claw.home()` runs **first, every time**, and you can say what breaks without it
 - Your cable steps land a cable **upright in grey**, and your mic steps release it **upright**
 - `home`, `grab`, `release` live in **your gripper file**, and the cable and mic **steps in your mission**
 :::
