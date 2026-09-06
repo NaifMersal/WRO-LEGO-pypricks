@@ -361,14 +361,16 @@ window.NM = {
 })();
 </script>
 <div class="fragment fade-up">
-<section id="why-p-overshoots" class="cardbox coral">
-<h3>Why P overshoots</h3>
+<div class="cardbox coral">
+<h3>
+Why P overshoots
+</h3>
 <ul>
 <li>Checks <strong>how far</strong> is left, not <strong>how fast</strong> it is closing</li>
 <li>Full speed at arrival means momentum carries it past 90°</li>
 <li>Crank KP higher and it rings even harder</li>
 </ul>
-</section>
+</div>
 </div>
 <aside class="notes">
 <p>Run it before the fragment. The red arc past the tick is overshoot made visible. Ask students: “the number hit 90 — why didn’t it stop?” Because the wheels were spinning at high speed. P cuts power at error 0, but momentum carries the robot past. Then P pulls back, creating oscillation. We need a way to detect that the error is dropping fast and ease off early.</p>
@@ -591,23 +593,27 @@ window.NM = {
 <div class="fragment fade-up">
 <div class="columns">
 <div class="column" style="width:50%;">
-<section id="p-proportional" class="cardbox teal">
-<h3>P (Proportional)</h3>
+<div class="cardbox teal">
+<h3>
+P (Proportional)
+</h3>
 <ul>
 <li>Reads <strong>where you are</strong></li>
 <li>Pushes hard when far</li>
 <li>Engine of the turn</li>
 </ul>
-</section>
+</div>
 </div><div class="column" style="width:50%;">
-<section id="d-derivative" class="cardbox coral">
-<h3>D (Derivative)</h3>
+<div class="cardbox coral">
+<h3>
+D (Derivative)
+</h3>
 <ul>
 <li>Reads <strong>how fast gap closes</strong></li>
 <li>Taps the brake before arrival</li>
 <li>Stops ringing and overshoot 🛑</li>
 </ul>
-</section>
+</div>
 </div></div>
 </div>
 <aside class="notes">
@@ -639,7 +645,7 @@ window.NM = {
     <button id="bdChip3" onclick="bdSet(3)" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:14px;padding:2px 9px;font-size:13px;font-weight:700;cursor:pointer;">🌊 kp 4 · kd 1.6</button>
   </div>
   <div style="display:flex;justify-content:center;align-items:flex-start;gap:12px;">
-    <div style="width:215px;display:flex-direction:column;display:flex;gap:4px;">
+    <div style="width:215px;display:flex;flex-direction:column;gap:4px;">
       <div id="bdB0" class="brBeat"><span class="be">🚪</span><span><b>ASK</b><span class="d">gap &gt; 1°?</span></span></div>
       <div id="bdB1" class="brBeat"><span class="be">📏</span><span><b>MEASURE</b><span class="d">how far left?</span></span></div>
       <div id="bdB2" class="brBeat"><span class="be">📉</span><span><b>SENSE (D)</b><span class="d">closing speed</span></span></div>
@@ -1175,28 +1181,108 @@ window.NM = {
           display:block!important;
       }</style></aside>
 </section>
-<section id="verb-1-turn-by-or-to" class="slide level2">
+<section id="verb-1-turn-by-or-to" class="slide level2 code-shrink">
 <h2>Verb #1: <code>turn</code>, by or to</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|2|3|4-6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> turn(angle, absolute<span class="op">=</span><span class="va">False</span>, kp<span class="op">=</span><span class="dv">4</span>, kd<span class="op">=</span><span class="fl">0.5</span>):</span>
-<span id="cb3-2"><a></a>    <span class="co">"""PD gyro turn. By this many degrees, or TO this heading."""</span></span>
-<span id="cb3-3"><a></a>    <span class="co"># hub.imu.reset_heading(0)   &lt;- Removed!</span></span>
-<span id="cb3-4"><a></a>    target <span class="op">=</span> angle <span class="cf">if</span> absolute <span class="cf">else</span> hub.imu.heading() <span class="op">+</span> angle</span>
-<span id="cb3-5"><a></a>    last_error <span class="op">=</span> target <span class="op">-</span> hub.imu.heading()</span>
-<span id="cb3-6"><a></a>    ...   <span class="co"># remaining PD loop identical to gyro_turn_pd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment fade-up">
-<ul>
-<li><code>turn(90)</code> → spin <strong>90° more</strong> from wherever I’m pointing, like a steering wheel</li>
-<li><code>turn(90, absolute=True)</code> → <strong>face 90° on the mat</strong>, like a compass</li>
-<li>Same PD logic, but we <strong>removed <code>reset_heading(0)</code></strong>: with one zero for the whole run, an absolute turn that lands 1° wide gets absorbed by the next one 🎯</li>
-</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> turn(angle, absolute<span class="op">=</span><span class="va">False</span>, kp<span class="op">=</span><span class="dv">4</span>, kd<span class="op">=</span><span class="fl">0.5</span>):</span>
+<span id="cb3-2"><a></a>    <span class="co">"""PD gyro turn. BY this many degrees, or TO this heading."""</span></span>
+<span id="cb3-3"><a></a>    <span class="cf">if</span> absolute:</span>
+<span id="cb3-4"><a></a>        target <span class="op">=</span> angle                      <span class="co"># face this heading on the mat</span></span>
+<span id="cb3-5"><a></a>    <span class="cf">else</span>:</span>
+<span id="cb3-6"><a></a>        target <span class="op">=</span> hub.imu.heading() <span class="op">+</span> angle  <span class="co"># add to where the nose points</span></span>
+<span id="cb3-7"><a></a>    ...   <span class="co"># same PD loop as gyro_turn_pd, now chasing target</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="qbox">
+<p><span class="qtitle">Press each button <strong>twice</strong>. Which one moves the robot both times?</span></p>
 </div>
-<div class="fragment fade-up">
-<div class="cardbox coral">
-<p>⚠️ <strong>Relative turns stack their mistakes. Absolute turns erase them.</strong> Four <code>turn(90)</code>s pile up four errors. Four <code>turn(90, absolute=True)</code>, <code>turn(180, absolute=True)</code>… each throw the last one away. <strong>Write missions in absolute.</strong></p>
+<div style="width:830px;margin:0 auto;">
+  <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:6px;">
+    <span style="font-size:18px;color:#1C355E;font-weight:700;">call your verb:</span>
+    <button onclick="tvTurn(false)" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-family:Consolas,monospace;font-size:18px;font-weight:700;cursor:pointer;">▶ turn(90)</button>
+    <button onclick="tvTurn(true)" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-family:Consolas,monospace;font-size:18px;font-weight:700;cursor:pointer;">▶ turn(90, absolute=True)</button>
+    <button onclick="tvReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">↺ crooked start</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:40px;">
+    <svg width="204" height="189" viewbox="-135 -122 270 250" style="display:block;flex:none;">
+      <circle r="94" fill="none" stroke="#c9d4e2" stroke-width="2" stroke-dasharray="4 7"></circle>
+      <text x="0" y="-102" text-anchor="middle" font-size="18" fill="#1C355E" font-weight="bold">0°</text>
+      <text x="112" y="6" text-anchor="middle" font-size="18" fill="#1C355E" font-weight="bold">90°</text>
+      <text x="0" y="118" text-anchor="middle" font-size="18" fill="#1C355E" font-weight="bold">180°</text>
+      <text x="-112" y="6" text-anchor="middle" font-size="18" fill="#1C355E" font-weight="bold">270°</text>
+      <path id="tvTrail" d="" fill="none" stroke="#E96852" stroke-width="5" stroke-linecap="round"></path>
+      <g id="tvTick" opacity="0"><line x1="0" y1="-94" x2="0" y2="-110" stroke="#00AE8D" stroke-width="6"></line></g>
+      <g id="tvBot" transform="rotate(30)"><g transform="scale(1.1)"><use href="#nmCarMini"></use></g></g>
+    </svg>
+    <div style="background:#eef3f8;border-radius:12px;border-left:5px solid #1C355E;padding:12px 20px;min-width:330px;">
+      <div style="font-family:Consolas,monospace;font-size:19px;color:#1C355E;">
+        hub.imu.heading() → <span id="tvHdg" style="font-weight:800;font-size:27px;">30</span>°
+      </div>
+      <div id="tvCalc" style="font-family:Consolas,monospace;font-size:17px;color:#5b6b82;margin-top:8px;">the nose starts 30° off</div>
+      <div id="tvWhich" style="font-size:16px;color:#5b6b82;margin-top:8px;">no call yet</div>
+    </div>
+  </div>
 </div>
-</div>
+<script>
+(function(){
+  var cur = 30, raf = null;
+  var sect = document.currentScript && document.currentScript.closest('section');
+  var codeLines = sect ? sect.querySelectorAll('div.sourceCode code > span') : [];
+  function lit(i, col){
+    for(var n = 0; n < codeLines.length; n++) codeLines[n].style.background = '';
+    if(i >= 0 && codeLines[i]) codeLines[i].style.background = col;
+  }
+  function pt(a){ var r = a*Math.PI/180; return (94*Math.sin(r)).toFixed(1)+' '+(-94*Math.cos(r)).toFixed(1); }
+  function show(){
+    NM.el('tvBot').setAttribute('transform','rotate('+cur.toFixed(1)+')');
+    NM.el('tvHdg').textContent = Math.round(cur);
+  }
+  function trail(from, to, col){
+    var d = to - from;
+    if(Math.abs(d) < 0.4){ NM.el('tvTrail').setAttribute('d',''); return; }
+    if(d >  359) to = from + 359;
+    if(d < -359) to = from - 359;
+    NM.el('tvTrail').setAttribute('stroke', col);
+    NM.el('tvTrail').setAttribute('d','M '+pt(from)+' A 94 94 0 '+(Math.abs(to-from)>180?1:0)+' '+(d>0?1:0)+' '+pt(to));
+  }
+  window.tvTurn = function(absolute){
+    if(raf) cancelAnimationFrame(raf);
+    var col = absolute ? '#00AE8D' : '#E96852';
+    var start = cur, target = absolute ? 90 : cur + 90;
+    NM.el('tvHdg').style.color = col;
+    NM.el('tvCalc').innerHTML = absolute
+      ? 'target = 90'
+      : 'target = ' + Math.round(start) + ' + 90 = ' + Math.round(target);
+    NM.el('tvWhich').innerHTML = absolute
+      ? 'line 4 ran: <b style="color:#00AE8D;">TO</b> a heading on the mat'
+      : 'line 6 ran: <b style="color:#E96852;">BY</b> 90 from the nose';
+    lit(absolute ? 3 : 5, col + '38');
+    NM.el('tvTick').setAttribute('transform','rotate('+target+')');
+    NM.el('tvTick').querySelector('line').setAttribute('stroke', col);
+    NM.el('tvTick').setAttribute('opacity','1');
+    var t0 = performance.now(), dur = Math.min(320 + Math.abs(target-start)*3, 1500);
+    function step(now){
+      var p = Math.min(Math.max((now-t0)/dur, 0), 1), e = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+      cur = start + (target-start)*e;
+      show(); trail(start, cur, col);
+      if(p < 1){ raf = requestAnimationFrame(step); } else { cur = target; show(); raf = null; }
+    }
+    raf = requestAnimationFrame(step);
+  };
+  window.tvReset = function(){
+    if(raf) cancelAnimationFrame(raf);
+    raf = null; cur = 30; show(); lit(-1);
+    NM.el('tvTrail').setAttribute('d','');
+    NM.el('tvTick').setAttribute('opacity','0');
+    NM.el('tvHdg').style.color = '#1C355E';
+    NM.el('tvCalc').innerHTML = 'the nose starts 30&#176; off';
+    NM.el('tvWhich').innerHTML = 'no call yet';
+  };
+})();
+</script>
 <aside class="notes">
-<p>One line carries the whole idea — line 4. Ask the room what <code>absolute=False</code> should <em>do</em> before you show it: “if I’m not facing a mat heading, what am I turning relative to?” They’ll get to “where I am now”, which is exactly <code>hub.imu.heading() + angle</code>. Then run both live on one robot from the same start: four relative 90s drift visibly off the tape, four absolute ones close. Removing <code>reset_heading</code> is the other half and it is critical — with resets, small turn errors accumulate across every turn in a mission; without them the gyro holds a single compass for the whole field. Do not tell them yet that Pybricks spells this exact signature the exact same way — that is the D8 reveal, and it lands far harder if they meet it as <em>their own</em> design first.</p>
+<p>This is the whole slide, so run it from their answers before you explain anything. Press the coral button: 30 becomes 120, the readout shows <code>target = 30 + 90</code>, and <strong>line 6 lights up in the code above</strong>. Press it again: 210. It never lands anywhere in particular, because <strong>by</strong> only knows the nose.</p>
+<p>Now the teal button: it swings to 90, line 4 lights instead, and the readout shows <code>target = 90</code>. Press it again and <strong>nothing moves</strong> – that is the moment. Ask why. It is already facing 90, so there is nothing left to do. Then press coral twice more and teal once: it comes straight back to 90 from wherever it wandered. <strong>To</strong> throws the wandering away, which is why missions get written in absolute.</p>
+<p>If someone spams coral past 360, let it happen and let teal unwind the long way – the number really does keep counting up, exactly as they saw on D4, and absolute really does aim at that one number.</p>
+<p>Line 3 has no <code>reset_heading(0)</code> in it. Mention that and move on, the square slides prove it: one zero for the whole run is what lets an absolute turn swallow the 1° the last one missed.</p>
+<p>Do not tell them yet that Pybricks spells this exact signature the exact same way – that is the D8 reveal, and it lands far harder if they meet it as <em>their own</em> design first.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1293,23 +1379,27 @@ window.NM = {
 <div class="fragment fade-up">
 <div class="columns">
 <div class="column" style="width:50%;">
-<section id="local-variables" class="cardbox coral">
-<h3>Local variables</h3>
+<div class="cardbox coral">
+<h3>
+Local variables
+</h3>
 <ul>
 <li>Created inside a function</li>
 <li>Gone the moment the function returns</li>
 <li><code>print(error)</code> outside → <code>NameError</code></li>
 </ul>
-</section>
+</div>
 </div><div class="column" style="width:50%;">
-<section id="global-constants" class="cardbox teal">
-<h3>Global constants</h3>
+<div class="cardbox teal">
+<h3>
+Global constants
+</h3>
 <ul>
 <li>Defined at the top of the file</li>
 <li>Visible across all functions</li>
 <li>Update once to tune the entire robot</li>
 </ul>
-</section>
+</div>
 </div></div>
 </div>
 <aside class="notes">
@@ -1336,21 +1426,25 @@ window.NM = {
 <div class="fragment fade-up">
 <div class="columns">
 <div class="column" style="width:50%;">
-<section id="why-it-failed" class="cardbox coral">
-<h3>Why it failed</h3>
+<div class="cardbox coral">
+<h3>
+Why it failed
+</h3>
 <ul>
 <li>Assigning inside <code>def</code> creates a <strong>local</strong> variable</li>
 <li>The global <code>KP</code> at the top was never touched</li>
 </ul>
-</section>
+</div>
 </div><div class="column" style="width:50%;">
-<section id="the-rule" class="cardbox teal">
-<h3>The rule</h3>
+<div class="cardbox teal">
+<h3>
+The rule
+</h3>
 <ul>
 <li><strong>Read</strong> globals from any function</li>
 <li><strong>Change</strong> tuning values only at the top of <code>movements.py</code></li>
 </ul>
-</section>
+</div>
 </div></div>
 </div>
 <aside class="notes">
