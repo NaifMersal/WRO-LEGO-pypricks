@@ -30,29 +30,29 @@ a planned deck goes live.
 | D2 · s2 | [beam-balance.qmd](beam-balance.qmd) | ⚖️ Unplugged maths opener (#31): paper `=` vs Python `=`, − and + on a fair beam, **break it** — one *object* off each side tips 6 🍊 = 3 🍌 (same count, different amount), × as repeated addition + commutativity by rotating a dot rectangle, ÷ **as** the isolate-one-unit move, then `27.6 × t = 30` → **391°** and their own `degrees = (distance ÷ C) × 360` |
 | D3 | [drive-a-square.qmd](drive-a-square.qmd) | Break-it square (turns drift), `for`/`while` + colon/indent bug hunts, feel the gyro, watched turn → momentum quiz, loop shapes (360 ÷ n), *Shape Shifter* |
 | D4 | [pid-on-the-gyro.qmd](pid-on-the-gyro.qmd) | Coast cured (arrive slowly) → two-speed `gyro_turn` + first `def` (+ "silent robot" bug hunt), P-term felt then named: `speed = error × KP` turn + self-healing straight, KP tuning, *Nudge Wars* |
-| D5 | [name-your-moves.qmd](name-your-moves.qmd) | D + I complete PID (I = coach demo only), then the library begins: `my_lib.py` with `turn_to` · `drive_straight` · `drive_square`, *Bullseye* on their own `drive_straight` |
+| D5 | [name-your-moves.qmd](name-your-moves.qmd) | D + I complete PID (I = coach demo only), then the library begins: `movements.py` with `turn(angle, absolute=False)` · `drive_straight` · `drive_square`, *Bullseye* on their own `drive_straight` |
 
 > 🔧 **Cohort-2 rework owed on the D4 and D5 decks before they run again** (decisions #53, #55, #56):
-> **(a)** `pid-on-the-gyro.qmd` **splits three ways** — D4a first `def` only · D4b **production day, nothing new** · D4c the P-term. `abs()` moves back to D3 (with the five-minute number line) and **parameter defaults move forward to D5**; today both arrive on D4 inside a single speaker note.
-> **(b)** D5 gains the ***to* vs *by* bench demo** — `turn_to` and `turn_by`, four corners each, 15 min. The distinction was taught at D18 last time, one day before the exam, while `turn_to` had been absolute since D5.
-> **(c)** `my_lib.py` here (and `RobotConfig` in the D8/D10 rows below) **predate decisions #36/#38** — the taught architecture is now `movements.py` + a `ROBOT FACTS` block, **no classes**. These decks contradict `CLAUDE.md` as they stand.
+> **(a)** `pid-on-the-gyro.qmd` **splits three ways** — D4a first `def` only · D4b **production day, nothing new** · D4c the P-term. `abs()` moves back to D3 (with the five-minute number line) and **parameter defaults move forward to D5**; today both arrive on D4 inside a single speaker note. *(The subtitle now reads D4a–4c; the deck itself is still one file.)*
+> **(b)** ✅ **Done.** D5 now teaches ***by* vs *to*** on the verb itself — `turn(angle, absolute=False)`, the same signature Pybricks gives `DriveBase.turn()`, revealed as such at D8. `turn_to`/`turn_by` are gone from the curriculum and from `code/movements.py`.
+> **(c)** ✅ **Done.** `my_lib.py` → `movements.py` everywhere, and the D8 deck's `RobotConfig` class is replaced by a `ROBOT FACTS` constants block. No classes remain in any deck.
 > **(d)** The cheat sheet is handed out at **D5**, not D8.
 
 ## Week 2 — Program the Robot, Build the Library, Form the Teams
 
 | Day | Deck | Topic |
 |:--:|---|---|
-| D6 | [pd-line-following.qmd](pd-line-following.qmd) | The robot opens its eyes: reflection reads + per-surface threshold + first `if/elif`, bang-bang → P line-following (third `error × KP`) + junction squaring (the gate); `kd` stretch; `follow_line` + `square_on_line` into `my_lib.py` |
-| D7 | [stop-patrol-react.qmd](stop-patrol-react.qmd) | Motor-as-sensor (`run_until_stalled` + measured back-off), patrol loop (reusing the calibrated eye), `drive_to_wall` + `wall_square` into `my_lib.py`, anchor-first scoring map |
-| D8 | [drivebase-shortcut.qmd](drivebase-shortcut.qmd) *(rework planned — still authored as old D10)* | Library consolidation into one module (Good Practices) + `RobotConfig` + the earned `DriveBase` reveal/migration + *Gauntlet* on the migrated library |
-| D9 | [mission-list.qmd](mission-list.qmd) | Lists (index/iterate/append), steps as functions, the blocking mission runner over the migrated library, end-of-week benchmarks + gold-reference validation, *Setlist* |
-| D10 | *(planned — deck TBD)* | Draft Day morning: team split + robot selection + `RobotConfig` merge onto the selected robot, *Mini Mission* finale → mechanism build #1 kicks off (cables + microphone) |
+| D6 | [pd-line-following.qmd](pd-line-following.qmd) | The robot opens its eyes: reflection reads + per-surface threshold + first `if/elif`, bang-bang → P line-following (third `error × KP`) + junction squaring (the gate); `kd` stretch; `follow_line` + `square_on_line` (two eyes — the one-eye robot squares on a wall) into `movements.py` |
+| D7 | [stop-patrol-react.qmd](stop-patrol-react.qmd) | Motor-as-sensor (`run_until_stalled` + measured back-off), patrol loop (reusing the calibrated eye), `drive_to_wall` + `wall_square` into `movements.py`, anchor-first scoring map |
+| D8 | [drivebase-shortcut.qmd](drivebase-shortcut.qmd) *(⚠️ still carries a Draft Day section — old-D10 content; removing it is **open decision #5**, a coach call)* | Library consolidation into one module (Good Practices) + the `ROBOT FACTS` block + the earned `DriveBase` reveal/migration — including the payoff that their hand-built `turn(angle, absolute=False)` *is* Pybricks' signature, so the verb gets deleted — + *Gauntlet* on the migrated library |
+| D16 | [mission-list.qmd](mission-list.qmd) *(authored for D9; **deferred to D16** per the plan — kept in this table because it closes the Week-2 library arc. The Week-4 table below also lists a D16; that table is stale, see its banner.)* | Lists (index/iterate/append), steps as functions, the blocking mission runner over the migrated library, end-of-week benchmarks + gold-reference validation, *Setlist* |
+| D10 | *(planned — deck TBD)* | Draft Day morning: team split + robot selection + `ROBOT FACTS` merge onto the selected robot, *Mini Mission* finale → mechanism build #1 kicks off (cables + microphone) |
 
 ## Week 3 — Build the Mechanisms, Chain the Anchor Run
 
 | Day | Deck | Topic |
 |:--:|---|---|
-| D11 | [gears-and-grippers.qmd](gears-and-grippers.qmd) | Gear theory taught on the students' own gripper (ratio/torque-vs-speed, bevel = axis change, coupling trade-off, worm self-lock) + re-gear challenge → **`run_angle` vs `run_target`** (one shove, two verbs; *move by, or move to*; whose zero is it) → the stall/torque block (**stall to find zero, torque to hold a thing**: `home()` by stall, the claw that lets go, grip as a force, two-signal `holding()` **asked twice**, ten grabs with `grip_test.py`) → mechanism build #1: cables (30) + microphone (20), `push_cable`/`place_mic` into `movements.py` + a gripper file, *Cable Master* |
+| D11 | [gears-and-grippers.qmd](gears-and-grippers.qmd) | Gear theory taught on the students' own gripper (ratio/torque-vs-speed, bevel = axis change, coupling trade-off) + re-gear challenge → **`run_angle` vs `run_target`** (one shove, two verbs; *move by, or move to*; whose zero is it) → the stall/torque block (**stall to find zero, torque to hold a thing**: `home()` stalls the jaws **shut** and calls that zero, so there is no empty-jaw angle to measure (#61); the claw that lets go, grip as a force, two-signal `holding()` **asked twice**, ten grabs with `grip_test.py`) → mechanism build #1: cables (30) + microphone (20), written as **mission steps over the existing verbs** — no `push_cable`/`place_mic` wrappers (#60) — *Cable Master* |
 | D12 | `instruments-and-avoidance.qmd` *(planned)* | Team mechanism build #2: instruments (45) + bonus-by-avoidance (+40) |
 | D13–D14 | *(planned — day split set at the Draft-Day planning pass)* | Segments integrated into the mission runner |
 | D15 | `assemble-anchor-run.qmd` *(planned)* | Full ~135 anchor chained end-to-end |

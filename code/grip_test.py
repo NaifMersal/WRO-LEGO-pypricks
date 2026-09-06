@@ -10,17 +10,19 @@ HOW TO USE IT
     2. Run this file.
     3. Write three numbers into claw_gripper.py's CLAW FACTS:
 
-        EMPTY_ANGLE     from the EMPTY test at the top
+        AIR_MARGIN      well under the smallest contact angle below
         GRIP_LOAD_MIN   about half the holding load from the ten-grab table
         GRIP_TORQUE     raise if the object slips, lower if the gears crunch
 
     4. Run it again. Tuning is a loop, not a step.
 
-BIG_ANGLE_MAX IS NOT HERE. Telling a big note from a small one needs the robot
-driving, so it lives in object_test.py test_size() with the rest of the
-note measurements.
+THERE IS NO EMPTY TEST, and that is the point: home() shuts the jaws on
+nothing and calls that zero, so "where do the jaws meet?" is 0 by construction
+and there is no number to measure or to re-measure after a re-gear.
 
-GRIP_ANGLE is NOT one of them -- claw_gripper.py derives it from EMPTY_ANGLE.
+BIG_ANGLE_MIN IS NOT HERE. Telling a big note from a small one needs the robot
+driving, so it lives in object_test.py with the rest of the note measurements.
+
 Why this file exists: docs/library-design-notes.md #5.
 """
 
@@ -40,7 +42,6 @@ COMPARE_TRIES = 5       # grabs per column in the side-by-side
 REST_MS = 600           # pause between grabs, so nothing is still moving
 
 STALL_EFFORT = 50       # the duty_limit the old stall-based grab() used
-CLOSE_EFFORT = 40       # gentle -- measure_empty() presses plastic on plastic
 
 
 # ================================================================= TOOLS ==
@@ -77,29 +78,12 @@ def report(name, angles, loads):
 
 # ================================================================= TESTS ==
 
-def measure_empty():
-    """Close on NOTHING until the jaws physically MEET. That is EMPTY_ANGLE.
-
-    Note it does NOT call grab(): grab() drives to GRIP_ANGLE and, with empty
-    jaws, simply arrives -- handing back the target you already set.
-    """
-    print("=== EMPTY JAWS -- take the object OUT ===")
-    print("starting in 5 seconds...")
-    wait(5000)
-
-    gripper.home()
-    motor.run_until_stalled(gripper.CLOSE_SPEED, then=Stop.COAST,
-                            duty_limit=CLOSE_EFFORT)
-    angle = motor.angle()
-    gripper.release()
-
-    print("EMPTY_ANGLE is about", angle, "-- where the jaws MEET")
-    print("-> write that one number into CLAW FACTS; GRIP_ANGLE follows")
-    return angle
-
-
 def test_repeatability():
-    """The main event: the same grab, TRIES times. Under ~10 deg spread is good."""
+    """The main event: the same grab, TRIES times. Under ~10 deg spread is good.
+
+    The angle is how far the object holds the jaws open, measured from shut --
+    so AIR_MARGIN goes comfortably BELOW the smallest number in the table.
+    """
     print("")
     print("=== WITH THE OBJECT -- put it in the jaws now ===")
     print("starting in 5 seconds...")
@@ -117,7 +101,9 @@ def test_repeatability():
         gripper.release()
         wait(REST_MS)
 
-    return report("TORQUE GRAB, " + str(TRIES) + " tries", angles, loads)
+    gap = report("TORQUE GRAB, " + str(TRIES) + " tries", angles, loads)
+    print("-> AIR_MARGIN goes well under", min(angles), "deg")
+    return gap
 
 
 def stall_grab():
@@ -125,7 +111,7 @@ def stall_grab():
 
     Here ONLY for the comparison. Do not copy this into your gripper file.
     """
-    motor.run_until_stalled(gripper.CLOSE_SPEED, then=Stop.HOLD,
+    motor.run_until_stalled(-gripper.CLOSE_SPEED, then=Stop.HOLD,
                             duty_limit=STALL_EFFORT)
 
 
@@ -169,7 +155,6 @@ def test_comparison():
 
 def main():
     print("GRIP TEST -- keep your hands clear of the jaws.")
-    measure_empty()
     test_repeatability()
     test_comparison()
     print("")

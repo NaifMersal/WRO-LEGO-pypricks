@@ -21,8 +21,8 @@ FROM ZERO. A big base stops the jaws at +45, a small one at +20; an absolute
 lift target would swing them to different heights. LIFT_TRAVEL is degrees
 *past contact*, so every object rises the same amount.
 
-POSITIVE OPENS here -- the opposite of claw_gripper.py. Check which file you
-are in before you flip a sign.
+POSITIVE OPENS, and zero is where the jaws MEET -- the same way round as
+claw_gripper.py, so a sign means the same thing in both files.
 
 Why any of this: docs/library-design-notes.md #1, #4, #8.
 """
@@ -38,7 +38,7 @@ from pybricks.tools import StopWatch, wait
 # number with the mechanism on the robot; the gearing cancels out.
 
 LIFT_PORT = Port.C      # claw_gripper defaults to E, so both fit at once
-LIFT_DIRECTION = Direction.COUNTERCLOCKWISE   # POSITIVE must mean OPENING. Test first.
+LIFT_DIRECTION = Direction.COUNTERCLOCKWISE   # POSITIVE must mean OPENING  TUNE
 
 OPEN_SPEED = 300        # deg/s
 CLOSE_SPEED = 200       # deg/s -- slow enough not to slam the object
