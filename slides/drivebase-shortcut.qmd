@@ -1,30 +1,30 @@
 ---
 title: "The Earned Shortcut"
-subtitle: "Day 10 · Robot Rockstars · SPIKE Prime + Pybricks"
+subtitle: "Day 8 · Robot Rockstars · SPIKE Prime + Pybricks"
 date: today
 format: revealjs
 ---
 
 # A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-Two weeks, one library — every verb hand-built, proven, and played from a list. Today teams form, one robot gets chosen… and you collect a surprise you've been earning since the square wouldn't close. 🎁
+Two weeks, one library, every verb hand-built and proven. Today teams form, one robot gets chosen, and you collect a surprise you've been earning since the square wouldn't close. 🎁
 
 ## Where we left off
 
 | You own | What it does |
 |---|---|
-| 📦 **`my_lib.py`** | `drive_straight` · `turn_to` · `drive_to_wall` · `wall_square` · `follow_line` · `square_on_line` — one module, one constants block |
-| 🎵 **the runner** | a mission is a *list*; three lines walk it |
-| 🏁 **gauntlet + setlist** | every verb proven alone *and* in sequence, under a judge's clock |
+| 📦 **`movements.py`** | `drive_straight` · `drive_to_wall` · `wall_square` · `follow_line` · `square_on_line` in one module, with one constants block |
+| 🧱 **the wall verbs** | stall, back off, square up: the reset that erases drift |
+| 🏁 **the gauntlet** | every verb proven alone *and* in sequence, under a judge's clock |
 
 ::: {.fragment .fade-up}
-🤔 Everything above was built by **one student, for one robot**. Today five students become **two teams** — and each team keeps just **one** robot. What happens to four robots' worth of carefully tuned code?
+🤔 Everything above was built by **one student, for one robot**. Today five students become **two teams**, and each team keeps just **one** robot. What happens to four robots' worth of carefully tuned code?
 :::
 
 ⏱️ **Time: 10 minutes**
 
 ::: {.notes}
-Recap fast — the room already owns all of it; the table is there to make the *inventory* visible because today it gets audited. The warm-up question is the day's whole arc: the merge (code from several authors onto one robot) is the break-it that motivates RobotConfig, and the reveal + draft close the two-week chapter. Structure of the day: Mini Mission finale runs in the competition window as usual; the draft itself lands after the gate. Keep the DriveBase surprise unspoiled until Act C.
+Recap fast — the room already owns all of it; the table is there to make the *inventory* visible because today it gets audited. The warm-up question is the day's whole arc: the merge (code from several authors onto one robot) is the break-it that motivates the ROBOT FACTS block, and the reveal + draft close the two-week chapter. Structure of the day: Mini Mission finale runs in the competition window as usual; the draft itself lands after the gate. Keep the DriveBase surprise unspoiled until Act C.
 :::
 
 # B. One Robot, Many Files {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
@@ -34,28 +34,28 @@ Your new team keeps **one** robot. Everyone's code was tuned for a *different* o
 ## Break it: the merge 🔥
 
 ::: {.qbox}
-[Your team just picked its robot — and it's **not yours**. Your `my_lib.py` thinks the wheels are 88 mm; the chosen robot's are 87. Your teammate's turn `kp` is tuned hotter. A motor sits on a different port. How many edits until *your* mission runs on *this* robot?]{.qtitle}
+[Your team just picked its robot, and it's **not yours**. Your `movements.py` thinks the wheels are 88 mm, and the chosen robot's are 87. Your teammate's turn `kp` is tuned hotter. A motor sits on a different port. How many edits until *your* mission runs on *this* robot?]{.qtitle}
 :::
 
 ```{=html}
 <div style="display:flex;justify-content:center;align-items:center;gap:18px;margin-top:10px;">
-  <div style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
-    <div style="font-weight:800;color:#E96852;">sara/my_lib.py</div>
-    <div>WHEEL_MM = <span style="background:#FFD50055;font-weight:800;">88</span></div>
-    <div>KP = <span style="background:#FFD50055;font-weight:800;">4</span></div>
-    <div>left = Motor(Port.<span style="background:#FFD50055;font-weight:800;">A</span>)</div>
+  <div class="sim-code">
+    <div class="em-coral">sara/movements.py</div>
+    <div>WHEEL_MM = <span class="hl">88</span></div>
+    <div>KP = <span class="hl">4</span></div>
+    <div>left = Motor(Port.<span class="hl">A</span>)</div>
   </div>
-  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
-    <div style="font-weight:800;color:#E96852;">omar/my_lib.py</div>
-    <div>WHEEL_MM = <span style="background:#FFD50055;font-weight:800;">87</span></div>
-    <div>KP = <span style="background:#FFD50055;font-weight:800;">6</span></div>
-    <div>left = Motor(Port.<span style="background:#FFD50055;font-weight:800;">B</span>)</div>
+  <div class="sim-code fragment">
+    <div class="em-coral">omar/movements.py</div>
+    <div>WHEEL_MM = <span class="hl">87</span></div>
+    <div>KP = <span class="hl">6</span></div>
+    <div>left = Motor(Port.<span class="hl">B</span>)</div>
   </div>
-  <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
-    <div style="font-weight:800;color:#E96852;">lena/my_lib.py</div>
-    <div>WHEEL_MM = <span style="background:#FFD50055;font-weight:800;">90</span> 😱</div>
-    <div>KP = <span style="background:#FFD50055;font-weight:800;">3.5</span></div>
-    <div>left = Motor(Port.<span style="background:#FFD50055;font-weight:800;">A</span>)</div>
+  <div class="sim-code fragment">
+    <div class="em-coral">lena/movements.py</div>
+    <div>WHEEL_MM = <span class="hl">90</span> 😱</div>
+    <div>KP = <span class="hl">3.5</span></div>
+    <div>left = Motor(Port.<span class="hl">A</span>)</div>
   </div>
   <div class="fragment" style="font-size:44px;">🤖<div style="font-size:14px;font-weight:800;color:#1C355E;text-align:center;">ONE robot</div></div>
 </div>
@@ -63,7 +63,7 @@ Your new team keeps **one** robot. Everyone's code was tuned for a *different* o
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-Every file was tuned for a robot that just became a **parts donor**. The facts — wheels, ports, gains, speeds — are *scattered* across files and functions: a robot swap means **twenty hunted edits**, and missing one means the robot **lies quietly**. The facts need **one home**.
+Every file was tuned for a robot that just became a **parts donor**. The facts (wheels, ports, gains, speeds) are *scattered* across files and functions, so a robot swap means **twenty hunted edits**, and missing one means the robot **lies quietly**. The facts need **one home**.
 :::
 :::
 
@@ -71,61 +71,63 @@ Every file was tuned for a robot that just became a **parts donor**. The facts �
 Make it concrete with the team's actual files if the draft order allows — three real constants blocks on screen beats the mock-up. Sharpen the sting: it's not just today's merge. The donor pool means a swap can happen *again* mid-season (a cracked chassis at Week 4 pace), and next time there's no afternoon to spare. Elicit the shape of the fix before naming it — they've done this twice: constants block (square day), library module (consolidation day). Same instinct, one level up: promote the constants to a single shared *object* the whole team's code reads.
 :::
 
-## Fix it: `RobotConfig` — the robot in one place {.code-shrink}
+## Fix it: `ROBOT FACTS`, the robot in one place {.code-shrink}
 
-```{.python code-line-numbers="|1-2|3-4|5-6|7-10|12"}
-@dataclass
-class RobotConfig:
-    wheel_diameter: int = 88    # mm — MEASURE the team robot
-    axle_track: int = 145       # mm — wheel center to center
-    left_port: Port = Port.A    # re-port a motor = one edit
-    right_port: Port = Port.E
-    turn_kp: float = 4.0        # the tuned knobs live here too
-    turn_kd: float = 0.5
-    straight_speed: int = 300   # mm/s
-    backoff_mm: int = 50        # the measured back-off
+```{.python code-line-numbers="|1-4|6-7|9-10|12-14"}
+# movements.py -- ROBOT FACTS. The only place a number about the robot lives.
+LEFT_MOTOR_PORT  = Port.F     # yours; re-port a motor = one edit
+RIGHT_MOTOR_PORT = Port.B     # yours
+EYE_PORT         = Port.D     # yours
 
-CFG = RobotConfig()             # the ONE copy everyone reads
+LEFT_DIRECTION  = Direction.COUNTERCLOCKWISE   # flip if it reverses  TUNE
+RIGHT_DIRECTION = Direction.CLOCKWISE                             # TUNE
+
+WHEEL_DIAMETER = 88           # mm, MEASURE the team robot        TUNE
+AXLE_TRACK     = 128          # mm, wheel centre to centre        TUNE
+
+CRUISE_SPEED   = 300          # mm/s
+LINE_THRESHOLD = 50           # halfway between black and white  TUNE
+KP_LINE        = 1.2          # how hard to steer back to the line TUNE
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-A `@dataclass` is a **labeled box for facts** — every physical truth about the robot, in one file (`robot_config.py`), with a name on each line. Nothing else in the team's code is allowed to *know* a number about the robot; it has to **ask `CFG`**.
+One **block at the top of the file**, a name on every line, `TUNE` on everything you must measure. Nothing further down is allowed to *know* a number about the robot. It reads the block. Same instinct you've used twice already, one level up.
 :::
 :::
 
 ::: {.notes}
-`@dataclass` is presented as "a class whose whole job is holding named facts" — no OOP lecture; it's a form they fill in, and the decorator writes the boring plumbing. (Coach note: Pybricks MicroPython has no `dataclasses` module — the exemplar `robot_config.py` ships a 3-line try/except shim so the same syntax runs on the hub; hand it out rather than typing it.) Walk the categories: geometry, ports, tuned knobs — point out these are exactly the numbers that differed across the three files on the last slide. The full gold-reference config (all 6 ports, line thresholds, stall limits) is in the root exemplar; teams copy it and edit *their* measured values.
+No classes today, and none this season — a plain block of named constants does the whole job, and every student can already read one. Walk the categories: ports, geometry, tuned knobs — point out these are exactly the numbers that differed across the three files on the last slide. Make `TUNE` the habit: it marks every value that must be *measured on this robot*, so a squad scanning the block knows exactly what a robot swap costs them. The full gold-reference block is in `code/movements.py`; teams copy it and edit *their* measured values.
 :::
 
-## Every verb now asks the config
+## Every verb reads the block
 
-```{.python code-line-numbers="|1-3|5-7|9-11"}
-# my_lib.py — the verbs READ the config, they don't know numbers
-left  = Motor(CFG.left_port, Direction.COUNTERCLOCKWISE)
-right = Motor(CFG.right_port)
+```{.python code-line-numbers="|1-3|5-6|8-10"}
+# movements.py -- the verbs READ the block, they don't hide numbers
+left_motor  = Motor(LEFT_MOTOR_PORT, LEFT_DIRECTION)
+right_motor = Motor(RIGHT_MOTOR_PORT, RIGHT_DIRECTION)
 
-DEG_PER_MM = 360 / (3.14 * CFG.wheel_diameter)
+robot = DriveBase(left_motor, right_motor,
+                  WHEEL_DIAMETER, AXLE_TRACK)
 
-def turn_to(target, kp=None, kd=None):
-    kp = kp or CFG.turn_kp
-    kd = kd or CFG.turn_kd
-    # …the same PD loop as ever…
+def drive_straight(distance_mm, speed=CRUISE_SPEED):
+    robot.settings(straight_speed=speed)
+    robot.straight(distance_mm)
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-New robot? **Measure it, edit `robot_config.py`, done** — the library and every mission file never change. The donor pool just became a *one-line insurance policy*. 🛡️
+New robot? **Measure it, edit the block, done.** The library and every mission file never change, and the donor pool just became a *one-line insurance policy*. 🛡️
 :::
 :::
 
 ::: {.notes}
-The team exercise that proves it (from the exemplar): run the merged code with teammate A's old constants on the chosen robot — watch the square miss; then fix ONLY robot_config.py and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap. Continuity note: squads' own `my_lib.py` from D5 may still spell the turn knob `gain=` — fold the rename into today's promotion and say it once: "we've been calling this knob the gain; its code name is `kp`, same K-family as the `KP` constants."
+The team exercise that proves it (from the exemplar): run the merged code with teammate A's old constants on the chosen robot — watch the square miss; then fix ONLY the ROBOT FACTS block and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap. Continuity note: squads' own `movements.py` from D5 may still spell the turn knob `gain=` — fold the rename into today's promotion and say it once: "we've been calling this knob the gain; its code name is `kp`, same K-family as the `KP` constants."
 :::
 
-# C. The Reveal — Let DriveBase Drive {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
+# C. The Reveal: Let DriveBase Drive {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
 
-You built gyro turns, self-healing straights, and all three letters of P·I·D — by hand, from raw motors. Now meet the pro version that's been in the box all along. 🎁
+You built gyro turns, self-healing straights, and all three letters of P·I·D by hand, from raw motors. Now meet the pro version that's been in the box all along. 🎁
 
 ## You built a robot driver 🏆
 
@@ -134,8 +136,8 @@ You built gyro turns, self-healing straights, and all three letters of P·I·D �
 ::: {.column width="50%"}
 **You wrote, these two weeks**
 
-- `turn_to(target)` — a PD turn that watches itself, **brakes before it arrives**, and lands true
-- `drive_straight(distance)` — a self-healing straight with a finish line in degrees
+- your **turn verb**, a PD turn that watches itself, **brakes before it arrives**, and lands true
+- `drive_straight(distance)`, a self-healing straight with a finish line in degrees
 :::
 
 ::: {.column width="50%"}
@@ -149,7 +151,7 @@ You built gyro turns, self-healing straights, and all three letters of P·I·D �
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Pybricks ships both moves — polished, tuned, tested — inside one tool: **`DriveBase`**. It runs a professional **P·I·D** on every move. You'll understand *every letter* it does… *because you spent two weeks building all three.*
+Pybricks ships both moves, polished and tested, inside one tool: **`DriveBase`**. It runs a professional **P·I·D** on every move, and you'll understand *every letter* of it, because you spent two weeks building all three.
 :::
 :::
 
@@ -162,84 +164,120 @@ This is the payoff the whole fortnight has been walking toward — let it feel l
 ::: {.qbox}
 [`DriveBase` asks for two numbers: **wheel diameter** and **axle track** (tire-center to tire-center). Why does it need the *second* one?]{.qtitle}
 
-Hint: you already *used* it once — on Day 3…
+Hint: you already *used* it once, back when you drove a square…
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-It's your **turn-circle**! You ran that math by hand once to get 148 — DriveBase runs *your* derivation for **any** angle. The shortcut is math you already own.
+It's your **turn-circle**! You ran that math by hand once to get 131, and DriveBase runs *your* derivation for **any** angle. The shortcut is math you already own.
 :::
 :::
 
 ::: {.notes}
-Both numbers are measured, not copied: roll the wheel 5 turns, divide by 5 and π for diameter (they'll land near 88); the track they measured on Day 3 for the 148 derivation (≈145 mm on our build; the stock ADB is ≈114) — have each *team* re-measure its chosen robot now, since that's the number going into its config. Wrong track → every turn systematically over- or under-shoots: that's the afternoon's tuning conversation (`drive.settings()`). If asked *why* the track matters: a spin-in-place drives the wheels around a circle as wide as the axle track — wider track = more wheel-degrees per robot-degree.
+Both numbers are measured, not copied: roll the wheel 5 turns, divide by 5 and π for diameter (they'll land near 88); the track they measured on Day 3 for the 131 derivation (≈128 mm on the coach's build; the stock ADB is ≈114) — have each *team* re-measure its chosen robot now, since that's the number going into its config. Wrong track → every turn systematically over- or under-shoots: that's the afternoon's tuning conversation (`robot.settings()`). If asked *why* the track matters: a spin-in-place drives the wheels around a circle as wide as the axle track — wider track = more wheel-degrees per robot-degree.
 :::
 
-## Build your DriveBase — from the config
+## Build your DriveBase from the block
 
-```{.python code-line-numbers="|1|3-4|5|6-7"}
+```{.python code-line-numbers="|1|3-4|5|6"}
 from pybricks.robotics import DriveBase   # now earned
 
-drive = DriveBase(left, right,
-                  CFG.wheel_diameter, CFG.axle_track)
-drive.use_gyro(True)  # your gyro + full PID, switched on
-drive.settings(straight_speed=CFG.straight_speed,
-               turn_rate=150)
+robot = DriveBase(left_motor, right_motor,
+                  WHEEL_DIAMETER, AXLE_TRACK)
+robot.use_gyro(True)  # your gyro + full PID, switched on
+robot.settings(straight_speed=CRUISE_SPEED)
 ```
 
 ::: {.cardbox .teal}
-`DriveBase` speaks **mm and robot-degrees** — `drive.straight(300)`, `drive.turn(90)` — and with `use_gyro(True)` every move is *watched* and *PID-corrected*, exactly like yours were. And it reads its facts from **`CFG`**, so it survives a robot swap like everything else.
+`DriveBase` speaks **mm and robot-degrees**, as in `robot.straight(300)` and `robot.turn(90)`. With `use_gyro(True)` every move is *watched* and *PID-corrected*, exactly like yours were. Its two constructor arguments are the two facts you measured: **wheel diameter** and **axle track**.
+:::
+
+## ✂️ Now delete your turn verb
+
+::: {.qbox}
+[Your `turn(angle, absolute=False)` from the library days. Here is Pybricks':]{.qtitle}
+:::
+
+```python
+robot.turn(angle, then=Stop.HOLD, wait=True, absolute=False)
+```
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+**The same word, the same default, the same meaning:** `robot.turn(90)` spins 90 **more**, `robot.turn(90, absolute=True)` **faces** 90. You didn't guess it, you re-derived it, because it's the only sensible way to say it. *(Pybricks puts `absolute` last, after `then=` and `wait=`, so always name it: `absolute=True`, never a bare `True`.)*
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+So the verb goes. A function that only re-spells a built-in is one more name to maintain, so **delete it and call `robot.turn()`**. `movements.py` keeps the verbs that do real work: `drive_straight`, `find_line`, `follow_line`, `drive_to_wall`, `wall_square`, `square_on_line`.
+:::
 :::
 
 ::: {.notes}
-Two acts of the day snap together here: the reveal is wired straight into the config, so the shortcut is born team-proof. `drive.settings()` is the pro version of their tuned constants — speeds and accelerations, adjustable per robot, stored in the config. Also worth naming: `drive.stalled()` now replaces the per-motor stall trick from the wall day *inside DriveBase moves*, and `drive.distance()` is a free odometer. Don't tour the whole API — the duel is next; let the tool prove itself.
+This is the moment the fortnight pays off twice — don't rush it. Put their D5 turn on screen beside the Pybricks line and let the room notice the match before you say it; the "we invented the same thing" feeling is what makes the deletion satisfying instead of deflating. Then make the rule explicit and general, because it governs every file they write from here: **a wrapper has to earn its name.** If a function only renames something Pybricks already gives you, it is one more thing to keep in sync and one more name for a teammate to learn — delete it. If it holds real logic (hunting a line, feeling a wall), keep it. Same test kills the `heading()` wrapper someone always proposes: `robot.angle()` already says it. Expect one squad to object that "our name is friendlier" — the answer is that the friendly name is now *wrong* half the time, because theirs took no `then=` or `wait=`. Land the positional trap explicitly, because it bites silently: in their version `absolute` was the 2nd argument, in Pybricks' it is the 4th, so `robot.turn(90, True)` sets **`then=True`** and turns relative anyway. The habit that makes it a non-issue is one they already have from `speed=` and `kd=` — name the argument.
+:::
+
+## Why the shortcut is team-proof
+
+`DriveBase` reads the **same block**, so the pro tool is per-robot too. And it hands you three things your library already wanted:
+
+| It gives you | Your library uses it for |
+|---|---|
+| `robot.settings()` | speeds and accelerations, the pro version of your tuned constants |
+| `robot.stalled()` | `drive_to_wall()` · `wall_square()`, feeling the border |
+| `robot.distance()` | a free odometer that every hunting verb measures with |
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+Nothing here is a new idea. It's your **own** three needs, already built. 🧰
+:::
+:::
+
+::: {.notes}
+Two acts of the day snap together here: the reveal is wired straight into the ROBOT FACTS block, so the shortcut is born team-proof. `robot.settings()` is the pro version of their tuned constants — speeds and accelerations, adjustable per robot, stored in the block. Also worth naming: `robot.stalled()` is what `drive_to_wall` and `wall_square` are built on, and `robot.distance()` is a free odometer. Don't tour the whole API — the duel is next; let the tool prove itself.
 :::
 
 ## The duel: your verb vs the pro's 🥊
 
 ```{=html}
-<div style="width:840px;margin:0 auto;">
-  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
-    <button onclick="duRun()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight(1000) vs drive.straight(1000)</button>
-    <button onclick="duNudge()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">😈 nudge them BOTH</button>
+<div class="sim">
+  <div class="sim-controls">
+    <button class="sim-btn teal" data-sim="duRun">▶ drive_straight(1000) vs robot.straight(1000)</button>
+    <button class="sim-btn ghost" data-sim="duNudge">😈 nudge them BOTH</button>
   </div>
   <svg width="820" height="240" viewBox="0 0 820 240" style="display:block;margin:0 auto;">
     <rect x="0" y="20" width="820" height="95" rx="12" fill="#eef3f8"/>
     <rect x="0" y="125" width="820" height="95" rx="12" fill="#eef3f8"/>
-    <text x="14" y="44" font-size="14" font-weight="800" fill="#625D9C">YOURS — drive_straight</text>
-    <text x="14" y="149" font-size="14" font-weight="800" fill="#00AE8D">PRO — drive.straight</text>
+    <text x="14" y="44" font-size="14" font-weight="800" fill="#625D9C">YOURS: drive_straight</text>
+    <text x="14" y="149" font-size="14" font-weight="800" fill="#00AE8D">PRO: robot.straight</text>
     <line x1="720" y1="28" x2="720" y2="108" stroke="#00AE8D" stroke-width="4"/>
     <line x1="720" y1="133" x2="720" y2="213" stroke="#00AE8D" stroke-width="4"/>
     <text x="720" y="16" font-size="13" fill="#00AE8D" font-weight="800" text-anchor="middle">1 m 🎯</text>
     <polyline id="duT1" points="" fill="none" stroke="#625D9C" stroke-width="3"/>
     <polyline id="duT2" points="" fill="none" stroke="#00C9A7" stroke-width="3"/>
     <g id="duB1" transform="translate(60,68)"><g transform="rotate(90) scale(0.45)">
-      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#625D9C"/>
-      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-      <circle cy="-30" r="4" fill="#FFD500"/>
+      <use href="#sim-bot-mini" style="--bot:#625D9C"/>
     </g></g>
     <g id="duB2" transform="translate(60,173)"><g transform="rotate(90) scale(0.45)">
-      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00AE8D"/>
-      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-      <circle cy="-30" r="4" fill="#FFD500"/>
+      <use href="#sim-bot-mini" style="--bot:#00AE8D"/>
     </g></g>
   </svg>
-  <div style="text-align:center;font-family:Consolas,monospace;font-size:18px;color:#1C355E;">yours landed <span id="duO1" style="font-weight:800;color:#625D9C;">–</span> · pro landed <span id="duO2" style="font-weight:800;color:#00AE8D;">–</span></div>
+  <div class="sim-msg mono">yours landed <span class="em-purple" id="duO1">–</span> · pro landed <span class="em-teal" id="duO2">–</span></div>
 </div>
 <script>
 (function(){
   var raf=null, last=null, nudgeReq=false;
-  function el(id){return document.getElementById(id);}
   function fresh(y){ return {x:60,y:y,h:0,done:false,pts:['60,'+y],nudged:false}; }
-  window.duRun=function(){
+  SIM.def('duRun', function(){
     var A=fresh(68), B=fresh(173), t=0; last=null; nudgeReq=false;
-    el('duT1').setAttribute('points',A.pts[0]); el('duT2').setAttribute('points',B.pts[0]);
-    el('duO1').textContent='–'; el('duO2').textContent='–';
+    SIM.el('duT1').setAttribute('points',A.pts[0]); SIM.el('duT2').setAttribute('points',B.pts[0]);
+    SIM.el('duO1').textContent='–'; SIM.el('duO2').textContent='–';
     function step(s,dt,heal,laneY){
       if(s.done) return;
       var sp=(720-s.x)*2.4+8; if(sp>300)sp=300;
       if(nudgeReq && !s.nudged && s.x>300){ s.h=(laneY<100?22:-22); s.nudged=true; }
-      s.h -= s.h*heal*dt;                       // both heal — same three letters inside
+      s.h -= s.h*heal*dt;                       // both heal -- same three letters inside
       var r=s.h*Math.PI/180;
       s.x+=sp*Math.cos(r)*dt; s.y+=sp*Math.sin(r)*dt;
       // stay in lane visually
@@ -250,49 +288,50 @@ Two acts of the day snap together here: the reveal is wired straight into the co
       var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now; t+=dt;
       step(A,dt,3.0,68); step(B,dt,3.6,173);
       if(A.nudged&&B.nudged) nudgeReq=false;
-      el('duT1').setAttribute('points',A.pts.join(' '));
-      el('duT2').setAttribute('points',B.pts.join(' '));
-      el('duB1').setAttribute('transform','translate('+A.x.toFixed(1)+','+A.y.toFixed(1)+') rotate('+A.h.toFixed(1)+')');
-      el('duB2').setAttribute('transform','translate('+B.x.toFixed(1)+','+B.y.toFixed(1)+') rotate('+B.h.toFixed(1)+')');
+      SIM.el('duT1').setAttribute('points',A.pts.join(' '));
+      SIM.el('duT2').setAttribute('points',B.pts.join(' '));
+      SIM.el('duB1').setAttribute('transform','translate('+A.x.toFixed(1)+','+A.y.toFixed(1)+') rotate('+A.h.toFixed(1)+')');
+      SIM.el('duB2').setAttribute('transform','translate('+B.x.toFixed(1)+','+B.y.toFixed(1)+') rotate('+B.h.toFixed(1)+')');
       if(A.done&&B.done||t>8){
         raf=null;
-        el('duO1').textContent='1.5 cm off 👏'; el('duO2').textContent='0.5 cm off 🤝';
+        SIM.el('duO1').textContent='1.5 cm off 👏'; SIM.el('duO2').textContent='0.5 cm off 🤝';
       } else raf=requestAnimationFrame(frame);
     }
     if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
-  };
-  window.duNudge=function(){ nudgeReq=true; };
+  });
+  SIM.def('duNudge', function(){ nudgeReq=true; });
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Nudge them both: **both heal** — same three letters inside. The pro edges ahead on polish (smooth speed ramps, factory-tuned gains, years of testing), not on magic. **You didn't get replaced — you hired a chauffeur for the part you already mastered.**
+Nudge them both: **both heal**, with the same three letters inside. The pro edges ahead on polish (smooth speed ramps, factory-tuned gains, years of testing), not on magic. **You didn't get replaced. You hired a chauffeur for the part you already mastered.**
 :::
 :::
 
 ::: {.notes}
-Run the duel on the real robots too — their drive_straight next to drive.straight under a nudge and a battery swap; the sim just makes the point projectable. Expected honest outcome: both survive, DriveBase is a bit crisper on arrival (its speed ramps are S-curves, its gains factory-tuned per motor model). The verdict to speak: hand-rolled took two weeks to build and would take another season to polish; the pro one is *free* and made of math they own. That's why the reveal waited — a shortcut is only a shortcut if you know the long way.
+Run the duel on the real robots too — their drive_straight next to robot.straight under a nudge and a battery swap; the sim just makes the point projectable. Expected honest outcome: both survive, DriveBase is a bit crisper on arrival (its speed ramps are S-curves, its gains factory-tuned per motor model). The verdict to speak: hand-rolled took two weeks to build and would take another season to polish; the pro one is *free* and made of math they own. That's why the reveal waited — a shortcut is only a shortcut if you know the long way.
 :::
 
-## What retires, what stays yours
+## What retires, what stays yours {.smaller}
 
 :::: {.columns}
 
 ::: {.column width="50%"}
 **Retires today** 🪦
 
-- `drive_straight(d)` → `drive.straight(d)`
-- `turn_to(a)` → `drive.turn(…)` *(gyro-watched)*
-- hand-tuned `KP`/`kd` → `drive.settings()`
+- your **turn verb** → `robot.turn(…)`
+- the hand-tuned turn `kp`/`kd` → DriveBase's own PID
+- `hub.imu.reset_heading(0)` → `robot.reset(angle=0)`
 :::
 
 ::: {.column width="50%"}
-**Stays in `my_lib.py`** 💪
+**Stays in `movements.py`** 💪
 
-- `drive_to_wall()` · `wall_square()` — the *feel* verbs
-- `follow_line()` · `square_on_line()` — the *eyes* verbs
+- `drive_straight()`, new insides and the **same name**
+- `drive_to_wall()` · `wall_square()`, the *feel* verbs
+- `follow_line()` · `square_on_line()`, the *eyes* verbs
 - every mechanism verb Week 3 will add
 :::
 
@@ -300,26 +339,26 @@ Run the duel on the real robots too — their drive_straight next to drive.strai
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-`DriveBase` replaces exactly **two internals** — the moving. It has no idea how to *feel a wall*, *ride a line's edge*, or *work a mechanism*. The library keeps every verb the pro tool doesn't have — which is most of them. **Missions from here on: `DriveBase` drives, your library does everything else.**
+`DriveBase` replaces the **moving** and nothing else. It has no idea how to *feel a wall*, *ride a line's edge*, or *work a mechanism*. **From here on: `DriveBase` drives, your library does the rest.**
 :::
 :::
 
 ::: {.notes}
-This boundary slide is the anti-demoralizer — put numbers on it: two verbs retire, four survive today, and every mechanism verb from Week 3 joins the surviving side. Mechanically the retirement is gentle: inside my_lib, drive_straight/turn_to can simply *become* one-line wrappers over drive.straight/drive.turn, so every mission list and runner from the setlist day works unchanged — nothing downstream even notices. (That's the payoff of naming moves: swap the engine, keep the verbs.) drive.stalled() similarly upgrades the inside of drive_to_wall without changing its name.
+This boundary slide is the anti-demoralizer — put numbers on it: two verbs retire, five survive today, and every mechanism verb from Week 3 joins the surviving side. Be precise about *how* they retire, because the two cases differ. `drive_straight` **keeps its name**: it still does real work (it sets the speed, then drives), so its insides swap to `robot.straight()` and every mission list from the setlist day runs unchanged — that's the payoff of naming moves, swap the engine and keep the verb. The turn verb is the other case: `robot.turn()` already takes the same `absolute` flag, so wrapping it would add a name and nothing else — **it is deleted, not rewrapped.** `robot.stalled()` upgrades the inside of `drive_to_wall` without changing its name, same as `drive_straight`. Name one more so nobody is surprised later: **`square_on_line` changes shape inside.** The version they wrote on the line day drives both wheels and lets each one park itself the moment its own eye crosses — which works because those were two independent motors. Once the motors belong to a `DriveBase`, starting one stops the other, so the library version creeps until *either* eye finds the line and then pivots to bring the second one on. Same verb, same reason it needs two eyes, different insides — and that difference is itself the lesson about what you traded away for `DriveBase`'s gyro. Last, the zero: from today `hub.imu.reset_heading(0)` is the wrong verb — `DriveBase` owns the gyro now, so `robot.reset(angle=0)` is what says "this way is zero", and it moves the gyro and the odometer together. Say it out loud, because every program they wrote in the last fortnight opens with the old line, and a squad that keeps it ends up with two zeros that disagree.
 :::
 
 # D. Draft Day {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-Today's showdown: **Mini Mission** 🎤 — the finale. Then the draft.
+Today's showdown: **Mini Mission** 🎤, then the draft.
 
 ## Mini Mission 🎤
 
 ::: {.callout-important}
 ## The challenge
-A **3-task run** — drive, turn, push an object home — in **60 seconds**. Everything from two weeks, on one clock: integration, time management, nerve.
+A **3-task run** (drive, turn, push an object home) in **60 seconds**. Everything from two weeks on one clock: integration, time management, nerve.
 :::
 
-- Plan it as a **mission list** over your verbs — you have a runner for exactly this.
+- Plan it as a **sequence** of your verbs, written out longhand. The *list* that walks itself is still ahead of you.
 - Budget the clock: a clean 2-task run beats a chaotic 3-task attempt. *(Sound familiar? It's the anchor-first rule, in miniature.)*
 
 ::: {.notes}
@@ -328,14 +367,14 @@ Template is Competition Ready Lesson 8 "Mission Ready." This is the last solo co
 
 ## The draft 🤝
 
-- Teams are formed on **who works well together and what each team needs** — complementary skills beat matching skills.
+- Teams are formed on **who works well together and what each team needs**. Complementary skills beat matching skills.
 - Each team reviews its members' robots and **selects one** as its competition robot.
-- The unselected robots become the **parts donor pool** — your insurance, one config edit away. 🛡️
-- From tomorrow: **team vs team, every day** — double the mat time, twice the fun.
+- The unselected robots become the **parts donor pool**, your insurance one config edit away. 🛡️
+- From tomorrow: **team vs team, every day**, which doubles the mat time.
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Your robot may retire to the donor pool — **your code and your skills don't.** Everything merges onto the team robot through `robot_config.py`, and both of the team's cross-trained roles need every verb you built. The draft picks a *chassis*, not a *coder*.
+Your robot may retire to the donor pool. **Your code and your skills don't.** Everything merges onto the team robot through one `ROBOT FACTS` block, and both of the team's cross-trained roles need every verb you built. The draft picks a *chassis*, not a *coder*.
 :::
 :::
 
@@ -347,11 +386,11 @@ Say the framing line exactly as planned and nothing more: "I'm teaming you based
 
 ::: {.callout-important}
 ## You're done today when…
-Your library passes its benchmarks one last time **solo** (`drive_straight` ±2 cm · `turn_to` ±2° · wall and line verbs demonstrated · the runner walks a called mission) — and your **team** leaves with one chosen robot, a donor pool, and a single `robot_config.py` that drives it with the merged code.
+Your library passes its benchmarks one last time **solo** (`drive_straight` ±2 cm · `robot.turn(…, absolute=True)` ±2° · wall and line verbs demonstrated · the runner walks a called mission), and your **team** leaves with one chosen robot, a donor pool, and a single `ROBOT FACTS` block that drives it with the merged code.
 :::
 
 ::: {.fragment .fade-up}
-Next week: your robot grows **hands** — the mechanisms that start turning driving skill into **scored points**, and the runner starts chaining them into the anchor run. 🔌🎤
+Next week: your robot grows **hands**, the mechanisms that turn driving skill into **scored points**, and the runner starts chaining them into the anchor run. 🔌🎤
 :::
 
 ::: {.notes}

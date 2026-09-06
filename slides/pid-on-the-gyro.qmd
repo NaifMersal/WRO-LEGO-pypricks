@@ -1,22 +1,22 @@
 ---
 title: "The Drive That Heals Itself"
-subtitle: "Day 4 · Robot Rockstars · SPIKE Prime + Pybricks"
+subtitle: "Days 4a–4c · Robot Rockstars · SPIKE Prime + Pybricks"
 date: today
 format: revealjs
 ---
 
 # A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-Yesterday your turn *watched itself* — and coasted to 94, guilty party named. Today: the cure. Then the cure gets a brain.
+Yesterday your turn *watched itself*, then coasted to 94 with the guilty party named. Today: the cure. Then the cure gets a brain.
 
 ## Where we left off
 
 | Yesterday | The trick |
 |---|---|
-| 🧭 **heading** | one number for "which way" — net turning since `reset_heading(0)` |
-| 👀 the **watched turn** | spin · watch `heading()` · stop *at* the target — `while` |
-| 🔁 **loops, nested** | `for` draws the shape, `while` lands the corner — 360 ÷ sides |
-| 🚨 the **open case** | it printed **94** — guilty party: *momentum*. Diagnosed, not cured |
+| 🧭 **heading** | one number for "which way": net turning since `reset_heading(0)` |
+| 👀 the **watched turn** | spin · watch `heading()` · stop *at* the target, with `while` |
+| 🔁 **loops, nested** | `for` draws the shape, `while` lands the corner, 360 ÷ sides |
+| 🚨 the **open case** | it printed **94**. Guilty party: *momentum*. Diagnosed, not cured |
 
 ::: {.fragment .fade-up}
 🤔 Shape Shifter's traces told the same story: every corner a few degrees hot, and the octagon paid 8 times. Today the coast meets its cure.
@@ -24,7 +24,7 @@ Yesterday your turn *watched itself* — and coasted to 94, guilty party named. 
 
 ⏱️ **Time: 10 minutes**
 
-## Setup — same bench, one new import
+## Setup: same bench, one new import
 
 ```{.python code-line-numbers="|1-4|6-8|10"}
 from pybricks.hubs import PrimeHub
@@ -33,10 +33,10 @@ from pybricks.parameters import Port, Direction
 from pybricks.tools import wait, StopWatch
 
 hub = PrimeHub()
-left = Motor(Port.A, Direction.COUNTERCLOCKWISE)
-right = Motor(Port.E)
+left = Motor(Port.F, Direction.COUNTERCLOCKWISE)   # yours
+right = Motor(Port.B)                              # yours
 
-# your watched turn from yesterday goes here — it still coasts to ~94. For now.
+# your watched turn from yesterday goes here. It still coasts to ~94, for now.
 ```
 
 ::: {.notes}
@@ -45,7 +45,7 @@ Everyone starts from their own D3 file — imports plus their watched-turn lines
 
 # B. The Cure: Arrive Slowly {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-Momentum needs *speed* to steal degrees. So give it none — at the end.
+Momentum needs *speed* to steal degrees. So give it none at the end.
 
 <!-- "Feel the fix" + "The fix, in code" moved here from slides/drive-a-square.qmd (D3) on 2026-07-06;
      Perfect Pivot folded into the bench check below. See decision log #15 in the plan. -->
@@ -53,7 +53,7 @@ Momentum needs *speed* to steal degrees. So give it none — at the end.
 ## Feel the fix: arrive slowly
 
 ```{=html}
-<div style="text-align:center;font-size:17px;color:#5b6678;margin-bottom:2px;">🚗 that's your <b>robot seen from above</b> — nose up = heading 0°. The judge calls: turn right to the <b style="color:#00AE8D;">90° tick</b>.</div>
+<div style="text-align:center;font-size:17px;color:#5b6678;margin-bottom:2px;">🚗 that's your <b>robot seen from above</b>: nose up = heading 0°. The judge calls: turn right to the <b style="color:#00AE8D;">90° tick</b>.</div>
 <div style="display:flex;justify-content:center;align-items:flex-start;gap:80px;">
   <div style="text-align:center;">
     <div style="font-weight:800;color:#1C355E;font-size:23px;">🚀 Full speed all the way</div>
@@ -63,19 +63,13 @@ Momentum needs *speed* to steal degrees. So give it none — at the end.
       <text x="92" y="-12" font-size="17" fill="#00C9A7" font-weight="700">90&#176;</text>
       <path id="odArc" d="M 86 0 A 86 86 0 0 1 85.4 10.5" fill="none" stroke="#E96852" stroke-width="7" stroke-linecap="round" opacity="0"/>
       <g id="odN1">
-        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#FF7A5C"/>
-        <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-        <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-        <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-        <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-        <circle cy="-30" r="4" fill="#FFD500"/>
+        <use href="#sim-bot" style="--bot:#FF7A5C"/>
       </g>
     </svg>
     <div style="font-size:24px;font-weight:800;color:#FF7A5C;"><span id="odV1">0</span>&#176; <span id="odS1" style="font-size:17px;"></span></div>
   </div>
   <div style="display:flex;flex-direction:column;justify-content:center;height:240px;">
-    <button onclick="raceDials()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:10px 26px;font-size:22px;font-weight:700;cursor:pointer;">▶ Turn to 90°</button>
+    <button class="sim-btn teal" data-sim="raceDials">▶ Turn to 90°</button>
   </div>
   <div style="text-align:center;">
     <div style="font-weight:800;color:#1C355E;font-size:23px;">🐢 Fast, then crawl</div>
@@ -84,13 +78,7 @@ Momentum needs *speed* to steal degrees. So give it none — at the end.
       <line x1="86" y1="0" x2="102" y2="0" stroke="#00C9A7" stroke-width="6"/>
       <text x="92" y="-12" font-size="17" fill="#00C9A7" font-weight="700">90&#176;</text>
       <g id="odN2">
-        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00C9A7"/>
-        <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-        <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-        <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-        <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-        <circle cy="-30" r="4" fill="#FFD500"/>
+        <use href="#sim-bot" style="--bot:#00C9A7"/>
       </g>
     </svg>
     <div style="font-size:24px;font-weight:800;color:#00C9A7;"><span id="odV2">0</span>&#176; <span id="odS2" style="font-size:17px;"></span></div>
@@ -101,12 +89,12 @@ var odRAF = null;
 function raceDials(){
   if(odRAF) cancelAnimationFrame(odRAF);
   var t0 = performance.now();
-  document.getElementById('odArc').setAttribute('opacity','0');
-  document.getElementById('odS1').textContent = '';
-  document.getElementById('odS2').textContent = '';
+  SIM.el('odArc').setAttribute('opacity','0');
+  SIM.el('odS1').textContent = '';
+  SIM.el('odS2').textContent = '';
   function pose(el, val, deg){
-    document.getElementById(el).setAttribute('transform','rotate('+deg.toFixed(1)+')');
-    document.getElementById(val).textContent = Math.round(deg);
+    SIM.el(el).setAttribute('transform','rotate('+deg.toFixed(1)+')');
+    SIM.el(val).textContent = Math.round(deg);
   }
   function step(now){
     var t = (now-t0)/1000;
@@ -123,19 +111,23 @@ function raceDials(){
     if(t < 1.4){ odRAF = requestAnimationFrame(step); }
     else {
       odRAF = null;
-      document.getElementById('odArc').setAttribute('opacity','1');
-      var s1 = document.getElementById('odS1'); s1.textContent = '— coasted past 😬'; s1.style.color = '#E96852';
-      var s2 = document.getElementById('odS2'); s2.textContent = '— parked on it 🎯'; s2.style.color = '#00AE8D';
+      SIM.el('odArc').setAttribute('opacity','1');
+      var s1 = SIM.el('odS1'); s1.textContent = '· coasted past 😬'; s1.style.color = '#E96852';
+      var s2 = SIM.el('odS2'); s2.textContent = '· parked on it 🎯'; s2.style.color = '#00AE8D';
     }
   }
   odRAF = requestAnimationFrame(step);
 }
+
+/* Registered for the kit: these are plain function declarations, so
+   they were never assigned to window and nothing else picks them up. */
+SIM.def('raceDials', raceDials);
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Same target. Same gyro. The only difference: the 🐢 arrives **slowly** — so there's nothing left to coast. Fast when far, slow when close.
+Same target. Same gyro. The only difference: the 🐢 arrives **slowly**, so there's nothing left to coast. Fast when far, slow when close.
 :::
 :::
 
@@ -157,23 +149,23 @@ gyro_turn(90)     # or gyro_turn(45), gyro_turn(180)…
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Two speeds, two `while`s: **fast for the long haul, crawl the last 30°** — momentum arrives with nothing left to steal. And line 1: `def` **names the move once**; every call replays it.
+Two speeds, two `while`s: **fast for the long haul, crawl the last 30°**, so momentum arrives with nothing left to steal. And line 1: `def` **names the move once**, and every call replays it.
 :::
 :::
 
 ::: {.notes}
-First `def` of the bootcamp — land it hard: a function is a *named move*, exactly like `run_angle` is someone else's named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two `run` signs and the `<` to `>`, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; `RobotConfig` at D8. Demo on the next slide — walk the highlights here first.
+First `def` of the bootcamp — land it hard: a function is a *named move*, exactly like `run_angle` is someone else's named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two `run` signs and the `<` to `>`, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; they get promoted into the `ROBOT FACTS` block at D8. Demo on the next slide — walk the highlights here first.
 :::
 
 ## One recipe card, many calls 📝
 
 ```{=html}
-<div style="width:820px;margin:0 auto;">
+<div class="sim">
   <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:8px;">
     <span style="font-size:18px;color:#1C355E;font-weight:700;">call the one recipe:</span>
-    <button onclick="rcCall(45)" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:18px;font-weight:700;cursor:pointer;">gyro_turn(45)</button>
-    <button onclick="rcCall(90)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:18px;font-weight:700;cursor:pointer;">gyro_turn(90)</button>
-    <button onclick="rcCall(180)" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:18px;font-weight:700;cursor:pointer;">gyro_turn(180)</button>
+    <button class="sim-btn teal small" data-sim="rcCall" data-sim-arg="45">gyro_turn(45)</button>
+    <button class="sim-btn purple small" data-sim="rcCall" data-sim-arg="90">gyro_turn(90)</button>
+    <button class="sim-btn coral small" data-sim="rcCall" data-sim-arg="180">gyro_turn(180)</button>
   </div>
   <div style="display:flex;justify-content:center;align-items:center;gap:48px;">
     <div id="rcCard" style="font-family:Consolas,monospace;font-size:16px;color:#1C355E;background:#eef3f8;border-radius:12px;border-left:5px solid #625D9C;padding:12px 18px;transition:box-shadow .15s,transform .15s;">
@@ -187,13 +179,7 @@ First `def` of the bootcamp — land it hard: a function is a *named move*, exac
         <circle r="82" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
         <g id="rcTick" opacity="0"><line x1="0" y1="-82" x2="0" y2="-98" stroke="#00AE8D" stroke-width="6"/></g>
         <g id="rcNeedle">
-          <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#625D9C"/>
-          <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-          <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-          <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-          <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-          <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-          <circle cy="-30" r="4" fill="#FFD500"/>
+          <use href="#sim-bot" style="--bot:#625D9C"/>
         </g>
       </svg>
       <div style="font-family:Consolas,monospace;font-size:18px;color:#1C355E;">landed <span id="rcLand" style="font-weight:800;">–</span>°</div>
@@ -204,41 +190,40 @@ First `def` of the bootcamp — land it hard: a function is a *named move*, exac
 <script>
 (function(){
   var T=0, h=0, phase='idle', raf=null, last=null, n=0;
-  function el(id){return document.getElementById(id);}
   function step(now){
     var dt = last ? Math.min((now-last)/1000,0.05) : 0.016; last=now;
     if(phase==='fast'){ h += 300*dt; if(h >= T-30) phase='crawl'; }
     else if(phase==='crawl'){ h += 70*dt; if(h >= T){ h=T; phase='settle'; } }
-    el('rcNeedle').setAttribute('transform','rotate('+h.toFixed(1)+')');
-    el('rcLand').textContent = Math.round(h);
-    if(phase==='settle'){ el('rcLand').style.color='#00AE8D'; raf=null; return; }
+    SIM.el('rcNeedle').setAttribute('transform','rotate('+h.toFixed(1)+')');
+    SIM.el('rcLand').textContent = Math.round(h);
+    if(phase==='settle'){ SIM.el('rcLand').style.color='#00AE8D'; raf=null; return; }
     raf=requestAnimationFrame(step);
   }
-  window.rcCall=function(t){
+  SIM.def('rcCall', function(t){
     T=t; h=0; phase='fast'; last=null;
-    n++; el('rcN').textContent=n;
-    el('rcLand').style.color='#1C355E';
-    el('rcTick').setAttribute('transform','rotate('+T+')');
-    el('rcTick').setAttribute('opacity','1');
-    var c=el('rcCard');
+    n++; SIM.el('rcN').textContent=n;
+    SIM.el('rcLand').style.color='#1C355E';
+    SIM.el('rcTick').setAttribute('transform','rotate('+T+')');
+    SIM.el('rcTick').setAttribute('opacity','1');
+    var c=SIM.el('rcCard');
     c.style.boxShadow='0 0 0 3px #625D9C'; c.style.transform='scale(1.03)';
     setTimeout(function(){ c.style.boxShadow='none'; c.style.transform='scale(1)'; },220);
     if(raf) cancelAnimationFrame(raf);
     raf=requestAnimationFrame(step);
-  };
+  });
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-**The 94 is cured** — and you just wrote your first robot *move*: one recipe card, any number of calls, and the 🚗 parks on every tick.
+**The 94 is cured**, and you just wrote your first robot *move*: one recipe card, any number of calls, and the 🚗 parks on every tick.
 :::
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Can you beat two speeds? Imagine speed **shrinking as the degrees-left shrink**. Hold that thought — it comes due before lunch. 😏
+Can you beat two speeds? Imagine speed **shrinking as the degrees-left shrink**. That idea comes due before lunch. 😏
 :::
 :::
 
@@ -263,7 +248,7 @@ def gyro_turn(target):
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-`def` only **writes** the recipe — it never cooks it. Nothing happens until you **call** the move by name: add `gyro_turn(90)` below. Defining a move and *using* a move are two separate steps.
+`def` only **writes** the recipe, it never cooks it. Nothing happens until you **call** the move by name: add `gyro_turn(90)` below. Defining a move and *using* a move are two separate steps.
 :::
 :::
 
@@ -273,8 +258,8 @@ The most instructive bug of the week — no error to read, so the robot's stilln
 
 ## Bench check: tune your crawl 🎯
 
-- Build `gyro_turn`, then judge-call yourself: **90° · 45° · 180°** — print the landing each time.
-- Tune **200 / 50 / 30** until 90° lands within a degree or two. Write your three numbers on a sticky note — they're about to testify.
+- Build `gyro_turn`, then judge-call yourself: **90° · 45° · 180°**, printing the landing each time.
+- Tune **200 / 50 / 30** until 90° lands within a degree or two. Write your three numbers on a sticky note. They're about to testify.
 
 ⏱️ **Time: 20 minutes**
 
@@ -289,11 +274,11 @@ The judge adds a **stopwatch**. Suddenly your crawl zone has a price tag.
 ## Three calls, one sticky note ⏱️
 
 ::: {.qbox}
-[The judge calls **45° → 90° → 180°** — same `gyro_turn`, same sticky note, and today the **clock counts too**. Two predictions with your partner:]{.qtitle}
+[The judge calls **45° → 90° → 180°** with the same `gyro_turn` and the same sticky note, and today the **clock counts too**. Two predictions with your partner:]{.qtitle}
 
-🐢 **Sleepy check:** the crawl always covers the **last 30°**. Which call spends the biggest *slice* of its turn crawling — what does that do to its time?
+🐢 **Sleepy check:** the crawl always covers the **last 30°**. Which call spends the biggest *slice* of its turn crawling, and what does that do to its time?
 
-🚀 **Fly-past check:** you crank the fast speed to beat the clock. Which call now risks blowing past its tick — and why *that* one?
+🚀 **Fly-past check:** you crank the fast speed to beat the clock. Which call now risks blowing past its tick, and why *that* one?
 :::
 
 ```{=html}
@@ -308,7 +293,7 @@ The judge adds a **stopwatch**. Suddenly your crawl zone has a price tag.
 ```
 
 ::: {.fragment .fade-up}
-Sketch it, then **write both predictions down** — the stopwatch grades them. 👀
+Sketch it, then **write both predictions down**. The stopwatch grades them. 👀
 :::
 
 ::: {.notes}
@@ -329,12 +314,12 @@ for target in [45, 90, 180]:
     wait(3000)                      # set the robot straight again
 ```
 
-- Run it with **your bench tuning** — the sticky note. Look at 45°'s time. Sleepy? That's the crawl lane eating two-thirds of a small turn.
+- Run it with **your bench tuning** from the sticky note. Look at 45°'s time. Sleepy? That's the crawl lane eating two-thirds of a small turn.
 - Now chase the clock: crank the fast speed **200 → 500** and rerun. Look at where **180° lands**. 😬
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-One tuning, three calls: **accurate but sleepy** — or **fast but flying past**. The fixed crawl zone can't serve every angle *and* every speed.
+One tuning, three calls: **accurate but sleepy**, or **fast but flying past**. The fixed crawl zone can't serve every angle *and* every speed.
 :::
 :::
 
@@ -345,13 +330,13 @@ Board the results next to the predictions. Expected shape: at 200, everything la
 ## The tuning treadmill 🎡
 
 ::: {.qbox}
-[Fix it with yesterday's toolbox: a **wider** crawl zone? A **third** speed? A different tuning **per angle**? — what does each one cost?]{.qtitle}
+[Fix it with yesterday's toolbox: a **wider** crawl zone? A **third** speed? A different tuning **per angle**? What does each one cost?]{.qtitle}
 
 Talk it out. Follow each fix two steps ahead.
 :::
 
 ::: {.fragment .fade-up}
-Board your fixes — then we **test-drive every single one**. 🚗
+Board your fixes, then we **test-drive every one**. 🚗
 :::
 
 ⏱️ **Time: 20 minutes** *(discussion + test-drives)*
@@ -363,16 +348,16 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
 ## Test-drive the fixes 🚗
 
 ```{=html}
-<div style="width:880px;margin:0 auto;">
+<div class="sim">
   <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:6px;">
     <span style="font-size:18px;color:#1C355E;font-weight:700;">the fixes you boarded:</span>
-    <button onclick="stFix('wider')" style="background:#00C9A7;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">wider crawl zone</button>
-    <button onclick="stFix('speed')" style="background:#625D9C;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">add a 3rd speed</button>
-    <button onclick="stFix('table')" style="background:#FF7A5C;color:#fff;border:none;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">a tuning per angle</button>
-    <button onclick="stReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:9px;padding:6px 14px;font-size:17px;font-weight:700;cursor:pointer;">reset</button>
-    <button onclick="stDrive()" style="background:#1C355E;color:#fff;border:none;border-radius:9px;padding:6px 18px;font-size:17px;font-weight:700;cursor:pointer;">▶ drive it</button>
+    <button class="sim-btn teal small" data-sim="stFix" data-sim-arg="wider">wider crawl zone</button>
+    <button class="sim-btn purple small" data-sim="stFix" data-sim-arg="speed">add a 3rd speed</button>
+    <button class="sim-btn coral small" data-sim="stFix" data-sim-arg="table">a tuning per angle</button>
+    <button class="sim-btn ghost small" data-sim="stReset">reset</button>
+    <button class="sim-btn small" data-sim="stDrive">▶ drive it</button>
   </div>
-  <div style="display:flex;justify-content:center;align-items:center;gap:16px;">
+  <div class="sim-stage">
     <svg width="700" height="290" viewBox="0 0 700 290" style="display:block;">
       <line x1="70" y1="240" x2="670" y2="240" stroke="#1C355E" stroke-width="3"/>
       <line x1="70" y1="240" x2="70" y2="35" stroke="#1C355E" stroke-width="3"/>
@@ -396,13 +381,7 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
         <line x1="62" y1="0" x2="74" y2="0" stroke="#00AE8D" stroke-width="5"/>
         <g id="stCar" transform="rotate(0)">
           <g transform="scale(0.72)">
-            <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#FF7A5C"/>
-            <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-            <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-            <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-            <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-            <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-            <circle cy="-30" r="4" fill="#FFD500"/>
+            <use href="#sim-bot" style="--bot:#FF7A5C"/>
           </g>
         </g>
       </svg>
@@ -410,14 +389,13 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
     </div>
   </div>
   <div style="text-align:center;font-size:18px;color:#1C355E;margin-top:2px;">
-    knobs to hand-tune: <b style="color:#E96852;"><span id="stKnobs">2</span></b> · <span id="stMsg" style="color:#625D9C;">two speeds, one crawl zone — where we started</span>
+    knobs to hand-tune: <b style="color:#E96852;"><span id="stKnobs">2</span></b> · <span id="stMsg" style="color:#625D9C;">two speeds, one crawl zone, where we started</span>
   </div>
 </div>
 <script>
 (function(){
   var steps=2, ghosts=0, sleepy=0, raf=null;
   var X0=70, X1=610, BOT=210;
-  function el(id){return document.getElementById(id);}
   function segY(i,n){ return 70 + (BOT-70)*i/(n-1||1); }
   function crawlFrac(){ return Math.min(1/steps + sleepy*0.18, 0.85); }   // widen clicks stretch the last (crawl) step
   function segBounds(i,n){
@@ -444,24 +422,24 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
     return pts.join(' ');
   }
   function render(){
-    el('stStair').setAttribute('points', build(steps));
-    el('stKnobs').textContent = steps + ghosts*steps + sleepy;
+    SIM.el('stStair').setAttribute('points', build(steps));
+    SIM.el('stKnobs').textContent = steps + ghosts*steps + sleepy;
   }
   function clearRun(){
     if(raf) cancelAnimationFrame(raf); raf=null;
-    el('stTrace').setAttribute('points','');
-    el('stDot').setAttribute('opacity','0');
-    el('stHere').setAttribute('opacity','0');
-    el('stLand').textContent='–'; el('stTime').textContent='–';
-    el('stLand').style.color='#1C355E';
-    el('stCar').setAttribute('transform','rotate(0)');
-    el('stCliff').setAttribute('font-weight','normal');
+    SIM.el('stTrace').setAttribute('points','');
+    SIM.el('stDot').setAttribute('opacity','0');
+    SIM.el('stHere').setAttribute('opacity','0');
+    SIM.el('stLand').textContent='–'; SIM.el('stTime').textContent='–';
+    SIM.el('stLand').style.color='#1C355E';
+    SIM.el('stCar').setAttribute('transform','rotate(0)');
+    SIM.el('stCliff').setAttribute('font-weight','normal');
   }
-  window.stDrive=function(){
+  SIM.def('stDrive', function(){
     clearRun();
     var e=90, t=0, last=null, tr=[], coastPhase=false, coast=0, cT=0, spEnd=0;
-    el('stDot').setAttribute('opacity','1');
-    el('stHere').setAttribute('opacity','1');
+    SIM.el('stDot').setAttribute('opacity','1');
+    SIM.el('stHere').setAttribute('opacity','1');
     function frame(now){
       var dt = last ? Math.min((now-last)/1000,0.05) : 0.016; last=now;
       if(!coastPhase){
@@ -471,45 +449,45 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
         e -= sp*dt; t += dt;
         if(e<=0){ e=0; coastPhase=true; spEnd=sp; coast=sp*0.05; }
         var x = X0 + (X1-X0)*(90-e)/90;
-        el('stDot').setAttribute('cx',x.toFixed(1)); el('stDot').setAttribute('cy',y.toFixed(1));
-        el('stHere').setAttribute('x',(x-14).toFixed(1)); el('stHere').setAttribute('y',(y-16).toFixed(1));
-        el('stHere').setAttribute('text-anchor', x>420 ? 'end' : 'start');
+        SIM.el('stDot').setAttribute('cx',x.toFixed(1)); SIM.el('stDot').setAttribute('cy',y.toFixed(1));
+        SIM.el('stHere').setAttribute('x',(x-14).toFixed(1)); SIM.el('stHere').setAttribute('y',(y-16).toFixed(1));
+        SIM.el('stHere').setAttribute('text-anchor', x>420 ? 'end' : 'start');
         tr.push(x.toFixed(0)+','+y.toFixed(0));
-        el('stTrace').setAttribute('points',tr.join(' '));
-        el('stCar').setAttribute('transform','rotate('+(90-e).toFixed(1)+')');
-        el('stTime').textContent=t.toFixed(2);
+        SIM.el('stTrace').setAttribute('points',tr.join(' '));
+        SIM.el('stCar').setAttribute('transform','rotate('+(90-e).toFixed(1)+')');
+        SIM.el('stTime').textContent=t.toFixed(2);
         raf=requestAnimationFrame(frame);
       } else {
         cT += dt;
         var c = Math.min(cT/0.35, 1), ease = 1-(1-c)*(1-c);
-        el('stCar').setAttribute('transform','rotate('+(90+coast*ease).toFixed(1)+')');
+        SIM.el('stCar').setAttribute('transform','rotate('+(90+coast*ease).toFixed(1)+')');
         var x2 = 610 + 40*ease;
-        el('stDot').setAttribute('cx',x2.toFixed(1)); el('stDot').setAttribute('cy','240');
-        el('stHere').setAttribute('x',(x2-14).toFixed(1)); el('stHere').setAttribute('y','226');
+        SIM.el('stDot').setAttribute('cx',x2.toFixed(1)); SIM.el('stDot').setAttribute('cy','240');
+        SIM.el('stHere').setAttribute('x',(x2-14).toFixed(1)); SIM.el('stHere').setAttribute('y','226');
         if(c<1){ raf=requestAnimationFrame(frame); }
         else {
           raf=null;
-          el('stLand').textContent=(90+coast).toFixed(1);
-          el('stLand').style.color='#E96852';
-          el('stCliff').setAttribute('font-weight','bold');
+          SIM.el('stLand').textContent=(90+coast).toFixed(1);
+          SIM.el('stLand').style.color='#E96852';
+          SIM.el('stCliff').setAttribute('font-weight','bold');
         }
       }
     }
     raf=requestAnimationFrame(frame);
-  };
-  window.stFix=function(k){
+  });
+  SIM.def('stFix', function(k){
     clearRun();
-    if(k==='wider'){ sleepy++; el('stMsg').textContent='wider zone → the crawl eats more of the turn: sleepy'; el('stMsg').style.color='#00AE8D'; }
-    else if(k==='speed'){ steps++; el('stMsg').textContent='another speed → now it begs for a fourth…'; el('stMsg').style.color='#625D9C'; }
+    if(k==='wider'){ sleepy++; SIM.el('stMsg').textContent='wider zone → the crawl eats more of the turn: sleepy'; SIM.el('stMsg').style.color='#00AE8D'; }
+    else if(k==='speed'){ steps++; SIM.el('stMsg').textContent='another speed → now it begs for a fourth…'; SIM.el('stMsg').style.color='#625D9C'; }
     else if(k==='table'){
       ghosts++;
       var g=''; for(var j=0;j<Math.min(ghosts*3,9);j++){ g+='<polyline points="'+build(steps)+'" fill="none" stroke="#FF7A5C" stroke-width="2" opacity="0.18" transform="translate('+(j*4-16)+','+(j*3-9)+')"/>'; }
-      el('stGhosts').innerHTML=g;
-      el('stMsg').textContent='table per angle → new battery, new mat: retune ×10'; el('stMsg').style.color='#E96852';
+      SIM.el('stGhosts').innerHTML=g;
+      SIM.el('stMsg').textContent='table per angle → new battery, new mat: retune ×10'; SIM.el('stMsg').style.color='#E96852';
     }
     render();
-  };
-  window.stReset=function(){ clearRun(); steps=2; ghosts=0; sleepy=0; el('stGhosts').innerHTML=''; el('stMsg').textContent='two speeds, one crawl zone — where we started'; el('stMsg').style.color='#625D9C'; render(); };
+  });
+  SIM.def('stReset', function(){ clearRun(); steps=2; ghosts=0; sleepy=0; SIM.el('stGhosts').innerHTML=''; SIM.el('stMsg').textContent='two speeds, one crawl zone, where we started'; SIM.el('stMsg').style.color='#625D9C'; render(); });
   render();
 })();
 </script>
@@ -517,7 +495,7 @@ This is the morning's teal teaser ("imagine speed shrinking as the degrees-left 
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-Every fix adds a **step** and a **knob** — and *every* drive still ends the same: the 🚗 crosses the cliff **still moving**. What you actually want: speed that **shrinks by itself** as the degrees-left shrink.
+Every fix adds a **step** and a **knob**, and *every* drive still ends the same: the 🚗 crosses the cliff **still moving**. What you actually want is speed that **shrinks by itself** as the degrees-left shrink.
 :::
 :::
 
@@ -533,12 +511,12 @@ You've been running this controller your whole life. Time to write it down.
 
 ::: {.callout-important}
 ## The game
-Stand three big steps from the wall. Walk to it and stop with your toes **exactly on the line**. Round 1: normal. Round 2: *robot style* — full speed, then slam the brakes at the end. Round 3: crawl the entire way. Which round felt right — and what were your legs doing in it?
+Stand three big steps from the wall. Walk to it and stop with your toes **exactly on the line**. Round 1: normal. Round 2: *robot style*, full speed then slam the brakes at the end. Round 3: crawl the entire way. Which round felt right, and what were your legs doing in it?
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Your legs already run the deal: **far → fast · close → gentle · there → zero.** No zones, no steps — your speed simply *follows* the distance left. Robots can sign the same deal.
+Your legs already run the deal: **far → fast · close → gentle · there → zero.** No zones, no steps. Your speed simply *follows* the distance left, and robots can sign the same deal.
 :::
 :::
 
@@ -551,7 +529,7 @@ Same unplugged-first habit as the D3 inner-ear game. Round 2 reproduces the coas
 ## Say the deal in numbers
 
 ::: {.qbox}
-[Target **90°**, heading reads **20°**. Call the degrees-left the **error** — here, 70. Build the wheel speed *from* the error: you're allowed one multiplication.]{.qtitle}
+[Target **90°**, heading reads **20°**. Call the degrees-left the **error**, which is 70 here. Build the wheel speed *from* the error: you're allowed one multiplication.]{.qtitle}
 
 What does your rule give at error 70? At 10? At 0?
 :::
@@ -560,16 +538,16 @@ What does your rule give at error 70? At 10? At 0?
 ```{=html}
 <div style="font-family:Consolas,monospace;font-size:23px;color:#1C355E;background:#eef3f8;border-radius:12px;padding:14px 26px;line-height:2.0;width:fit-content;margin:0 auto;">
   <div>speed = <span style="color:#E96852;font-weight:800;">error</span> × <span style="color:#625D9C;font-weight:800;">KP</span>&nbsp;&nbsp;<span style="opacity:0.65;">(KP = 4)</span></div>
-  <div>error <span style="color:#E96852;font-weight:700;">70</span> → speed <b>280</b>&nbsp;&nbsp;flat out 🚀</div>
-  <div>error <span style="color:#E96852;font-weight:700;">10</span> → speed <b>40</b>&nbsp;&nbsp;&nbsp;&nbsp;tiptoe 🐢</div>
-  <div>error <span style="color:#E96852;font-weight:700;">0</span>&nbsp; → speed <b>0</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parks itself 🎯</div>
+  <div>error <span class="em-coral">70</span> → speed <b>280</b>&nbsp;&nbsp;flat out 🚀</div>
+  <div>error <span class="em-coral">10</span> → speed <b>40</b>&nbsp;&nbsp;&nbsp;&nbsp;tiptoe 🐢</div>
+  <div>error <span class="em-coral">0</span>&nbsp; → speed <b>0</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parks itself 🎯</div>
 </div>
 ```
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-**`speed = error × KP`** — the whole staircase, in one line. `KP` is the slope — engineers call this knob the **gain**: how hard to push *per degree left*. And at error 0 the speed is 0 — it parks itself.
+**`speed = error × KP`**: the whole staircase in one line. `KP` is the slope, and engineers call this knob the **gain**: how hard to push *per degree left*. At error 0 the speed is 0, so it parks itself.
 :::
 :::
 
@@ -600,7 +578,7 @@ Elicit the multiplication — don't reveal it. Most squads propose "speed = dist
     <polyline points="70,90 397,90 397,248 560,248 560,300" fill="none" stroke="#FF7A5C" stroke-width="6" stroke-linejoin="round"/>
     <text x="150" y="78" font-size="16" fill="#E96852" font-weight="800">🪜 two speeds: 200</text>
     <text x="440" y="236" font-size="15" fill="#E96852" font-weight="700">crawl: 50</text>
-    <!-- ramp (P) — dim until it runs -->
+    <!-- ramp (P), dim until it runs -->
     <g id="opRampG" opacity="0.15">
       <line x1="70" y1="73" x2="560" y2="300" stroke="#00C9A7" stroke-width="6" stroke-linecap="round"/>
       <text x="150" y="130" font-size="16" fill="#00AE8D" font-weight="800">📈 speed = error × 4</text>
@@ -612,22 +590,16 @@ Elicit the multiplication — don't reveal it. Most squads propose "speed = dist
     <text id="opHere" font-size="14" fill="#1C355E" font-weight="800" opacity="0">you are HERE</text>
   </svg>
   <div style="text-align:center;width:250px;">
-    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:6px;">
-      <button onclick="opRun('stair')" style="background:#FF7A5C;color:#fff;border:none;border-radius:9px;padding:6px 12px;font-size:16px;font-weight:700;cursor:pointer;">▶ 🪜 drive it</button>
-      <button onclick="opRun('ramp')" style="background:#00C9A7;color:#fff;border:none;border-radius:9px;padding:6px 12px;font-size:16px;font-weight:700;cursor:pointer;">▶ 📈 drive it</button>
+    <div class="sim-controls">
+      <button class="sim-btn coral small" data-sim="opRun" data-sim-arg="stair">▶ 🪜 drive it</button>
+      <button class="sim-btn teal small" data-sim="opRun" data-sim-arg="ramp">▶ 📈 drive it</button>
     </div>
     <svg width="150" height="150" viewBox="-80 -80 160 160" style="display:block;margin:0 auto;">
       <circle r="66" fill="#eef3f8" stroke="#1C355E" stroke-width="4"/>
       <line x1="66" y1="0" x2="78" y2="0" stroke="#00AE8D" stroke-width="5"/>
       <g id="opCar" transform="rotate(0)">
         <g transform="scale(0.78)">
-          <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
-          <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#101820"/>
-          <rect x="13" y="-21" width="6" height="14" rx="3" fill="#101820"/>
-          <rect x="-19" y="6" width="6" height="14" rx="3" fill="#101820"/>
-          <rect x="13" y="6" width="6" height="14" rx="3" fill="#101820"/>
-          <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-          <circle cy="-30" r="4" fill="#FFD500"/>
+          <use href="#sim-bot"/>
         </g>
       </g>
     </svg>
@@ -637,7 +609,7 @@ Elicit the multiplication — don't reveal it. Most squads propose "speed = dist
       <div>wheel speed: <b><span id="opSpdV">0</span></b></div>
       <div style="height:16px;background:#eef3f8;border-radius:5px;overflow:hidden;margin-top:2px;"><div id="opSpdBar" style="height:100%;width:0%;background:#00AE8D;"></div></div>
     </div>
-    <div id="opMsg" style="font-size:15px;font-weight:700;color:#625D9C;margin-top:8px;min-height:44px;">the dot and the 🚗 move <b>together</b> — same robot, two views</div>
+    <div id="opMsg" style="font-size:15px;font-weight:700;color:#625D9C;margin-top:8px;min-height:44px;">the dot and the 🚗 move <b>together</b>: same robot, two views</div>
   </div>
 </div>
 ```
@@ -646,19 +618,18 @@ Elicit the multiplication — don't reveal it. Most squads propose "speed = dist
 <script>
 (function(){
   var X0=70, X1=560, YB=300, raf=null;
-  function el(id){return document.getElementById(id);}
   function spOf(mode, e){ return mode==='stair' ? (e>30 ? 200 : 50) : 4*e; }
   function yOf(mode, e){ return mode==='stair' ? (e>30 ? 90 : 248) : YB - (e/90)*227; }
-  window.opRun=function(mode){
+  SIM.def('opRun', function(mode){
     if(raf) cancelAnimationFrame(raf); raf=null;
-    if(mode==='ramp') el('opRampG').setAttribute('opacity','1');
+    if(mode==='ramp') SIM.el('opRampG').setAttribute('opacity','1');
     var e=90, last=null, tr=[], coastPhase=false, cT=0;
-    el('opTrace').setAttribute('points','');
-    el('opDot').setAttribute('opacity','1');
-    el('opHere').setAttribute('opacity','1');
-    el('opCar').setAttribute('transform','rotate(0)');
-    el('opMsg').style.color='#625D9C';
-    el('opMsg').innerHTML = mode==='stair' ? 'reading the 🪜: high = fast, low = crawl…' : 'reading the 📈: speed <b>shrinks with</b> the error…';
+    SIM.el('opTrace').setAttribute('points','');
+    SIM.el('opDot').setAttribute('opacity','1');
+    SIM.el('opHere').setAttribute('opacity','1');
+    SIM.el('opCar').setAttribute('transform','rotate(0)');
+    SIM.el('opMsg').style.color='#625D9C';
+    SIM.el('opMsg').innerHTML = mode==='stair' ? 'reading the 🪜: high = fast, low = crawl…' : 'reading the 📈: speed <b>shrinks with</b> the error…';
     function frame(now){
       var dt = last ? Math.min((now-last)/1000,0.05) : 0.016; last=now;
       if(!coastPhase){
@@ -669,46 +640,46 @@ Elicit the multiplication — don't reveal it. Most squads propose "speed = dist
         else if(mode==='ramp' && e<=0.5){ e=0; done=true; }
         var x = X0 + (X1-X0)*(90-e)/90, y = yOf(mode, Math.max(e,0.001));
         if(e===0) y = YB;
-        el('opDot').setAttribute('cx',x.toFixed(1)); el('opDot').setAttribute('cy',y.toFixed(1));
-        el('opHere').setAttribute('x',(x-14).toFixed(1)); el('opHere').setAttribute('y',(y-16).toFixed(1));
-        el('opHere').setAttribute('text-anchor', x>340 ? 'end' : 'start');
+        SIM.el('opDot').setAttribute('cx',x.toFixed(1)); SIM.el('opDot').setAttribute('cy',y.toFixed(1));
+        SIM.el('opHere').setAttribute('x',(x-14).toFixed(1)); SIM.el('opHere').setAttribute('y',(y-16).toFixed(1));
+        SIM.el('opHere').setAttribute('text-anchor', x>340 ? 'end' : 'start');
         tr.push(x.toFixed(0)+','+y.toFixed(0));
-        el('opTrace').setAttribute('points',tr.join(' '));
-        el('opCar').setAttribute('transform','rotate('+(90-e).toFixed(1)+')');
-        el('opErrV').textContent = Math.round(e);
-        el('opSpdV').textContent = Math.round(spOf(mode,e));
-        el('opErrBar').style.width = (e/90*100)+'%';
-        el('opSpdBar').style.width = Math.min(spOf(mode,e)/360*100,100)+'%';
+        SIM.el('opTrace').setAttribute('points',tr.join(' '));
+        SIM.el('opCar').setAttribute('transform','rotate('+(90-e).toFixed(1)+')');
+        SIM.el('opErrV').textContent = Math.round(e);
+        SIM.el('opSpdV').textContent = Math.round(spOf(mode,e));
+        SIM.el('opErrBar').style.width = (e/90*100)+'%';
+        SIM.el('opSpdBar').style.width = Math.min(spOf(mode,e)/360*100,100)+'%';
         if(done){
-          el('opMsg').style.color='#00AE8D';
-          el('opMsg').innerHTML='speed hit 0 <b>exactly at the target</b> — parked at 90.0° 🎯';
+          SIM.el('opMsg').style.color='#00AE8D';
+          SIM.el('opMsg').innerHTML='speed hit 0 <b>exactly at the target</b>: parked at 90.0° 🎯';
           raf=null; return;
         }
         raf=requestAnimationFrame(frame);
       } else {
         cT += dt;
         var c = Math.min(cT/0.35,1), ease = 1-(1-c)*(1-c);
-        el('opCar').setAttribute('transform','rotate('+(90+2.5*ease).toFixed(1)+')');
+        SIM.el('opCar').setAttribute('transform','rotate('+(90+2.5*ease).toFixed(1)+')');
         var x2 = X1 + 35*ease;
-        el('opDot').setAttribute('cx',x2.toFixed(1)); el('opDot').setAttribute('cy',YB);
-        el('opHere').setAttribute('x',(x2-14).toFixed(1)); el('opHere').setAttribute('y',(YB-16));
+        SIM.el('opDot').setAttribute('cx',x2.toFixed(1)); SIM.el('opDot').setAttribute('cy',YB);
+        SIM.el('opHere').setAttribute('x',(x2-14).toFixed(1)); SIM.el('opHere').setAttribute('y',(YB-16));
         if(c<1){ raf=requestAnimationFrame(frame); }
         else {
-          el('opMsg').style.color='#E96852';
-          el('opMsg').innerHTML='hit 0 still doing 50 → <b>coasted to 92.5°</b> 🤞';
+          SIM.el('opMsg').style.color='#E96852';
+          SIM.el('opMsg').innerHTML='hit 0 still doing 50 → <b>coasted to 92.5°</b> 🤞';
           raf=null;
         }
       }
     }
     raf=requestAnimationFrame(frame);
-  };
+  });
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Every staircase fix added a step. The ramp has **no steps to tune** — it re-measures the error **200×/second** and touches zero exactly at the target, so there's never anything left to coast.
+Every staircase fix added a step. The ramp has **no steps to tune**. It re-measures the error **200×/second** and touches zero exactly at the target, so there's never anything left to coast.
 :::
 :::
 
@@ -733,26 +704,26 @@ gyro_turn_p(90)   # gyro_turn_p(45)… gyro_turn_p(180)… gyro_turn_p(-90)!
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Line 10: a **negative** target flips the sign, the wheels swap — **left turns come free.** Yesterday's version needed surgery for that.
+Line 10: a **negative** target flips the sign and the wheels swap, so **left turns come free.** Yesterday's version needed surgery for that.
 :::
 :::
 
 ::: {.notes}
 Walk the highlight stops: `kp` arrives as a *parameter with a default* — new syntax, teach it in one breath ("a knob you can leave alone"). Line 3's `abs()` is what makes negative targets work. Demo on the next slide.
 
-**Coach aside — "why `run()` and not `motor.dc()`?"** (for the sharp student who's read ahead). Honest truth: `run()` is *itself* a closed-loop **speed** controller inside Pybricks — so this hand-written P sits *on top* of it, a controller-on-a-controller. Your `kp` sets a speed *target*; Pybricks' own loop chases it. A pro writing a controller from scratch often reaches for `motor.dc()` instead — raw power/duty — so their formula is the *whole* controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep `run()` on purpose for two reasons: it's **smoother and battery-proof** (a fresh vs. tired hub turns the same — priceless with five robots on the bench), and it speaks the same **"speed"** language as `drive.drive(speed, turn)` and `DriveBase` — so `speed = error × KP` stays literally true all the way from this turn, through the self-healing straight, to D6's line-follower. `dc()` is the right tool the day you build a controller with no help underneath; that day isn't this bootcamp.
+**Coach aside — "why `run()` and not `motor.dc()`?"** (for the sharp student who's read ahead). Honest truth: `run()` is *itself* a closed-loop **speed** controller inside Pybricks — so this hand-written P sits *on top* of it, a controller-on-a-controller. Your `kp` sets a speed *target*; Pybricks' own loop chases it. A pro writing a controller from scratch often reaches for `motor.dc()` instead — raw power/duty — so their formula is the *whole* controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep `run()` on purpose for two reasons: it's **smoother and battery-proof** (a fresh vs. tired hub turns the same — priceless with five robots on the bench), and it speaks the same **"speed"** language as `robot.drive(speed, turn)` and `DriveBase` — so `speed = error × KP` stays literally true all the way from this turn, through the self-healing straight, to D6's line-follower. `dc()` is the right tool the day you build a controller with no help underneath; that day isn't this bootcamp.
 :::
 
 ## Playground: one knob, every angle 🎛️
 
 ```{=html}
-<div style="width:880px;margin:0 auto;">
+<div class="sim">
   <div style="display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:4px;">
     <span style="font-size:19px;color:#1C355E;font-weight:700;">judge calls:</span>
-    <button onclick="pgRun(45)" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ 45°</button>
-    <button onclick="pgRun(90)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ 90°</button>
-    <button onclick="pgRun(180)" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ 180°</button>
-    <span style="font-size:17px;color:#1C355E;margin-left:14px;">the game: land within <b>±2°</b> and under <b>1.3 s</b> — on <b>all three</b> calls. Which side can?</span>
+    <button class="sim-btn teal" data-sim="pgRun" data-sim-arg="45">▶ 45°</button>
+    <button class="sim-btn purple" data-sim="pgRun" data-sim-arg="90">▶ 90°</button>
+    <button class="sim-btn coral" data-sim="pgRun" data-sim-arg="180">▶ 180°</button>
+    <span style="font-size:17px;color:#1C355E;margin-left:14px;">the game: land within <b>±2°</b> and under <b>1.3 s</b> on <b>all three</b> calls. Which side can?</span>
   </div>
   <div style="display:flex;justify-content:center;gap:70px;">
     <div style="text-align:center;">
@@ -761,18 +732,12 @@ Walk the highlight stops: `kp` arrives as a *parameter with a default* — new s
         <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
         <g id="tsTick" opacity="0"><line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6"/></g>
         <g id="tsNeedle">
-          <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#E96852"/>
-          <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-          <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-          <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-          <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-          <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-          <circle cy="-30" r="4" fill="#FFD500"/>
+          <use href="#sim-bot" style="--bot:#E96852"/>
         </g>
       </svg>
       <div style="font-family:Consolas,monospace;font-size:19px;color:#1C355E;">landed <span id="tsLand" style="font-weight:800;">–</span>° · <span id="tsTime" style="font-weight:800;">–</span> s</div>
       <div style="font-size:17px;color:#1C355E;margin-top:4px;">fast speed: <b><span id="tsFastV">200</span></b> °/s<br>
-      <input type="range" min="200" max="600" step="20" value="200" oninput="pgFast(this.value)" style="width:190px;accent-color:#E96852;"></div>
+      <input type="range" min="200" max="600" step="20" value="200" data-sim-input="pgFast" style="width:190px;accent-color:#E96852;"></div>
     </div>
     <div style="text-align:center;">
       <div style="font-weight:800;color:#00AE8D;font-size:21px;">📈 speed = error × KP</div>
@@ -780,18 +745,12 @@ Walk the highlight stops: `kp` arrives as a *parameter with a default* — new s
         <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
         <g id="ppTick" opacity="0"><line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6"/></g>
         <g id="ppNeedle">
-          <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#00C9A7"/>
-          <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-          <rect x="13" y="-21" width="6" height="14" rx="3" fill="#1C355E"/>
-          <rect x="-19" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-          <rect x="13" y="6" width="6" height="14" rx="3" fill="#1C355E"/>
-          <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-          <circle cy="-30" r="4" fill="#FFD500"/>
+          <use href="#sim-bot" style="--bot:#00C9A7"/>
         </g>
       </svg>
       <div style="font-family:Consolas,monospace;font-size:19px;color:#1C355E;">landed <span id="ppLand" style="font-weight:800;">–</span>° · <span id="ppTime" style="font-weight:800;">–</span> s</div>
       <div style="font-size:17px;color:#1C355E;margin-top:4px;">KP: <b><span id="ppKpV">4</span></b><br>
-      <input type="range" min="1" max="20" step="0.5" value="4" oninput="pgKp(this.value)" style="width:190px;accent-color:#00AE8D;"></div>
+      <input type="range" min="1" max="20" step="0.5" value="4" data-sim-input="pgKp" style="width:190px;accent-color:#00AE8D;"></div>
     </div>
   </div>
 </div>
@@ -800,7 +759,6 @@ Walk the highlight stops: `kp` arrives as a *parameter with a default* — new s
   var W = 1.65;                 // wheel deg/s -> robot deg/s divisor (gap/wheel)
   var T = 90, fast = 200, kp = 4, raf = null, last = null;
   var A, B;
-  function el(id){ return document.getElementById(id); }
   function fresh(){ return {h:0, r:0, t:0, stopped:false, stall:0, done:false, buf:[]}; }
   function stepA(s, dt){                      // two speeds + coast
     var cmd;
@@ -832,14 +790,14 @@ Walk the highlight stops: `kp` arrives as a *parameter with a default* — new s
   }
   function put(land, time, s){
     var okL = Math.abs(s.h - T) <= 2, okT = s.t <= 1.3;
-    el(land).textContent = s.h.toFixed(1);
-    el(time).textContent = s.t.toFixed(2);
-    el(land).style.color = s.done ? (okL ? '#00AE8D' : '#E96852') : '#1C355E';
-    el(time).style.color = s.done ? (okT ? '#00AE8D' : '#E96852') : '#1C355E';
+    SIM.el(land).textContent = s.h.toFixed(1);
+    SIM.el(time).textContent = s.t.toFixed(2);
+    SIM.el(land).style.color = s.done ? (okL ? '#00AE8D' : '#E96852') : '#1C355E';
+    SIM.el(time).style.color = s.done ? (okT ? '#00AE8D' : '#E96852') : '#1C355E';
   }
   function draw(){
-    el('tsNeedle').setAttribute('transform', 'rotate(' + A.h.toFixed(1) + ')');
-    el('ppNeedle').setAttribute('transform', 'rotate(' + B.h.toFixed(1) + ')');
+    SIM.el('tsNeedle').setAttribute('transform', 'rotate(' + A.h.toFixed(1) + ')');
+    SIM.el('ppNeedle').setAttribute('transform', 'rotate(' + B.h.toFixed(1) + ')');
     put('tsLand','tsTime',A); put('ppLand','ppTime',B);
   }
   function frame(now){
@@ -853,18 +811,18 @@ Walk the highlight stops: `kp` arrives as a *parameter with a default* — new s
     draw();
     if(!A.done || !B.done){ raf = requestAnimationFrame(frame); } else { raf = null; }
   }
-  window.pgRun = function(t){
+  SIM.def('pgRun', function(t){
     T = t;
-    el('tsTick').setAttribute('transform', 'rotate(' + T + ')');
-    el('ppTick').setAttribute('transform', 'rotate(' + T + ')');
-    el('tsTick').setAttribute('opacity', '1');
-    el('ppTick').setAttribute('opacity', '1');
+    SIM.el('tsTick').setAttribute('transform', 'rotate(' + T + ')');
+    SIM.el('ppTick').setAttribute('transform', 'rotate(' + T + ')');
+    SIM.el('tsTick').setAttribute('opacity', '1');
+    SIM.el('ppTick').setAttribute('opacity', '1');
     A = fresh(); B = fresh(); last = null;
     if(raf) cancelAnimationFrame(raf);
     raf = requestAnimationFrame(frame);
-  };
-  window.pgFast = function(v){ fast = parseFloat(v); el('tsFastV').textContent = v; };
-  window.pgKp = function(v){ kp = parseFloat(v); el('ppKpV').textContent = v; };
+  });
+  SIM.def('pgFast', function(v){ fast = parseFloat(v); SIM.el('tsFastV').textContent = v; });
+  SIM.def('pgKp', function(v){ kp = parseFloat(v); SIM.el('ppKpV').textContent = v; });
   A = fresh(); B = fresh(); draw();
 })();
 </script>
@@ -881,13 +839,13 @@ You just built: a controller whose push is **proportional** to the error.
 ::: {.fragment .fade-up}
 ```{=html}
 <div style="text-align:center;font-size:44px;font-weight:800;color:#1C355E;margin:18px 0 6px 0;">the <span style="color:#00AE8D;">P</span>-controller</div>
-<div style="text-align:center;font-size:22px;color:#1C355E;">P = proportional — the first letter of <b>PID</b></div>
+<div style="text-align:center;font-size:22px;color:#1C355E;">P = proportional, the first letter of <b>PID</b></div>
 ```
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-This exact line runs inside every drone, thermostat, cruise control, elevator, and Mars rover. You didn't learn a LEGO trick today — you wrote the opening letter of the most-used formula in robotics. **I** and **D**? They earn their seats tomorrow.
+This exact line runs inside every drone, thermostat, cruise control, elevator, and Mars rover. You didn't learn a LEGO trick today. You wrote the opening letter of the most-used formula in robotics. **I** and **D**? They earn their seats tomorrow.
 :::
 :::
 
@@ -898,12 +856,12 @@ This is the payoff of yesterday's "it has a name every roboticist on Earth knows
 ## Quick quiz: the KP knob 🚨
 
 ::: {.qbox}
-[Before you touch the robot: **KP = 1** — what will the turn *feel* like? **KP = 20**? Predict both.]{.qtitle}
+[Before you touch the robot: with **KP = 1**, what will the turn *feel* like? And with **KP = 20**? Predict both.]{.qtitle}
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-**1 = lazy** — near the target it pushes too weakly to beat friction and **parks short.** **20 = hot** — it flies past and zig-zags back. Tuning is the middle: hard enough to *arrive*, soft enough to arrive *calm*. That lazy leftover it parks on gets a name tomorrow. 😏
+**1 = lazy.** Near the target it pushes too weakly to beat friction and **parks short. 20 = hot.** It flies past and zig-zags back. Tuning is the middle: hard enough to *arrive*, soft enough to arrive *calm*. That lazy leftover it parks on gets a name tomorrow. 😏
 :::
 :::
 
@@ -913,7 +871,7 @@ The prediction is the day's real gate: "the bigger the error, the harder the pus
 
 ## Lab: your KP, your rematch 🎛️
 
-- Build `gyro_turn_p`, then rerun the **morning race** — same three calls, one KP. Beat your two-speed times *and* landings?
+- Build `gyro_turn_p`, then rerun the **morning race**: same three calls, one KP. Beat your two-speed times *and* landings?
 - Find **your** KP: start at 4 → halve it, double it, feel both failures, close in from the middle.
 - Try `gyro_turn_p(-90)`. No surgery required. 😎
 
@@ -929,18 +887,18 @@ Turns are true. But is your "straight"… actually straight?
 
 ## Break it: the nudge test 💥
 
-```{.python code-line-numbers="|1-2|4-7|8-9"}
+```{.python code-line-numbers="|1-2|4-7|8"}
 hub.imu.reset_heading(0)
 left.reset_angle(0)              # zero the wheel's degree-counter
 
 left.run(500); right.run(500)
-while left.angle() < 1304:       # ≈ 100 cm — Day 2's number!
+while left.angle() < 1304:       # ≈ 100 cm, your own number
     print(hub.imu.heading())
     wait(100)
 left.stop(); right.stop()
 ```
 
-- `left.angle()` = the same degree-counter `run_angle` uses — now **you** read it.
+- `left.angle()` is the same degree-counter `run_angle` uses. Now **you** read it.
 - While it drives, give the robot's side a **gentle nudge** (or lay a pencil in its path). Watch the printout…
 
 ::: {.notes}
@@ -950,66 +908,65 @@ Line-walk the code first; the sim of the nudge is on the next slide, then they d
 ## Watch the printout 👀
 
 ```{=html}
-<div style="width:820px;margin:0 auto;">
+<div class="sim">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
     <div style="display:flex;gap:12px;">
-      <button onclick="nbDrive()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ Drive</button>
-      <button onclick="nbNudge()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">💥 Nudge</button>
+      <button class="sim-btn teal" data-sim="nbDrive">▶ Drive</button>
+      <button class="sim-btn coral" data-sim="nbNudge">💥 Nudge</button>
     </div>
-    <div style="font-family:Consolas,monospace;font-size:21px;color:#1C355E;">printout: heading <span id="nbHdg" style="font-weight:800;color:#FF7A5C;">0</span>° <span id="nbStuck" style="color:#E96852;font-weight:700;"></span></div>
+    <div style="font-family:Consolas,monospace;font-size:21px;color:#1C355E;">printout: heading <span id="nbHdg" style="font-weight:800;color:#FF7A5C;">0</span>° <span class="em-coral" id="nbStuck"></span></div>
   </div>
   <svg width="820" height="210" viewBox="0 0 820 210" style="display:block;">
     <rect x="0" y="15" width="820" height="180" rx="14" fill="#eef3f8"/>
     <line x1="20" y1="105" x2="800" y2="105" stroke="#c9d4e0" stroke-width="3" stroke-dasharray="16 12"/>
     <polyline id="nbTrace" points="" fill="none" stroke="#00C9A7" stroke-width="4"/>
-    <g id="nbBot" transform="translate(40,105)"><g transform="rotate(90) scale(0.42)"><rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/><rect x="-19" y="-21" width="6" height="14" rx="3" fill="#101820"/><rect x="13" y="-21" width="6" height="14" rx="3" fill="#101820"/><rect x="-19" y="6" width="6" height="14" rx="3" fill="#101820"/><rect x="13" y="6" width="6" height="14" rx="3" fill="#101820"/><path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/><circle cy="-30" r="4" fill="#FFD500"/></g></g>
+    <g id="nbBot" transform="translate(40,105)"><g transform="rotate(90) scale(0.42)"><use href="#sim-bot"/></g></g>
   </svg>
 </div>
 <script>
 (function(){
   var x=40,y=105,h=0,raf=null,last=null,pts=[],frame=0,nudged=false;
-  function el(id){return document.getElementById(id);}
-  function reset(){x=40;y=105;h=0;pts=[];nudged=false;el('nbTrace').setAttribute('points','');el('nbStuck').textContent='';el('nbHdg').textContent='0';el('nbHdg').style.color='#FF7A5C';}
+  function reset(){x=40;y=105;h=0;pts=[];nudged=false;SIM.el('nbTrace').setAttribute('points','');SIM.el('nbStuck').textContent='';SIM.el('nbHdg').textContent='0';SIM.el('nbHdg').style.color='#FF7A5C';}
   function step(now){
     var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
     var r=h*Math.PI/180;
     x+=120*Math.cos(r)*dt; y+=120*Math.sin(r)*dt;
     if(y<28)y=28; if(y>182)y=182;
-    if(++frame%3===0){ pts.push(x.toFixed(0)+','+y.toFixed(0)); if(pts.length>400)pts.shift(); el('nbTrace').setAttribute('points',pts.join(' ')); }
-    el('nbBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
-    el('nbHdg').textContent=Math.round(h);
-    if(x>790){ el('nbBot').setAttribute('transform','translate(790,'+y.toFixed(1)+') rotate('+h.toFixed(1)+')'); raf=null; return; }
+    if(++frame%3===0){ pts.push(x.toFixed(0)+','+y.toFixed(0)); if(pts.length>400)pts.shift(); SIM.el('nbTrace').setAttribute('points',pts.join(' ')); }
+    SIM.el('nbBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
+    SIM.el('nbHdg').textContent=Math.round(h);
+    if(x>790){ SIM.el('nbBot').setAttribute('transform','translate(790,'+y.toFixed(1)+') rotate('+h.toFixed(1)+')'); raf=null; return; }
     raf=requestAnimationFrame(step);
   }
-  window.nbDrive=function(){ if(raf)cancelAnimationFrame(raf); reset(); last=null; raf=requestAnimationFrame(step); };
-  window.nbNudge=function(){ if(!nudged){ h=8; nudged=true; el('nbStuck').textContent='… and stays at 8'; } };
+  SIM.def('nbDrive', function(){ if(raf)cancelAnimationFrame(raf); reset(); last=null; raf=requestAnimationFrame(step); });
+  SIM.def('nbNudge', function(){ if(!nudged){ h=8; nudged=true; SIM.el('nbStuck').textContent='… and stays at 8'; } });
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-It jumps to **8 — and stays at 8.** `run()` spins the wheels equally; nobody keeps the robot *pointing*.
+It jumps to **8 and stays at 8.** `run()` spins the wheels equally, and nobody keeps the robot *pointing*.
 :::
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-But the gyro **knew** — it read the 8 the whole time. 👀
+But the gyro **knew**. It read the 8 the whole time. 👀
 :::
 :::
 
 ## Talk it out
 
 ::: {.qbox}
-[Heading says **+8** — nosed right. You command each wheel's speed. What should the wheels do about it?]{.qtitle}
+[Heading says **+8**, so it's nosed right. You command each wheel's speed. What should the wheels do about it?]{.qtitle}
 
 And should a +2 error get the same medicine as a +20 error?
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Steer back **left** — right wheel faster, left slower — until heading reads 0. And the **bigger** the error, the **harder** the push.
+Steer back **left**, with the right wheel faster and the left slower, until heading reads 0. And the **bigger** the error, the **harder** the push.
 :::
 :::
 
@@ -1027,11 +984,11 @@ while left.angle() < 1304:        # until ≈ 100 cm rolls by…
 left.stop(); right.stop()
 ```
 
-Run it — and **nudge it again.** 😈
+Run it, then **nudge it again.** 😈
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-**It fights back.** A hundred times a second: read the error, steer against it. Error 0 → wheels equal → dead straight. That tiny loop is the heart of every self-driving machine on Earth.
+**It fights back.** A hundred times a second: read the error, steer against it. Error 0 → wheels equal → dead straight. That tiny loop is the heart of every self-driving machine.
 :::
 :::
 
@@ -1042,12 +999,12 @@ Check the signs with them, don't just assert: error +8 → left runs 468, right 
 ## Watch it heal 🩹
 
 ```{=html}
-<div style="width:880px;margin:0 auto;">
+<div class="sim">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
     <div style="display:flex;gap:12px;">
-      <button onclick="laneStart()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">▶ Drive</button>
-      <button onclick="laneNudge()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">💥 Nudge!</button>
-      <button id="laneGyroBtn" onclick="laneToggle()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">gyro fix: OFF</button>
+      <button class="sim-btn teal" data-sim="laneStart">▶ Drive</button>
+      <button class="sim-btn coral" data-sim="laneNudge">💥 Nudge!</button>
+      <button class="sim-btn ghost" id="laneGyroBtn" data-sim="laneToggle">gyro fix: OFF</button>
     </div>
     <div style="font-family:Consolas,monospace;font-size:21px;color:#1C355E;">heading: <span id="laneHdg" style="font-weight:800;color:#FF7A5C;">0</span>&#176;</div>
   </div>
@@ -1057,13 +1014,7 @@ Check the signs with them, don't just assert: error +8 → left runs 468, right 
     <polyline id="laneTrace" points="" fill="none" stroke="#00C9A7" stroke-width="4" stroke-linecap="round"/>
     <g id="laneBot" transform="translate(40,120)">
       <g transform="rotate(90) scale(0.45)">
-        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
-        <rect x="-19" y="-21" width="6" height="14" rx="3" fill="#101820"/>
-        <rect x="13" y="-21" width="6" height="14" rx="3" fill="#101820"/>
-        <rect x="-19" y="6" width="6" height="14" rx="3" fill="#101820"/>
-        <rect x="13" y="6" width="6" height="14" rx="3" fill="#101820"/>
-        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-        <circle cy="-30" r="4" fill="#FFD500"/>
+        <use href="#sim-bot"/>
       </g>
     </g>
   </svg>
@@ -1094,32 +1045,32 @@ Check the signs with them, don't just assert: error +8 → left runs 468, right 
     draw();
     raf = requestAnimationFrame(step);
   }
-  window.laneStart = function(){
-    bot = document.getElementById('laneBot');
-    trace = document.getElementById('laneTrace');
-    hdg = document.getElementById('laneHdg');
+  SIM.def('laneStart', function(){
+    bot = SIM.el('laneBot');
+    trace = SIM.el('laneTrace');
+    hdg = SIM.el('laneHdg');
     if(raf) cancelAnimationFrame(raf);
     reset(); last = null;
     raf = requestAnimationFrame(step);
-  };
-  window.laneNudge = function(){
+  });
+  SIM.def('laneNudge', function(){
     h += (Math.random()<0.5 ? -1 : 1) * (10 + Math.random()*12);
-  };
-  window.laneToggle = function(){
+  });
+  SIM.def('laneToggle', function(){
     on = !on;
-    var b = document.getElementById('laneGyroBtn');
+    var b = SIM.el('laneGyroBtn');
     b.textContent = 'gyro fix: ' + (on ? 'ON' : 'OFF');
     b.style.background = on ? '#625D9C' : '#eef3f8';
     b.style.color = on ? '#fff' : '#1C355E';
     b.style.border = on ? 'none' : '2px solid #1C355E';
-  };
+  });
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Gyro fix **OFF**: one nudge and it rides the wall forever. **ON**: every nudge gets steered right back out. Same robot — the only difference is *watching the error*.
+Gyro fix **OFF**: one nudge and it rides the wall forever. **ON**: every nudge gets steered right back out. Same robot. The only difference is *watching the error*.
 :::
 :::
 
@@ -1136,7 +1087,7 @@ Today's showdown: **Nudge Wars** 💥
 Drive 1.5 m straight while the judge nudges your robot **twice** mid-run. Score = closest final heading to 0° + straightest trace. 3 attempts, best counts.
 :::
 
-- Tune on the bench first — your straight's `4` is a knob too: too soft and a shove sends you wandering; too hot and the trace zig-zags all the way down the lane.
+- Tune on the bench first. Your straight's `4` is a knob too: too soft and a shove sends you wandering, too hot and the trace zig-zags all the way down the lane.
 - Watch one recovery closely: the harder the shove, the harder the fight-back. **The shove *is* the error.**
 
 ::: {.notes}
@@ -1147,13 +1098,13 @@ Format: a 1.5 m taped lane; the judge nudges at roughly the 0.5 m and 1.0 m mark
 
 ::: {.callout-important}
 ## You're done today when…
-One KP turns your robot to **any called angle** — both directions — with your own `gyro_turn_p`; your 1.5 m straight **fights back** through two nudges; and you can say *"the bigger the error, the harder the push"* and predict what a too-small / too-big KP does **before** running it.
+One KP turns your robot to **any called angle**, in both directions, with your own `gyro_turn_p`. Your 1.5 m straight **fights back** through two nudges, and you can say *"the bigger the error, the harder the push"* and predict what a too-small / too-big KP does **before** running it.
 :::
 
 ::: {.fragment .fade-up}
-Tomorrow: put P in a *hurry* and watch it slam past the target — meet the letter that **damps** it. Then a lean P never quite kills — one more letter. Finish the acronym… and start naming moves in a library of your **own**. 📦
+Tomorrow: put P in a *hurry* and watch it slam past the target, then meet the letter that **damps** it. After that, the lean a P never quite kills earns one more letter. You finish the acronym and start naming moves in a library of your **own**. 📦
 :::
 
 ::: {.notes}
-The gate is the plan's D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the KP prediction in their own words — same formula, two applications today (turn + straight); the third is D6's line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins `my_lib.py` (`drive_straight`/`turn_to`) — the `DriveBase` surprise now waits at the D8 reveal (decision #20, re-timed by #26), earned only after the whole library is theirs.
+The gate is the plan's D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the KP prediction in their own words — same formula, two applications today (turn + straight); the third is D6's line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins `movements.py` (`drive_straight`/`turn`) — the `DriveBase` surprise now waits at the D8 reveal (decision #20, re-timed by #26), earned only after the whole library is theirs.
 :::

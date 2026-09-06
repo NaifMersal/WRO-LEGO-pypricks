@@ -18,19 +18,19 @@ Yesterday the robot learned to **see**. Today it learns to **feel**. 🧱
 | 📐 **two eyes square up** | `square_on_line` at the junction |
 
 ::: {.fragment .fade-up}
-🤔 The eye reads the **floor** — but a **wall**? No port left for a distance sensor…
+🤔 The eye reads the **floor**, but what about a **wall**? And we carry no distance sensor…
 :::
 
-⏱️ **Time: 5 minutes — then robots out**
+⏱️ **Time: 5 minutes, then robots out**
 
 ::: {.notes}
-Recap by asking, not telling: "how does the robot know where it is?" Yesterday's answers all live on the floor — the calibrated eye, the P follower, the two-eye square. Today's problem stands upright: walls. No port is free for a distance sensor (all six are spoken for), and that constraint is the day's gift — the drive motors themselves become touch sensors. Arc of the day: feel the wall (stall), back off a measured distance, wrap it in a patrol loop (yesterday's `if` now lives inside a `while`), then bottle `drive_to_wall` + `wall_square` into the library and read the 255 scoresheet the anchor-first way. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15, so the recap is a springboard, not a lecture.
+Recap by asking, not telling: "how does the robot know where it is?" Yesterday's answers all live on the floor — the calibrated eye, the P follower, the two-eye square. Today's problem stands upright: walls. We carry no distance sensor — and be accurate about why, because the easy answer is wrong. It is **not** that the ports ran out: port **A** is free on our robot (the stock kit is the thing with all six full). It is that a distance sensor would buy us nothing the wheels cannot already feel, and a stall is repeatable to the millimetre while an ultrasonic reading is not — so the spare port is better spent on a second eye, or on nothing. The cap that *does* bind us is the **4-motor** limit (§5.2.8), and it binds mechanisms, not sensors: F and B drive, E and C grip, and that is the four. That constraint is the day's gift — the drive motors themselves become touch sensors. Arc of the day: feel the wall (stall), back off a measured distance, wrap it in a patrol loop (yesterday's `if` now lives inside a `while`), then bottle `drive_to_wall` + `wall_square` into the library and read the 255 scoresheet the anchor-first way. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15, so the recap is a springboard, not a lecture.
 :::
 
 ## 🤖 Robots out: Line King rematch 👑
 
-- 🛣️ `follow_line(600)` on the mat's staff lines — **hold the curve**
-- 📐 finish with `square_on_line()` at the junction — **sit square**
+- 🛣️ `follow_line(600)` on the mat's staff lines: **hold the curve**
+- 📐 finish with `square_on_line()` at the junction: **sit square**
 - ⏱️ **15 minutes**, then the robot gets its sense of touch
 
 ::: {.notes}
@@ -39,33 +39,33 @@ Drill-first (decision #22): yesterday's compete replayed as the warm-up, on the 
 
 # B. The Motor Is a Sensor {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
 
-Six ports, all full — but the robot already knows how to **feel**. 🧱
+No distance sensor anywhere on this robot, and it already knows how to **feel**. 🧱
 
 ## Feel it: see the invisible 📉
 
 ```{.python}
-# Run this ALONE first — watch the number, not the robot.
+# Run this ALONE first -- watch the number, not the robot.
 while True:
     print("wheel speed:", left.speed())
     wait(100)
 ```
 
-🤖 **Robots out.** Run the loop, **grab the wheels** — watch it dive. Then the wall board: same dive, no hand.
+🤖 **Robots out.** Run the loop and **grab the wheels**, and watch it dive. Then the wall board: same dive, no hand.
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-The speed dive **is** the wall — every motor has **`stalled()`** and **`run_until_stalled()`**.
+The speed dive **is** the wall, and every motor has **`stalled()`** and **`run_until_stalled()`**.
 :::
 :::
 
 ::: {.notes}
-"Make the invisible visible" — same habit as the gyro heading in Week 1, and this one happens on the real robot, not a slide (the animated version lives in the 🏠 appendix for home replay). Sequence: print loop running → student hand-blocks the wheels → speed crashes → then the same crash against the wall board. Only *after* they've seen the crash do you name the stall tools: `left.stalled()` asks "are you jammed *right now*?", `left.run_until_stalled()` is "roll until you jam" in one call. Point out why this beats an ultrasonic sensor even if we had a free port: a touch via stall is repeatable to the millimetre and never lies about a wall it can "see through."
+"Make the invisible visible" — same habit as the gyro heading in Week 1, and this one happens on the real robot, not a slide (the animated version lives in the 🏠 appendix for home replay). Sequence: print loop running → student hand-blocks the wheels → speed crashes → then the same crash against the wall board. Only *after* they've seen the crash do you name the stall tools: `left.stalled()` asks "are you jammed *right now*?", `left.run_until_stalled()` is "roll until you jam" in one call. Point out why this beats an ultrasonic sensor even though port A is free and we could fit one: a touch via stall is repeatable to the millimetre and never lies about a wall it can "see through."
 :::
 
 ## Fix it: stall = touch, then back off 🧱
 
 ```{.python code-line-numbers="|1|2|3-4|5|6|7"}
-APPROACH_SPEED = 150         # deg/s — gentle, not a crash
+APPROACH_SPEED = 150         # deg/s, gentle, not a crash
 right.run(APPROACH_SPEED)    # right rolls along…
 left.run_until_stalled(APPROACH_SPEED,
                        duty_limit=50)   # …until LEFT jams
@@ -74,7 +74,7 @@ hub.speaker.beep()           # "I arrived"
 drive_straight(-BACKOFF_MM)         # measured, repeatable
 ```
 
-🤖 **Robots out.** Build it, tune `BACKOFF_MM` against the board — this is today's competition in seven lines.
+🤖 **Robots out.** Build it and tune `BACKOFF_MM` against the board. This is today's competition in seven lines.
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
@@ -83,7 +83,7 @@ Gentle touch · wait for the jam · back off a **measured** `BACKOFF_MM`.
 :::
 
 ::: {.notes}
-Stress the gentleness knobs: a low approach speed (≈150 deg/s) and `duty_limit=50` — the duty limit caps how hard the motor is *allowed* to push, so the reading is crisp and the LEGO survives. Driving straight into a wall jams both wheels, so watching ONE motor is enough — `run_until_stalled` blocks on the left while the right just rolls. Line 6 calls their own `drive_straight` with a *negative* distance — the challenge parked at the library day is now urgent: flip the `while` comparison (or mirror it for negatives) in `my_lib.py`, two-minute fix, big payoff. Back-off is measured, not guessed — `BACKOFF_MM = 50` ends exactly 5 cm off the wall, every run. (The pro equivalent, `DriveBase.stalled()`, arrives with the D8 reveal.)
+Stress the gentleness knobs: a low approach speed (≈150 deg/s) and `duty_limit=50` — the duty limit caps how hard the motor is *allowed* to push, so the reading is crisp and the LEGO survives. Driving straight into a wall jams both wheels, so watching ONE motor is enough — `run_until_stalled` blocks on the left while the right just rolls. Line 6 calls their own `drive_straight` with a *negative* distance — the challenge parked at the library day is now urgent: flip the `while` comparison (or mirror it for negatives) in `movements.py`, two-minute fix, big payoff. Back-off is measured, not guessed — `BACKOFF_MM = 50` ends exactly 5 cm off the wall, every run. (The pro equivalent, `DriveBase.stalled()`, arrives with the D8 reveal.)
 :::
 
 # C. Patrol & React {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
@@ -100,7 +100,7 @@ One wall is a fluke. A real run is a **patrol**. 🔁
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-Your code was *right* — it just **stopped too soon.** That's a **loop's** job.
+Your code was *right*. It just **stopped too soon**, and that's a **loop's** job.
 :::
 :::
 
@@ -120,22 +120,22 @@ for lap in range(PATROL_LAPS):          # counted repeat = laps
         wait(10)
     left.stop(); right.stop()
     drive_straight(-BACKOFF_MM)                # measured back-off
-    turn_to(90 * (lap + 1))             # absolute appointment
+    turn(90 * (lap + 1), absolute=True)   # absolute appointment
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Two loops **nested** — `for` counts laps, `while` waits for the wall, the `if` reacts **on the move.**
+Two loops **nested**: `for` counts laps, `while` waits for the wall, and the `if` reacts **on the move.**
 :::
 :::
 
 ::: {.notes}
-Read the shape aloud: outer `for` = "do this lap N times," inner `while not left.stalled()` = "keep rolling until you feel the wall," inner `if` = "and if you cross a staff line on the way, sing out" — yesterday's calibrated threshold, reused as-is. The `if` living *inside* the `while` is the subtle win — reaction happens continuously during motion, not as a stop-and-check. (That's also why this loop uses `left.stalled()` rather than the blocking `run_until_stalled` from this morning — the robot needs to keep *checking things* while it rolls.) `turn_to(90 * (lap + 1))` is the library day's absolute-appointment trick doing its job silently: corner 1 aims at 90, corner 2 at 180 — a bumped corner can't poison the next one. This program is the literal answer key for Gentle Giant's loop bonus. With one board and no table borders yet, patrol two "walls" by moving the board between reps or using a wall + heavy box pair — the loop doesn't care.
+Read the shape aloud: outer `for` = "do this lap N times," inner `while not left.stalled()` = "keep rolling until you feel the wall," inner `if` = "and if you cross a staff line on the way, sing out" — yesterday's calibrated threshold, reused as-is. The `if` living *inside* the `while` is the subtle win — reaction happens continuously during motion, not as a stop-and-check. (That's also why this loop uses `left.stalled()` rather than the blocking `run_until_stalled` from this morning — the robot needs to keep *checking things* while it rolls.) `turn(90 * (lap + 1), absolute=True)` is the library day's absolute-appointment trick doing its job silently: corner 1 aims at 90, corner 2 at 180 — a bumped corner can't poison the next one. This program is the literal answer key for Gentle Giant's loop bonus. With one board and no table borders yet, patrol two "walls" by moving the board between reps or using a wall + heavy box pair — the loop doesn't care.
 :::
 
 # D. Bottle It: Two New Verbs {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
 
-Bottle today's tricks into `my_lib.py` — then read the scoresheet like a pro. 📦
+Bottle today's tricks into `movements.py`, then read the scoresheet like a pro. 📦
 
 ## `drive_to_wall` and `wall_square` join the library 📦 {.code-shrink}
 
@@ -163,28 +163,28 @@ Both wheels flat on the wall → heading **known again**. **The wall never lies.
 :::
 
 ::: {.notes}
-Same promotion ritual as the library day: the morning's loose fix-it lines get names and move into `my_lib.py`, right under `drive_straight` and `turn_to`. Walk `wall_square` slowly — it's the first verb whose *output* is trust, not motion: waiting for BOTH motors to stall means the bumper is flat on the wall, so the physical world just told you your heading exactly; `reset_heading(heading)` writes that truth back into the gyro, and the measured back-off leaves you at a known distance too. Gyro drift accumulates over a 2-minute run — squaring is how Weeks 3–4 missions reset it between tasks, which is why this humble verb outlives almost everything else. Demo: spin the robot a few times by hand (drift injected), wall_square, then a `turn_to(90)` — still true. Table note (decision #23): until the bordered table exists, `wall_square` trains on the fixed board; when the table lands we re-validate it at the true border positions — that's the table-arrival checkpoint.
+Same promotion ritual as the library day: the morning's loose fix-it lines get names and move into `movements.py`, right under `drive_straight` and `turn`. Walk `wall_square` slowly — it's the first verb whose *output* is trust, not motion: waiting for BOTH motors to stall means the bumper is flat on the wall, so the physical world just told you your heading exactly; `reset_heading(heading)` writes that truth back into the gyro, and the measured back-off leaves you at a known distance too. Gyro drift accumulates over a 2-minute run — squaring is how Weeks 3–4 missions reset it between tasks, which is why this humble verb outlives almost everything else. Demo: spin the robot a few times by hand (drift injected), wall_square, then a `turn(90, absolute=True)` — still true. Table note (decision #23): until the bordered table exists, `wall_square` trains on the fixed board; when the table lands we re-validate it at the true border positions — that's the table-arrival checkpoint.
 :::
 
 ## Read the scoresheet: anchor first 🗺️
 
 ```{=html}
-<div style="width:840px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:8px;">
-    <button onclick="scStep()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:18px;font-weight:700;cursor:pointer;">▶ build the score, layer by layer</button>
-    <button onclick="scReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 16px;font-size:16px;font-weight:700;cursor:pointer;">reset</button>
+<div class="sim">
+  <div class="sim-controls">
+    <button class="sim-btn teal" data-sim="scStep">▶ build the score, layer by layer</button>
+    <button class="sim-btn ghost small" data-sim="scReset">reset</button>
   </div>
-  <svg width="820" height="150" viewBox="0 0 820 150" style="display:block;margin:0 auto;">
-    <rect x="30" y="46" width="760" height="46" rx="8" fill="#eef3f8" stroke="#dbe2ea"/>
+  <svg width="820" height="150" viewBox="0 0 820 150">
+    <rect class="board" x="30" y="46" width="760" height="46" rx="8"/>
     <!-- segments: scaled so 255 -> 760px, x start 30 -->
     <g id="scSegs"></g>
     <line x1="432.4" y1="34" x2="432.4" y2="104" stroke="#625D9C" stroke-width="2" stroke-dasharray="5 4"/>
-    <text x="432.4" y="28" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">~135 anchor</text>
+    <text class="label purple" x="432.4" y="28" font-size="12" font-weight="800" text-anchor="middle">&#8776;135 &#183; the gate</text>
     <line x1="551.6" y1="104" x2="551.6" y2="120" stroke="#E96852" stroke-width="2" stroke-dasharray="5 4"/>
-    <text x="551.6" y="134" font-size="12" fill="#E96852" font-weight="800" text-anchor="middle">~175 gated</text>
-    <text x="790" y="134" font-size="12" fill="#1C355E" font-weight="800" text-anchor="end">255 max</text>
+    <text class="label coral" x="551.6" y="134" font-size="12" font-weight="800" text-anchor="middle">&#8776;175 &#183; D24 stretch</text>
+    <text class="label" x="790" y="134" font-size="12" font-weight="800" text-anchor="end">255 max</text>
   </svg>
-  <div id="scMsg" style="text-align:center;font-size:17px;color:#1C355E;font-weight:700;min-height:26px;">the anchor run scores <b>~135 with NO color sensor</b> — that's what we build first.</div>
+  <div id="scMsg" class="sim-msg">the anchor run scores <b>~135 with NO color sensor</b>, and that's what we build first.</div>
 </div>
 <script>
 (function(){
@@ -198,15 +198,14 @@ Same promotion ritual as the library day: the morning's loose fix-it lines get n
     {n:'Random notes',pts:80, c:'#FFB548', tier:2}
   ];
   var msgs=[
-    'the anchor run scores <b>~135 with NO color sensor</b> — that\'s what we build first.',
-    '<b>Anchor ~135</b>: Instruments 45 · Cables 30 · Avoidance 40 · Microphone 20 — zero color needed. 🧱',
-    '<b>+40 fixed notes</b> (green/red) → <b>~175</b>: the gated 5-week deliverable. 🎶',
+    'the anchor run scores <b>~135 with NO color sensor</b>, and that\'s what we build first.',
+    '<b>Anchor ~135</b>: Instruments 45 · Cables 30 · Avoidance 40 · Microphone 20, zero color needed. 🧱',
+    '<b>+40 fixed notes</b> (green/red) → <b>~175</b>: a D24 stretch, taken only after the lock. 🎶',
     '<b>+80 randomized notes</b> → <b>255</b>: the Week-5 stretch. Anchor first, always. 🌈'
   ];
-  function el(id){return document.getElementById(id);}
   function xw(pts){ return pts/TOT*W; }
   function render(){
-    var g=el('scSegs'), html='', x=X0;
+    var html='', x=X0;
     // tier 0 shown at step>=1, tier1 at step>=2, tier2 at step>=3
     for(var i=0;i<segs.length;i++){
       var s=segs[i], w=xw(s.pts);
@@ -216,38 +215,38 @@ Same promotion ritual as the library day: the morning's loose fix-it lines get n
       if(on && w>34) html += '<text x="'+(x+w/2).toFixed(1)+'" y="75" font-size="12" fill="#fff" font-weight="800" text-anchor="middle">'+s.pts+'</text>';
       x += on ? w : 0;
     }
-    g.innerHTML=html;
-    el('scMsg').innerHTML=msgs[Math.min(step,3)];
+    SIM.html('scSegs', html);
+    SIM.html('scMsg', msgs[Math.min(step,3)]);
   }
-  window.scStep=function(){ if(step<3){ step++; render(); } };
-  window.scReset=function(){ step=0; render(); };
+  SIM.def('scStep', function(){ if(step<3){ step++; render(); } });
+  SIM.def('scReset', function(){ step=0; render(); });
   render();
 })();
 </script>
 ```
 
 ::: {.cardbox .teal}
-**135 points, zero color** — never trade a reliable anchor for a shaky full run.
+**135 points, zero color.** Never trade a reliable anchor for a shaky full run.
 :::
 
 ::: {.notes}
-This slide connects the whole bootcamp to the scoresheet — and now the mat is physically in the room, point at the real zones while clicking through the tiers. The load-bearing idea: color is *risk* (lighting, calibration — they watched the numbers move between surfaces yesterday), so we defer every point that needs it. Everything the anchor needs lives color-free: the precise driving and wall verbs this week builds, then the Week-3 team mechanisms — cables, instruments, microphone, avoidance. Fixed notes (+40) arrive Week 4 only after the anchor is locked; randomized notes (+80) are a Week-5 stretch. If a parent asks "why not go for 255 now?": a reliable 175 beats a heroic 255 you land one time in ten — this is a WRO scoring truth, not a confidence thing.
+This slide connects the whole bootcamp to the scoresheet — and now the mat is physically in the room, point at the real zones while clicking through the tiers. The load-bearing idea: color is *risk* (lighting, calibration — they watched the numbers move between surfaces yesterday), so we defer every point that needs it. Everything the anchor needs lives color-free: the precise driving and wall verbs this week builds, then the Week-3 team mechanisms — cables, instruments, microphone, avoidance. Fixed notes (+40) are a **D24** stretch, taken only after the ×20 lock passes; the randomized notes (+80) leave the five weeks entirely and open the continuation season (decision #30). If a parent asks "why not go for 255 now?": the gated deliverable is the ~135 anchor landed 20 times at 90%+ (decision #30), and a reliable 135 beats a heroic 255 you land one time in ten — this is a WRO scoring truth, not a confidence thing.
 :::
 
 # E. Compete & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
 
-Today's showdown: **Gentle Giant** 🐘 — on the real mat, against the real wall board.
+Today's showdown: **Gentle Giant** 🐘, on the real mat against the real wall board.
 
-## Gentle Giant 🐘 — live on the mat
+## Gentle Giant 🐘, live on the mat
 
 ::: {.callout-important}
 ## The challenge
-Feel the wall, back off, stop **exactly 5 cm** away. Closest wins — **loop bonus** for a second wall in the same run.
+Feel the wall, back off, stop **exactly 5 cm** away. Closest wins, with a **loop bonus** for a second wall in the same run.
 :::
 
 - Predict your `BACKOFF_MM` out loud, then prove it
-- 3 attempts, best counts — judge measures nose-to-board
-- 🎸 **Roadie preview (fast squads):** push a **cable brick** into the grey zone — library calls only
+- 3 attempts, best counts. The judge measures nose-to-board
+- 🎸 **Roadie preview (fast squads):** push a **cable brick** into the grey zone, using library calls only
 
 ::: {.notes}
 The competition proves the day's whole chain: stall detection, calibrated back-off, and (for the bonus) the patrol loop — all on the real mat with the board standing in for the missing border (decision #23). The Roadie preview is decision #22's mission-preview pattern: the cable task is pure pushing, so the bare chassis can score it — squads discover that the *approach angle* decides whether the cable stays upright, which is exactly the W3 mechanism conversation, planted early for free. Keep the leaderboard warm but light: most-improved call-out as always. (A practice sim of Gentle Giant lives in the 🏠 appendix.)
@@ -258,219 +257,202 @@ The competition proves the day's whole chain: stall detection, calibrated back-o
 ::: {.callout-important}
 ## You're done today when…
 - Your stall + back-off patrol works on **two walls** in one run
-- **`drive_to_wall`** and **`wall_square`** live in your `my_lib.py`
+- **`drive_to_wall`** and **`wall_square`** live in your `movements.py`
 - You can say **why the anchor run needs no color sensor**
 :::
 
 ::: {.fragment .fade-up}
-Next: five files become **one clean `my_lib.py`** — and the pros' `DriveBase` joins the team. 📦
+Next: five files become **one clean `movements.py`**, and the pros' `DriveBase` joins the team. 📦
 :::
 
 ::: {.notes}
-The gate has three legs: the reactive patrol (stall + calibrated back-off + loop across two walls), the two new library verbs demonstrated from `my_lib.py` (plus the quick oral check: what does `duty_limit` protect?), and the scoring understanding (anchor-first). All three are observable at the bench in under 20 minutes with five robots. Optional ½-block if time allows — the plan's "Good Practices" beat gets its full day at the consolidation session, but a taste here is cheap insurance: pseudocode the patrol in plain words first, comment the threshold with its calibration numbers, and back the working file up before the consolidation day. Then tease tomorrow: five scattered files become one clean module with one constants block — and the pros' `DriveBase` finally joins the team, driving everything the library taught by hand.
+The gate has three legs: the reactive patrol (stall + calibrated back-off + loop across two walls), the two new library verbs demonstrated from `movements.py` (plus the quick oral check: what does `duty_limit` protect?), and the scoring understanding (anchor-first). All three are observable at the bench in under 20 minutes with five robots. Optional ½-block if time allows — the plan's "Good Practices" beat gets its full day at the consolidation session, but a taste here is cheap insurance: pseudocode the patrol in plain words first, comment the threshold with its calibration numbers, and back the working file up before the consolidation day. Then tease tomorrow: five scattered files become one clean module with one constants block — and the pros' `DriveBase` finally joins the team, driving everything the library taught by hand.
 :::
 
 # 🏠 Explore at Home {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #9B8EC0)"}
 
-Optional replays — **nothing tomorrow depends on these.** 🎮
+Optional replays. **Nothing tomorrow depends on these.** 🎮
 
 ## 🏠 Watch the speed die (sim) 📉
 
 ```{=html}
-<div style="width:820px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:6px;">
-    <button onclick="wsRun()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive the robot into the wall</button>
+<div class="sim">
+  <div class="sim-controls">
+    <button class="sim-btn" data-sim="wsRun">▶ drive the robot into the wall</button>
   </div>
-  <div style="display:flex;justify-content:center;align-items:center;gap:14px;">
+  <div class="sim-stage">
     <svg width="200" height="120" viewBox="0 0 230 150">
-      <rect x="8" y="40" width="180" height="70" rx="8" fill="#eef3f8"/>
+      <rect class="ground" x="8" y="40" width="180" height="70" rx="8"/>
       <rect id="wsWall" x="188" y="24" width="18" height="100" rx="4" fill="#625D9C"/>
-      <g id="wsBot" transform="translate(30,75)"><g transform="rotate(90) scale(0.5)">
-        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
-        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-        <circle cy="-30" r="4" fill="#FFD500"/>
-      </g></g>
-      <text x="197" y="18" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">wall</text>
+      <g id="wsBot" transform="translate(30,75)"><use href="#sim-bot-mini" transform="rotate(90) scale(0.5)"/></g>
+      <text class="label purple" x="197" y="18" font-size="12" font-weight="800" text-anchor="middle">wall</text>
     </svg>
     <svg width="560" height="165" viewBox="0 0 560 200">
-      <line x1="50" y1="165" x2="540" y2="165" stroke="#1C355E" stroke-width="3"/>
-      <line x1="50" y1="165" x2="50" y2="20" stroke="#1C355E" stroke-width="3"/>
-      <text x="22" y="95" font-size="14" fill="#1C355E" font-weight="700" transform="rotate(-90 22 95)" text-anchor="middle">wheel speed</text>
-      <text x="500" y="188" font-size="14" fill="#1C355E" font-weight="700" text-anchor="middle">time →</text>
+      <line class="axis" x1="50" y1="165" x2="540" y2="165"/>
+      <line class="axis" x1="50" y1="165" x2="50" y2="20"/>
+      <text class="label" x="22" y="95" font-size="14" font-weight="700" transform="rotate(-90 22 95)" text-anchor="middle">wheel speed</text>
+      <text class="label" x="500" y="188" font-size="14" font-weight="700" text-anchor="middle">time →</text>
       <line x1="50" y1="150" x2="540" y2="150" stroke="#E96852" stroke-width="2" stroke-dasharray="7 6"/>
-      <text x="536" y="145" font-size="13" fill="#E96852" font-weight="700" text-anchor="end">stall level</text>
-      <polyline id="wsTrace" points="" fill="none" stroke="#00AE8D" stroke-width="4"/>
-      <text id="wsFlag" x="300" y="45" font-size="18" fill="#E96852" font-weight="800" text-anchor="middle" opacity="0">🧱 speed hit 0 → the motor felt the wall</text>
+      <text class="label coral" x="536" y="145" font-size="13" font-weight="700" text-anchor="end">stall level</text>
+      <polyline id="wsTrace" class="trace" points="" stroke="#00AE8D" stroke-width="4"/>
+      <text id="wsFlag" class="label coral" x="300" y="45" font-size="18" font-weight="800" text-anchor="middle" opacity="0">🧱 speed hit 0 → the motor felt the wall</text>
     </svg>
   </div>
 </div>
 <script>
 (function(){
-  var raf=null, last=null;
   var X0=50, X1=540, YB=165, TSPAN=3.2, VMAX=180, WALLX=150;
-  function el(id){return document.getElementById(id);}
+  var trace=SIM.trace('wsTrace');
   function yOf(v){ return YB - (v/VMAX)*(YB-25); }
-  window.wsRun=function(){
-    var t=0, v=0, botx=30, pts=[], done=false, hit=false; last=null;
-    el('wsTrace').setAttribute('points',''); el('wsFlag').setAttribute('opacity','0');
-    el('wsBot').setAttribute('transform','translate(30,75)');
-    function frame(now){
-      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
-      var sd=0.008, n=Math.max(1,Math.round(dt/sd));
-      for(var i=0;i<n && !done;i++){
+  SIM.def('wsRun', function(){
+    var t=0, v=0, botx=30, hit=false;
+    trace.clear();
+    SIM.set('wsFlag','opacity','0');
+    SIM.tf('wsBot','translate(30,75)');
+    SIM.loop('ws', {
+      dt: 0.008,
+      step: function(dt){
         if(botx < WALLX){ v += (150-v)*0.12; botx += v*0.02; }   // rolling toward the wall
         else { hit=true; v *= 0.72; }                            // wheels jammed → speed collapses
-        t += sd;
-        if(hit && v < 12) done=true;
-        if(t > TSPAN) done=true;
-      }
-      var x=X0+(t/TSPAN)*(X1-X0);
-      pts.push(x.toFixed(1)+','+yOf(v).toFixed(1));
-      el('wsTrace').setAttribute('points',pts.join(' '));
-      var bx=30 + (Math.min(botx,WALLX)/WALLX)*143;
-      el('wsBot').setAttribute('transform','translate('+bx.toFixed(1)+',75)');
-      if(!done){ raf=requestAnimationFrame(frame); }
-      else if(hit){ raf=null; el('wsFlag').setAttribute('opacity','1'); }
-    }
-    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
-  };
+        t += dt;
+        return (hit && v < 12) || t > TSPAN;
+      },
+      draw: function(){
+        trace.push(X0+(t/TSPAN)*(X1-X0), yOf(v));
+        SIM.tf('wsBot','translate('+(30 + (Math.min(botx,WALLX)/WALLX)*143).toFixed(1)+',75)');
+      },
+      done: function(){ if(hit) SIM.set('wsFlag','opacity','1'); }
+    });
+  });
 })();
 </script>
 ```
 
-The same dive you saw on your real robot — the speed trace collapsing *is* the wall.
+The same dive you saw on your real robot. The speed trace collapsing *is* the wall.
 
 ## 🏠 One-shot vs patrol (sim) 🔁
 
 ```{=html}
-<div style="width:820px;margin:0 auto;">
-  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
-    <button onclick="ptRun('once')" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ one-shot <code style="color:#fff;">if</code></button>
-    <button onclick="ptRun('loop')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ patrol loop</button>
+<div class="sim">
+  <div class="sim-controls">
+    <button class="sim-btn coral" data-sim="ptRun" data-sim-arg="once">▶ one-shot <code>if</code></button>
+    <button class="sim-btn teal" data-sim="ptRun" data-sim-arg="loop">▶ patrol loop</button>
   </div>
-  <svg width="270" height="270" viewBox="0 0 360 360" style="display:block;margin:0 auto;background:#eef3f8;border-radius:14px;">
+  <svg class="panel" width="270" height="270" viewBox="0 0 360 360">
     <rect x="40" y="40" width="280" height="280" fill="none" stroke="#625D9C" stroke-width="8"/>
-    <text id="ptW1" x="180" y="30" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle">wall 1</text>
-    <text id="ptW2" x="336" y="184" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle" transform="rotate(90 336 184)">wall 2</text>
-    <text id="ptW3" x="180" y="344" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle">wall 3</text>
-    <text id="ptW4" x="24" y="184" font-size="13" fill="#9B8EC0" font-weight="800" text-anchor="middle" transform="rotate(-90 24 184)">wall 4</text>
-    <polyline id="ptTrace" points="" fill="none" stroke="#00C9A7" stroke-width="3" stroke-linejoin="round"/>
-    <g id="ptBot" transform="translate(180,300)"><g transform="scale(0.55)">
-      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
-      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-      <circle cy="-30" r="4" fill="#FFD500"/>
-    </g></g>
-    <text id="ptMsg" x="180" y="185" font-size="17" font-weight="800" text-anchor="middle" fill="#1C355E"></text>
+    <text id="ptW1" class="label dim" x="180" y="30" font-size="13" font-weight="800" text-anchor="middle">wall 1</text>
+    <text id="ptW2" class="label dim" x="336" y="184" font-size="13" font-weight="800" text-anchor="middle" transform="rotate(90 336 184)">wall 2</text>
+    <text id="ptW3" class="label dim" x="180" y="344" font-size="13" font-weight="800" text-anchor="middle">wall 3</text>
+    <text id="ptW4" class="label dim" x="24" y="184" font-size="13" font-weight="800" text-anchor="middle" transform="rotate(-90 24 184)">wall 4</text>
+    <polyline id="ptTrace" class="trace" points="" stroke="#00C9A7" stroke-width="3"/>
+    <g id="ptBot" transform="translate(180,300)"><use href="#sim-bot-mini" transform="scale(0.55)"/></g>
+    <text id="ptMsg" class="label" x="180" y="185" font-size="17" font-weight="800" text-anchor="middle"></text>
   </svg>
 </div>
 <script>
 (function(){
-  var raf=null, last=null;
   var NOSE=16.5, LO=44, HI=316;      // wall inner edges; the nose leads by 16.5px
-  function el(id){return document.getElementById(id);}
+  var wallIds=['ptW1','ptW2','ptW3','ptW4'];
+  var trace=SIM.trace('ptTrace');
   // corner heading pattern: start bottom-center facing up (-90)
-  window.ptRun=function(mode){
+  SIM.def('ptRun', function(mode){
     var laps = mode==='loop' ? 4 : 1;
-    var x=180, y=300, h=-90, pts=['180,300'];
-    var leg=0, phase='drive', prog=0;
-    var col = mode==='loop' ? '#00C9A7' : '#E96852';
-    el('ptTrace').setAttribute('stroke',col); el('ptTrace').setAttribute('points','180,300');
-    el('ptMsg').textContent=''; last=null;
-    ['ptW1','ptW2','ptW3','ptW4'].forEach(function(id){ el(id).setAttribute('fill','#9B8EC0'); });
-    var wallIds=['ptW1','ptW2','ptW3','ptW4'];
-    function frame(now){
-      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
-      var r=h*Math.PI/180, sp=150;
-      if(phase==='drive'){
-        x+=sp*Math.cos(r)*dt; y+=sp*Math.sin(r)*dt;
-        var nx=x+Math.cos(r)*NOSE, ny=y+Math.sin(r)*NOSE;   // where the nose is
-        if(nx<LO||nx>HI||ny<LO||ny>HI){                     // nose met a wall → stall
-          if(nx<LO)x=LO+NOSE; if(nx>HI)x=HI-NOSE;
-          if(ny<LO)y=LO+NOSE; if(ny>HI)y=HI-NOSE;
-          el(wallIds[leg]).setAttribute('fill','#E96852'); phase='back'; prog=0;
+    var x=180, y=300, h=-90;
+    var leg=0, phase='drive';
+    var prog=0, ended=false;
+    SIM.set('ptTrace','stroke', mode==='loop' ? '#00C9A7' : '#E96852');
+    trace.clear(); trace.push(180,300);
+    SIM.text('ptMsg','');
+    wallIds.forEach(function(id){ SIM.tone(id,'dim'); });
+    SIM.loop('pt', {
+      step: function(dt){
+        var r=h*Math.PI/180, sp=150;
+        if(phase==='drive'){
+          x+=sp*Math.cos(r)*dt; y+=sp*Math.sin(r)*dt;
+          var nx=x+Math.cos(r)*NOSE, ny=y+Math.sin(r)*NOSE;   // where the nose is
+          if(nx<LO||nx>HI||ny<LO||ny>HI){                     // nose met a wall → stall
+            if(nx<LO)x=LO+NOSE; if(nx>HI)x=HI-NOSE;
+            if(ny<LO)y=LO+NOSE; if(ny>HI)y=HI-NOSE;
+            SIM.tone(wallIds[leg],'coral'); phase='back'; prog=0;
+          }
+          trace.push(x,y);
+        } else if(phase==='back'){
+          x-=sp*Math.cos(r)*dt; y-=sp*Math.sin(r)*dt; prog+=sp*dt;
+          trace.push(x,y);
+          if(prog>=32){ leg++; phase='turn'; }
+        } else if(phase==='turn'){
+          if(leg>=laps){ ended=true; return true; }
+          h+=90; phase='drive';
         }
-        pts.push(x.toFixed(1)+','+y.toFixed(1)); el('ptTrace').setAttribute('points',pts.join(' '));
-      } else if(phase==='back'){
-        x-=sp*Math.cos(r)*dt; y-=sp*Math.sin(r)*dt; prog+=sp*dt;
-        pts.push(x.toFixed(1)+','+y.toFixed(1)); el('ptTrace').setAttribute('points',pts.join(' '));
-        if(prog>=32){ leg++; phase='turn'; }
-      } else if(phase==='turn'){
-        if(leg>=laps){ raf=null; finish(mode); return; }
-        h+=90; phase='drive';
+        return false;
+      },
+      draw: function(){
+        if(ended) return;
+        SIM.tf('ptBot','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(h+90).toFixed(1)+')');
+      },
+      done: function(){
+        if(mode==='once'){ SIM.tone('ptMsg','coral'); SIM.text('ptMsg','program ended 💤 · walls 2–4 never happen'); }
+        else { SIM.tone('ptMsg','teal'); SIM.text('ptMsg','4 walls patrolled ✓'); }
       }
-      el('ptBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(h+90).toFixed(1)+')');
-      raf=requestAnimationFrame(frame);
-    }
-    function finish(m){
-      if(m==='once'){ el('ptMsg').setAttribute('fill','#E96852'); el('ptMsg').textContent='program ended 💤 — walls 2–4 never happen'; }
-      else { el('ptMsg').setAttribute('fill','#00AE8D'); el('ptMsg').textContent='4 walls patrolled ✓'; }
-    }
-    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
-  };
+    });
+  });
 })();
 </script>
 ```
 
-Your code was *right* — it just stopped too soon. Watch the loop keep the decision alive.
+Your code was *right*. It just stopped too soon. Watch the loop keep the decision alive.
 
 ## 🏠 Gentle Giant practice (sim) 🐘
 
 ```{=html}
-<div style="width:840px;margin:0 auto;">
-  <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px;">
-    <button onclick="ggRun()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ stall &amp; back off</button>
-    <span style="font-size:16px;color:#1C355E;font-weight:700;">BACKOFF_MM: <b><span id="ggV">50</span></b></span>
-    <input type="range" min="0" max="110" step="1" value="50" oninput="ggSet(this.value)" style="width:200px;accent-color:#00AE8D;">
+<div class="sim">
+  <div class="sim-controls">
+    <button class="sim-btn coral" data-sim="ggRun">▶ stall &amp; back off</button>
+    <span class="sim-tag">BACKOFF_MM: <b><span id="ggV">50</span></b></span>
+    <input type="range" min="0" max="110" step="1" value="50" data-sim-input="ggSet">
   </div>
-  <svg width="820" height="150" viewBox="0 0 820 150" style="display:block;margin:0 auto;">
-    <rect x="20" y="48" width="770" height="66" rx="10" fill="#eef3f8"/>
+  <svg width="820" height="150" viewBox="0 0 820 150">
+    <rect class="ground" x="20" y="48" width="770" height="66" rx="10"/>
     <rect x="762" y="34" width="20" height="94" rx="4" fill="#625D9C"/>
-    <text x="772" y="26" font-size="12" fill="#625D9C" font-weight="800" text-anchor="middle">wall</text>
+    <text class="label purple" x="772" y="26" font-size="12" font-weight="800" text-anchor="middle">wall</text>
     <!-- 5 cm target zone: 50 mm before the wall. scale 4 px/mm -> 200px -->
     <line x1="562" y1="40" x2="562" y2="122" stroke="#00AE8D" stroke-width="3" stroke-dasharray="6 5"/>
-    <text x="562" y="140" font-size="12" fill="#00AE8D" font-weight="800" text-anchor="middle">5 cm mark 🎯</text>
-    <g id="ggBot" transform="translate(60,81)"><g transform="rotate(90) scale(0.5)">
-      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
-      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-      <circle cy="-30" r="4" fill="#FFD500"/>
-    </g></g>
+    <text class="label teal" x="562" y="140" font-size="12" font-weight="800" text-anchor="middle">5 cm mark 🎯</text>
+    <g id="ggBot" transform="translate(60,81)"><use href="#sim-bot-mini" transform="rotate(90) scale(0.5)"/></g>
   </svg>
-  <div id="ggMsg" style="text-align:center;font-family:Consolas,monospace;font-size:18px;color:#1C355E;font-weight:700;min-height:26px;">set your back-off, then run — 50 mm lands you on the mark.</div>
+  <div id="ggMsg" class="sim-msg mono">set your back-off, then run. 50 mm lands you on the mark.</div>
 </div>
 <script>
 (function(){
-  var raf=null, last=null, backoff=50;
+  var backoff=50;
   var WALLX=762, PXMM=4, NOSE=15;        // 4 px per mm; wall face at x=762; nose leads by 15px
-  function el(id){return document.getElementById(id);}
-  window.ggSet=function(v){ backoff=parseInt(v,10); el('ggV').textContent=v; };
-  window.ggRun=function(){
-    var x=60, phase='fwd', bo=backoff; last=null;
-    el('ggMsg').style.color='#1C355E'; el('ggMsg').textContent='rolling in…';
-    var touchX = WALLX - NOSE;           // nose touches wall
-    function frame(now){
-      var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
-      if(phase==='fwd'){
-        x += 320*dt;
-        if(x>=touchX){ x=touchX; phase='stall'; el('ggMsg').textContent='🧱 stalled — backing off '+bo+' mm'; }
-      } else if(phase==='back'){
-        x -= 260*dt;
-        if(x <= touchX - bo*PXMM){ x=touchX - bo*PXMM; phase='done'; }
-      } else if(phase==='stall'){ phase='back'; }
-      el('ggBot').setAttribute('transform','translate('+x.toFixed(1)+',81) rotate(90)');
-      if(phase==='done'){
-        raf=null;
+  var touchX = WALLX - NOSE;             // nose touches wall
+  SIM.def('ggSet', function(v){ backoff=parseInt(v,10); SIM.text('ggV', v); });
+  SIM.def('ggRun', function(){
+    var x=60, phase='fwd', bo=backoff;
+    SIM.msg('ggMsg','rolling in…');
+    SIM.loop('gg', {
+      step: function(dt){
+        if(phase==='fwd'){
+          x += 320*dt;
+          if(x>=touchX){ x=touchX; phase='stall'; SIM.msg('ggMsg','🧱 stalled, backing off '+bo+' mm'); }
+        } else if(phase==='back'){
+          x -= 260*dt;
+          if(x <= touchX - bo*PXMM){ x=touchX - bo*PXMM; return true; }
+        } else if(phase==='stall'){ phase='back'; }
+        return false;
+      },
+      draw: function(){ SIM.tf('ggBot','translate('+x.toFixed(1)+',81) rotate(90)'); },
+      done: function(){
         var gapMm = Math.round((WALLX - (x+NOSE))/PXMM);   // distance nose→wall
         var err = Math.abs(gapMm-50);
-        if(err<=1){ el('ggMsg').style.color='#00AE8D'; el('ggMsg').innerHTML='landed <b>'+gapMm+' mm</b> off the wall — bullseye on 5 cm 🎯'; }
-        else { el('ggMsg').style.color='#E96852'; el('ggMsg').innerHTML='landed <b>'+gapMm+' mm</b> off — <b>'+err+' mm</b> from the 5 cm mark. Re-tune BACKOFF_MM.'; }
-        return;
+        if(err<=1){ SIM.msg('ggMsg','landed <b>'+gapMm+' mm</b> off the wall · bullseye on 5 cm 🎯','good'); }
+        else { SIM.msg('ggMsg','landed <b>'+gapMm+' mm</b> off, <b>'+err+' mm</b> from the 5 cm mark. Re-tune BACKOFF_MM.','bad'); }
       }
-      raf=requestAnimationFrame(frame);
-    }
-    if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
-  };
+    });
+  });
 })();
 </script>
 ```
 
-Replay today's competition — slide `BACKOFF_MM` off 50 and watch the score suffer.
+Replay today's competition. Slide `BACKOFF_MM` off 50 and watch the score suffer.

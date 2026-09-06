@@ -1,0 +1,238 @@
+/*
+  Robot Rockstars sim kit -- shared chrome for the interactive simulations
+  embedded in the decks under slides/.
+
+  Deliberately NOT part of sdaia.scss: that file is the SDAIA brand bundle and
+  is kept in sync with .claude/skills/author-verify-slides/bundle/. These
+  classes are project-specific (robot sims), so they live here and are added
+  as a second theme layer in _quarto.yml.
+
+  Pair with slides_template/assets/sim-kit.html, which supplies the matching
+  `SIM` JavaScript helpers and the shared `#sim-bot` glyph.
+*/
+
+/*-- scss:rules --*/
+
+:root {
+  --sim-ground: #eef3f8;   /* the pale board every sim draws on */
+  --sim-line:   #dbe2ea;
+  --sim-gold:   #FFD500;   /* the bot's status light */
+  --sim-mono:   "JetBrains Mono", "Fira Code", Consolas, monospace;
+  /* ONE frame for every sim. Set to the widest the decks used (990px) rather
+     than an average: the frame only centres the sim, so a wider one changes
+     nothing visually, while a narrower one makes .sim-stage wrap and drops
+     a panel onto a second row. */
+  --sim-width:  980px;
+}
+
+/* ── Frame ──────────────────────────────────────────────────────────── */
+
+.reveal .sim {
+  width: min(var(--sim-width), 100%);
+  margin: 0 auto;
+}
+
+/* Centre only a top-level panel. Scoped to a direct child on purpose: `auto`
+   margins on a flex item absorb the row's free space, so an unscoped
+   `margin: 0 auto` would fight .sim-stage's `gap` and push the panels apart. */
+.reveal .sim > svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.reveal .sim-stage > svg { display: block; }
+
+/* The row of controls above a sim. */
+.reveal .sim-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+/* The row of SVG panels that makes up the sim itself. */
+/* A stage is a single row on purpose. The hand-written stages did not wrap, and
+   letting one wrap silently re-lays the sim vertically and squashes the slide. */
+.reveal .sim-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────── */
+/* Two shapes: filled (default) and .ghost (outlined). Four brand accents.
+   These replace 95 hand-styled buttons that carried 71 distinct style
+   strings, all of them the same two designs with jittered padding. */
+
+.reveal .sim-btn {
+  background: var(--sdaia-navy);
+  color: #fff;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 8px 20px;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: filter .12s ease, transform .12s ease;
+}
+
+.reveal .sim-btn:hover  { filter: brightness(1.08); }
+.reveal .sim-btn:active { transform: translateY(1px); }
+
+.reveal .sim-btn.coral  { background: var(--sdaia-coral); }
+.reveal .sim-btn.teal   { background: var(--sdaia-teal); }
+.reveal .sim-btn.purple { background: var(--sdaia-purple); }
+
+/* Inline code inside a button label must not pick up the code-block skin. */
+.reveal .sim-btn code {
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Listed last so `class="sim-btn teal ghost"` resolves to the outlined shape. */
+.reveal .sim-btn.ghost {
+  background: var(--sim-ground);
+  color: var(--sdaia-navy);
+  border-color: var(--sdaia-navy);
+}
+
+/* Three sizes, taken from what the decks actually used: a regular control, a
+   compact one for dense rows of presets, and a tiny inline chip. Sized by the
+   original vertical padding, which separated the clusters far more cleanly than
+   font-size did. */
+.reveal .sim-btn.small { padding: 6px 14px; font-size: 16px; }
+.reveal .sim-btn.tiny  { padding: 2px 9px;  font-size: 13px; border-width: 1px; }
+
+/* Selected state for a row of preset buttons (the gear-tooth and polygon-side
+   pickers). Toggle the class from JS -- never by writing element.style. */
+.reveal .sim-btn.on {
+  background: var(--sdaia-teal);
+  border-color: var(--sdaia-teal);
+  color: #fff;
+}
+
+/* A small label sitting in the control row beside a button or slider. */
+.reveal .sim-tag {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sdaia-navy);
+}
+
+.reveal .sim input[type="range"] {
+  accent-color: var(--sdaia-teal);
+  width: 200px;
+}
+
+/* ── Readouts ───────────────────────────────────────────────────────── */
+
+/* The monospace panel that sits beside a stage and shows live numbers. */
+.reveal .sim-readout {
+  font-family: var(--sim-mono);
+  font-size: 20px;
+  color: var(--sdaia-navy);
+  min-width: 300px;
+  text-align: left;
+}
+
+/* The one-line coach message under a sim. Tone is set from JS via
+   SIM.msg(id, text, 'good' | 'bad' | 'note') -- never with a colour literal. */
+.reveal .sim-msg {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--sdaia-navy);
+  min-height: 26px;
+}
+
+.reveal .sim-msg.mono { font-family: var(--sim-mono); font-size: 18px; }
+.reveal .sim-msg.good { color: var(--sdaia-teal); }
+.reveal .sim-msg.bad  { color: var(--sdaia-coral); }
+.reveal .sim-msg.note { color: var(--sdaia-purple); }
+
+/* A progress bar with a target tick: the fill is driven from JS by width. */
+.reveal .sim-bar {
+  height: 20px;
+  background: var(--sim-ground);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.reveal .sim-bar-fill {
+  height: 100%;
+  width: 0;
+  background: var(--sdaia-coral);
+  opacity: .55;
+}
+
+.reveal .sim-bar-mark {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: var(--sdaia-teal);
+}
+
+/* A strip of code shown inside a sim (not a Quarto code block). */
+.reveal .sim-code {
+  background: var(--sim-ground);
+  border-radius: 12px;
+  border-left: 5px solid var(--sdaia-coral);
+  padding: 10px 16px;
+  font-family: var(--sim-mono);
+  font-size: 15px;
+  color: var(--sdaia-navy);
+}
+
+/* Highlighter for a term inside sim prose (was `background:#FFD50055`). */
+.reveal .hl {
+  background: rgba(255, 213, 0, .33);
+  font-weight: 800;
+}
+
+/* Emphasised inline term in a brand colour. Replaces the ~30 hand-written
+   `font-weight:800;color:#RRGGBB` spans scattered through the decks. */
+.reveal .em-coral  { color: var(--sdaia-coral);  font-weight: 800; }
+.reveal .em-teal   { color: var(--sdaia-teal);   font-weight: 800; }
+.reveal .em-purple { color: var(--sdaia-purple); font-weight: 800; }
+.reveal .em-navy   { color: var(--sdaia-navy);   font-weight: 800; }
+
+/* ── SVG helpers ────────────────────────────────────────────────────── */
+/* Use as class= on SVG elements so the sim markup carries geometry only. */
+
+.reveal .sim svg .ground { fill: var(--sim-ground); }
+.reveal .sim svg .board  { fill: var(--sim-ground); stroke: var(--sim-line); }
+.reveal .sim svg .axis   { stroke: var(--sdaia-navy); stroke-width: 3; }
+
+/* A trace carries only the boilerplate that never varies. `stroke` and
+   `stroke-width` stay as SVG attributes on purpose: several sims recolour a
+   trace at run time with setAttribute, and a stylesheet `stroke` would win
+   over the attribute and silently freeze the colour. */
+.reveal .sim svg .trace { fill: none; stroke-linejoin: round; }
+
+/* `.label` sets colour and nothing else. font-size and font-weight stay as SVG
+   attributes: sims range over 12-18 px and 700-800, and a CSS declaration here
+   would override every one of those attributes at once. */
+.reveal .sim svg .label { fill: var(--sdaia-navy); }
+
+.reveal .sim svg .label.teal   { fill: var(--sdaia-teal); }
+.reveal .sim svg .label.coral  { fill: var(--sdaia-coral); }
+.reveal .sim svg .label.purple { fill: var(--sdaia-purple); }
+.reveal .sim svg .label.navy   { fill: var(--sdaia-navy); }
+.reveal .sim svg .label.dim    { fill: var(--sdaia-purple-on-dark); }
+
+/* An SVG that is itself a panel: the field and track views sit on the ground
+   colour rather than drawing a backing rect. */
+.reveal .sim svg.panel {
+  background: var(--sim-ground);
+  border-radius: 14px;
+}

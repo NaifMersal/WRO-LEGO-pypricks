@@ -1,6 +1,6 @@
 ---
 title: "The Setlist"
-subtitle: "Day 9 · Robot Rockstars · SPIKE Prime + Pybricks"
+subtitle: "Day 16 · Robot Rockstars · SPIKE Prime + Pybricks"
 date: today
 format: revealjs
 ---
@@ -13,13 +13,13 @@ Your library is one clean module and it survived the gauntlet. Today the *missio
 
 | You have | What it does |
 |---|---|
-| 📦 **one `my_lib.py`** | every verb in one module — one constants block tunes them all |
-| 🚗 **moving verbs** | `drive_straight` · `turn_to` — watched by *your* PD loop |
-| 🧱 **wall verbs** | `drive_to_wall` · `wall_square` — the motor as a touch sensor |
-| 👀 **line verbs** | `follow_line` · `square_on_line` — the mat as a map |
+| 📦 **one `movements.py`** | every verb in one module, with one constants block to tune them all |
+| 🚗 **moving verbs** | `drive_straight` · `robot.turn`, watched by the gyro |
+| 🧱 **wall verbs** | `drive_to_wall` · `wall_square`, the motor as a touch sensor |
+| 👀 **line verbs** | `follow_line` · `square_on_line`, the mat as a map |
 
 ::: {.fragment .fade-up}
-🤔 The gauntlet proved every verb works *alone*. A competition run is verbs **in a row** — and the row keeps changing. Today: how pros hold a plan that has to change in seconds.
+🤔 The gauntlet proved every verb works *alone*. A competition run is verbs **in a row**, and the row keeps changing. Today: how pros hold a plan that has to change in seconds.
 :::
 
 ⏱️ **Time: 10 minutes**
@@ -30,17 +30,17 @@ Recap by asking: name the verbs, who tuned what, which constant fixes which move
 
 # B. The Plan That Couldn't Change {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
 
-Your verbs work. Now the judge calls a *sequence* — and then changes it. 😈
+Your verbs work. Now the judge calls a *sequence*, then changes it. 😈
 
 ## Unplugged: the pigeonholes 📮
 
 ::: {.qbox}
-[Six numbered boxes on the bench, a pile of colored bricks. "Red into box 0. Blue into box 2. What's in box 1? Swap 0 and 3. Add a green one at the end — which box did it land in?"]{.qtitle}
+[Six numbered boxes on the bench, a pile of colored bricks. "Red into box 0. Blue into box 2. What's in box 1? Swap 0 and 3. Add a green one at the end. Which box did it land in?"]{.qtitle}
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-You just used every list skill: a **numbered row of slots**, filled in order, **counting from 0** — read a slot by its number (**index**), walk the row front to back (**iterate**), grow it at the end (**append**). Python calls this row a **list**. No laptop needed — you already think this way.
+You just used every list skill: a **numbered row of slots**, filled in order, **counting from 0**. Read a slot by its number (**index**), walk the row front to back (**iterate**), grow it at the end (**append**). Python calls this row a **list**, and you already think this way.
 :::
 :::
 
@@ -51,13 +51,13 @@ Run it physically before any code — 5 minutes, real boxes (or taped squares) a
 ## Break it: the pasted plan 🔥 {.code-shrink}
 
 ::: {.qbox}
-[The judge calls: *cross the stage · face the band · square on the wall.* You paste it as one block. Then: **"Actually — wall square FIRST."** How long does the edit take?]{.qtitle}
+[The judge calls: *cross the stage · face the band · square on the wall.* You paste it as one block. Then: **"Actually, wall square FIRST."** How long does the edit take?]{.qtitle}
 :::
 
 ```{.python code-line-numbers="|1-5|6-7"}
-# mission_friday.py — one pasted block 😬
+# mission_friday.py -- one pasted block 😬
 drive_straight(400)          # cross the stage
-turn_to(90)           # face the band
+robot.turn(90, absolute=True)   # face the band
 drive_to_wall()
 wall_square()         # reset at the wall
 # judge: "wall square FIRST, then cross"…
@@ -66,7 +66,7 @@ wall_square()         # reset at the wall
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-The plan is **trapped in the code**. Reordering means surgery — select, cut, paste, and pray you moved *all* the lines of each step. Under a 5-minute clock, surgery loses. The plan needs to be a **thing** you can shuffle — like cards in a deck.
+The plan is **trapped in the code**. Reordering means surgery: select, cut, paste, and pray you moved *all* the lines of each step. Under a 5-minute clock, surgery loses. The plan needs to be a **thing** you can shuffle, like cards in a deck.
 :::
 :::
 
@@ -82,7 +82,7 @@ Name the steps. Put the names in a row. Play the row.
 
 ```{.python code-line-numbers="|1|2|3|4|5-6"}
 setlist = ["intro", "solo", "finale"]   # a numbered row of slots
-setlist[0]                # "intro" — count from 0, like the boxes!
+setlist[0]                # "intro" -- count from 0, like the boxes!
 setlist.append("encore")  # grows at the end → slot 3
 setlist[1] = "duet"       # swap what a slot holds
 for song in setlist:      # visit every slot, front to back
@@ -91,7 +91,7 @@ for song in setlist:      # visit every slot, front to back
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Index · append · iterate — the three moves from the pigeonhole game, now in Python. A list holds **anything**: strings, numbers… and (next slide) something sneakier. 😏
+Index · append · iterate: the three moves from the pigeonhole game, now in Python. A list holds **anything**: strings, numbers, and (next slide) something sneakier. 😏
 :::
 :::
 
@@ -99,25 +99,25 @@ Index · append · iterate — the three moves from the pigeonhole game, now in 
 Type it live in the REPL, mirroring each line back to the physical boxes on the bench ("slot 0… that box"). Off-by-one and negative index (`setlist[-1]` = last box) are fun 30-second asides if the room is quick. Don't linger — the payoff slide is next, and lists only get interesting once functions go inside them.
 :::
 
-## Steps are just functions — hold the name, don't play it
+## Steps are just functions: hold the name, don't play it
 
 ```{.python code-line-numbers="|1-2|4-5|7-8|10-11"}
 def cross_stage():
     drive_straight(400)
 
 def face_band():
-    turn_to(90)
+    robot.turn(90, absolute=True)
 
 def reset_at_wall():
     drive_to_wall(); wall_square()
 
 mission = [reset_at_wall, cross_stage, face_band]
-#          ^ no parentheses — cards in a deck, not moves happening
+#          ^ no parentheses -- cards in a deck, not moves happening
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-`cross_stage()` **plays** the move. `cross_stage` — no parentheses — is the **recipe card itself**, a thing you can hold, hand around… and drop into a list. A list of names is a **setlist**: the whole show, and it hasn't started yet.
+`cross_stage()` **plays** the move. `cross_stage`, with no parentheses, is the **recipe card itself**: a thing you can hold, hand around, and drop into a list. A list of names is a **setlist**, the whole show before it has started.
 :::
 :::
 
@@ -125,9 +125,9 @@ mission = [reset_at_wall, cross_stage, face_band]
 This is the day's one genuinely new idea — a function is a *value*. Land it with the recipe-card metaphor from the first `def` day: the card vs cooking the dish. Common bug to demo on purpose: write `mission = [cross_stage(), face_band()]` — the robot drives *while the list is being built* (the moves happen at line 10!) and the list ends up holding three `None`s. Let them see that, then delete the parentheses. Note the judge's reorder is now already solved on line 10 — `reset_at_wall` simply moved to slot 0.
 :::
 
-## The runner — the whole thing
+## The runner, the whole thing
 
-```{.python code-line-numbers="|1|2|3|5"}
+```{.python code-line-numbers="|1|2|3|4"}
 def run_mission(steps):
     for step in steps:   # take the next card…
         step()           # …now play it
@@ -136,7 +136,7 @@ run_mission(mission)
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Three lines, and they **never change again**. Reorder the show → edit the *list*. Insert a step → `append` or slot it in. The judge changes the mission; you change **data**, not code. That's the split the pros live by.
+Three lines, and they **never change again**. Reorder the show → edit the *list*. Insert a step → `append` or slot it in. The judge changes the mission, and you change **data**, not code. That's the split the pros live by.
 :::
 :::
 
@@ -147,11 +147,11 @@ Read it aloud in pigeonhole language: for each box front to back, take the card 
 ## Feel it: shuffle the setlist 🔀
 
 ```{=html}
-<div style="width:860px;margin:0 auto;">
-  <div style="display:flex;justify-content:center;gap:12px;margin-bottom:8px;">
-    <button onclick="mlRun()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ run_mission(mission)</button>
-    <button onclick="mlSwap()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">🔀 judge: wall square FIRST</button>
-    <button onclick="mlAppend()" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">➕ append(face_crowd)</button>
+<div class="sim">
+  <div class="sim-controls">
+    <button class="sim-btn teal" data-sim="mlRun">▶ run_mission(mission)</button>
+    <button class="sim-btn purple" data-sim="mlSwap">🔀 judge: wall square FIRST</button>
+    <button class="sim-btn coral" data-sim="mlAppend">➕ append(face_crowd)</button>
   </div>
   <div style="display:flex;justify-content:center;align-items:flex-start;gap:22px;">
     <div style="min-width:280px;">
@@ -166,9 +166,7 @@ Read it aloud in pigeonhole language: for each box front to back, take the card 
       <text x="120" y="296" font-size="13" fill="#1C355E" text-anchor="middle" font-weight="700">start</text>
       <polyline id="mlTrace" points="" fill="none" stroke="#00C9A7" stroke-width="4" stroke-linejoin="round"/>
       <g id="mlBot" transform="translate(120,270) rotate(0)"><g transform="scale(0.55)">
-        <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
-        <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-        <circle cy="-30" r="4" fill="#FFD500"/>
+        <use href="#sim-bot-mini"/>
       </g></g>
       <text id="mlMsg" x="215" y="322" font-size="15" fill="#1C355E" font-weight="800" text-anchor="middle"></text>
     </svg>
@@ -189,7 +187,6 @@ Read it aloud in pigeonhole language: for each box front to back, take the card 
   };
   var mission=['cross_stage','face_band','reset_at_wall'];
   var appended=false;
-  function el(id){return document.getElementById(id);}
   function render(hi){
     var html='';
     for(var i=0;i<mission.length;i++){
@@ -197,16 +194,16 @@ Read it aloud in pigeonhole language: for each box front to back, take the card 
       html+='<div style="font-family:Consolas,monospace;font-size:17px;padding:7px 14px;margin:4px 0 4px 18px;border-radius:10px;border-left:5px solid '+(on?'#00AE8D':'#c9d4e0')+';background:'+(on?'#00AE8D22':'#eef3f8')+';color:#1C355E;font-weight:'+(on?'800':'600')+';">'
         + i + ': ' + STEPS[mission[i]].label + (on?' ▶':'') + '</div>';
     }
-    el('mlList').innerHTML=html;
+    SIM.el('mlList').innerHTML=html;
   }
   render(-1);
   function animate(idx, phases, done){
     // robot state persists on the g transform; parse it back
-    var m=/translate\(([-\d.]+),([-\d.]+)\) rotate\(([-\d.]+)\)/.exec(el('mlBot').getAttribute('transform'));
+    var m=/translate\(([-\d.]+),([-\d.]+)\) rotate\(([-\d.]+)\)/.exec(SIM.el('mlBot').getAttribute('transform'));
     var x=+m[1], y=+m[2], h=+m[3];
     render(idx);
     var pi=0, t=0; last=null;
-    function trace(){ el('mlTrace').setAttribute('points', el('mlTrace').getAttribute('points')+' '+x.toFixed(1)+','+y.toFixed(1)); }
+    function trace(){ SIM.el('mlTrace').setAttribute('points', SIM.el('mlTrace').getAttribute('points')+' '+x.toFixed(1)+','+y.toFixed(1)); }
     function frame(now){
       var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now; t+=dt;
       var p=phases[pi], fin=false, sp=150;
@@ -229,43 +226,43 @@ Read it aloud in pigeonhole language: for each box front to back, take the card 
         if(p.done===undefined){ p.done=t+p.s; }
         if(t>=p.done) fin=true;
       }
-      el('mlBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
+      SIM.el('mlBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
       if(fin){ pi++; t=0; }
       if(pi<phases.length){ raf=requestAnimationFrame(frame); }
       else { raf=null; done(); }
     }
     raf=requestAnimationFrame(frame);
   }
-  window.mlRun=function(){
+  SIM.def('mlRun', function(){
     if(running) return; running=true;
-    el('mlBot').setAttribute('transform','translate(120,270) rotate(0)');
-    el('mlTrace').setAttribute('points','120,270');
-    el('mlMsg').textContent='';
+    SIM.el('mlBot').setAttribute('transform','translate(120,270) rotate(0)');
+    SIM.el('mlTrace').setAttribute('points','120,270');
+    SIM.el('mlMsg').textContent='';
     var i=0;
     function next(){
-      if(i>=mission.length){ running=false; render(-1); el('mlMsg').textContent='show complete 🎉 — same runner, whatever the list says'; return; }
+      if(i>=mission.length){ running=false; render(-1); SIM.el('mlMsg').textContent='show complete 🎉 · same runner, whatever the list says'; return; }
       animate(i, STEPS[mission[i]].phases(), function(){ i++; next(); });
     }
     next();
-  };
-  window.mlSwap=function(){
+  });
+  SIM.def('mlSwap', function(){
     if(running) return;
     var i=mission.indexOf('reset_at_wall');
     if(i>0){ mission.splice(i,1); mission.unshift('reset_at_wall'); }
-    render(-1); el('mlMsg').textContent='one edit to the LIST — the runner never changed 😎';
-  };
-  window.mlAppend=function(){
+    render(-1); SIM.el('mlMsg').textContent='one edit to the LIST · the runner never changed 😎';
+  });
+  SIM.def('mlAppend', function(){
     if(running || appended) return; appended=true;
     mission.push('face_crowd');
-    render(-1); el('mlMsg').textContent='mission.append(face_crowd) → new slot '+(mission.length-1);
-  };
+    render(-1); SIM.el('mlMsg').textContent='mission.append(face_crowd) → new slot '+(mission.length-1);
+  });
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-The judge's reorder is **one edit to the list** — watch slot 0 change hands, then run the *same* three-line runner. Append a step: a new slot appears at the end, exactly like the pigeonholes. **The plan is data now.**
+The judge's reorder is **one edit to the list**. Watch slot 0 change hands, then run the *same* three-line runner. Append a step and a new slot appears at the end, exactly like the pigeonholes. **The plan is data now.**
 :::
 :::
 
@@ -281,12 +278,12 @@ Today's showdown: **Setlist** 🎵
 
 ::: {.callout-important}
 ## The challenge
-The judge calls a **3-step mini-mission** — you have **5 minutes** to encode it as a mission list over your own library and run it. Score = steps completed; tiebreak = time.
+The judge calls a **3-step mini-mission**, and you have **5 minutes** to encode it as a mission list over your own library and run it. Score = steps completed, tiebreak = time.
 :::
 
-- Hear the mission → say it as **verbs** (*"that's a `drive_straight`, a `turn_to`, a `wall_square`"*) → wrap, list, run.
+- Hear the mission → say it as **verbs** (*"that's a `drive_straight`, a `robot.turn`, a `wall_square`"*) → wrap, list, run.
 - The judge **will** change the order on round two. 😈 Your surgery-free edit is the whole advantage.
-- Fast squads: swap in `run_mission_logged` — per-step stopwatch + a printed transition log.
+- Fast squads: swap in `run_mission_logged`, a per-step stopwatch plus a printed transition log.
 
 ::: {.notes}
 Score decomposition, not typing speed: the squads to praise are the ones who translate the judge's sentence into library verbs *before* touching a keyboard. Round two's reorder is the day's thesis under pressure — a list squad edits one line; watch for anyone still cutting and pasting blocks and coach them on the spot. The logged runner is the exemplar's stretch (timeouts + transition log) — offer it, never gate it. Coach's private scorecard today: list fluency, decomposition into verbs, debugging a *sequence* (which step failed? the log says).
@@ -296,13 +293,13 @@ Score decomposition, not typing speed: the squads to praise are the ones who tra
 
 ::: {.callout-important}
 ## You're done today when…
-You can **read and build a list** (index from 0, iterate, append), your steps are **named functions over your own library**, and the three-line runner walks a judge-called **3-step mission** — with a reorder costing you **one edit**, not surgery.
+You can **read and build a list** (index from 0, iterate, append), your steps are **named functions over your own library**, and the three-line runner walks a judge-called **3-step mission**, with a reorder costing you **one edit** instead of surgery.
 :::
 
 ::: {.fragment .fade-up}
-Next: **Draft Day** — teams form, each team picks its competition robot… and the first *mechanism* gets built. 🤝
+Next: the runner stops being a demo and becomes **the anchor run**. Your mechanism verbs join the list, and the chain starts paying points. 🤝
 :::
 
 ::: {.notes}
-The gate is the plan's D9 outcome verbatim. This is the last solo-robot day — tomorrow's session opens with the *Mini Mission* finale and the draft, so make sure every student's library + runner are saved and named (they carry into the team merge: each member's `RobotConfig` numbers get consolidated onto the selected robot). Then the mechanism builds begin — the anchor run's cables, microphone, and instruments.
+The gate is the plan's D16 outcome verbatim. Sequencing note: this content was authored for D9 and **deferred to D16** — by now the teams formed at Draft Day (D10) and the mechanisms are built, so the runner arrives with real verbs to call — `drive_straight`, `robot.turn`, `claw.grab()`, `claw.let_go()` — rather than as an abstract exercise. Note what the steps are *not* called: there is no `push_cable()` or `place_mic()` to drop into the list (#60), so the cable and the mic each arrive as a short run of ordinary verbs. That is the day's thesis paying off rather than a gap — a list whose entries are mission-named wrappers reorders just as easily but reads like a black box, and the judge's round-two change is exactly the moment a student needs to *see* what each step does. Say that out loud: the list they build today is the anchor run's actual spine, not a rehearsal. Make sure every team's `movements.py` + gripper files are saved and named before the chaining days.
 :::

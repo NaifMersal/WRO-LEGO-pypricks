@@ -7,24 +7,24 @@ format: revealjs
 
 # A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-`error × KP`, **third time** — today it steers the **eye**. 🛣️
+`error × KP` for the **third time**. Today it steers the **eye**. 🛣️
 
 ## Where we left off
 
 | You own | Built on |
 |---|---|
-| 📦 **`my_lib.py` begins** | `drive_straight` · `turn_to` |
+| 📦 **`movements.py` begins** | `drive_straight` · `turn` |
 | 📈 **`error × KP`** | the turn · the straight |
-| 🛑 **D — damping** | brakes before overshoot |
+| 🛑 **D, damping** | brakes before overshoot |
 
 ::: {.fragment .fade-up}
 ::: {.callout-note}
 ## One thing up front
-A script is **blind** — today: **see → decide → steer.** Brightness only; color names are **Week 4**.
+A script is **blind**. Today: **see → decide → steer.** Brightness only, colour names come in **Week 4**.
 :::
 :::
 
-⏱️ **Time: 5 minutes — then a bug hunt**
+⏱️ **Time: 5 minutes, then a bug hunt**
 
 ::: {.notes}
 Anchor today in what they already own, or it feels like a brand-new mountain (it isn't — the plan flags the line day as the longest precisely because the *old* material was video-paced; live, it's one formula applied a third time). Recap `error × KP` from the gyro out loud. Today the robot opens its eyes — three new powers land: the color eye (reflection = the echo of its own light), the per-surface threshold, and `if` (the first real decision). Flag the reflection-vs-color point early and firmly — kids will want to "detect the green line"; stop that now, it's brightness only until Week 4. The day is eye → threshold → `if` → bang-bang → P on the line, then junction squaring — **the P follower + squaring pair is the gate** (it's what the anchor run actually uses); the PD upgrade is the stretch for squads that tune P early. If the cohort is still behind on programming, the afternoon flexes to library-consolidation practice instead of pushing PD. Keep this slide to five minutes: per the W2 delivery rhythm (decision #22), robots are out by minute 15.
@@ -41,12 +41,12 @@ drive_straight(300)  # …still lazy. Nothing changed. 😤
 ```
 
 ::: {.qbox}
-[Watch it stay lazy — find the bug. Where *should* `KP = 12` live?]{.qtitle}
+[Watch it stay lazy, then find the bug. Where *should* `KP = 12` live?]{.qtitle}
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-Inside a `def` you made a **local** — dead the moment it returned. **Change globals only at the top.**
+Inside a `def` you made a **local**, and it died the moment the function returned. **Change globals only at the top.**
 :::
 :::
 
@@ -56,8 +56,8 @@ This closes Day 5's leftover (globals/shadowing), delivered as a live hunt inste
 
 ## 🤖 Robots out: Bullseye on the real mat 🎯
 
-- 🎯 `drive_straight(1000)` on the **real mat** — one attempt, **±2 cm** passes
-- 📦 `drive_square(300)` — watch it snap shut where it started
+- 🎯 `drive_straight(1000)` on the **real mat**: one attempt, **±2 cm** passes
+- 📦 `drive_square(300)`: watch it snap shut where it started
 - ⏱️ **15 minutes**, then the robot opens its **eyes**
 
 ::: {.notes}
@@ -66,14 +66,14 @@ Pure energy burner with a hidden agenda: it closes the remaining D5 gate legs (`
 
 # B. One Eye, One Edge {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
 
-The robot **opens its eyes** — then parks one on a line's edge. 👁️
+The robot **opens its eyes**, then parks one on a line's edge. 👁️
 
 ## Meet the eye 🔦
 
-A **flashlight + light meter** in one brick — it measures its own echo.
+A **flashlight + light meter** in one brick. It measures its own echo.
 
 ```{=html}
-<div style="width:780px;margin:0 auto;">
+<div class="sim">
   <svg width="740" height="200" viewBox="0 0 740 200" style="display:block;margin:0 auto;">
     <defs>
       <marker id="meY" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto"><path d="M0,0 L14,7 L0,14 Z" fill="#FFD500"/></marker>
@@ -101,27 +101,32 @@ A **flashlight + light meter** in one brick — it measures its own echo.
     <!-- surfaces -->
     <rect x="55" y="150" width="240" height="22" rx="4" fill="#101820"/>
     <rect x="445" y="150" width="240" height="22" rx="4" fill="#f7f9fc" stroke="#dbe2ea"/>
-    <text x="175" y="166" font-size="13" fill="#ffffff" font-weight="800" text-anchor="middle">black line — echo swallowed</text>
-    <text x="565" y="166" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat — echo bounces back</text>
-    <text x="370" y="112" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">same flashlight —</text>
+    <text x="175" y="166" font-size="13" fill="#ffffff" font-weight="800" text-anchor="middle">black line: echo swallowed</text>
+    <text x="565" y="166" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat: echo bounces back</text>
+    <text x="370" y="112" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">same flashlight,</text>
     <text x="370" y="132" font-size="15" fill="#625D9C" font-weight="800" text-anchor="middle">different echo</text>
   </svg>
 </div>
 ```
 
 ```{.python}
+from pybricks.pupdevices import ColorSensor
+
+left_eye = ColorSensor(Port.D)    # yours
+right_eye = ColorSensor(Port.A)   # yours -- only if you fitted a second eye
+
 left_eye.reflection()   # 0-100: % of its OWN light echoing back
 left_eye.color()        # a name: Color.RED... (Week 4's tool)
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-Anything that changes the **echo** changes the number — ✨ gloss · 💡 light · 📏 height.
+Anything that changes the **echo** changes the number: ✨ gloss · 💡 light · 📏 height.
 :::
 :::
 
 ::: {.notes}
-The live demo beats the diagram: run a `print(left_eye.reflection())` loop, hold the robot, and let students slide surfaces under the eye, tilt it, lift it — the number dances. Establish the active-sensor idea: it brings its own LED, so it mostly ignores the room, but gloss, sensor height, and strong ambient light still shift the echo — which is exactly why every surface gets its own calibration (next slide). `reflection()` vs `color()`: today reflection does all the work; `color()` names colors and gets a cameo here — its real job is Week 4's notes. Two eyes fill ports B and F; one eye does the following — `square_on_line` at the end of today shows why we carry two.
+The live demo beats the diagram: run a `print(left_eye.reflection())` loop, hold the robot, and let students slide surfaces under the eye, tilt it, lift it — the number dances. Establish the active-sensor idea: it brings its own LED, so it mostly ignores the room, but gloss, sensor height, and strong ambient light still shift the echo — which is exactly why every surface gets its own calibration (next slide). `reflection()` vs `color()`: today reflection does all the work; `color()` names colors and gets a cameo here — its real job is Week 4's notes. The eye lives on port **D** on the coach's robot — check yours. Following needs only **one** eye; `square_on_line` at the end of today is the job that wants a second, on the spare port **A**.
 :::
 
 ## Break it: the threshold you guessed 🔥
@@ -130,11 +135,11 @@ The live demo beats the diagram: run a `print(left_eye.reflection())` loop, hold
 [Last week the tape split at **50** (white 88, black 10). Does 50 still work on the **mat**? The **floor**?]{.qtitle}
 :::
 
-🤖 **Robots out.** Print `reflection()` across **three surfaces** — tape · mat · floor. Log white & black for each.
+🤖 **Robots out.** Print `reflection()` across **three surfaces**: tape · mat · floor. Log white and black for each.
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-A threshold is a fact about a **surface** — read white · read black · **split the middle.**
+A threshold is a fact about a **surface**: read white · read black · **split the middle.**
 :::
 :::
 
@@ -142,10 +147,10 @@ A threshold is a fact about a **surface** — read white · read black · **spli
 Let each squad predict *before* measuring — commitments make the surprise land. The printed mat just arrived (decision #23), so this is also the real calibration-transfer checkpoint from the plan: the numbers they log here ARE the re-logged thresholds. Expected outcome: the mat's white and the tape-field's white read differently (print ink vs paper, matte tarp vs tape), the split point moves, and the habit lands — look first, then split what you actually see. The glossy-table failure (black reading 60, `< 50` calling the line "clear" and driving over it) is the venue-day version of the same lesson; it lives as an interactive sim in the 🏠 appendix since we don't have a glossy table in the room — mention it, don't show it. The takeaway is a habit, not a number: re-read and re-split, every surface.
 :::
 
-## Fix it: calibrate, then decide — `if / else` 🎚️
+## Fix it: calibrate, then decide with `if / else` 🎚️
 
 ```{.python code-line-numbers="|1-2|3|4|5-6"}
-# Calibrate FIRST — measure, never guess
+# Calibrate FIRST -- measure, never guess
 REFLECT_THRESHOLD = 50              # for THIS surface
 while True:
     if left_eye.color() == Color.RED:
@@ -155,11 +160,11 @@ while True:
     wait(50)
 ```
 
-🤖 **Robots out.** Threshold from *your* mat numbers — low beep on lines, high beep on red.
+🤖 **Robots out.** Threshold from *your* mat numbers: low beep on lines, high beep on red.
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-`if … elif` is the robot **choosing** — new surface → **re-calibrate the threshold, never the code.**
+`if … elif` is the robot **choosing**. New surface → **re-calibrate the threshold, never the code.**
 :::
 :::
 
@@ -170,17 +175,17 @@ This is the just-in-time concept for the day: `if/elif` + booleans. Keep it conc
 ## Ride the edge 👁️
 
 ```{.python}
-# Watch it live FIRST — before any steering. Just read the number.
+# Watch it live FIRST -- before any steering. Just read the number.
 while True:
     print("reflection:", left_eye.reflection())   # 0=black, 100=white
     wait(100)
 ```
 
 ```{=html}
-<div style="width:820px;margin:0 auto;">
+<div class="sim">
   <div style="text-align:center;margin-bottom:6px;">
     <span style="font-size:16px;color:#1C355E;font-weight:700;">slide the eye across the edge:</span>
-    <input type="range" min="0" max="100" step="1" value="20" oninput="edMove(this.value)" style="width:280px;accent-color:#E96852;vertical-align:middle;">
+    <input type="range" min="0" max="100" step="1" value="20" data-sim-input="edMove" style="width:280px;accent-color:#E96852;vertical-align:middle;">
   </div>
   <svg width="760" height="150" viewBox="0 0 760 150" style="display:block;margin:0 auto;">
     <rect x="30" y="30" width="350" height="90" fill="#f2f5f9" stroke="#dbe2ea"/>
@@ -196,28 +201,27 @@ while True:
 <script>
 (function(){
   var X0=45, X1=715, EDGE=380;
-  function el(id){return document.getElementById(id);}
   function reflAt(cx){
     // smooth transition across the edge at x=380 (± 40px)
     var t=(cx-(EDGE-40))/80;               // 0 on white side, 1 on black side
     t=Math.max(0,Math.min(1,t));
     return Math.round(88 - t*(88-10));     // 88 on white → 10 on black
   }
-  window.edMove=function(v){
+  SIM.def('edMove', function(v){
     var cx=X0 + (parseInt(v,10)/100)*(X1-X0);
-    el('edEye').setAttribute('cx',cx.toFixed(1));
-    var r=reflAt(cx), err=r-50, m=el('edMsg');
-    if(Math.abs(err)<=6){ m.style.color='#00AE8D'; m.innerHTML='reflection <b>'+r+'</b> → error <b>'+(err>=0?'+':'')+err+'</b> · riding the edge — go straight ✓ 🎯'; }
-    else if(err>0){ m.style.color='#1C355E'; m.innerHTML='reflection <b>'+r+'</b> → error <b>+'+err+'</b> · out on white — steer toward the line'; }
-    else { m.style.color='#625D9C'; m.innerHTML='reflection <b>'+r+'</b> → error <b>'+err+'</b> · buried in black — steer back out'; }
-  };
+    SIM.el('edEye').setAttribute('cx',cx.toFixed(1));
+    var r=reflAt(cx), err=r-50, m=SIM.el('edMsg');
+    if(Math.abs(err)<=6){ m.style.color='#00AE8D'; m.innerHTML='reflection <b>'+r+'</b> → error <b>'+(err>=0?'+':'')+err+'</b> · riding the edge, go straight ✓ 🎯'; }
+    else if(err>0){ m.style.color='#1C355E'; m.innerHTML='reflection <b>'+r+'</b> → error <b>+'+err+'</b> · out on white, steer toward the line'; }
+    else { m.style.color='#625D9C'; m.innerHTML='reflection <b>'+r+'</b> → error <b>'+err+'</b> · buried in black, steer back out'; }
+  });
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-`error = reflection − 50` — **+ on white · − on black · 0 on the edge.**
+`error = reflection − 50`: **+ on white · − on black · 0 on the edge.**
 :::
 :::
 
@@ -228,7 +232,7 @@ Watch reflection live on a real robot first, over white then over black — read
 ## Break it: only two answers 🔥
 
 ::: {.qbox}
-[Two moves only — *hard left* or *hard right*. Predict the path.]{.qtitle}
+[Two moves only: *hard left* or *hard right*. Predict the path.]{.qtitle}
 :::
 
 ```{.python code-line-numbers="|1|2|3-4|5-7"}
@@ -244,7 +248,7 @@ while True:
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-Two answers = it can **never** go straight — it slams left-right forever.
+Two answers means it can **never** go straight. It slams left-right forever.
 :::
 :::
 
@@ -252,7 +256,7 @@ Two answers = it can **never** go straight — it slams left-right forever.
 This is **bang-bang** — the naïve controller. Let them predict, then confirm with the sim two slides on. The diagnosis you want in their words: "it only knows left or right, so it's always turning." The bridge to P is exactly the KP quiz from Day 4: what if the correction were *proportional* to how far off we are, instead of always full-tilt? Keep bang-bang short — it exists only to make P feel like the rescue.
 :::
 
-## Name it: P — proportional steering 📈
+## Name it: P, proportional steering 📈
 
 ```{.python code-line-numbers="|1|2-3"}
 error = left_eye.reflection() - THRESHOLD    # signed: how far off the edge?
@@ -262,7 +266,7 @@ right.run(LINE_SPEED - KP * error)           # near → gentle
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-`error × KP` **again** — tune **`KP`**: too small = lazy, too big = the wobble is back.
+`error × KP` **again**. Tune **`KP`**: too small = lazy, too big = the wobble is back.
 :::
 :::
 
@@ -272,43 +276,40 @@ The "aha" is that they've written this line before — twice. It's *literally* t
 
 # C. P → PD, and Squaring {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
 
-Push P fast into a curve — an old ghost comes back. 🛑
+Push P fast into a curve and an old ghost comes back. 🛑
 
 ## Feel it: race all three 🎢
 
 ::: {.qbox}
-[Run **P** *fast* into a curve — predict the moment it lets go.]{.qtitle}
+[Run **P** *fast* into a curve and predict the moment it lets go.]{.qtitle}
 :::
 
 ```{=html}
-<div style="width:900px;margin:0 auto;">
+<div class="sim">
   <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
-    <button id="lfBB" onclick="lfMode('bb')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">bang-bang</button>
-    <button id="lfP" onclick="lfMode('p')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">P</button>
-    <button id="lfPD" onclick="lfMode('pd')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">PD</button>
-    <button onclick="lfGo()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:6px 18px;font-size:16px;font-weight:700;cursor:pointer;">▶ run</button>
+    <button class="sim-btn ghost small" id="lfBB" data-sim="lfMode" data-sim-arg="bb">bang-bang</button>
+    <button class="sim-btn ghost small" id="lfP" data-sim="lfMode" data-sim-arg="p">P</button>
+    <button class="sim-btn teal small" id="lfPD" data-sim="lfMode" data-sim-arg="pd">PD</button>
+    <button class="sim-btn small" data-sim="lfGo">▶ run</button>
   </div>
   <div style="display:flex;justify-content:center;align-items:center;gap:22px;font-size:15px;color:#1C355E;font-weight:700;margin-bottom:4px;">
-    <span>speed <input type="range" min="80" max="320" step="10" value="200" oninput="lfSet('v',this.value)" style="width:120px;accent-color:#1C355E;"> <span id="lfVv">200</span></span>
-    <span>KP <input type="range" min="0.2" max="3" step="0.1" value="1.2" oninput="lfSet('kp',this.value)" style="width:120px;accent-color:#00AE8D;"> <span id="lfKpv">1.2</span></span>
-    <span>KD <input type="range" min="0" max="8" step="0.2" value="4" oninput="lfSet('kd',this.value)" style="width:120px;accent-color:#E96852;"> <span id="lfKdv">4.0</span></span>
+    <span>speed <input type="range" min="80" max="320" step="10" value="200" data-sim-input="lfSet" data-sim-arg="v" style="width:120px;accent-color:#1C355E;"> <span id="lfVv">200</span></span>
+    <span>KP <input type="range" min="0.2" max="3" step="0.1" value="1.2" data-sim-input="lfSet" data-sim-arg="kp" style="width:120px;accent-color:#00AE8D;"> <span id="lfKpv">1.2</span></span>
+    <span>KD <input type="range" min="0" max="8" step="0.2" value="4" data-sim-input="lfSet" data-sim-arg="kd" style="width:120px;accent-color:#E96852;"> <span id="lfKdv">4.0</span></span>
   </div>
   <svg width="880" height="178" viewBox="0 0 880 240" style="display:block;margin:0 auto;background:#f2f5f9;border-radius:14px;">
     <path id="lfLine" d="" fill="none" stroke="#101820" stroke-width="10" stroke-linecap="round"/>
     <polyline id="lfPath" points="" fill="none" stroke="#00C9A7" stroke-width="3"/>
     <g id="lfBot" transform="translate(40,120) rotate(90)"><g transform="scale(0.5)">
-      <rect x="-14" y="-30" width="28" height="54" rx="8" fill="#1C355E"/>
-      <path d="M -8 -12 L 0 -23 L 8 -12 Z" fill="#fff" opacity="0.9"/>
-      <circle cy="-30" r="4" fill="#FFD500"/>
+      <use href="#sim-bot-mini"/>
     </g></g>
-    <text id="lfTag" x="440" y="28" font-size="17" font-weight="800" text-anchor="middle" fill="#625D9C">PD — reads far AND fast</text>
+    <text id="lfTag" x="440" y="28" font-size="17" font-weight="800" text-anchor="middle" fill="#625D9C">PD: reads far AND fast</text>
   </svg>
 </div>
 <script>
 (function(){
   var raf=null, last=null, mode='pd', V=200, KP=1.2, KD=4.0;
   var X0=40, X1=840, midY=120, G=0.6;
-  function el(id){return document.getElementById(id);}
   // the line the bot must follow: straight lead-in, then an S-curve
   function edgeY(x){
     if(x<300) return midY;
@@ -317,25 +318,25 @@ Push P fast into a curve — an old ghost comes back. 🛑
   function drawLine(){
     var d='M '+X0+' '+edgeY(X0).toFixed(1);
     for(var x=X0+6;x<=X1;x+=6) d+=' L '+x.toFixed(1)+' '+edgeY(x).toFixed(1);
-    el('lfLine').setAttribute('d',d);
+    SIM.el('lfLine').setAttribute('d',d);
   }
-  var TAGS={bb:['bang-bang — only two answers','#E96852'],p:['P — reads how FAR off','#00AE8D'],pd:['PD — reads far AND fast','#625D9C']};
+  var TAGS={bb:['bang-bang: only two answers','#E96852'],p:['P: reads how FAR off','#00AE8D'],pd:['PD: reads far AND fast','#625D9C']};
   function setBtns(){
     [['bb','lfBB'],['p','lfP'],['pd','lfPD']].forEach(function(pair){
-      var on=mode===pair[0], b=el(pair[1]);
+      var on=mode===pair[0], b=SIM.el(pair[1]);
       b.style.background=on?'#00C9A7':'#eef3f8'; b.style.color=on?'#fff':'#1C355E'; b.style.border=on?'none':'2px solid #1C355E';
     });
-    el('lfTag').textContent=TAGS[mode][0]; el('lfTag').setAttribute('fill',TAGS[mode][1]);
+    SIM.el('lfTag').textContent=TAGS[mode][0]; SIM.el('lfTag').setAttribute('fill',TAGS[mode][1]);
   }
-  window.lfMode=function(m){ mode=m; setBtns(); };
-  window.lfSet=function(k,v){
-    if(k==='v'){ V=parseInt(v,10); el('lfVv').textContent=v; }
-    if(k==='kp'){ KP=parseFloat(v); el('lfKpv').textContent=parseFloat(v).toFixed(1); }
-    if(k==='kd'){ KD=parseFloat(v); el('lfKdv').textContent=parseFloat(v).toFixed(1); }
-  };
-  window.lfGo=function(){
+  SIM.def('lfMode', function(m){ mode=m; setBtns(); });
+  SIM.def('lfSet', function(k,v){
+    if(k==='v'){ V=parseInt(v,10); SIM.el('lfVv').textContent=v; }
+    if(k==='kp'){ KP=parseFloat(v); SIM.el('lfKpv').textContent=parseFloat(v).toFixed(1); }
+    if(k==='kd'){ KD=parseFloat(v); SIM.el('lfKdv').textContent=parseFloat(v).toFixed(1); }
+  });
+  SIM.def('lfGo', function(){
     var x=X0, y=edgeY(X0), th=0, lastErr=0, wApplied=0, pts=[]; last=null;
-    el('lfPath').setAttribute('points','');
+    SIM.el('lfPath').setAttribute('points','');
     function frame(now){
       var dt=last?Math.min((now-last)/1000,0.04):0.016; last=now;
       var sd=0.006, n=Math.max(1,Math.round(dt/sd));
@@ -347,7 +348,7 @@ Push P fast into a curve — an old ghost comes back. 🛑
         else if(mode==='p'){ wDesired=KP*e*0.09; }
         else { wDesired=KP*e*0.09 + KD*(e-lastErr)*0.09; }
         lastErr=e;
-        wApplied += (wDesired-wApplied)*0.30;  // steering/motor lag — a real robot can't flip direction instantly
+        wApplied += (wDesired-wApplied)*0.30;  // steering/motor lag -- a real robot can't flip direction instantly
         th += wApplied*sd*6;
         if(th>1.2)th=1.2; if(th<-1.2)th=-1.2;
         y += V*Math.tan(th)*sd;
@@ -355,13 +356,13 @@ Push P fast into a curve — an old ghost comes back. 🛑
         if(y<20)y=20; if(y>220)y=220;
       }
       pts.push(x.toFixed(1)+','+y.toFixed(1));
-      el('lfPath').setAttribute('points',pts.join(' '));
-      el('lfPath').setAttribute('stroke', mode==='bb'?'#E96852':(mode==='p'?'#00AE8D':'#00C9A7'));
-      el('lfBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(90+th*57.3).toFixed(1)+')');
+      SIM.el('lfPath').setAttribute('points',pts.join(' '));
+      SIM.el('lfPath').setAttribute('stroke', mode==='bb'?'#E96852':(mode==='p'?'#00AE8D':'#00C9A7'));
+      SIM.el('lfBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+(90+th*57.3).toFixed(1)+')');
       if(x<X1){ raf=requestAnimationFrame(frame); } else raf=null;
     }
     if(raf)cancelAnimationFrame(raf); drawLine(); raf=requestAnimationFrame(frame);
-  };
+  });
   drawLine(); setBtns();
 })();
 </script>
@@ -369,7 +370,7 @@ Push P fast into a curve — an old ghost comes back. 🛑
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-**bang-bang** ping-pongs · **P** overshoots · **PD** holds. Drag **KD → 0** — **D is the only difference.**
+**bang-bang** ping-pongs · **P** overshoots · **PD** holds. Drag **KD → 0**: **D is the only difference.**
 :::
 :::
 
@@ -381,7 +382,7 @@ Run bang-bang first (big zigzag), then P at speed 200 (fine on the straight, ove
 
 ```{.python code-line-numbers="|1|3|4|5-6|7|8-9|12"}
 def follow_line(distance_mm, speed=250, kd=0):
-    """P follow on the LEFT eye — kd > 0 is the PD stretch."""
+    """P follow on the LEFT eye. kd > 0 is the PD stretch."""
     finish = left.angle() + distance_mm * DEG_PER_MM
     last_error = 0
     while left.angle() < finish:
@@ -396,17 +397,17 @@ def follow_line(distance_mm, speed=250, kd=0):
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-The P loop, **bottled** — a finish line in degrees makes it a *segment*. **`kd`** is the stretch knob.
+The P loop, **bottled**. A finish line in degrees makes it a *segment*, and **`kd`** is the stretch knob.
 :::
 :::
 
 ::: {.notes}
-Same promotion ritual as every day this week: the loose P loop gets a name and moves into `my_lib.py` (its `KP` becomes `KP_LINE` — the library's constants block already owns `KP` for the gyro). Map every part back to what they own: `error` = P on the eye, the `finish` line = `drive_straight`'s DEG_PER_MM trick (follow *for a distance* — that's how missions call it), `kd * (error - last_error)` = the D from the library-day gyro turn, with `last_error` the one-line memory that makes D possible. The gate is the P version — `follow_line(600)` with kd=0; the stretch is sliding kd up until the fast curve stops overshooting, which is what wins Speed Demon. State the I-policy plainly and move on: integral fixes a *steady* offset over a *long* run; our segments are short, so I is a demo they can watch but never something the gate depends on.
+Same promotion ritual as every day this week: the loose P loop gets a name and moves into `movements.py` (its `KP` becomes `KP_LINE` — the library's constants block already owns `KP` for the gyro). Map every part back to what they own: `error` = P on the eye, the `finish` line = `drive_straight`'s DEG_PER_MM trick (follow *for a distance* — that's how missions call it), `kd * (error - last_error)` = the D from the library-day gyro turn, with `last_error` the one-line memory that makes D possible. The gate is the P version — `follow_line(600)` with kd=0; the stretch is sliding kd up until the fast curve stops overshooting, which is what wins Speed Demon. State the I-policy plainly and move on: integral fixes a *steady* offset over a *long* run; our segments are short, so I is a demo they can watch but never something the gate depends on.
 :::
 
 ## The two-eye job: square up 📐 {.code-shrink}
 
-The **second** eye's moment: you hit a junction **crooked** — sit square before the next move.
+The **second** eye's moment: you hit a junction **crooked**, so sit square before the next move.
 
 ```{.python code-line-numbers="|1|3|4|5|6-7|8-9|10"}
 def square_on_line(speed=160):
@@ -423,20 +424,32 @@ def square_on_line(speed=160):
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Each eye stops **its own** wheel — the robot **pivots square**. *That's* why it carries two.
+Each eye stops **its own** wheel, so the robot **pivots square**. *That's* why it carries two.
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .coral}
+👁️ **One eye can't do this, and it's worth knowing why.** One reading tells you that you **are** on the line. It never tells you whether you're **crooked** on it: a robot 20° askew and a robot dead square give the same number.
+:::
+:::
+
+::: {.fragment .fade-up}
+::: {.cardbox .teal}
+So a one-eye robot squares on a **wall** instead. Both wheels press the same flat edge, and the edge does the aligning. Two eyes square on a **line**, anywhere on the mat. That's the trade the spare port buys.
 :::
 :::
 
 ::: {.notes}
-Answer the port question head-on: two color sensors fill two of the six hub ports (B and F), and following needs only one — so the second eye earns its seat here, squaring. On the real mat this kills accumulated drift in a fraction of a second, gold going into the chained runs of Week 3. (The same right eye later reads note colors in Week 4 — but never steers.)
+Answer the port question head-on, and answer it with **our** robot, not the kit: the eye is on **D**, the two grippers take **E** and **C**, the drive motors **F** and **B** — which leaves exactly **one** spare port, **A**. Following needs one eye; this verb wants two. So the second eye is a *purchase*, and A is the money. Say what it costs: spend A on an eye and you can never add a third mechanism — though the 4-motor cap (§5.2.8) was going to stop you anyway. On the real mat this kills accumulated drift in a fraction of a second, gold going into the chained runs of Week 3. (The same second eye later reads note colours in Week 4 — but never steers.)
 :::
 
 ## Watch it snap square 📐
 
 ```{=html}
-<div style="width:760px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:6px;">
-    <button onclick="sqGo()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:18px;font-weight:700;cursor:pointer;">▶ creep onto the junction</button>
+<div class="sim">
+  <div class="sim-controls">
+    <button class="sim-btn purple" data-sim="sqGo">▶ creep onto the junction</button>
   </div>
   <svg width="420" height="272" viewBox="0 0 420 272" style="display:block;margin:0 auto;background:#f2f5f9;border-radius:14px;">
     <rect x="0" y="60" width="420" height="14" fill="#101820"/>
@@ -446,17 +459,16 @@ Answer the port question head-on: two color sensors fill two of the six hub port
       <circle id="sqLE" cx="-16" cy="-30" r="6" fill="#FFD500" stroke="#fff" stroke-width="2"/>
       <circle id="sqRE" cx="16" cy="-30" r="6" fill="#FFD500" stroke="#fff" stroke-width="2"/>
     </g>
-    <text id="sqMsg" x="210" y="262" font-size="16" font-weight="800" text-anchor="middle" fill="#1C355E">arrives crooked — each eye stops its own wheel</text>
+    <text id="sqMsg" x="210" y="262" font-size="16" font-weight="800" text-anchor="middle" fill="#1C355E">arrives crooked: each eye stops its own wheel</text>
   </svg>
 </div>
 <script>
 (function(){
   var raf=null, last=null, LINEY=67;
-  function el(id){return document.getElementById(id);}
-  window.sqGo=function(){
+  SIM.def('sqGo', function(){
     var cx=210, cy=178, th=-0.28;            // start below, skewed
     var phase='drive', px=0, py=0, sgn=1; last=null;
-    el('sqMsg').setAttribute('fill','#1C355E'); el('sqMsg').textContent='creeping up — skewed…';
+    SIM.el('sqMsg').setAttribute('fill','#1C355E'); SIM.el('sqMsg').textContent='creeping up, skewed…';
     // eye local coords: left (-16,-30), right (16,-30) → world
     function eyeWorld(lx,ly){ return {x: cx+lx*Math.cos(th)-ly*Math.sin(th), y: cy+lx*Math.sin(th)+ly*Math.cos(th)}; }
     function frame(now){
@@ -466,10 +478,10 @@ Answer the port question head-on: two color sensors fill two of the six hub port
         var le=eyeWorld(-16,-30), re=eyeWorld(16,-30);
         if(le.y<=LINEY || re.y<=LINEY){                       // leading eye reaches the line
           var leftLeads = le.y<=LINEY;
-          px=(leftLeads?le:re).x; py=LINEY;                   // that wheel parks — pivot here
+          px=(leftLeads?le:re).x; py=LINEY;                   // that wheel parks, pivot here
           sgn = th<0 ? 1 : -1;                                // trailing wheel swings body square
           phase='pivot';
-          el('sqMsg').textContent=(leftLeads?'left':'right')+' eye on the line — its wheel parks, the other creeps on';
+          SIM.el('sqMsg').textContent=(leftLeads?'left':'right')+' eye on the line: its wheel parks, the other creeps on';
         }
       } else if(phase==='pivot'){
         var dth=sgn*0.9*dt;
@@ -477,23 +489,23 @@ Answer the port question head-on: two color sensors fill two of the six hub port
         var ox=cx-px, oy=cy-py, c=Math.cos(dth), s=Math.sin(dth);
         cx=px+ox*c-oy*s; cy=py+ox*s+oy*c; th+=dth;            // rotate body about the parked eye
       }
-      el('sqBot').setAttribute('transform','translate('+cx.toFixed(1)+','+cy.toFixed(1)+') rotate('+(th*57.3).toFixed(1)+')');
+      SIM.el('sqBot').setAttribute('transform','translate('+cx.toFixed(1)+','+cy.toFixed(1)+') rotate('+(th*57.3).toFixed(1)+')');
       if(phase==='done'){
-        raf=null; el('sqMsg').setAttribute('fill','#00AE8D');
-        el('sqMsg').textContent='squared ✓ — heading reset to 0°, position error gone';
+        raf=null; SIM.el('sqMsg').setAttribute('fill','#00AE8D');
+        SIM.el('sqMsg').textContent='squared ✓ · heading reset to 0°, position error gone';
         return;
       }
       raf=requestAnimationFrame(frame);
     }
     if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
-  };
+  });
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Leading wheel parks first · trailing wheel swings square — **drift gone.** 🎯
+Leading wheel parks first · trailing wheel swings square · **drift gone.** 🎯
 :::
 :::
 
@@ -503,14 +515,14 @@ Run it live: the bot arrives crooked, one wheel stops on the line first, the oth
 
 # D. Compete & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-Today's showdown: **Line King** 👑 — and for the fast squads, **Speed Demon.** 🏁
+Today's showdown: **Line King** 👑, and for the fast squads, **Speed Demon.** 🏁
 
 ## Line King 👑 / Speed Demon 🏁
 
 ::: {.callout-important}
 ## The challenge
-**Line King** — hold the curved line for **30 s**: accuracy + speed.
-**Speed Demon** *(fast squads)* — fastest run that **never leaves the line.**
+**Line King:** hold the curved line for **30 s**, on accuracy and speed.
+**Speed Demon** *(fast squads)*: the fastest run that **never leaves the line.**
 :::
 
 :::: {.columns}
@@ -543,32 +555,34 @@ Line King rewards a clean, honest tune over raw speed; Speed Demon is the stretc
 ::: {.callout-important}
 ## You're done today when…
 - You can **build, tune, and explain** a P line-follower
-- It **follows a curve and squares on a junction** reliably
-- **`follow_line` + `square_on_line`** live in your `my_lib.py` — *(stretch: the `kd` upgrade)*
+- It **follows a curve** reliably
+- **Two eyes:** it **squares on a junction** with `square_on_line`
+- **One eye:** you can *show* why it can't, because crooked and square read the same, and the job carries to tomorrow's wall
+- **`follow_line`** lives in your `movements.py` *(it gains `kd=` for the PD stretch)*
 :::
 
 ::: {.fragment .fade-up}
-Next: *Stop at the Wall* — the motor becomes a **sensor**, and the wall **resets the truth**. 🧱
+Next: *Stop at the Wall*. The motor becomes a **sensor**, and the wall **resets the truth**. 🧱
 :::
 
 ::: {.notes}
-The gate is the plan's line-day outcome: build, tune, and *explain* a P follower + reliable junction squaring — what the anchor run actually uses; PD is explicitly the stretch, never the gate. A student who can narrate why each term is there owns the concept and can debug it in Week 3 when the follower serves the run. Two eyes, one job each: one follows, both square. Close by pointing forward: tomorrow the motor itself becomes a sensor — the robot feels walls, patrols between them, and resets its heading truth against them — and the scoresheet gets read the anchor-first way: everything those color-free verbs score comes first.
+The gate is the plan's line-day outcome: build, tune, and *explain* a P follower + reliable junction squaring — what the anchor run actually uses. Split the squaring half by build, because our competition robot runs **one** eye and `square_on_line` genuinely needs two: a two-eye squad demonstrates the verb, a one-eye squad demonstrates the *failure* (park it crooked on the line, read the number, park it square, read the same number) and carries the job to tomorrow, where `wall_square` solves it on the border. Do not fail a one-eye squad for a sensor it was never given. The `heading=` argument is tomorrow's idea too — declaring a heading is D7's "the wall never lies", so name it, don't teach it today; PD is explicitly the stretch, never the gate. A student who can narrate why each term is there owns the concept and can debug it in Week 3 when the follower serves the run. Two eyes, one job each: one follows, both square. Close by pointing forward: tomorrow the motor itself becomes a sensor — the robot feels walls, patrols between them, and resets its heading truth against them — and the scoresheet gets read the anchor-first way: everything those color-free verbs score comes first.
 :::
 
 # 🏠 Explore at Home {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #9B8EC0)"}
 
-Optional replays — **nothing tomorrow depends on these.** 🎮
+Optional replays. **Nothing tomorrow depends on these.** 🎮
 
 ## 🏠 The threshold that broke on gloss (sim) 🔥
 
 ```{=html}
-<div style="width:860px;margin:0 auto;">
+<div class="sim">
   <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:8px;">
     <span style="font-size:16px;color:#1C355E;font-weight:700;">surface:</span>
-    <button id="rmHome" onclick="rmSurf('home')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">📄 practice paper</button>
-    <button id="rmGloss" onclick="rmSurf('gloss')" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">🏆 glossy table</button>
+    <button class="sim-btn teal small" id="rmHome" data-sim="rmSurf" data-sim-arg="home">📄 practice paper</button>
+    <button class="sim-btn ghost small" id="rmGloss" data-sim="rmSurf" data-sim-arg="gloss">🏆 glossy table</button>
     <span style="font-size:16px;color:#1C355E;font-weight:700;margin-left:12px;">threshold: <b><span id="rmThV">50</span></b></span>
-    <input id="rmTh" type="range" min="0" max="100" step="1" value="50" oninput="rmTh(this.value)" style="width:170px;accent-color:#E96852;">
+    <input id="rmTh" type="range" min="0" max="100" step="1" value="50" data-sim-input="rmTh" style="width:170px;accent-color:#E96852;">
   </div>
   <svg width="820" height="150" viewBox="0 0 820 150" style="display:block;margin:0 auto;">
     <rect x="60" y="58" width="700" height="26" rx="13" fill="#101820"/>
@@ -583,48 +597,47 @@ Optional replays — **nothing tomorrow depends on these.** 🎮
     <g id="rmBlack"><circle cy="71" r="11" fill="#1C355E" stroke="#fff" stroke-width="2"/><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">black line</text></g>
     <g id="rmWhite"><circle cy="71" r="11" fill="#FFD500" stroke="#1C355E" stroke-width="2"/><text y="132" font-size="13" fill="#1C355E" font-weight="800" text-anchor="middle">white mat</text></g>
   </svg>
-  <div id="rmVerdict" style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;font-weight:700;min-height:28px;">pick a surface — read what the eye actually sees</div>
+  <div id="rmVerdict" style="text-align:center;font-family:Consolas,monospace;font-size:19px;color:#1C355E;font-weight:700;min-height:28px;">pick a surface and read what the eye actually sees</div>
 </div>
 <script>
 (function(){
   var X0=60, X1=760, thr=50, surf=null;
   var S={ home:{white:88, black:10}, gloss:{white:95, black:60} };
-  function el(id){return document.getElementById(id);}
   function xOf(v){ return X0 + v/100*(X1-X0); }
   function draw(){
-    el('rmThLine').setAttribute('x1',xOf(thr)); el('rmThLine').setAttribute('x2',xOf(thr));
-    el('rmThTxt').setAttribute('x',xOf(thr)); el('rmThTxt').textContent=thr;
+    SIM.el('rmThLine').setAttribute('x1',xOf(thr)); SIM.el('rmThLine').setAttribute('x2',xOf(thr));
+    SIM.el('rmThTxt').setAttribute('x',xOf(thr)); SIM.el('rmThTxt').textContent=thr;
     if(!surf) return;
     var s=S[surf];
-    el('rmBlack').setAttribute('transform','translate('+xOf(s.black).toFixed(1)+',0)');
-    el('rmWhite').setAttribute('transform','translate('+xOf(s.white).toFixed(1)+',0)');
+    SIM.el('rmBlack').setAttribute('transform','translate('+xOf(s.black).toFixed(1)+',0)');
+    SIM.el('rmWhite').setAttribute('transform','translate('+xOf(s.white).toFixed(1)+',0)');
     var blackOK = s.black < thr;   // robot must call the dark line "line"
     var whiteOK = s.white > thr;   // and the bright mat "clear"
-    var v=el('rmVerdict');
+    var v=SIM.el('rmVerdict');
     if(blackOK && whiteOK){
       v.style.color='#00AE8D';
       v.innerHTML='black '+s.black+' &lt; '+thr+' → <b>LINE ✓</b> &nbsp;·&nbsp; white '+s.white+' &gt; '+thr+' → <b>clear ✓</b> &nbsp; 🎯';
     } else {
       v.style.color='#E96852';
-      var msg = !blackOK ? ('black reads '+s.black+' — <b>above '+thr+'</b>, so the robot calls the line "clear" and drives right over it. 😬')
-                         : ('white reads '+s.white+' — <b>below '+thr+'</b>, so the robot brakes on empty mat. 😬');
+      var msg = !blackOK ? ('black reads '+s.black+', <b>above '+thr+'</b>, so the robot calls the line "clear" and drives right over it. 😬')
+                         : ('white reads '+s.white+', <b>below '+thr+'</b>, so the robot brakes on empty mat. 😬');
       v.innerHTML=msg;
     }
   }
-  window.rmSurf=function(k){
+  SIM.def('rmSurf', function(k){
     surf=k;
-    el('rmHome').style.background = k==='home' ? '#00C9A7':'#eef3f8';
-    el('rmHome').style.color = k==='home' ? '#fff':'#1C355E';
-    el('rmHome').style.border = k==='home' ? 'none':'2px solid #1C355E';
-    el('rmGloss').style.background = k==='gloss' ? '#00C9A7':'#eef3f8';
-    el('rmGloss').style.color = k==='gloss' ? '#fff':'#1C355E';
-    el('rmGloss').style.border = k==='gloss' ? 'none':'2px solid #1C355E';
+    SIM.el('rmHome').style.background = k==='home' ? '#00C9A7':'#eef3f8';
+    SIM.el('rmHome').style.color = k==='home' ? '#fff':'#1C355E';
+    SIM.el('rmHome').style.border = k==='home' ? 'none':'2px solid #1C355E';
+    SIM.el('rmGloss').style.background = k==='gloss' ? '#00C9A7':'#eef3f8';
+    SIM.el('rmGloss').style.color = k==='gloss' ? '#fff':'#1C355E';
+    SIM.el('rmGloss').style.border = k==='gloss' ? 'none':'2px solid #1C355E';
     draw();
-  };
-  window.rmTh=function(v){ thr=parseInt(v,10); el('rmThV').textContent=v; draw(); };
-  window.rmSurf('home');
+  });
+  SIM.def('rmTh', function(v){ thr=parseInt(v,10); SIM.el('rmThV').textContent=v; draw(); });
+  SIM.run('rmSurf', 'home');
 })();
 </script>
 ```
 
-On a glossy venue table, "black" can bounce back **60** — drag the threshold and rescue the robot.
+On a glossy venue table, "black" can bounce back **60**. Drag the threshold and rescue the robot.

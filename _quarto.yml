@@ -37,6 +37,10 @@ project:
     # Vendored single-page field tool + its logos and mat image. The whole
     # folder must ship, not just the .html — it loads Logo/* and GameField/*.
     - tools/odommap/**
+    # The sim kit is linked by every deck's <head>; Quarto only copies assets it
+    # can see referenced (the theme's SVGs), so this one must be listed or the
+    # decks ship with a dead <script src> and every simulation goes quiet.
+    - slides_template/assets/sim-kit.js
 
 execute:
   echo: false
@@ -49,7 +53,13 @@ format:
     show-slide-number: all
     embed-resources: false
     preview-links: false
-    theme: [default, slides_template/assets/sdaia.scss]
+    # sdaia.scss is the SDAIA brand bundle (kept in sync with the
+    # author-verify-slides skill); rockstars-sims.scss is this project's own
+    # layer -- the shared chrome for the interactive sims in the decks.
+    theme:
+      - default
+      - slides_template/assets/sdaia.scss
+      - slides_template/assets/rockstars-sims.scss
     logo: slides_template/assets/sdaia.svg
     transition: slide
     transition-speed: default
@@ -76,3 +86,12 @@ format:
     plugins: [menu]
     include-in-header:
       - file: slides_template/assets/favicon.html
+      # The `SIM` helper kit every deck's simulations are built on. Linked rather
+      # than inlined so the browser caches one copy across all 12 decks instead
+      # of carrying 10 KB in each. Every deck renders to output/slides/, so the
+      # relative path is the same for all of them.
+      #
+      # NO `defer` and NO `async`: each deck's own <script> blocks call SIM.def()
+      # while the body is parsing, so the kit has to have run by then.
+      - text: |
+          <script src="../slides_template/assets/sim-kit.js"></script>

@@ -7,11 +7,11 @@ format: revealjs
 
 # A. Warm-Up {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-Finish the builds — every robot passes the four checks.
+Finish the builds. Every robot passes the four checks.
 
 ## Before we code
 
-- 🏗️ **Build catch-up** — didn't finish yesterday? Finish now, no penalty.
+- 🏗️ **Build catch-up.** Didn't finish yesterday? Finish now, no penalty.
 - ✅ Re-run the **four checks**: click · twin · shake · roll.
 - 🔋 Battery light **green-ish**? You'll see *why* that matters today.
 
@@ -25,7 +25,7 @@ Break it → feel it → fix it. Starting with **no laptops at all.**
 
 ::: {.callout-important}
 ## The game
-One of you is the *programmer*; your blindfolded partner is the *robot*. Only **discrete commands** — "forward 30 cm," "turn 90° right." No steering, no touching. Get your robot across the mat to the target.
+One of you is the *programmer*, and your blindfolded partner is the *robot*. Only **separate commands**: "forward 30 cm," "turn 90° right." No steering, no touching. Get your robot across the mat to the target.
 :::
 
 - Give the commands. Watch where your "robot" *actually* ends up.
@@ -58,19 +58,19 @@ One of you is the *programmer*; your blindfolded partner is the *robot*. Only **
 . . .
 
 ::: {.cardbox .coral}
-That gap is **open-loop drift** — moving without checking the result. Hold that thought: your LEGO robot is about to do *exactly* the same thing.
+That gap is **open-loop drift**: moving without checking the result. Your LEGO robot is about to do exactly the same thing.
 :::
 
 # C. What IS Speed? {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
 
-Two cars. One race. You already know the answer — now say it like a scientist.
+Two cars. One race. You already know the answer. Now say it like a scientist.
 
 ## 🏁 The race
 
 ```{=html}
-<div style="width:880px;margin:0 auto;">
+<div class="sim">
   <div style="display:flex;justify-content:space-between;align-items:center;">
-    <button onclick="startRace()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 26px;font-size:24px;font-weight:700;cursor:pointer;">🏁 Race!</button>
+    <button class="sim-btn teal" data-sim="startRace">🏁 Race!</button>
     <div style="font-size:26px;font-weight:800;color:#1C355E;">⏱ <span id="raceClock">0.0</span> s</div>
   </div>
   <div style="position:relative;height:62px;background:#eef3f8;border-radius:12px;margin-top:12px;">
@@ -85,7 +85,7 @@ Two cars. One race. You already know the answer — now say it like a scientist.
 </div>
 <script>
 (function(){
-  var ruler = document.getElementById('raceRuler');
+  var ruler = SIM.el('raceRuler');
   if(!ruler) return;
   for(var i=0;i<=8;i++){
     var t=document.createElement('div');
@@ -100,9 +100,9 @@ Two cars. One race. You already know the answer — now say it like a scientist.
 var raceRAF=null;
 function startRace(){
   if(raceRAF) cancelAnimationFrame(raceRAF);
-  var A=document.getElementById('carA'), B=document.getElementById('carB'),
-      c=document.getElementById('raceClock'),
-      lA=document.getElementById('lblA'), lB=document.getElementById('lblB');
+  var A=SIM.el('carA'), B=SIM.el('carB'),
+      c=SIM.el('raceClock'),
+      lA=SIM.el('lblA'), lB=SIM.el('lblB');
   A.style.left='4px'; B.style.left='4px';
   lA.style.visibility='hidden'; lB.style.visibility='hidden';
   var t0=performance.now();
@@ -116,6 +116,10 @@ function startRace(){
   }
   raceRAF=requestAnimationFrame(step);
 }
+
+/* Registered for the kit: these are plain function declarations, so
+   they were never assigned to window and nothing else picks them up. */
+SIM.def('startRace', startRace);
 </script>
 ```
 
@@ -161,7 +165,7 @@ Run the race two or three times. Elicit, don't tell: "What did you notice?" (Car
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-**speed = distance ÷ time** — how far you get, *per second*. That's the whole formula. You invented it.
+**speed = distance ÷ time**: how far you get *per second*. That's the whole formula, and you invented it.
 :::
 :::
 
@@ -182,8 +186,8 @@ from pybricks.parameters import Port, Direction
 from pybricks.tools import wait
 
 hub = PrimeHub()
-left = Motor(Port.A, Direction.COUNTERCLOCKWISE)
-right = Motor(Port.E)
+left = Motor(Port.F, Direction.COUNTERCLOCKWISE)   # yours
+right = Motor(Port.B)                              # yours
 
 left.run_time(500, 2000, wait=False)
 right.run_time(500, 2000)
@@ -195,7 +199,7 @@ Walk the highlight steps live: (1) the imports pull in the hub/motor/port tools;
 
 # Game Day 🎮 {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
 
-Yesterday you made it move. Today you make it *obey* — with the one tool you already own: `run_time`.
+Yesterday you made it move. Today you make it *obey*, with the one tool you already own: `run_time`.
 
 ## 🐛 Bug hunt
 
@@ -206,8 +210,8 @@ Yesterday you made it move. Today you make it *obey* — with the one tool you a
 ```python
 from pybricks.parameters import Port, Direction
 
-left = Motor(Port.A, Direction.COUNTERCLOCKWISE)
-right = Motor(Port.E)
+left = Motor(Port.F, Direction.COUNTERCLOCKWISE)
+right = Motor(Port.B)
 
 left.run_time(500, 2000, wait=False)
 right.run_time(500, 2000)
@@ -215,7 +219,7 @@ right.run_time(500, 2000)
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-`NameError: name 'Motor' is not defined` — we never **imported** `Motor`. Python only knows the tools you pull in: `from pybricks.pupdevices import Motor`.
+`NameError: name 'Motor' is not defined`. We never **imported** `Motor`. Python only knows the tools you pull in: `from pybricks.pupdevices import Motor`.
 :::
 :::
 
@@ -233,8 +237,8 @@ Run each buggy program live on one robot if possible — the error message on sc
 from pybricks.pupdevices import Motor
 from pybricks.parameters import Port, Direction
 
-left = Motor(Port.A, Direction.COUNTERCLOCKWISE)
-right = Motor(Port.B)
+left = Motor(Port.F, Direction.COUNTERCLOCKWISE)
+right = Motor(Port.A)
 
 left.run_time(500, 2000, wait=False)
 right.run_time(500, 2000)
@@ -242,7 +246,7 @@ right.run_time(500, 2000)
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-`OSError` — the code says **Port B**, but the right motor is plugged into **Port E**. The program must match the *physical* robot. Check the cable, then check the letter.
+`OSError`. The code says **Port A**, but the right motor is plugged into **Port B**. The program must match the *physical* robot. Check the cable, then check the letter.
 :::
 :::
 
@@ -252,7 +256,7 @@ right.run_time(500, 2000)
 
 ::: {.callout-important}
 ## The rules
-Tape three zones on the floor: **10 pts** · **25 pts** · **50 pts bullseye**. Start behind the line, run your program, hands off. Robot must stop **fully inside** a zone — slide past the last zone and it's **0**. You may change **only one number: the `2000`**. **3 throws, best one counts.**
+Tape three zones on the floor: **10 pts** · **25 pts** · **50 pts bullseye**. Start behind the line, run your program, hands off. Robot must stop **fully inside** a zone. Slide past the last zone and it's **0**. You may change **only one number: the `2000`**. **3 throws, best one counts.**
 :::
 
 ```python
@@ -262,7 +266,7 @@ right.run_time(500, 2000)
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Throw 1 lands short, throw 2 with the *same number* lands somewhere else?! Keep your score sheet — that wobble is **evidence**, and we'll need it later today. 🕵️
+Throw 1 lands short, throw 2 with the *same number* lands somewhere else?! Keep your score sheet. That wobble is **evidence**, and we need it later today. 🕵️
 :::
 :::
 
@@ -276,13 +280,13 @@ Zones at roughly 80 / 110 / 140 cm from the start line — close enough that ~2�
 
 ::: {.callout-important}
 ## The rules
-Park your robot's nose **as close to the wall as you can without touching it**. Touch = **0**. Judge measures the gap with a ruler — **smallest gap wins.**
+Park your robot's nose **as close to the wall as you can without touching it**. Touch = **0**. The judge measures the gap with a ruler. **Smallest gap wins.**
 :::
 
 - Same law as curling: tune the time, nothing else.
-- Pro tip: sneak up in *two* runs? Not allowed — **one program, one shot.** 😏
+- Pro tip: sneak up in *two* runs? Not allowed. **One program, one shot.** 😏
 
-⏱️ **Time: 10 minutes — if the curling podium is settled**
+⏱️ **Time: 10 minutes, if the curling podium is settled**
 
 
 # Break {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
@@ -290,15 +294,15 @@ Park your robot's nose **as close to the wall as you can without touching it**. 
 ## Quick quiz 🚨
 
 ::: {.qbox}
-[`run_time(500, 2000)` — you just defined speed… so 500 is a speed of *what*? And the 2000?]{.qtitle}
+[`run_time(500, 2000)`. You just defined speed, so 500 is a speed of *what*? And the 2000?]{.qtitle}
 
 Centimeters per second? Meters? Robot points? Guess!
 :::
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-`2000` = **milliseconds** — how long it runs.
-`500` = **degrees per second**. It *is* a speed — something ÷ time — but the something isn't distance… 🤔
+`2000` = **milliseconds**. That's how long it runs.
+`500` = **degrees per second**. It *is* a speed (something ÷ time), but the something isn't distance… 🤔
 :::
 :::
 
@@ -318,7 +322,7 @@ Ask "what speed did you just use?" — expect silence; that's the plan. Reveal: 
     <div style="font-size:22px;color:#1C355E;"><span id="rotA">0.0</span> rotations</div>
   </div>
   <div style="display:flex;flex-direction:column;justify-content:center;height:230px;">
-    <button onclick="spinMotors()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:10px 24px;font-size:22px;font-weight:700;cursor:pointer;">▶ Spin for 3 s</button>
+    <button class="sim-btn purple" data-sim="spinMotors">▶ Spin for 3 s</button>
   </div>
   <div style="text-align:center;">
     <div style="font-weight:800;color:#1C355E;font-size:24px;">Motor B</div>
@@ -332,25 +336,29 @@ Ask "what speed did you just use?" — expect silence; that's the plan. Reveal: 
 var spinRAF=null;
 function spinMotors(){
   if(spinRAF) cancelAnimationFrame(spinRAF);
-  var dA=document.getElementById('discA'), dB=document.getElementById('discB');
+  var dA=SIM.el('discA'), dB=SIM.el('discB');
   var t0=performance.now();
   function step(now){
     var t=(now-t0)/1000; if(t>3) t=3;
     var aA=360*t, aB=120*t;
     dA.style.transform='rotate('+aA+'deg)';
     dB.style.transform='rotate('+aB+'deg)';
-    document.getElementById('rotA').textContent=(aA/360).toFixed(1);
-    document.getElementById('rotB').textContent=(aB/360).toFixed(1);
+    SIM.el('rotA').textContent=(aA/360).toFixed(1);
+    SIM.el('rotB').textContent=(aB/360).toFixed(1);
     if(t<3){ spinRAF=requestAnimationFrame(step); } else { spinRAF=null; }
   }
   spinRAF=requestAnimationFrame(step);
 }
+
+/* Registered for the kit: these are plain function declarations, so
+   they were never assigned to window and nothing else picks them up. */
+SIM.def('spinMotors', spinMotors);
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-No road, no distance — so count what a motor *does*: **turns**. Spin speed = **rotations ÷ time**. Same recipe, new ingredient.
+No road, no distance. So count what a motor *does*: **turns**. Spin speed = **rotations ÷ time**. Same recipe, new ingredient.
 :::
 :::
 
@@ -386,18 +394,18 @@ Elicit: "This is a motor — how can we measure how fast it is?" Expect "rotatio
 
   <!-- buttons -->
   <div style="display:flex;flex-direction:column;gap:12px;justify-content:center;">
-    <button onclick="setDial(0)"   style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">0°</button>
-    <button onclick="setDial(90)"  style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">90° — ¼ turn</button>
-    <button onclick="setDial(180)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">180° — ½ turn</button>
-    <button onclick="setDial(270)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">270° — ¾ turn</button>
-    <button onclick="setDial(360)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">360° — full turn</button>
+    <button class="sim-btn ghost" data-sim="setDial" data-sim-arg="0" >0°</button>
+    <button class="sim-btn ghost" data-sim="setDial" data-sim-arg="90" >90° = ¼ turn</button>
+    <button class="sim-btn ghost" data-sim="setDial" data-sim-arg="180">180° = ½ turn</button>
+    <button class="sim-btn ghost" data-sim="setDial" data-sim-arg="270">270° = ¾ turn</button>
+    <button class="sim-btn purple" data-sim="setDial" data-sim-arg="360">360° = full turn</button>
   </div>
 </div>
 
 <script>
 (function(){
   // draw tick marks at 0,30,60,...360
-  var tg = document.getElementById('ticks');
+  var tg = SIM.el('ticks');
   [0,30,60,90,120,150,180,210,240,270,300,330,360].forEach(function(d){
     var rad = (d - 90) * Math.PI / 180;
     var isMajor = (d % 90 === 0);
@@ -445,7 +453,7 @@ Elicit: "This is a motor — how can we measure how fast it is?" Expect "rotatio
     return 'M 0 -88 A 88 88 0 '+large+' 1 '+x.toFixed(2)+' '+y.toFixed(2);
   }
 
-  window.setDial = function(target){
+  SIM.def('setDial', function(target){
     if(rafId) cancelAnimationFrame(rafId);
     var start = currentDeg, duration = 500, t0 = performance.now();
     function animate(now){
@@ -454,22 +462,22 @@ Elicit: "This is a motor — how can we measure how fast it is?" Expect "rotatio
       var deg = start + (target-start)*ease;
       currentDeg = deg;
       var rad = (deg-90)*Math.PI/180;
-      document.getElementById('dialNeedle').setAttribute('x2', (Math.sin(deg*Math.PI/180)*72).toFixed(2));
-      document.getElementById('dialNeedle').setAttribute('y2', (-Math.cos(deg*Math.PI/180)*72).toFixed(2));
-      document.getElementById('arcFill').setAttribute('d', describeArc(deg));
-      document.getElementById('dialDeg').textContent = Math.round(deg);
-      document.getElementById('dialFrac').textContent = fracLabel(Math.round(deg));
+      SIM.el('dialNeedle').setAttribute('x2', (Math.sin(deg*Math.PI/180)*72).toFixed(2));
+      SIM.el('dialNeedle').setAttribute('y2', (-Math.cos(deg*Math.PI/180)*72).toFixed(2));
+      SIM.el('arcFill').setAttribute('d', describeArc(deg));
+      SIM.el('dialDeg').textContent = Math.round(deg);
+      SIM.el('dialFrac').textContent = fracLabel(Math.round(deg));
       if(p<1){ rafId=requestAnimationFrame(animate); } else { currentDeg=target; rafId=null; }
     }
     rafId=requestAnimationFrame(animate);
-  };
+  });
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-**0, 30, 60, 90 … 360** — ancient sky-watchers sliced a full circle into **360 equal steps** called **degrees**. The idea comes from the **Babylonians** (~2000 BCE), who loved multiples of 60. The Greeks inherited and spread it, and we are still using it today! 🏛️
+**0, 30, 60, 90 … 360.** Ancient sky-watchers cut a full circle into **360 equal steps** called **degrees**. The idea comes from the **Babylonians** (~2000 BCE), who loved multiples of 60. The Greeks spread it, and we still use it today. 🏛️
 :::
 :::
 
@@ -477,7 +485,7 @@ Elicit: "This is a motor — how can we measure how fast it is?" Expect "rotatio
 Ask: "If I want *exactly* half a turn, how do I write that as a number of full rotations?" (0.5 — messy fractions ahead!) Reveal: that's why we use degrees. Walk through the dial: 90° = quarter, 180° = half, 360° = full. Then fun history: Babylonians, base-60, ~360 days in a year — they made 360 the magic number. Greeks (Hipparchus, Ptolemy) adopted and spread it. LEGO engineers still follow that 4000-year-old choice.
 :::
 
-## Name your numbers — variables
+## Name your numbers: variables
 
 ```{.python code-line-numbers="|1-2|4-5"}
 DRIVE_SPEED = 500   # deg/s
@@ -505,7 +513,7 @@ Think: what's the only part of the robot that actually *touches* the mat?
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-The **wheel** 🛞 — every degree the motor turns becomes distance on the ground. Let's see exactly how much.
+The **wheel** 🛞. Every degree the motor turns becomes distance on the ground.
 :::
 :::
 
@@ -514,7 +522,7 @@ The **wheel** 🛞 — every degree the motor turns becomes distance on the grou
 ```{=html}
 <div style="width:880px;margin:0 auto;text-align:center;">
 <svg id="unrollSVG" viewBox="0 0 880 430" style="width:880px;height:430px;" xmlns="http://www.w3.org/2000/svg">
-  <text x="30" y="34" font-size="23" fill="#1C355E" font-weight="bold">Tiny wheel — rope around the rim = 8 cm</text>
+  <text x="30" y="34" font-size="23" fill="#1C355E" font-weight="bold">Tiny wheel: rope around the rim = 8 cm</text>
   <line x1="30" y1="150" x2="850" y2="150" stroke="#c9d4e0" stroke-width="3"/>
   <line id="trace1" x1="60" y1="150" x2="60" y2="150" stroke="#00C9A7" stroke-width="9" stroke-dasharray="14 9" stroke-linecap="round"/>
   <g id="wheel1G" transform="translate(60,115)">
@@ -528,7 +536,7 @@ The **wheel** 🛞 — every degree the motor turns becomes distance on the grou
   <line x1="280" y1="152" x2="280" y2="170" stroke="#1C355E" stroke-width="3"/>
   <text id="res1" x="170" y="192" text-anchor="middle" font-size="22" fill="#00C9A7" font-weight="bold" opacity="0">1 rotation = the whole rope = 8 cm</text>
 
-  <text x="30" y="234" font-size="23" fill="#1C355E" font-weight="bold">YOUR wheel — rope around the rim ≈ 27.6 cm</text>
+  <text x="30" y="234" font-size="23" fill="#1C355E" font-weight="bold">YOUR wheel: rope around the rim ≈ 27.6 cm</text>
   <line x1="30" y1="368" x2="850" y2="368" stroke="#c9d4e0" stroke-width="3"/>
   <line id="trace2" x1="60" y1="368" x2="60" y2="368" stroke="#00C9A7" stroke-width="9" stroke-dasharray="14 9" stroke-linecap="round"/>
   <g id="wheel2G" transform="translate(60,316)">
@@ -542,16 +550,16 @@ The **wheel** 🛞 — every degree the motor turns becomes distance on the grou
   <line x1="387" y1="370" x2="387" y2="388" stroke="#1C355E" stroke-width="3"/>
   <text id="res2" x="224" y="412" text-anchor="middle" font-size="22" fill="#00C9A7" font-weight="bold" opacity="0">1 rotation = the whole rope ≈ 27.6 cm</text>
 </svg>
-<button onclick="rollWheels()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 26px;font-size:22px;font-weight:700;cursor:pointer;margin-top:4px;">🛞 Roll one full turn</button>
+<button class="sim-btn teal" data-sim="rollWheels">🛞 Roll one full turn</button>
 </div>
 <script>
 var rollRAF=null;
 function rollWheels(){
   if(rollRAF) cancelAnimationFrame(rollRAF);
   var C1=2*Math.PI*35, C2=2*Math.PI*52;
-  var g1=document.getElementById('wheel1G'), r1=document.getElementById('wheel1R'), t1=document.getElementById('trace1');
-  var g2=document.getElementById('wheel2G'), r2=document.getElementById('wheel2R'), t2=document.getElementById('trace2');
-  var res1=document.getElementById('res1'), res2=document.getElementById('res2');
+  var g1=SIM.el('wheel1G'), r1=SIM.el('wheel1R'), t1=SIM.el('trace1');
+  var g2=SIM.el('wheel2G'), r2=SIM.el('wheel2R'), t2=SIM.el('trace2');
+  var res1=SIM.el('res1'), res2=SIM.el('res2');
   res1.setAttribute('opacity','0'); res2.setAttribute('opacity','0');
   var t0=performance.now(), DUR=2.6;
   function step(now){
@@ -567,6 +575,10 @@ function rollWheels(){
   }
   rollRAF=requestAnimationFrame(step);
 }
+
+/* Registered for the kit: these are plain function declarations, so
+   they were never assigned to window and nothing else picks them up. */
+SIM.def('rollWheels', rollWheels);
 </script>
 ```
 
@@ -610,7 +622,7 @@ $500 \times \frac{27.6}{360} \approx 38.3\text{ cm/s}$
 
 ::::
 
-## 🔬 Speed lab — measure YOUR robot
+## 🔬 Speed lab: measure YOUR robot
 
 1. Put tape at the **front wheels**. Run the program: `DRIVE_SPEED = 500`, `DRIVE_TIME = 2000`.
 2. Measure the distance with a ruler. **Write it down.**
@@ -618,7 +630,7 @@ $500 \times \frac{27.6}{360} \approx 38.3\text{ cm/s}$
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-Got *less* than 77? And your neighbor got a *different* number — same code?! (Hint: check both battery lights. 🔋) **Commanding is not the same as getting.**
+Got *less* than 77? And your neighbor got a *different* number from the same code?! (Hint: check both battery lights. 🔋) **Commanding is not the same as getting.**
 :::
 :::
 
@@ -634,7 +646,7 @@ Did anyone land *on* 100 cm?
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .coral}
-Short again — and different every run. **Timed driving trusts the battery to keep its promise.** There has to be a better way…
+Short again, and different every run. **Timed driving trusts the battery to keep its promise.** There has to be a better way…
 :::
 :::
 
@@ -642,7 +654,7 @@ Short again — and different every run. **Timed driving trusts the battery to k
 
 # F. Count Degrees, Not Seconds {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}
 
-`run_angle` — the motor counts every degree for you.
+`run_angle`: the motor counts every degree for you.
 
 ## run_time vs run_angle
 
@@ -679,7 +691,7 @@ right.run_angle(DRIVE_SPEED, 1304)
 
 # G. Where Does 27.6 Come From? {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #625D9C)"}
 
-Wheels don't advertise their rope — they advertise their **diameter**.
+Wheels don't advertise their rope. They advertise their **diameter**.
 
 ## Diameter → circumference
 
@@ -687,19 +699,19 @@ Wheels don't advertise their rope — they advertise their **diameter**.
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-**circumference = π × diameter.** Your wheel: 3.14 × 8.8 cm ≈ **27.6 cm**. Any wheel on Earth: read the diameter off the tire, multiply by π, and you speak its language.
+**circumference = π × diameter.** Your wheel: 3.14 × 8.8 cm ≈ **27.6 cm**. For any wheel, read the diameter off the tire and multiply by π.
 :::
 :::
 
 ## 🧪 Bonus: discover π yourself
 
-- Wrap a string around anything round — cup, tape roll, bottle, your wheel. That's **C**.
+- Wrap a string around anything round: a cup, a tape roll, a bottle, your wheel. That's **C**.
 - Measure straight across the middle. That's **d**.
 - Divide: **C ÷ d = ?**
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .purple}
-**≈ 3.14. Every. Single. Time.** That number is **π** — the circle's built-in constant. You didn't memorize it; you *discovered* it.
+**≈ 3.14, every single time.** That number is **π**, the circle's built-in constant. You didn't memorize it, you *discovered* it.
 :::
 :::
 
@@ -736,7 +748,7 @@ No string? Catch the circle with **straight lines** instead.
 
 ::: {.fragment .fade-up fragment-index=3}
 ::: {.cardbox .purple}
-**2.83 < π < 4** — trapped, no string needed! A rough trap, though… how do we squeeze tighter? **More sides →**
+**2.83 < π < 4**, trapped with no string needed. It is a loose trap, though. How do we squeeze it tighter? **More sides →**
 :::
 :::
 
@@ -747,7 +759,7 @@ Optional enrichment — no gate depends on it; skip live if time is tight and po
 ## 🧪 Bonus: Archimedes' squeeze
 
 ```{=html}
-<div style="display:flex;justify-content:center;align-items:center;gap:60px;">
+<div class="sim-stage">
   <svg width="360" height="360" viewBox="-190 -190 380 380" xmlns="http://www.w3.org/2000/svg">
     <polygon id="piOuterPoly" points="" fill="none" stroke="#FF7A5C" stroke-width="5"/>
     <circle r="150" fill="#eef3f8" stroke="#1C355E" stroke-width="5"/>
@@ -757,11 +769,11 @@ Optional enrichment — no gate depends on it; skip live if time is tight and po
   </svg>
   <div style="text-align:left;">
     <div style="display:flex;gap:10px;margin-bottom:18px;">
-      <button class="piBtn" onclick="setPiSides(4,this)"  style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 18px;font-size:20px;font-weight:700;cursor:pointer;">4</button>
-      <button class="piBtn" onclick="setPiSides(6,this)"  style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 18px;font-size:20px;font-weight:700;cursor:pointer;">6</button>
-      <button class="piBtn" onclick="setPiSides(12,this)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 18px;font-size:20px;font-weight:700;cursor:pointer;">12</button>
-      <button class="piBtn" onclick="setPiSides(24,this)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 18px;font-size:20px;font-weight:700;cursor:pointer;">24</button>
-      <button class="piBtn" onclick="setPiSides(96,this)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 18px;font-size:20px;font-weight:700;cursor:pointer;">96</button>
+      <button class="sim-btn ghost piBtn" data-sim="setPiSides" data-sim-arg="4" >4</button>
+      <button class="sim-btn ghost piBtn" data-sim="setPiSides" data-sim-arg="6" >6</button>
+      <button class="sim-btn ghost piBtn" data-sim="setPiSides" data-sim-arg="12">12</button>
+      <button class="sim-btn ghost piBtn" data-sim="setPiSides" data-sim-arg="24">24</button>
+      <button class="sim-btn ghost piBtn" data-sim="setPiSides" data-sim-arg="96">96</button>
     </div>
     <div style="font-size:24px;color:#1C355E;"><b><span id="piN">4</span> sides</b></div>
     <div style="font-size:30px;margin-top:14px;white-space:nowrap;">
@@ -782,24 +794,24 @@ Optional enrichment — no gate depends on it; skip live if time is tight and po
     }
     return s.trim();
   }
-  window.setPiSides=function(n, btn){
+  SIM.def('setPiSides', function(n, btn){
     var r=150;
-    document.getElementById('piInnerPoly').setAttribute('points', piPts(n, r, -Math.PI/2));
-    document.getElementById('piOuterPoly').setAttribute('points', piPts(n, r/Math.cos(Math.PI/n), -Math.PI/2+Math.PI/n));
-    document.getElementById('piLo').textContent=(n*Math.sin(Math.PI/n)).toFixed(4);
-    document.getElementById('piHi').textContent=(n*Math.tan(Math.PI/n)).toFixed(4);
-    document.getElementById('piN').textContent=n;
-    document.querySelectorAll('.piBtn').forEach(function(b){ b.style.background='#eef3f8'; b.style.color='#1C355E'; });
-    if(btn){ btn.style.background='#625D9C'; btn.style.color='#fff'; }
-  };
-  setPiSides(4, document.querySelector('.piBtn'));
+    SIM.el('piInnerPoly').setAttribute('points', piPts(n, r, -Math.PI/2));
+    SIM.el('piOuterPoly').setAttribute('points', piPts(n, r/Math.cos(Math.PI/n), -Math.PI/2+Math.PI/n));
+    SIM.el('piLo').textContent=(n*Math.sin(Math.PI/n)).toFixed(4);
+    SIM.el('piHi').textContent=(n*Math.tan(Math.PI/n)).toFixed(4);
+    SIM.el('piN').textContent=n;
+    document.querySelectorAll('.piBtn').forEach(function(b){ b.classList.remove('on'); });
+    if(btn) btn.classList.add('on');
+  });
+  SIM.run('setPiSides', 4, document.querySelector('.piBtn'));
 })();
 </script>
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-**Archimedes** (Syracuse, ~250 BCE) did exactly this by hand — doubling up to **96 sides** — and proved **3 10/71 < π < 3 1/7**. He squeezed π out of a circle 2,200 years before calculators. 🏛️
+**Archimedes** (Syracuse, ~250 BCE) did exactly this by hand, doubling up to **96 sides**, and proved **3 10/71 < π < 3 1/7**. He squeezed π out of a circle 2,200 years before calculators. 🏛️
 :::
 :::
 
@@ -815,7 +827,7 @@ Today's showdown: **Radar Gun** 🔫
 
 ::: {.callout-important}
 ## The challenge
-**Predict, then prove.** Measure your robot's speed, then tell the judge *exactly* how many seconds it needs to cross the **1.5 m** finish line. Judge starts the stopwatch — closest prediction wins. 3 attempts, best counts.
+**Predict, then prove.** Measure your robot's speed, then tell the judge *exactly* how many seconds it needs to cross the **1.5 m** finish line. The judge starts the stopwatch, and the closest prediction wins. 3 attempts, best counts.
 :::
 
 - Pure science: measure → calculate → predict → test.
@@ -829,13 +841,9 @@ Your robot **moves with named variables**, you can convert **deg/s → cm/s** fo
 :::
 
 ::: {.fragment .fade-up}
-Next: *Drive a Square* — meet the **gyro**, a hidden sense you'll *feel* with your own hands, and watch it snap tomorrow's open-loop square shut.
+Next: *Drive a Square*. You meet the **gyro**, feel it in your own hands, and watch it snap an open-loop square shut.
 :::
 
-## Tonight's mission 🎬 {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)"}
-
-::: {.r-fit-text}
-You made it move. You measured it like a scientist.
+::: {.fragment .fade-up}
+**Optional at home:** WRO-Learn, [*Fundamentals of Mechanics*](https://wro-learn.org/en_us/course/48). Short videos, pure enrichment. Everything you need is taught in class.
 :::
-
-**Optional at home:** WRO-Learn — [*Fundamentals of Mechanics*](https://wro-learn.org/en_us/course/48) (short videos — pure enrichment; everything you need is delivered in class).
