@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-09-05">
+  <meta name="dcterms.date" content="2026-09-06">
   <title>Name Your Moves</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,12 +206,12 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-09-05</p>
+  <p class="date">2026-09-06</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>A. Warm-Up</h1>
-<p>Yesterday you <em>named</em> <strong>P</strong> — <code>error × KP</code>. Today: the two letters that fix what P alone can’t — and then your moves get <strong>names of their own</strong>. 📦</p>
+<p>Yesterday you built <strong>P</strong> (<code>error × KP</code>). Today: complete PID, then build your own motion library. 📦</p>
 <!-- Shared assets for every sim in this deck: one car (two sizes), one helper kit. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -236,7 +236,7 @@ window.NM = {
   el: function(id){ return document.getElementById(id); },
   pt: function(a,R){ var r=a*Math.PI/180; return (R*Math.sin(r)).toFixed(1)+' '+(-R*Math.cos(r)).toFixed(1); },
   arcD: function(a1,a2,R){ if(a2-a1<0.5) return ''; return 'M '+NM.pt(a1,R)+' A '+R+' '+R+' 0 '+((a2-a1)>180?1:0)+' 1 '+NM.pt(a2,R); },
-  // one 5 ms tick of the turn-to-90 sim (kd = 0 → pure P), shared by both PID sims
+  // one 5 ms tick of the turn-to-90 sim (kd = 0 -> pure P), shared by both PID sims
   step: function(s, kd){
     var sd=0.005, err=90-s.h, change=err-s.lastErr; s.lastErr=err;
     var cmd=12*err + kd*(change/sd);
@@ -250,44 +250,40 @@ window.NM = {
 <section id="where-we-left-off" class="slide level2">
 <h2>Where we left off</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Yesterday</th>
-<th>The trick</th>
+<th>What happened</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>📈 <strong>P, named</strong></td>
-<td><code>speed = error × KP</code> — far → fast, close → gentle, there → zero</td>
+<td>📈 <strong>P term</strong></td>
+<td><code>speed = error × KP</code> (smooth slow-down)</td>
 </tr>
 <tr class="even">
-<td>🔁 <strong>one formula, two jobs</strong></td>
-<td>the <strong>watched turn</strong> <em>and</em> the <strong>self-healing straight</strong> — same line, two uses</td>
+<td>🔁 <strong>Two jobs</strong></td>
+<td>Watched turns and self-healing straights</td>
 </tr>
 <tr class="odd">
-<td>🔥 <strong>crack #1</strong></td>
-<td><code>KP = 20</code> flew <strong>past</strong> the target and zig-zagged back</td>
+<td>🔥 <strong>Crack 1</strong></td>
+<td>High KP flew <strong>past</strong> and zig-zagged</td>
 </tr>
 <tr class="even">
-<td>😴 <strong>crack #2</strong></td>
-<td><code>KP = 1</code> <strong>parked a hair short</strong> — a leftover P never quite killed</td>
+<td>😴 <strong>Crack 2</strong></td>
+<td>Low KP <strong>parked short</strong> of target</td>
 </tr>
 </tbody>
 </table>
 <div class="fragment fade-up">
 <ul>
-<li>Both cracks survived yesterday’s KP quiz — each one is a <strong>letter</strong> we collect this morning</li>
-<li>Then every move you own gets a <strong>name</strong> in <strong>your own library</strong></li>
+<li>Today’s two letters fix both cracks: <strong>D</strong> and <strong>I</strong></li>
+<li>Then every move gets a <strong>name</strong> in your own library 📦</li>
 </ul>
 </div>
 <p>⏱️ <strong>Time: 10 minutes</strong></p>
 <aside class="notes">
-<p>Recap by asking, not telling: “walk me through <code>gyro_turn_p</code> — what does <code>kp</code> do at a big error vs a tiny one?” Then surface the two cracks <em>they already saw</em> on the D4 quiz: the hot KP overshot and rang; the lazy KP parked short. Don’t fix anything yet — name that the morning’s job is those two leftovers, which turn out to be the last two letters of PID, and the afternoon’s job is turning everything they’ve hand-built into named library functions. Keep P as the hero they built; D and I are its finishing touches, not a new subject.</p>
+<p>Recap by asking, not telling: “walk me through <code>gyro_turn_p</code> — what does <code>kp</code> do at a big error vs a tiny one?” Then surface the two cracks they already saw on the D4 quiz: the hot KP overshot and rang; the lazy KP parked short. Don’t fix anything yet. Name that the morning’s job is those two leftovers (which turn out to be D and I in PID), and the afternoon’s job is packaging everything into named library functions. Keep P as the hero they built; D and I are its finishing touches.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -304,16 +300,16 @@ window.NM = {
 <section id="b.-finish-the-word-d-and-i" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
 <h1>B. Finish the Word: D and I</h1>
 <ul>
-<li>P knows <strong>how far</strong> is left</li>
-<li>P ignores <strong>how fast</strong> it’s closing — or that a lean is stealing from it</li>
-<li>Two letters fix that</li>
+<li><strong>P</strong> knows how far is left</li>
+<li><strong>D</strong> tracks how fast you close</li>
+<li><strong>I</strong> fights friction and drag</li>
 </ul>
 </section>
 <section id="break-it-p-in-a-hurry" class="slide level2">
 <h2>Break it: P in a hurry 🔥</h2>
 <div style="width:780px;margin:0 auto;">
   <div style="text-align:center;margin-bottom:6px;">
-    <button onclick="phRun()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">▶ gyro_turn_p(90) — KP cranked 🔥</button>
+    <button onclick="phRun()" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:8px 22px;font-size:20px;font-weight:700;cursor:pointer;">▶ gyro_turn_p(90), KP cranked 🔥</button>
   </div>
   <div style="display:flex;justify-content:center;align-items:center;gap:44px;">
     <svg width="200" height="200" viewbox="-105 -105 210 210" style="display:block;">
@@ -344,7 +340,7 @@ window.NM = {
       var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
       var n=Math.max(1,Math.round(dt/0.005));
       for(var i=0;i<n && !done;i++){
-        NM.step(s, 0);                        // hot KP, D=0
+        NM.step(s, 0);
         if(s.h>peak)peak=s.h;
         if(s.t>4){ done=true; }
       }
@@ -355,7 +351,7 @@ window.NM = {
       if(!done){ raf=requestAnimationFrame(frame); }
       else{
         raf=null;
-        el('phMsg').innerHTML='shot to <b>'+peak.toFixed(0)+'°</b> — the red arc it painted past the tick — swung back, rang, <b>then</b> settled. 😬';
+        el('phMsg').innerHTML='shot to <b>'+peak.toFixed(0)+'°</b> (past the tick), swung back, and rang before settling. 😬';
         el('phMsg').style.color='#E96852';
       }
     }
@@ -365,14 +361,17 @@ window.NM = {
 })();
 </script>
 <div class="fragment fade-up">
+<section id="why-p-overshoots" class="cardbox coral">
+<h3>Why P overshoots</h3>
 <ul>
-<li class="fragment">The push only knows <em>how far</em> is left — <strong>not how fast it’s closing</strong></li>
-<li class="fragment">It arrives at 90 flat-out, blows past, over-corrects, and <strong>rings</strong> before it settles</li>
-<li class="fragment">A bigger KP rings <em>harder</em></li>
+<li>Checks <strong>how far</strong> is left, not <strong>how fast</strong> it is closing</li>
+<li>Full speed at arrival means momentum carries it past 90°</li>
+<li>Crank KP higher and it rings even harder</li>
 </ul>
+</section>
 </div>
 <aside class="notes">
-<p>Run it before the fragment. The red arc painted past the tick is the overshoot made physical — point at it. Elicit the diagnosis in their words: “the number hit 90 — why didn’t it stop?” Because the wheels were still spinning fast; P read error 0 and cut power, but momentum carried it past, then P yanked it back, and round it goes. This is exactly the D3 coast — but now P can’t two-speed its way out, because a hot KP is what won the race yesterday. Set up the need: we want something that notices the error is <em>dropping fast</em> and eases off early. Don’t name D yet.</p>
+<p>Run it before the fragment. The red arc past the tick is overshoot made visible. Ask students: “the number hit 90 — why didn’t it stop?” Because the wheels were spinning at high speed. P cuts power at error 0, but momentum carries the robot past. Then P pulls back, creating oscillation. We need a way to detect that the error is dropping fast and ease off early.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -388,11 +387,11 @@ window.NM = {
 <section id="step-it-be-the-robot" class="slide level2 smaller">
 <h2>Step it: be the robot 🚶</h2>
 <style>
-.brBeat{display:flex;align-items:center;gap:9px;background:#f7f9fc;border:2px solid #dbe2ea;border-radius:12px;padding:6px 10px;opacity:.45;transition:opacity .15s, border-color .15s, background .15s;}
+.brBeat{display:flex;align-items:center;gap:9px;background:#f7f9fc;border:2px solid #dbe2ea;border-radius:12px;padding:5px 9px;opacity:.45;transition:opacity .15s, border-color .15s, background .15s;}
 .brBeat.on{opacity:1;border-color:#E96852;background:#FFD50022;}
-.brBeat .be{font-size:23px;}
-.brBeat b{font-size:15px;color:#1C355E;display:block;line-height:1.2;}
-.brBeat span.d{font-size:12.5px;color:#1C355E;opacity:.75;display:block;line-height:1.25;}
+.brBeat .be{font-size:22px;}
+.brBeat b{font-size:14px;color:#1C355E;display:block;line-height:1.2;}
+.brBeat span.d{font-size:12px;color:#1C355E;opacity:.75;display:block;line-height:1.2;}
 .brln{opacity:.45;padding:1px 8px;border-left:4px solid transparent;border-radius:6px;white-space:pre;}
 .brln.on{opacity:1;border-left-color:#E96852;background:#FFD50022;}
 .brrow{display:flex;justify-content:space-between;padding:2px 10px;border-bottom:1px solid #dbe2ea;}
@@ -400,25 +399,25 @@ window.NM = {
 </style>
 <div style="width:960px;margin:0 auto;">
   <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
-    <button onclick="brStep()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:6px 18px;font-size:17px;font-weight:700;cursor:pointer;">▶ next beat</button>
-    <button onclick="brPass()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">⟳ whole pass</button>
-    <button id="brPlayB" onclick="brPlay()" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:17px;font-weight:700;cursor:pointer;">▶▶ play</button>
-    <button onclick="brReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:5px 14px;font-size:17px;font-weight:700;cursor:pointer;">↺ reset</button>
-    <button id="brCodeB" onclick="brCode()" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:10px;padding:5px 14px;font-size:16px;font-weight:700;cursor:pointer;font-family:Consolas,monospace;">{ } hide the code</button>
-    <span style="font-size:14px;color:#1C355E;font-weight:800;margin-left:6px;">the knob:</span>
-    <button id="brChip4" onclick="brSet(4)" style="background:#00AE8D;color:#fff;border:2px solid #00AE8D;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">✅ kp = 4</button>
-    <button id="brChip1" onclick="brSet(1)" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">😴 kp = 1</button>
-    <button id="brChip20" onclick="brSet(20)" style="background:#eef3f8;color:#E96852;border:2px solid #E96852;border-radius:14px;padding:3px 12px;font-size:14px;font-weight:700;cursor:pointer;">🔥 kp = 20</button>
+    <button onclick="brStep()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:5px 16px;font-size:16px;font-weight:700;cursor:pointer;">▶ next beat</button>
+    <button onclick="brPass()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:5px 14px;font-size:16px;font-weight:700;cursor:pointer;">⟳ whole pass</button>
+    <button id="brPlayB" onclick="brPlay()" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:5px 14px;font-size:16px;font-weight:700;cursor:pointer;">▶▶ play</button>
+    <button onclick="brReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:4px 12px;font-size:16px;font-weight:700;cursor:pointer;">↺ reset</button>
+    <button id="brCodeB" onclick="brCode()" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:10px;padding:4px 12px;font-size:15px;font-weight:700;cursor:pointer;font-family:Consolas,monospace;">{ } hide code</button>
+    <span style="font-size:13px;color:#1C355E;font-weight:800;margin-left:6px;">the knob:</span>
+    <button id="brChip4" onclick="brSet(4)" style="background:#00AE8D;color:#fff;border:2px solid #00AE8D;border-radius:14px;padding:2px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">✅ kp = 4</button>
+    <button id="brChip1" onclick="brSet(1)" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:14px;padding:2px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">😴 kp = 1</button>
+    <button id="brChip20" onclick="brSet(20)" style="background:#eef3f8;color:#E96852;border:2px solid #E96852;border-radius:14px;padding:2px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">🔥 kp = 20</button>
   </div>
-  <div style="display:flex;justify-content:center;align-items:flex-start;gap:16px;">
-    <div style="width:235px;display:flex;flex-direction:column;gap:6px;">
+  <div style="display:flex;justify-content:center;align-items:flex-start;gap:14px;">
+    <div style="width:230px;display:flex;flex-direction:column;gap:5px;">
       <div id="brB0" class="brBeat"><span class="be">🚪</span><span><b>ASK</b><span class="d">still more than 1° to go?</span></span></div>
       <div id="brB1" class="brBeat"><span class="be">📏</span><span><b>MEASURE</b><span class="d">how far is left?</span></span></div>
       <div id="brB2" class="brBeat"><span class="be">🦵</span><span><b>PUSH</b><span class="d">push sized to the gap</span></span></div>
-      <div id="brB3" class="brBeat"><span class="be">😴</span><span><b>BLINK</b><span class="d">sleep 5 ms — the car moves</span></span></div>
-      <div style="text-align:center;font-size:13px;color:#625D9C;font-weight:800;">↻ …and back to ASK — again!</div>
+      <div id="brB3" class="brBeat"><span class="be">😴</span><span><b>BLINK</b><span class="d">sleep 5 ms, the car moves</span></span></div>
+      <div style="text-align:center;font-size:12px;color:#625D9C;font-weight:800;">↻ back to ASK again</div>
     </div>
-    <div id="brCodeCol" style="display:block;background:#f7f9fc;border:1px solid #dbe2ea;border-radius:12px;padding:10px 12px;font-family:Consolas,monospace;font-size:13px;line-height:1.55;color:#1C355E;">
+    <div id="brCodeCol" style="display:block;background:#f7f9fc;border:1px solid #dbe2ea;border-radius:12px;padding:8px 10px;font-family:Consolas,monospace;font-size:12.5px;line-height:1.5;color:#1C355E;">
 <div id="brC0" class="brln">def gyro_turn_p(target, kp=4):</div>
 <div id="brC1" class="brln">    hub.imu.reset_heading(0)</div>
 <div id="brC2" class="brln">    while abs(target - hub.imu.heading()) &gt; 1:</div>
@@ -428,21 +427,21 @@ window.NM = {
 <div id="brC6" class="brln">        wait(5)</div>
 <div id="brC7" class="brln">    left.stop(); right.stop()</div>
     </div>
-    <div style="width:330px;display:flex;align-items:center;gap:10px;">
-      <svg width="150" height="150" viewbox="-105 -105 210 210" style="display:block;flex:none;">
+    <div style="width:310px;display:flex;align-items:center;gap:10px;">
+      <svg width="135" height="135" viewbox="-105 -105 210 210" style="display:block;flex:none;">
         <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
         <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"></line>
         <path id="brArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"></path>
         <g id="brCar"><use href="#nmCar" style="--car:#625D9C"></use></g>
       </svg>
-      <div style="font-family:Consolas,monospace;font-size:15px;color:#1C355E;flex:1;">
+      <div style="font-family:Consolas,monospace;font-size:14px;color:#1C355E;flex:1;">
         <div class="brrow"><span>gap (°)</span><b id="brRGap">–</b></div>
         <div class="brrow"><span>push (°/s)</span><b id="brRCmd">–</b></div>
-        <div style="padding:4px 10px;font-weight:800;">loop pass <span style="color:#625D9C;">#</span><span id="brPassN" style="color:#625D9C;">0</span></div>
+        <div style="padding:3px 10px;font-weight:800;">loop pass <span style="color:#625D9C;">#</span><span id="brPassN" style="color:#625D9C;">0</span></div>
       </div>
     </div>
   </div>
-  <div id="brMsg" style="text-align:center;font-size:16px;color:#625D9C;font-weight:700;min-height:52px;margin-top:8px;">press <b>▶ next beat</b> to call the function — then the <b>lit beat</b> runs on each click. <b>you</b> are the robot's brain 🧠</div>
+  <div id="brMsg" style="text-align:center;font-size:14px;color:#625D9C;font-weight:700;min-height:36px;margin-top:6px;">press <b>▶ next beat</b> to step through the turn 🧠</div>
 </div>
 <script>
 (function(){
@@ -466,25 +465,25 @@ window.NM = {
   function doBeat(){
     if(s.done) return;
     var pc=s.pc;
-    if(pc===0){ s.h=0; drawBot(); msg('called <b>gyro_turn_p(90, kp='+kp+')</b> — gyro zeroed: the car points 0°, the target tick is 90°'); s.pc=1; }
+    if(pc===0){ s.h=0; drawBot(); msg('called <b>gyro_turn_p(90, kp='+kp+')</b> (target 90°)'); s.pc=1; }
     else if(pc===1){
       var gap=Math.abs(90-s.h);
       row('brRGap',gap.toFixed(1),1);
-      if(gap>1){ s.passes++; el('brPassN').textContent=s.passes; msg('🚪 <b>ASK</b> — the while line is a <b>door</b>: gap is '+gap.toFixed(1)+'° — bigger than 1? <b>YES</b> → run the body again'); s.pc=2; }
-      else { msg('🚪 <b>ASK</b> — gap is '+gap.toFixed(1)+'° — NOT bigger than 1. The door <b>closes</b>: stop the motors','#00AE8D'); s.pc=5; }
+      if(gap>1){ s.passes++; el('brPassN').textContent=s.passes; msg('🚪 <b>ASK</b>: gap '+gap.toFixed(1)+'° &gt; 1? YES → run body'); s.pc=2; }
+      else { msg('🚪 <b>ASK</b>: gap '+gap.toFixed(1)+'° &le; 1 → close door and stop motors','#00AE8D'); s.pc=5; }
     }
-    else if(pc===2){ s.err=90-s.h; row('brRGap',s.err.toFixed(1),1); msg('📏 <b>MEASURE</b> — error = 90 − '+s.h.toFixed(1)+' = <b>'+s.err.toFixed(1)+'°</b> — how FAR is left'); s.pc=3; }
+    else if(pc===2){ s.err=90-s.h; row('brRGap',s.err.toFixed(1),1); msg('📏 <b>MEASURE</b>: error = <b>'+s.err.toFixed(1)+'°</b> remaining'); s.pc=3; }
     else if(pc===3){
       s.cmd=kp*s.err; s.cmdc=Math.max(-CAP,Math.min(CAP,s.cmd));
       var over=Math.abs(s.cmd)>CAP;
       row('brRCmd',s.cmd.toFixed(0)+(over?' ⚠':''),1);
-      msg('🦵 <b>PUSH</b> — push = '+kp+' × '+s.err.toFixed(1)+' = <b>'+s.cmd.toFixed(0)+'</b>'+(over?' — the motor maxes out at ±'+CAP+'! ⚠':(Math.abs(s.cmd)<80?' — tiny gap, gentle push':' — big gap, big push')));
+      msg('🦵 <b>PUSH</b>: push = '+kp+' × '+s.err.toFixed(1)+' = <b>'+s.cmd.toFixed(0)+'</b>');
       s.pc=4;
     }
     else if(pc===4){
       s.v+=(s.cmdc-s.v)*LAG; s.h+=s.v*F*SD; if(s.h>s.peak)s.peak=s.h;
       drawBot();
-      msg('😴 <b>BLINK</b> — wait(5): the code sleeps, the wheels spin — the car turned to <b>'+s.h.toFixed(1)+'°</b>… back to 🚪 ASK');
+      msg('😴 <b>BLINK</b>: wait(5), turned to <b>'+s.h.toFixed(1)+'°</b>');
       s.pc=1;
     }
     else if(pc===5){ finish(); return; }
@@ -502,11 +501,11 @@ window.NM = {
         coastT=null;
         var hot = s.peak>91.5 || Math.abs(exitV)>30, lazy = !hot && s.passes>450, t, col;
         if(hot){
-          t='🔔 rang out to <b>'+s.peak.toFixed(1)+'°</b>'+(Math.abs(exitV)>30?' and flew out the door <b>still spinning '+Math.abs(exitV).toFixed(0)+' °/s</b>':'')+' — settled at '+s.h.toFixed(1)+'° after <b>'+s.passes+'</b> passes<br>the door checks the <b>gap</b>, never the <b>speed</b> — something must brake <i>before</i> arrival…'; col='#E96852';
+          t='🔔 Overshot to <b>'+s.peak.toFixed(1)+'°</b>. The door checks gap, not speed!'; col='#E96852';
         } else if(lazy){
-          t='😴 door finally closed after <b>'+s.passes+'</b> passes — every push a whisper<br>on a REAL robot that fading push slips below friction and parks <b>short</b> — nothing dramatic ever happens, and <i>that</i> is the failure'; col='#625D9C';
+          t='😴 Took <b>'+s.passes+'</b> passes. On a real robot, weak pushes stall short.'; col='#625D9C';
         } else {
-          t='✅ door closed after <b>'+s.passes+'</b> passes — landed at <b>'+s.h.toFixed(1)+'°</b><br>it never <b>counted</b> to 90 — it kept <b>CHECKING</b> until the gap got small 🧠'; col='#00AE8D';
+          t='✅ Landed cleanly at <b>'+s.h.toFixed(1)+'°</b> in '+s.passes+' passes.'; col='#00AE8D';
         }
         el('brMsg').innerHTML=t; el('brMsg').style.color=col;
       }
@@ -522,7 +521,7 @@ window.NM = {
     el('brPlayB').innerHTML=playing?'⏸ pause':'▶▶ play';
     highlight();
     if(playing){
-      el('brMsg').innerHTML='⏩ fast-forward — the real robot does this ~200× a second'; el('brMsg').style.color='#625D9C';
+      el('brMsg').innerHTML='⏩ Fast-forward loop execution (~200× per second)'; el('brMsg').style.color='#625D9C';
       function frame(){ if(!playing||s.done)return; var n=s.passes>300?12:s.passes>120?6:1; for(var i=0;i<n&&!s.done;i++)pass(); if(playing&&!s.done)raf=requestAnimationFrame(frame); }
       raf=requestAnimationFrame(frame);
     }
@@ -532,13 +531,13 @@ window.NM = {
     el('brPlayB').innerHTML='▶▶ play'; el('brPassN').textContent='0';
     row('brRGap','–'); row('brRCmd','–');
     el('brCar').setAttribute('transform','rotate(0)'); el('brArc').setAttribute('opacity','0'); el('brArc').setAttribute('d','');
-    el('brMsg').innerHTML='press <b>▶ next beat</b> to call the function — then the <b>lit beat</b> runs on each click. <b>you</b> are the robot\'s brain 🧠'; el('brMsg').style.color='#625D9C';
+    el('brMsg').innerHTML='press <b>▶ next beat</b> to step through the turn 🧠'; el('brMsg').style.color='#625D9C';
     highlight();
   };
   window.brCode=function(){
     codeOn=!codeOn;
     el('brCodeCol').style.display=codeOn?'block':'none';
-    el('brCodeB').textContent=codeOn?'{ } hide the code':'{ } show the code';
+    el('brCodeB').textContent=codeOn?'{ } hide code':'{ } show code';
   };
   window.brSet=function(k){
     kp=k;
@@ -551,15 +550,19 @@ window.NM = {
 })();
 </script>
 <div class="fragment fade-up">
-<ul>
-<li class="fragment">The <code>while</code> line is a <strong>door</strong>, not a countdown — every pass it re-asks <em>“is the gap still &gt; 1?”</em> The loop never counts to 90; it keeps <strong>checking</strong></li>
-<li class="fragment">Every push is a number <strong>you</strong> computed — <code>kp × gap</code>: far → hard push, close → gentle, arrived → zero</li>
-<li class="fragment">😴 <code>kp = 1</code>: every push a <strong>whisper</strong> — the pass counter balloons to 715; a real robot’s fading push slips below friction and <strong>parks short</strong></li>
-<li class="fragment">🔥 <code>kp = 20</code>: the door checks the <strong>gap</strong>, never the <strong>speed</strong> — it blows past and flies out <strong>still spinning</strong>. Something must brake <em>before</em> arrival…</li>
-</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cardbox purple">
+<p><strong>😴 Low KP (1):</strong> Whisper push, 715 passes, stalls short.</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cardbox coral">
+<p><strong>🔥 High KP (20):</strong> Blows past target, rings before stopping.</p>
+</div>
+</div></div>
 </div>
 <aside class="notes">
-<p>This is the bridge from the logic they already say out loud to the code — run it BEFORE any new letters, on code they own: it steps <code>gyro_turn_p</code> (the P turn they built) beat by beat, nothing new. The code sits alongside from the start, and every beat lights its card AND its line — ASK is the while line (a door, not a countdown), MEASURE is the error line, PUSH is <code>kp * error</code> mirrored on two wheels, BLINK is <code>wait(5)</code>. For the very first pass you can <code>{ }</code> hide the code and run it in pure words, then bring it back — the words snap onto the lines. Ritual: each click is one beat; before every click of the first two passes the squad says the lit beat’s sentence in their own words (“still far? how far? push how hard? blink”) — THEN click and check the numbers. Landmarks at kp=4: pass 1 — gap 90.0, push 4×90 = 360; pass 2 — gap 89.8, push 359; keep stepping and the pushes shrink every pass — far→fast, close→gentle, in numbers <em>they</em> computed. Then <code>⟳ whole pass</code> a few times and ▶▶ play to the end: <strong>143 passes, lands 89.1°</strong> (inside the 1° door), no drama. Land the sentence and make them say it back: <em>the loop never COUNTED to 90 — it kept CHECKING until the gap got small.</em> Then the knob’s two cracks, one chip each (both auto-play): 😴 <strong>kp = 1</strong> — every push a whisper, nothing dramatic ever happens, and the counter balloons to <strong>715 passes</strong> (5× the tuned run); on a real robot that fading push slips below friction and <strong>parks short</strong> — crack #2, the cue for I later this morning. 🔥 <strong>kp = 20</strong> — the push computes <strong>1800</strong> but the motor caps at ±650, it rings out to <strong>~101°</strong> and flies out the door at ~91° <strong>still swinging back ~85 °/s</strong> — the door checks the gap, never the speed; that’s why a hot kp lands crooked, not just late. Ask “what would YOU add so it eases off <em>before</em> arriving?” and let the next slide answer with D. The sim is deliberate slow motion (the real hub runs this ~200×/s); illustrative, never gated.</p>
+<p>Step through the turn live. Point out the loop structure: ASK (check door), MEASURE (calculate error), PUSH (apply power proportional to error), BLINK (wait 5 ms). Show that the loop never counts to 90; it repeatedly checks until the error is small. Demonstrate KP=1 (stalls short) and KP=20 (overshoots and rings).</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -578,23 +581,37 @@ window.NM = {
 <span id="cb1-2"><a></a>    hub.imu.reset_heading(<span class="dv">0</span>)</span>
 <span id="cb1-3"><a></a>    last_error <span class="op">=</span> target</span>
 <span id="cb1-4"><a></a>    <span class="cf">while</span> <span class="bu">abs</span>(target <span class="op">-</span> hub.imu.heading()) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
-<span id="cb1-5"><a></a>        error <span class="op">=</span> target <span class="op">-</span> hub.imu.heading()   <span class="co"># how FAR → P</span></span>
-<span id="cb1-6"><a></a>        change <span class="op">=</span> (error <span class="op">-</span> last_error) <span class="op">/</span> <span class="fl">0.005</span> <span class="co"># how FAST → D (°/s)</span></span>
+<span id="cb1-5"><a></a>        error <span class="op">=</span> target <span class="op">-</span> hub.imu.heading()    <span class="co"># how FAR (P)</span></span>
+<span id="cb1-6"><a></a>        change <span class="op">=</span> (error <span class="op">-</span> last_error) <span class="op">/</span> <span class="fl">0.005</span> <span class="co"># how FAST (D, in °/s)</span></span>
 <span id="cb1-7"><a></a>        last_error <span class="op">=</span> error</span>
-<span id="cb1-8"><a></a>        left.run(kp <span class="op">*</span> error <span class="op">+</span> kd <span class="op">*</span> change)   <span class="co"># ease off early</span></span>
+<span id="cb1-8"><a></a>        left.run(kp <span class="op">*</span> error <span class="op">+</span> kd <span class="op">*</span> change)    <span class="co"># ease off early</span></span>
 <span id="cb1-9"><a></a>        right.run(<span class="op">-</span>(kp <span class="op">*</span> error <span class="op">+</span> kd <span class="op">*</span> change))</span>
 <span id="cb1-10"><a></a>        wait(<span class="dv">5</span>)</span>
 <span id="cb1-11"><a></a>    left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
+<div class="columns">
+<div class="column" style="width:50%;">
+<section id="p-proportional" class="cardbox teal">
+<h3>P (Proportional)</h3>
 <ul>
-<li class="fragment">P reads where you ARE. D reads how fast you’re closing</li>
-<li class="fragment"><code>last_error</code> is the loop’s only <strong>memory</strong> — always one heartbeat behind <code>error</code>, so the very first pass sees <code>change = 0</code></li>
-<li class="fragment">Watch <code>error</code> fall <code>90 → 55 → 30</code>: each tick <code>change</code> is <em>negative</em> (<code>−35</code>, then <code>−25</code>) — the gap is closing fast</li>
-<li class="fragment">D catches that and <strong>eases off early — it taps the brake <em>before</em> you arrive</strong>, so the turn glides in instead of ringing. That’s <strong>D — derivative</strong>, the second letter of <strong>PID</strong></li>
+<li>Reads <strong>where you are</strong></li>
+<li>Pushes hard when far</li>
+<li>Engine of the turn</li>
 </ul>
+</section>
+</div><div class="column" style="width:50%;">
+<section id="d-derivative" class="cardbox coral">
+<h3>D (Derivative)</h3>
+<ul>
+<li>Reads <strong>how fast gap closes</strong></li>
+<li>Taps the brake before arrival</li>
+<li>Stops ringing and overshoot 🛑</li>
+</ul>
+</section>
+</div></div>
 </div>
 <aside class="notes">
-<p>The loop skeleton (door → measure → push → blink) was just walked beat by beat on the previous slide — don’t re-teach it; spend the minutes only on the three NEW lines. Anticipation is the whole idea — say it that way: P only knows the gap’s <em>size</em> right now; D knows the gap is <em>shrinking</em> and lifts off early, like braking as you near a parking spot instead of at it. Three new lines: remember last tick’s error, subtract to get the <em>change</em> (a speed, °/s), feed it in. Sign check out loud on the card’s numbers — as the robot closes, <code>error</code> shrinks each tick, so <code>change</code> is negative, so it trims the command down → gentle arrival. <code>kd</code> is a new knob, same as <code>kp</code> was — a strength dial for the braking. Too little kd = still rings (P alone); too much = it brakes so early it crawls in sluggishly. They’ll feel both on the next slide. <code>gyro_turn_pd</code> stays on <code>run()</code> (see the D4 proportional-turn note on <code>run()</code> vs <code>motor.dc()</code>); worth knowing for coaches — and it pays off again at the D8 reveal, where the pro controller actuates one layer <em>deeper</em>, by torque/effort.</p>
+<p>Focus on the three new lines: remember last error, subtract to get rate of change, and combine into the motor command. When closing fast on the target, error shrinks each loop pass, making <code>change</code> negative. Multiplying by <code>kd</code> subtracts power, giving a smooth deceleration right into 90°.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -611,26 +628,25 @@ window.NM = {
 <h2>Step it: feel the brake 🛑</h2>
 <div style="width:990px;margin:0 auto;">
   <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
-    <button onclick="bdStep()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:6px 16px;font-size:16px;font-weight:700;cursor:pointer;">▶ next beat</button>
-    <button onclick="bdPass()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">⟳ whole pass</button>
-    <button id="bdPlayB" onclick="bdPlay()" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:700;cursor:pointer;">▶▶ play</button>
-    <button onclick="bdReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:5px 12px;font-size:16px;font-weight:700;cursor:pointer;">↺ reset</button>
-    <span style="font-size:14px;color:#1C355E;font-weight:800;margin-left:6px;">one click, one story:</span>
-    <button id="bdChip0" onclick="bdSet(0)" style="background:#00AE8D;color:#fff;border:2px solid #00AE8D;border-radius:14px;padding:3px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">✅ kp 4 · kd 0.5</button>
-    <button id="bdChip1" onclick="bdSet(1)" style="background:#eef3f8;color:#E96852;border:2px solid #E96852;border-radius:14px;padding:3px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">🔔 kp 20 · kd 0</button>
-    <button id="bdChip2" onclick="bdSet(2)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:14px;padding:3px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">🛑 kp 20 · kd 0.5</button>
-    <button id="bdChip3" onclick="bdSet(3)" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:14px;padding:3px 10px;font-size:13.5px;font-weight:700;cursor:pointer;">🌊 kp 4 · kd 1.6</button>
+    <button onclick="bdStep()" style="background:#1C355E;color:#fff;border:none;border-radius:10px;padding:5px 14px;font-size:15px;font-weight:700;cursor:pointer;">▶ next beat</button>
+    <button onclick="bdPass()" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:5px 13px;font-size:15px;font-weight:700;cursor:pointer;">⟳ whole pass</button>
+    <button id="bdPlayB" onclick="bdPlay()" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:5px 13px;font-size:15px;font-weight:700;cursor:pointer;">▶▶ play</button>
+    <button onclick="bdReset()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:4px 11px;font-size:15px;font-weight:700;cursor:pointer;">↺ reset</button>
+    <span style="font-size:13px;color:#1C355E;font-weight:800;margin-left:6px;">presets:</span>
+    <button id="bdChip0" onclick="bdSet(0)" style="background:#00AE8D;color:#fff;border:2px solid #00AE8D;border-radius:14px;padding:2px 9px;font-size:13px;font-weight:700;cursor:pointer;">✅ kp 4 · kd 0.5</button>
+    <button id="bdChip1" onclick="bdSet(1)" style="background:#eef3f8;color:#E96852;border:2px solid #E96852;border-radius:14px;padding:2px 9px;font-size:13px;font-weight:700;cursor:pointer;">🔔 kp 20 · kd 0</button>
+    <button id="bdChip2" onclick="bdSet(2)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:14px;padding:2px 9px;font-size:13px;font-weight:700;cursor:pointer;">🛑 kp 20 · kd 0.5</button>
+    <button id="bdChip3" onclick="bdSet(3)" style="background:#eef3f8;color:#625D9C;border:2px solid #625D9C;border-radius:14px;padding:2px 9px;font-size:13px;font-weight:700;cursor:pointer;">🌊 kp 4 · kd 1.6</button>
   </div>
-  <div style="display:flex;justify-content:center;align-items:flex-start;gap:14px;">
-    <div style="width:218px;display:flex;flex-direction:column;gap:5px;">
-      <div id="bdB0" class="brBeat"><span class="be">🚪</span><span><b>ASK</b><span class="d">still more than 1° to go?</span></span></div>
-      <div id="bdB1" class="brBeat"><span class="be">📏</span><span><b>MEASURE</b><span class="d">how far is left?</span></span></div>
-      <div id="bdB2" class="brBeat"><span class="be">📉</span><span><b>SENSE — new!</b><span class="d">how fast is it closing? remember</span></span></div>
-      <div id="bdB3" class="brBeat"><span class="be">🦵</span><span><b>PUSH</b><span class="d">engine kp·error + brake kd·change</span></span></div>
-      <div id="bdB4" class="brBeat"><span class="be">😴</span><span><b>BLINK</b><span class="d">sleep 5 ms — the car moves</span></span></div>
-      <div style="text-align:center;font-size:12.5px;color:#625D9C;font-weight:800;">↻ …and back to ASK — again!</div>
+  <div style="display:flex;justify-content:center;align-items:flex-start;gap:12px;">
+    <div style="width:215px;display:flex-direction:column;display:flex;gap:4px;">
+      <div id="bdB0" class="brBeat"><span class="be">🚪</span><span><b>ASK</b><span class="d">gap &gt; 1°?</span></span></div>
+      <div id="bdB1" class="brBeat"><span class="be">📏</span><span><b>MEASURE</b><span class="d">how far left?</span></span></div>
+      <div id="bdB2" class="brBeat"><span class="be">📉</span><span><b>SENSE (D)</b><span class="d">closing speed</span></span></div>
+      <div id="bdB3" class="brBeat"><span class="be">🦵</span><span><b>PUSH</b><span class="d">engine + brake</span></span></div>
+      <div id="bdB4" class="brBeat"><span class="be">😴</span><span><b>BLINK</b><span class="d">wait 5 ms</span></span></div>
     </div>
-    <div style="background:#f7f9fc;border:1px solid #dbe2ea;border-radius:12px;padding:9px 11px;font-family:Consolas,monospace;font-size:12.5px;line-height:1.5;color:#1C355E;">
+    <div style="background:#f7f9fc;border:1px solid #dbe2ea;border-radius:12px;padding:8px 10px;font-family:Consolas,monospace;font-size:12px;line-height:1.45;color:#1C355E;">
 <div id="bdC0" class="brln">def gyro_turn_pd(target, kp=4, kd=0.5):</div>
 <div id="bdC1" class="brln">    hub.imu.reset_heading(0)</div>
 <div id="bdC2" class="brln">    last_error = target</div>
@@ -643,22 +659,22 @@ window.NM = {
 <div id="bdC9" class="brln">        wait(5)</div>
 <div id="bdC10" class="brln">    left.stop(); right.stop()</div>
     </div>
-    <div style="width:320px;display:flex;align-items:center;gap:10px;">
-      <svg width="145" height="145" viewbox="-105 -105 210 210" style="display:block;flex:none;">
+    <div style="width:300px;display:flex;align-items:center;gap:8px;">
+      <svg width="130" height="130" viewbox="-105 -105 210 210" style="display:block;flex:none;">
         <circle r="86" fill="#eef3f8" stroke="#1C355E" stroke-width="5"></circle>
         <line x1="0" y1="-86" x2="0" y2="-101" stroke="#00AE8D" stroke-width="6" transform="rotate(90)"></line>
         <path id="bdArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"></path>
         <g id="bdCar"><use href="#nmCar" style="--car:#625D9C"></use></g>
       </svg>
-      <div style="font-family:Consolas,monospace;font-size:14px;color:#1C355E;flex:1;">
+      <div style="font-family:Consolas,monospace;font-size:13px;color:#1C355E;flex:1;">
         <div class="brrow"><span>gap (°)</span><b id="bdRGap">–</b></div>
         <div class="brrow"><span>change (°/s)</span><b id="bdRChg">–</b></div>
         <div class="brrow"><span>push (°/s)</span><b id="bdRCmd">–</b></div>
-        <div style="padding:3px 10px;font-weight:800;">loop pass <span style="color:#625D9C;">#</span><span id="bdPassN" style="color:#625D9C;">0</span></div>
+        <div style="padding:2px 8px;font-weight:800;">pass <span id="bdPassN" style="color:#625D9C;">0</span></div>
       </div>
     </div>
   </div>
-  <div id="bdMsg" style="text-align:center;font-size:15.5px;color:#625D9C;font-weight:700;min-height:48px;margin-top:7px;">same loop, one new beat — press <b>▶ next beat</b> and watch 📉 SENSE feed the brake 🧠</div>
+  <div id="bdMsg" style="text-align:center;font-size:14px;color:#625D9C;font-weight:700;min-height:34px;margin-top:5px;">watch 📉 SENSE feed the brake</div>
 </div>
 <script>
 (function(){
@@ -683,19 +699,19 @@ window.NM = {
   function doBeat(){
     if(s.done) return;
     var pc=s.pc;
-    if(pc===0){ s.h=0; s.lastErr=90; drawBot(); msg('called <b>gyro_turn_pd(90, kp='+kp+', kd='+kd+')</b> — gyro zeroed, and the memory starts FULL: last_error = 90'); s.pc=1; }
+    if(pc===0){ s.h=0; s.lastErr=90; drawBot(); msg('called <b>gyro_turn_pd(90, kp='+kp+', kd='+kd+')</b>'); s.pc=1; }
     else if(pc===1){
       var gap=Math.abs(90-s.h);
       row('bdRGap',gap.toFixed(1),1);
-      if(gap>1){ s.passes++; el('bdPassN').textContent=s.passes; msg('🚪 <b>ASK</b> — the door: gap is '+gap.toFixed(1)+'° — bigger than 1? <b>YES</b> → run the body again'); s.pc=2; }
-      else { msg('🚪 <b>ASK</b> — gap is '+gap.toFixed(1)+'° — NOT bigger than 1. The door <b>closes</b>: stop the motors','#00AE8D'); s.pc=6; }
+      if(gap>1){ s.passes++; el('bdPassN').textContent=s.passes; msg('🚪 <b>ASK</b>: gap '+gap.toFixed(1)+'° &gt; 1? YES'); s.pc=2; }
+      else { msg('🚪 <b>ASK</b>: gap &le; 1° → motors stop','#00AE8D'); s.pc=6; }
     }
-    else if(pc===2){ s.err=90-s.h; row('bdRGap',s.err.toFixed(1),1); msg('📏 <b>MEASURE</b> — error = 90 − '+s.h.toFixed(1)+' = <b>'+s.err.toFixed(1)+'°</b> — how FAR is left'); s.pc=3; }
+    else if(pc===2){ s.err=90-s.h; row('bdRGap',s.err.toFixed(1),1); msg('📏 <b>MEASURE</b>: error = <b>'+s.err.toFixed(1)+'°</b>'); s.pc=3; }
     else if(pc===3){
       var prev=s.lastErr;
       s.change=(s.err-prev)/SD; s.lastErr=s.err;
       row('bdRChg',s.change.toFixed(0),1);
-      msg('📉 <b>SENSE</b> — change = ('+s.err.toFixed(1)+' − '+prev.toFixed(1)+') / 0.005 = <b>'+s.change.toFixed(0)+' °/s</b>'+(s.passes===1?' — first pass: memory = target, nothing to compare yet':(s.change<0?' — negative: the gap is <b>closing</b>':''))+' · memory updated');
+      msg('📉 <b>SENSE</b>: closing speed = <b>'+s.change.toFixed(0)+' °/s</b>');
       s.pc=4;
     }
     else if(pc===4){
@@ -703,13 +719,13 @@ window.NM = {
       s.cmd=eng+brk; s.cmdc=Math.max(-CAP,Math.min(CAP,s.cmd));
       var over=Math.abs(s.cmd)>CAP;
       row('bdRCmd',s.cmd.toFixed(0)+(over?' ⚠':''),1);
-      msg('🦵 <b>PUSH</b> — '+kp+'×'+s.err.toFixed(1)+' + '+kd+'×('+s.change.toFixed(0)+') = '+eng.toFixed(0)+' '+(brk<0?'− '+Math.abs(brk).toFixed(0):'+ '+brk.toFixed(0))+' = <b>'+s.cmd.toFixed(0)+'</b>'+(over?' — capped at ±'+CAP+'! ⚠':(brk<-1?' — the brake trims the engine':'')));
+      msg('🦵 <b>PUSH</b>: engine ('+eng.toFixed(0)+') + brake ('+brk.toFixed(0)+') = <b>'+s.cmd.toFixed(0)+'</b>');
       s.pc=5;
     }
     else if(pc===5){
       s.v+=(s.cmdc-s.v)*LAG; s.h+=s.v*F*SD; if(s.h>s.peak)s.peak=s.h;
       drawBot();
-      msg('😴 <b>BLINK</b> — wait(5): the code sleeps, the wheels spin — the car turned to <b>'+s.h.toFixed(1)+'°</b>… back to 🚪 ASK');
+      msg('😴 <b>BLINK</b>: heading = <b>'+s.h.toFixed(1)+'°</b>');
       s.pc=1;
     }
     else if(pc===6){ finish(); return; }
@@ -726,10 +742,10 @@ window.NM = {
       else{
         coastT=null;
         var ring=s.peak>91.5, crawl=!ring&&s.passes>450, t, col;
-        if(ring){ t='🔔 kd = 0 deleted the brake — rang out to <b>'+s.peak.toFixed(1)+'°</b> and flew out the door still spinning — yesterday\'s P, exactly'; col='#E96852'; }
-        else if(crawl){ t='🌊 door closed after <b>'+s.passes+'</b> passes — D braked so early the last degrees arrived at a <b>crawl</b><br>damping is a dial, not a free upgrade'; col='#625D9C'; }
-        else if(kp>=20){ t='🛑 SAME hot kp = 20 — but the brake trimmed every push: <b>no ring</b>, peak '+s.peak.toFixed(1)+'°, done in <b>'+s.passes+'</b> passes<br>D doesn\'t slow the robot — it <b>tames</b> it'; col='#1C355E'; }
-        else { t='✅ door closed after <b>'+s.passes+'</b> passes — landed <b>'+s.h.toFixed(1)+'°</b>, one clean glide<br>every time the gap closed fast, the brake trimmed the push — the glide was <b>engineered</b>'; col='#00AE8D'; }
+        if(ring){ t='🔔 kd = 0 (no brake) overshot to <b>'+s.peak.toFixed(1)+'°</b>.'; col='#E96852'; }
+        else if(crawl){ t='🌊 High kd braked so early the robot crawled in late.'; col='#625D9C'; }
+        else if(kp>=20){ t='🛑 Fast KP (20) + D brake: <b>no ring</b>, finished in '+s.passes+' passes.'; col='#1C355E'; }
+        else { t='✅ Smooth glide: landed at <b>'+s.h.toFixed(1)+'°</b>.'; col='#00AE8D'; }
         el('bdMsg').innerHTML=t; el('bdMsg').style.color=col;
       }
     }
@@ -744,7 +760,7 @@ window.NM = {
     el('bdPlayB').innerHTML=playing?'⏸ pause':'▶▶ play';
     highlight();
     if(playing){
-      el('bdMsg').innerHTML='⏩ fast-forward — the real robot does this ~200× a second'; el('bdMsg').style.color='#625D9C';
+      el('bdMsg').innerHTML='⏩ Running live loop passes'; el('bdMsg').style.color='#625D9C';
       function frame(){ if(!playing||s.done)return; var n=s.passes>300?12:s.passes>120?6:1; for(var i=0;i<n&&!s.done;i++)pass(); if(playing&&!s.done)raf=requestAnimationFrame(frame); }
       raf=requestAnimationFrame(frame);
     }
@@ -754,7 +770,7 @@ window.NM = {
     el('bdPlayB').innerHTML='▶▶ play'; el('bdPassN').textContent='0';
     row('bdRGap','–'); row('bdRChg','–'); row('bdRCmd','–');
     el('bdCar').setAttribute('transform','rotate(0)'); el('bdArc').setAttribute('opacity','0'); el('bdArc').setAttribute('d','');
-    el('bdMsg').innerHTML='same loop, one new beat — press <b>▶ next beat</b> and watch 📉 SENSE feed the brake 🧠'; el('bdMsg').style.color='#625D9C';
+    el('bdMsg').innerHTML='watch 📉 SENSE feed the brake'; el('bdMsg').style.color='#625D9C';
     highlight();
   };
   window.bdSet=function(i){
@@ -767,14 +783,19 @@ window.NM = {
 })();
 </script>
 <div class="fragment fade-up">
-<ul>
-<li class="fragment">Same door, same beats — <strong>one new beat</strong>: 📉 SENSE reads how FAST the gap is closing; <code>last_error</code> is the memory it compares against (pass #1: nothing to compare — <code>change = 0</code>)</li>
-<li class="fragment">The push is now <strong>engine + brake</strong>: <code>kp × error</code> drives toward the target, <code>kd × change</code> pulls back while the gap is closing fast — a <em>negative</em> number doing the braking</li>
-<li class="fragment">🔔 <code>kd = 0</code>: yesterday’s ring, beat by beat · 🛑 hot <code>kp = 20</code> <strong>with</strong> the brake: no ring, done in 41 passes · 🌊 <code>kd = 1.6</code>: brakes so early it <strong>crawls</strong> in — a dial, not a free upgrade</li>
-</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cardbox teal">
+<p><strong>Engine + brake:</strong> <code>kp * error</code> drives forward, <code>kd * change</code> trims the speed.</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cardbox purple">
+<p><strong>Tuned balance:</strong> <code>kd = 0</code> rings, <code>kd = 1.6</code> crawls, <code>kd = 0.5</code> glides in.</p>
+</div>
+</div></div>
 </div>
 <aside class="notes">
-<p>Same ritual as the P stepper — the squads already own four of the five beats, so all attention goes to 📉 SENSE, the one new beat (two lines: compute <code>change</code>, update the memory). Landmarks at the ✅ tuned chip (kp 4, kd 0.5): pass 1 — change <strong>0</strong> (ask why! <code>last_error = target</code> before the loop means the first pass sees no change), push 360; pass 2 — error 89.8, change −43 °/s, push = 359 − 21 = <strong>338</strong> — the brake already trimming. Hand-step the first two passes, watch <code>last_error</code> trail <code>error</code> by exactly one beat, then ▶▶ play: <strong>278 passes, lands 89.0°</strong>, one clean glide. Then the story chips (each auto-plays): 🔔 <strong>kp 20 · kd 0</strong> — brake deleted: rings to ~101° and flies out still swinging — the previous slide’s crack, now with the D lines sitting right there doing nothing; 🛑 <strong>kp 20 · kd 0.5</strong> — the SAME hot engine with the brake back on: <strong>no ring, peak 89.9°, done in 41 passes</strong> — D doesn’t slow the robot, it <em>tames</em> it; this chip is the sell. 🌊 <strong>kp 4 · kd 1.6</strong> — brakes so hard so early the last degrees crawl in over <strong>537 passes</strong> — damping is a dial, and ✅ is home. Sign-check out loud at PUSH: while closing, <code>change</code> is negative, so <code>kd × change</code> SUBTRACTS — the brake only pulls while the gap is shrinking fast. Next slide races P vs PD continuously — the same story at full speed, in the diary view.</p>
+<p>Demonstrate the new SENSE beat. Compare <code>kd = 0</code> (rings like yesterday) against <code>kd = 0.5</code> (smooth arrival). Notice that even with a hot <code>kp = 20</code>, adding <code>kd = 0.5</code> keeps the robot stable without overshooting.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -804,7 +825,7 @@ window.NM = {
         <g id="fdCarP"><use href="#nmCar" style="--car:#E96852"></use></g>
         <g id="fdCarPD"><g transform="scale(0.62)"><use href="#nmCar" style="--car:#00C9A7"></use></g></g>
       </svg>
-      <div style="font-size:14px;color:#1C355E;font-weight:700;">🔴 P — big car · 🟢 PD — small car</div>
+      <div style="font-size:14px;color:#1C355E;font-weight:700;">🔴 P (big) · 🟢 PD (small)</div>
     </div>
     <svg width="590" height="255" viewbox="0 0 590 255" style="display:block;">
       <line x1="50" y1="215" x2="570" y2="215" stroke="#1C355E" stroke-width="3"></line>
@@ -815,8 +836,8 @@ window.NM = {
       <text x="562" y="72" font-size="14" fill="#00AE8D" font-weight="700" text-anchor="end">target 90°</text>
       <polyline id="fdPtrace" points="" fill="none" stroke="#E96852" stroke-width="4"></polyline>
       <polyline id="fdPDtrace" points="" fill="none" stroke="#00C9A7" stroke-width="4"></polyline>
-      <text x="115" y="44" font-size="17" fill="#E96852" font-weight="800">🔴 P alone — rings</text>
-      <text x="115" y="66" font-size="17" fill="#00AE8D" font-weight="800">🟢 PD — glides in</text>
+      <text x="115" y="44" font-size="17" fill="#E96852" font-weight="800">🔴 P alone: rings</text>
+      <text x="115" y="66" font-size="17" fill="#00AE8D" font-weight="800">🟢 PD: glides in</text>
       <circle id="fdDotP" r="7" fill="#FFD500" stroke="#1C355E" stroke-width="2.5" opacity="0"></circle>
       <circle id="fdDotPD" r="7" fill="#FFD500" stroke="#1C355E" stroke-width="2.5" opacity="0"></circle>
       <text id="fdHere" font-size="14" fill="#1C355E" font-weight="800" opacity="0">you are HERE</text>
@@ -833,7 +854,7 @@ window.NM = {
   function yOf(h){ return YB - (h/HMAX)*(YB-40); }
   function fresh(){ return {h:0,v:0,lastErr:90,t:0,done:false,pts:[],lx:X0,ly:YB}; }
   function stepc(s, useD){
-    NM.step(s, useD? kd : 0);   // D = kd × closing speed (°/s) → damps, same as the code
+    NM.step(s, useD? kd : 0);
     if(s.t>TSPAN) s.done=true;
   }
   function push(s){
@@ -871,14 +892,19 @@ window.NM = {
 })();
 </script>
 <div class="fragment fade-up">
-<ul>
-<li>Same hot KP, same target. <strong>P</strong> reads only the error’s <em>size</em> and rings — watch the red car paint its wobble past the tick</li>
-<li><strong>PD</strong> also reads its <em>speed</em> and eases off early — one clean glide <em>(the graph is the cars’ <strong>diary</strong>; the yellow dot is now)</em></li>
-<li>Slide <code>kd</code> to <strong>0</strong> and the green curve rings too; too high and it crawls in. <strong>Fast when far, gentle as it arrives.</strong></li>
-</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cardbox coral">
+<p><strong>🔴 P alone:</strong> Overshoots and rings back and forth.</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cardbox teal">
+<p><strong>🟢 PD:</strong> Senses arrival speed and glides directly to 90°.</p>
+</div>
+</div></div>
 </div>
 <aside class="notes">
-<p>Reading ritual first, same as yesterday’s dot-and-car slides: the two cars on the dial ARE the robots (big red = P, small green = PD); the graph is their diary, written left to right while they turn; the yellow dot at each trace’s tip is <em>now</em> — car and dot move together, same robot, two views. Run at kd=0.5 — narrate the dial (“red blows past the tick, paints the arc, swings back; green glides on”) <em>then</em> point at the diary telling the identical story. Drag kd to 0 live: the green curve collapses onto the red one — <em>proof</em> that D is the only difference. Nudge kd up to ~1.5: green now approaches sluggishly and arrives late. The sweet spot is theirs to feel, exactly like the KP knob yesterday. The sim is illustrative, not gospel — on the real robot they’ll tune kd by eye, same habit.</p>
+<p>Show the real-time comparison graph. Red shows P ringing past 90 degrees before settling. Green shows PD smoothly approaching target. Adjust the slider live to show that setting kd=0 replicates the P curve.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -892,9 +918,9 @@ window.NM = {
       }</style></aside>
 </section>
 <section id="the-last-letter-i-coach-demo" class="slide level2">
-<h2>The last letter: I — <em>(coach demo)</em> 🧲</h2>
+<h2>The last letter: I (Coach Demo) 🧲</h2>
 <div class="qbox">
-<p><span class="qtitle">Rest a thumb of weight on one side. Now the P-turn stops <strong>a hair short</strong> — 88°, not 90 — and <strong>stays there, forever.</strong> Why can’t P finish the job?</span></p>
+<p><span class="qtitle">Add physical friction or a lean to one side. Why does P stop short and stay there?</span></p>
 </div>
 <div style="width:860px;margin:0 auto;">
   <div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:6px;">
@@ -909,7 +935,7 @@ window.NM = {
         <path id="itGapArc" d="" fill="none" stroke="#E96852" stroke-width="6" stroke-linecap="round" opacity="0"></path>
         <g id="itCar"><use href="#nmCar" style="--car:#625D9C"></use><text x="17" y="4" font-size="15">🧲</text></g>
       </svg>
-      <div style="font-size:13px;color:#1C355E;font-weight:700;">🧲 = the lean, riding the car</div>
+      <div style="font-size:13px;color:#1C355E;font-weight:700;">🧲 = constant friction/lean</div>
     </div>
     <svg width="545" height="189" viewbox="0 0 590 205" style="display:block;">
       <line x1="50" y1="175" x2="570" y2="175" stroke="#1C355E" stroke-width="3"></line>
@@ -925,7 +951,7 @@ window.NM = {
     </svg>
   </div>
   <div style="display:flex;justify-content:center;align-items:center;gap:14px;font-size:15px;color:#1C355E;">
-    <span>the <b>leftover</b> P can't push out, piling up in <b>I</b>'s memory:</span>
+    <span>accumulated error (I memory):</span>
     <div style="width:220px;height:16px;background:#eef3f8;border-radius:6px;overflow:hidden;"><div id="itAcc" style="height:100%;width:0%;background:#625D9C;"></div></div>
   </div>
 </div>
@@ -936,7 +962,7 @@ window.NM = {
   function yOf(h){ return YB - (h/HMAX)*(YB-25); }
   window.itRun=function(){
     var T=90, h=0, acc=0, t=0, done=false, pts=[]; last=null;
-    var LEAN=16;                                  // constant load the wheels must overcome
+    var LEAN=16;
     el('itTrace').setAttribute('points',''); el('itGap').setAttribute('opacity','0');
     el('itGapArc').setAttribute('d',''); el('itGapArc').setAttribute('opacity','0');
     el('itCar').setAttribute('transform','rotate(0)');
@@ -947,7 +973,7 @@ window.NM = {
       for(var i=0;i<n && !done;i++){
         var sd=0.005, err=T-h;
         acc += err*sd;
-        var push = 3*err + (useI? 0.3*acc : 0) - LEAN;   // P + (I) fighting the lean
+        var push = 3*err + (useI? 0.3*acc : 0) - LEAN;
         h += push*0.5*sd; t+=sd;
         if(t>TSPAN) done=true;
       }
@@ -981,13 +1007,19 @@ window.NM = {
 })();
 </script>
 <div class="fragment fade-up">
-<ul>
-<li>P’s push (<code>KP × error</code>) can’t beat the lean, so it <strong>parks a hair short forever</strong> — that’s yesterday’s <code>KP = 1</code>, now explained</li>
-<li>Turn <strong>I ON</strong>: each tick piles the leftover onto a <strong>running total</strong> (the purple bar) until the sum beats the lean. <strong>I — integral</strong></li>
-</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cardbox purple">
+<p><strong>P alone stalls:</strong> The tiny leftover error makes a push too weak to beat friction.</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cardbox teal">
+<p><strong>I (Integral) fixes it:</strong> It adds up the leftover error over time, until the motor is strong enough to beat the drag.</p>
+</div>
+</div></div>
 </div>
 <aside class="notes">
-<p>This is a <strong>coach demo — never gated.</strong> Show it, don’t assign it. Point at the dial first: the car (🧲 riding its side — that’s the thumb of weight) climbs and sticks short of the tick, and the red sliver between nose and tick IS the flatline gap on the diary next to it — same robot, two views, yellow dot = now. Toggle I OFF first: the purple curve rises then flatlines short, the “stuck 5° short” tag appears — that’s yesterday’s <code>KP=1</code> parks-short, now explained. Toggle I ON and rerun: the accumulator bar fills, the car creeps the last sliver onto the tick, and the curve creeps up to 90. Say plainly why it barely matters for us: our mission moves are short — a 30 cm straight or a 90° turn ends before the accumulator fills — so I earns its seat on long steady offsets, not here. They now <em>own</em> the whole acronym; that’s the win, not a tuned I.</p>
+<p>Coach demo only; not a required implementation for students. When a small error remains, <code>KP * error</code> is too small to overcome friction, so the robot sits parked short. The integral term adds up the leftover error every millisecond. As time passes, the accumulator grows until it breaks through friction and hits target.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1010,26 +1042,26 @@ window.NM = {
 <div style="display:flex;justify-content:center;gap:26px;margin-top:8px;">
   <div style="background:#eef3f8;border-radius:12px;border-top:5px solid #00AE8D;padding:12px 20px;text-align:center;width:200px;">
     <div style="font-size:26px;font-weight:800;color:#00AE8D;">P</div>
-    <div style="font-size:16px;color:#1C355E;">the error's <b>size</b><br>far → hard push</div>
+    <div style="font-size:16px;color:#1C355E;">error <b>size</b><br>push proportional to distance</div>
   </div>
   <div style="background:#eef3f8;border-radius:12px;border-top:5px solid #625D9C;padding:12px 20px;text-align:center;width:200px;">
     <div style="font-size:26px;font-weight:800;color:#625D9C;">I</div>
-    <div style="font-size:16px;color:#1C355E;">the error's <b>history</b><br>kills a steady lean</div>
+    <div style="font-size:16px;color:#1C355E;">error <b>history</b><br>overcomes steady drag</div>
   </div>
   <div style="background:#eef3f8;border-radius:12px;border-top:5px solid #E96852;padding:12px 20px;text-align:center;width:200px;">
     <div style="font-size:26px;font-weight:800;color:#E96852;">D</div>
-    <div style="font-size:16px;color:#1C355E;">the error's <b>speed</b><br>brakes before arrival</div>
+    <div style="font-size:16px;color:#1C355E;">error <b>speed</b><br>brakes before arrival</div>
   </div>
 </div>
 <div class="fragment fade-up">
 <ul>
-<li>Size, history, speed — three readings of one number, the error</li>
-<li>This exact trio runs inside every drone, thermostat, and Mars rover</li>
-<li>You didn’t learn a LEGO trick; you <strong>finished the most-used formula in robotics.</strong> Now give your moves <strong>names.</strong> 📦</li>
+<li>Three views of one number (error): <strong>Size</strong>, <strong>Speed</strong>, and <strong>History</strong></li>
+<li>The foundation of motion in drones, rockets, and self-driving cars</li>
+<li>Next: give your moves <strong>reusable names</strong> 📦</li>
 </ul>
 </div>
 <aside class="notes">
-<p>Let the acronym land with a beat of silence — this is the payoff of two days. Say it in one breath: P built yesterday, D and I today, all three read the same error different ways. Then pivot: every one of those moves still lives as a loose pasted loop in one file. The afternoon turns them into a <strong>library</strong> — named functions they’ll carry all the way to the competition table.</p>
+<p>Let the acronym land. Students have built P and D themselves and seen I solve steady friction. All three read error in complementary ways. Transition to the afternoon: packaging these formulas into a reusable module.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1045,12 +1077,12 @@ window.NM = {
 <section>
 <section id="c.-the-library-begins" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
 <h1>C. The Library Begins</h1>
-<p>Every move you own is still a <em>pasted loop</em>. Name each one <strong>once</strong>, and a mission becomes a sentence.</p>
+<p>Write each move once in its own file. Then call it like a sentence.</p>
 </section>
 <section id="break-it-the-copy-paste-swamp" class="slide level2">
 <h2>Break it: the copy-paste swamp 🔥</h2>
 <div class="qbox">
-<p><span class="qtitle">The judge calls: <em>turn to 90 · drive 40 cm · turn to 45 · drive 30 cm.</em> With yesterday’s file, how many lines do you paste — and when a bug turns up in the turn loop, in how many places do you fix it?</span></p>
+<p><span class="qtitle">A run needs 4 moves: 2 turns and 2 straights. If you copy-paste the loops, how many lines is that? What happens when you find a bug?</span></p>
 </div>
 <div style="display:flex;justify-content:center;gap:16px;margin-top:10px;">
   <div style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
@@ -1064,7 +1096,7 @@ window.NM = {
   <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
     <div style="font-weight:800;color:#E96852;">drive 40 cm</div>
     <div>while left.angle() &lt; …:</div>
-    <div>&nbsp;&nbsp;error = heading()</div>
+    <div>&nbsp;&nbsp;error = hub.imu.heading()</div>
     <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(500 - 4*error)</span></div>
     <div>&nbsp;&nbsp;… 5 more lines …</div>
     <div style="color:#E96852;font-weight:700;">…and here…</div>
@@ -1080,7 +1112,7 @@ window.NM = {
   <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:14px;color:#1C355E;">
     <div style="font-weight:800;color:#E96852;">drive 30 cm</div>
     <div>while left.angle() &lt; …:</div>
-    <div>&nbsp;&nbsp;error = heading()</div>
+    <div>&nbsp;&nbsp;error = hub.imu.heading()</div>
     <div>&nbsp;&nbsp;<span style="background:#FFD50055;">left.run(500 - 4*error)</span></div>
     <div>&nbsp;&nbsp;… 5 more lines …</div>
     <div style="color:#E96852;font-weight:700;">…and here. 😵</div>
@@ -1088,12 +1120,13 @@ window.NM = {
 </div>
 <div class="fragment fade-up">
 <ul>
-<li>Four moves ≈ <strong>30 pasted lines</strong>, and one bug means <strong>four fixes</strong> — miss one and the robot lies to you</li>
-<li>A real mission has a <em>dozen</em> moves. The cure isn’t more pasting — it’s <strong>naming</strong>: write each move once, call it forever</li>
+<li>4 moves = <strong>30+ pasted lines</strong></li>
+<li>One bug means fixing the same code in 4 places 😵</li>
+<li><strong>The fix:</strong> write each move once, as a named function</li>
 </ul>
 </div>
 <aside class="notes">
-<p>Let them actually start pasting for the judge’s call — a minute of real pasting sells the swamp better than any slide. Then freeze: “you already know the cure — you used it yesterday.” <code>def gyro_turn</code> was the first named move; today every move gets a name, in a file of its own. Vocabulary to land: a <strong>library</strong> = a file of named moves; your mission file <em>imports</em> the verbs. This is the same trick <code>run_angle</code> plays — someone at LEGO named a move so you wouldn’t have to paste motor physics.</p>
+<p>Have squads think about copying loop code 4 or 5 times in a single mission file. If they need to change the KP value or fix a calculation, they must remember to edit all four copies. Introducing functions and modules solves duplicate code.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1106,29 +1139,30 @@ window.NM = {
           display:block!important;
       }</style></aside>
 </section>
-<section id="fix-it-a-file-of-your-own-my_lib.py" class="slide level2 code-shrink">
-<h2>Fix it: a file of your own — <code>my_lib.py</code> 📦</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1|2-9|11-13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># my_lib.py — YOUR moves: written once, named forever</span></span>
+<section id="fix-it-your-own-file-movements.py" class="slide level2 code-shrink">
+<h2>Fix it: Your Own File <code>movements.py</code> 📦</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1|2-9|11-13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># movements.py -- your own library of robot moves</span></span>
 <span id="cb2-2"><a></a><span class="im">from</span> pybricks.hubs <span class="im">import</span> PrimeHub</span>
 <span id="cb2-3"><a></a><span class="im">from</span> pybricks.pupdevices <span class="im">import</span> Motor</span>
 <span id="cb2-4"><a></a><span class="im">from</span> pybricks.parameters <span class="im">import</span> Port, Direction</span>
 <span id="cb2-5"><a></a><span class="im">from</span> pybricks.tools <span class="im">import</span> wait</span>
 <span id="cb2-6"><a></a></span>
 <span id="cb2-7"><a></a>hub <span class="op">=</span> PrimeHub()</span>
-<span id="cb2-8"><a></a>left <span class="op">=</span> Motor(Port.A, Direction.COUNTERCLOCKWISE)</span>
-<span id="cb2-9"><a></a>right <span class="op">=</span> Motor(Port.E)</span>
+<span id="cb2-8"><a></a>left <span class="op">=</span> Motor(Port.F, Direction.COUNTERCLOCKWISE)   <span class="co"># yours</span></span>
+<span id="cb2-9"><a></a>right <span class="op">=</span> Motor(Port.B)                              <span class="co"># yours</span></span>
 <span id="cb2-10"><a></a></span>
-<span id="cb2-11"><a></a>KP <span class="op">=</span> <span class="dv">4</span>                                <span class="co"># named constants — tune HERE,</span></span>
-<span id="cb2-12"><a></a>WHEEL_MM <span class="op">=</span> <span class="dv">88</span>                         <span class="co"># nowhere else</span></span>
-<span id="cb2-13"><a></a>DEG_PER_MM <span class="op">=</span> <span class="dv">360</span> <span class="op">/</span> (<span class="fl">3.14</span> <span class="op">*</span> WHEEL_MM)  <span class="co"># Day 2's wheel math, bottled</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-11"><a></a>KP <span class="op">=</span> <span class="dv">4</span>                                <span class="co"># tuned steering constants</span></span>
+<span id="cb2-12"><a></a>WHEEL_MM <span class="op">=</span> <span class="dv">88</span>                         <span class="co"># measured wheel diameter</span></span>
+<span id="cb2-13"><a></a>DEG_PER_MM <span class="op">=</span> <span class="dv">360</span> <span class="op">/</span> (<span class="fl">3.14</span> <span class="op">*</span> WHEEL_MM)  <span class="co"># wheel conversion factor</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <ul>
-<li>One new file. The top holds the robot’s <strong>facts</strong> (ports, gains, wheel math); below it live the <strong>verbs</strong></li>
-<li>Your mission file just says <code>from my_lib import drive_straight, turn_to</code> — and reads like a story instead of a swamp</li>
+<li><strong>Constants at the top:</strong> ports, tuning numbers, and wheel sizes</li>
+<li><strong>Functions below:</strong> the moves you call in your missions</li>
+<li>Main program stays clean: <code>from movements import drive_straight, turn</code></li>
 </ul>
 </div>
 <aside class="notes">
-<p>Make the file for real, together — everyone creates <code>my_lib.py</code> next to their mission file. The constants block is the same discipline from the square day, now promoted to the library’s front door: facts at the top, verbs below, missions elsewhere. <code>DEG_PER_MM</code> bottles the D2 rope-unroll math (360° per wheel-turn ÷ circumference) so distance-in-mm is a multiply away. Two verbs move in today; the library keeps growing all week — wall verbs next session, line verbs after — same file, more names.</p>
+<p>Walk through creating <code>movements.py</code> alongside the main mission script. Keeping constants at the top makes tuning easy and central. All functions inside the library share these settings.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1141,22 +1175,28 @@ window.NM = {
           display:block!important;
       }</style></aside>
 </section>
-<section id="verb-1-turn_to-the-pd-turn-named" class="slide level2">
-<h2>Verb #1: <code>turn_to</code> — the PD turn, named</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|2|3|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> turn_to(target, kp<span class="op">=</span><span class="dv">4</span>, kd<span class="op">=</span><span class="fl">0.5</span>):</span>
-<span id="cb3-2"><a></a>    <span class="co">"""PD gyro turn to a heading ON THE MAT — no reset."""</span></span>
-<span id="cb3-3"><a></a>    <span class="co"># hub.imu.reset_heading(0)   ← DELETED. That's the whole diff.</span></span>
-<span id="cb3-4"><a></a>    last_error <span class="op">=</span> target <span class="op">-</span> hub.imu.heading()</span>
-<span id="cb3-5"><a></a>    ...   <span class="co"># the rest IS gyro_turn_pd, line for line</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="verb-1-turn-by-or-to" class="slide level2">
+<h2>Verb #1: <code>turn</code>, by or to</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|2|3|4-6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> turn(angle, absolute<span class="op">=</span><span class="va">False</span>, kp<span class="op">=</span><span class="dv">4</span>, kd<span class="op">=</span><span class="fl">0.5</span>):</span>
+<span id="cb3-2"><a></a>    <span class="co">"""PD gyro turn. By this many degrees, or TO this heading."""</span></span>
+<span id="cb3-3"><a></a>    <span class="co"># hub.imu.reset_heading(0)   &lt;- Removed!</span></span>
+<span id="cb3-4"><a></a>    target <span class="op">=</span> angle <span class="cf">if</span> absolute <span class="cf">else</span> hub.imu.heading() <span class="op">+</span> angle</span>
+<span id="cb3-5"><a></a>    last_error <span class="op">=</span> target <span class="op">-</span> hub.imu.heading()</span>
+<span id="cb3-6"><a></a>    ...   <span class="co"># remaining PD loop identical to gyro_turn_pd</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <ul>
-<li>Copy <code>gyro_turn_pd</code> into <code>my_lib.py</code>, rename it, <strong>delete the reset</strong> — that’s the whole edit</li>
-<li><code>turn_to(90)</code> now means <em>face 90 on the mat</em> — not “turn 90 more”</li>
-<li>Arrive at a corner 1° hot? The <strong>next</strong> <code>turn_to</code> absorbs it. <strong>Errors stop stacking.</strong></li>
+<li><code>turn(90)</code> → spin <strong>90° more</strong> from wherever I’m pointing, like a steering wheel</li>
+<li><code>turn(90, absolute=True)</code> → <strong>face 90° on the mat</strong>, like a compass</li>
+<li>Same PD logic, but we <strong>removed <code>reset_heading(0)</code></strong>: with one zero for the whole run, an absolute turn that lands 1° wide gets absorbed by the next one 🎯</li>
 </ul>
 </div>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p>⚠️ <strong>Relative turns stack their mistakes. Absolute turns erase them.</strong> Four <code>turn(90)</code>s pile up four errors. Four <code>turn(90, absolute=True)</code>, <code>turn(180, absolute=True)</code>… each throw the last one away. <strong>Write missions in absolute.</strong></p>
+</div>
+</div>
 <aside class="notes">
-<p>The dropped reset is the day’s sneakiest upgrade — walk it slowly. With reset, every turn measures from wherever the robot happens to point, so corner errors <em>add up</em> (the D3 square never closed for exactly this reason). Without reset, the gyro keeps one map-wide heading and every <code>turn_to</code> is an absolute appointment: 90 is 90, whatever mess came before. Quiz it: “you’re at heading 92 after a bumped corner — what does <code>turn_to(180)</code> do?” (turns 88, not 90 — it <em>fixes</em> the bump for free). The gyro heading keeps counting past 360, which the square slide uses. Defaults (<code>kp=4, kd=0.5</code>) are their tuned D4/D5 values — theirs may differ; that’s the point of owning the knobs. Don’t unpack the <code>=</code> in the def line yet — <em>default</em> gets named and drilled two slides on.</p>
+<p>One line carries the whole idea — line 4. Ask the room what <code>absolute=False</code> should <em>do</em> before you show it: “if I’m not facing a mat heading, what am I turning relative to?” They’ll get to “where I am now”, which is exactly <code>hub.imu.heading() + angle</code>. Then run both live on one robot from the same start: four relative 90s drift visibly off the tape, four absolute ones close. Removing <code>reset_heading</code> is the other half and it is critical — with resets, small turn errors accumulate across every turn in a mission; without them the gyro holds a single compass for the whole field. Do not tell them yet that Pybricks spells this exact signature the exact same way — that is the D8 reveal, and it lands far harder if they meet it as <em>their own</em> design first.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1169,26 +1209,27 @@ window.NM = {
           display:block!important;
       }</style></aside>
 </section>
-<section id="verb-2-drive_straight-a-straight-with-a-finish-line" class="slide level2 code-shrink">
-<h2>Verb #2: <code>drive_straight</code> — a straight with a finish line</h2>
+<section id="verb-2-drive_straight-with-finish-line" class="slide level2 code-shrink">
+<h2>Verb #2: <code>drive_straight</code> (With Finish Line)</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers="|1|3|5|6-8|9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> drive_straight(distance_mm, speed<span class="op">=</span><span class="dv">400</span>):</span>
-<span id="cb4-2"><a></a>    <span class="co">"""Drive distance_mm, healing the heading the whole way."""</span></span>
-<span id="cb4-3"><a></a>    heading <span class="op">=</span> hub.imu.heading()                    <span class="co"># lock THIS heading</span></span>
+<span id="cb4-2"><a></a>    <span class="co">"""Drive distance_mm while holding gyro heading."""</span></span>
+<span id="cb4-3"><a></a>    heading <span class="op">=</span> hub.imu.heading()                    <span class="co"># lock current heading</span></span>
 <span id="cb4-4"><a></a>    finish <span class="op">=</span> left.angle() <span class="op">+</span> distance_mm <span class="op">*</span> DEG_PER_MM</span>
 <span id="cb4-5"><a></a>    <span class="cf">while</span> left.angle() <span class="op">&lt;</span> finish:                   <span class="co"># encoder finish line</span></span>
-<span id="cb4-6"><a></a>        error <span class="op">=</span> hub.imu.heading() <span class="op">-</span> heading        <span class="co"># one heartbeat</span></span>
+<span id="cb4-6"><a></a>        error <span class="op">=</span> hub.imu.heading() <span class="op">-</span> heading        <span class="co"># gyro correction</span></span>
 <span id="cb4-7"><a></a>        left.run(speed <span class="op">-</span> KP <span class="op">*</span> error)</span>
 <span id="cb4-8"><a></a>        right.run(speed <span class="op">+</span> KP <span class="op">*</span> error)</span>
 <span id="cb4-9"><a></a>        wait(<span class="dv">5</span>)</span>
 <span id="cb4-10"><a></a>    left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <ul>
-<li>Day 2’s wheel math sets the <strong>finish line in degrees</strong>; Day 4’s healing loop steers every heartbeat on the way there</li>
-<li>A verb calling a verb would stack — here it’s inlined for simplicity, same idea: <strong>libraries grow by stacking, not pasting</strong></li>
+<li>The wheel counters work out the <strong>finish line</strong></li>
+<li>The gyro P-loop <strong>holds the heading straight</strong></li>
+<li>One function replaces raw motor commands everywhere</li>
 </ul>
 </div>
 <aside class="notes">
-<p>Single function now: <code>drive_straight</code> handles both the finish line (encoder degrees) and the healing loop (P steering each tick). <code>finish</code> is measured from wherever the wheel already is (no encoder reset), same absolute-not-relative discipline as <code>turn_to</code>. Backwards moves (a negative <code>distance_mm</code>) need the comparison flipped — park it as a challenge today; it becomes urgent at the wall session’s measured back-off, and the coach exemplar handles it. Benchmarks come at the gate: 1 m within ±2 cm is very reachable with a measured wheel. The <code>speed=400</code> in the def line gets its name — <em>default</em> — on the very next slide.</p>
+<p>Combine motor encoders with the gyro. Motor encoders determine forward distance; the gyro detects and counters yaw drift. Notice that <code>speed=400</code> in the function header is a default parameter.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1203,26 +1244,31 @@ window.NM = {
 </section>
 <section id="knobs-with-defaults" class="slide level2 smaller">
 <h2>Knobs with defaults 🎛️</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1|2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> turn_to(target, kp<span class="op">=</span><span class="dv">4</span>, kd<span class="op">=</span><span class="fl">0.5</span>):           <span class="co"># two knobs, factory-set</span></span>
-<span id="cb5-2"><a></a><span class="kw">def</span> drive_straight(distance_mm, speed<span class="op">=</span><span class="dv">400</span>):  <span class="co"># one knob, factory-set</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
-<li>Every <code>=</code> in a <code>def</code> line is a <strong>default</strong> — a factory setting. Skip the knob, the factory value runs; name it — a <strong>keyword argument</strong> like <code>kd=0</code> — and you turn <em>that one knob</em>, nothing else</li>
-</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1|2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> turn(angle, absolute<span class="op">=</span><span class="va">False</span>, kp<span class="op">=</span><span class="dv">4</span>, kd<span class="op">=</span><span class="fl">0.5</span>):   <span class="co"># these have default values</span></span>
+<span id="cb5-2"><a></a><span class="kw">def</span> drive_straight(distance_mm, speed<span class="op">=</span><span class="dv">400</span>):  <span class="co"># speed has a default value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="qbox">
-<p><span class="qtitle">Predict — what runs? ① <code>turn_to(90)</code> · ② <code>turn_to(90, kd=0)</code> · ③ <code>drive_straight(300, speed=150)</code> · ④ <code>drive_straight(speed=150)</code></span></p>
+<p><span class="qtitle">Predict what happens: ① <code>turn(90, absolute=True)</code> &nbsp;|&nbsp; ② <code>turn(90, absolute=True, kd=0)</code> &nbsp;|&nbsp; ③ <code>drive_straight(300, speed=150)</code> &nbsp;|&nbsp; ④ <code>drive_straight(speed=150)</code></span></p>
 </div>
 <div class="fragment fade-up">
+<div class="columns">
+<div class="column" style="width:50%;">
 <div class="cardbox teal">
-<p>① all factory settings — <strong>your</strong> tuned <code>kp=4, kd=0.5</code> run unasked · ② brake knob to zero — <strong>yesterday’s ringing P is back, on demand</strong> 🔔</p>
+<ul>
+<li><strong>①:</strong> Uses default values (<code>kp=4, kd=0.5</code>)</li>
+<li><strong>②:</strong> Disables derivative braking (<code>kd=0</code>) 🔔</li>
+</ul>
 </div>
-</div>
-<div class="fragment fade-up">
+</div><div class="column" style="width:50%;">
 <div class="cardbox purple">
-<p>③ one careful straight at 150 — every <em>other</em> call still fast · ④ 💥 <code>TypeError</code> — <code>distance_mm</code> has <strong>no</strong> default. Some knobs <em>must</em> be turned</p>
+<ul>
+<li><strong>③:</strong> Sets speed to 150 for this single call</li>
+<li><strong>④:</strong> 💥 <code>TypeError</code>: <code>distance_mm</code> has no default</li>
+</ul>
 </div>
+</div></div>
 </div>
 <aside class="notes">
-<p>Name the vocabulary plainly, once: the names in the parentheses are <strong>parameters</strong>; a parameter with <code>=</code> carries a <strong>default</strong>; naming a knob at the call site (<code>kd=0</code>) is a <strong>keyword argument</strong>. They’ve used all three since <code>gyro_turn_p(target, kp=4)</code> — this slide only hangs names on habits. Quiz cadence: read a call, every squad commits out loud, <em>then</em> reveal the card — ② is the fun one (one keyword resurrects yesterday’s ringing bug, proof the default was doing real work), ④ is the confidence move: run it live, read the <code>TypeError</code> together — the interpreter is <em>telling you which knob you forgot</em>, not scolding you. Forward hook for coaches: at the D8 reveal, <code>RobotConfig</code> gathers all these factory settings into one dataclass — same idea, bigger box.</p>
+<p>Explain default arguments and keyword overrides. When a parameter has an <code>=</code> in the definition, callers can omit it to use the default value, or specify it explicitly to adjust that parameter for a specific maneuver. Required arguments without defaults must always be provided.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1237,28 +1283,37 @@ window.NM = {
 </section>
 <section id="two-homes-for-a-name" class="slide level2 smaller">
 <h2>Two homes for a name 🗺️</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="|1-3|5-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># top of my_lib.py — GLOBALS: born once, every verb reads them</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="|1-3|5-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="co"># Top of movements.py (GLOBAL)</span></span>
 <span id="cb6-2"><a></a>hub <span class="op">=</span> PrimeHub()</span>
 <span id="cb6-3"><a></a>KP <span class="op">=</span> <span class="dv">4</span></span>
 <span id="cb6-4"><a></a></span>
 <span id="cb6-5"><a></a><span class="kw">def</span> drive_straight(distance_mm, speed<span class="op">=</span><span class="dv">400</span>):</span>
-<span id="cb6-6"><a></a>    heading <span class="op">=</span> hub.imu.heading()              <span class="co"># LOCALS: born at the call…</span></span>
-<span id="cb6-7"><a></a>    error <span class="op">=</span> hub.imu.heading() <span class="op">-</span> heading      <span class="co"># …gone the moment it ends</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="qbox">
-<p><span class="qtitle">The run just ended — what does <code>print(error)</code> print? And: change <code>KP = 4</code> → <code>6</code> at the top — how many verbs feel it?</span></p>
-</div>
+<span id="cb6-6"><a></a>    heading <span class="op">=</span> hub.imu.heading()              <span class="co"># LOCAL: created during call</span></span>
+<span id="cb6-7"><a></a>    error <span class="op">=</span> hub.imu.heading() <span class="op">-</span> heading      <span class="co"># LOCAL: deleted when call ends</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
-<div class="cardbox coral">
-<p><code>print(error)</code> → <strong>NameError</strong> — <code>error</code> is a <strong>local</strong>: born at the call, dead at the end. A <em>feature</em> — every verb gets private scratch names that never collide</p>
-</div>
-</div>
-<div class="fragment fade-up">
-<div class="cardbox teal">
-<p><code>KP</code> is a <strong>global</strong> — one edit, <strong>every</strong> verb feels it. The file’s whole shape: <strong>facts up top (global) · verbs below · scratch inside (local)</strong></p>
-</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<section id="local-variables" class="cardbox coral">
+<h3>Local variables</h3>
+<ul>
+<li>Created inside a function</li>
+<li>Gone the moment the function returns</li>
+<li><code>print(error)</code> outside → <code>NameError</code></li>
+</ul>
+</section>
+</div><div class="column" style="width:50%;">
+<section id="global-constants" class="cardbox teal">
+<h3>Global constants</h3>
+<ul>
+<li>Defined at the top of the file</li>
+<li>Visible across all functions</li>
+<li>Update once to tune the entire robot</li>
+</ul>
+</section>
+</div></div>
 </div>
 <aside class="notes">
-<p>Two words, two homes — point at the actual file while saying it: a name born at the <strong>top of the file</strong> is a <strong>global</strong> (born once, when the file loads; every verb below can read it — <code>hub</code>, <code>left</code>, <code>KP</code>, <code>DEG_PER_MM</code>); a name born <strong>inside a def</strong> is a <strong>local</strong> (born fresh at every call, gone at the end — <code>heading</code>, <code>finish</code>, <code>error</code>). Run the <code>print(error)</code> NameError live if a laptop’s handy; kids expect the number to still be there, and the error landing is the lesson. Then sell dying-locals as a feature: <code>turn_to</code> and <code>drive_straight</code> <em>both</em> use <code>error</code> and never trip over each other, and every call starts with a clean slate. The KP question is the payoff of the “tune HERE, nowhere else” comment they already wrote — one global, read by everyone, edited in one place. Don’t mention the <code>global</code> keyword; the next slide handles the one trap without it.</p>
+<p>Contrast scope: variables defined inside a function exist only during that specific function call, preventing accidental variable collisions between different maneuvers. Variables defined at module top level remain available everywhere.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1274,18 +1329,32 @@ window.NM = {
 <section id="break-it-the-tune-that-didnt-stick" class="slide level2">
 <h2>Break it: the tune that didn’t stick 🔥</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-code-line-numbers="|1-2|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="kw">def</span> make_it_sharper():</span>
-<span id="cb7-2"><a></a>    KP <span class="op">=</span> <span class="dv">12</span>          <span class="co"># crank steering for the whole library… right?</span></span>
+<span id="cb7-2"><a></a>    KP <span class="op">=</span> <span class="dv">12</span>          <span class="co"># trying to tune the whole library...</span></span>
 <span id="cb7-3"><a></a></span>
 <span id="cb7-4"><a></a>make_it_sharper()</span>
-<span id="cb7-5"><a></a>drive_straight(<span class="dv">300</span>)  <span class="co"># …still lazy. Nothing changed. 😤</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-5"><a></a>drive_straight(<span class="dv">300</span>)  <span class="co"># ...still unchanged! 😤</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
+<div class="columns">
+<div class="column" style="width:50%;">
+<section id="why-it-failed" class="cardbox coral">
+<h3>Why it failed</h3>
 <ul>
-<li class="fragment"><strong>Assigning</strong> a name inside a <code>def</code> births a brand-new <strong>local</strong> — even when a global already owns that name. This <code>KP</code> lived inside <code>make_it_sharper</code>… and <strong>died at the end of the call</strong>. The top-of-file <code>KP</code> never moved</li>
-<li class="fragment">The fix is zero new code — it’s the rule the file already taught you: <strong>read a global from anywhere; <em>change</em> it only at the top.</strong> <code>KP = 12</code> belongs in exactly ONE place — the constants block</li>
+<li>Assigning inside <code>def</code> creates a <strong>local</strong> variable</li>
+<li>The global <code>KP</code> at the top was never touched</li>
 </ul>
+</section>
+</div><div class="column" style="width:50%;">
+<section id="the-rule" class="cardbox teal">
+<h3>The rule</h3>
+<ul>
+<li><strong>Read</strong> globals from any function</li>
+<li><strong>Change</strong> tuning values only at the top of <code>movements.py</code></li>
+</ul>
+</section>
+</div></div>
 </div>
 <aside class="notes">
-<p>Act it out before explaining: type <code>make_it_sharper</code> live, run the straight, watch nothing change — let the 😤 be theirs. Then the one-sentence rule: the moment you <em>assign</em> a name inside a def, Python births a new local, even if a global already wears that name — the global is untouched, and the local evaporates at return. (Inside <code>make_it_sharper</code> the new <code>KP</code> even <em>hides</em> the global — same name, different box.) Do <strong>not</strong> teach the <code>global</code> keyword as the escape hatch — the library discipline is strictly better and it’s already on the slide: constants change at the top, nowhere else. Coach’s radar for Weeks 2–3: when a squad swears “I tuned it and it didn’t stick,” the first question is <em>“where did you assign it?”</em> — this slide is that bug, met safely in advance.</p>
+<p>Assigning a variable inside a function creates a local variable in Python unless declared otherwise. Emphasize the clean pattern: never reassign constants inside functions; keep tuning values strictly in the constants block at the top of the file.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1300,23 +1369,23 @@ window.NM = {
 </section>
 <section id="the-square-in-four-names" class="slide level2">
 <h2>The square, in four names</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-code-line-numbers="|1|3-6|8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">from</span> my_lib <span class="im">import</span> drive_straight, turn_to</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-code-line-numbers="|1|3-6|8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">from</span> movements <span class="im">import</span> drive_straight, turn</span>
 <span id="cb8-2"><a></a></span>
 <span id="cb8-3"><a></a><span class="kw">def</span> drive_square(side_mm):</span>
 <span id="cb8-4"><a></a>    <span class="cf">for</span> corner <span class="kw">in</span> [<span class="dv">90</span>, <span class="dv">180</span>, <span class="dv">270</span>, <span class="dv">360</span>]:</span>
 <span id="cb8-5"><a></a>        drive_straight(side_mm)</span>
-<span id="cb8-6"><a></a>        turn_to(corner)</span>
+<span id="cb8-6"><a></a>        turn(corner, absolute<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb8-7"><a></a></span>
 <span id="cb8-8"><a></a>drive_square(<span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <ul>
-<li>Run it. <strong>The square snaps shut.</strong></li>
-<li>Each corner is an <em>appointment on the mat</em> — 90, 180, 270, 360 — so a hot corner can’t poison the next one</li>
-<li>Day 3’s drift didn’t get patched; it became <strong>impossible</strong>. (And notice what the mission just turned into: <em>a list.</em> 😉)</li>
+<li><strong>Absolute headings:</strong> 90°, 180°, 270°, 360°</li>
+<li>No stacked drift: each turn aims at the mat on its own</li>
+<li>4 lines replace dozens of hand-written ones 🎯</li>
 </ul>
 </div>
 <aside class="notes">
-<p>Close the loop hard: put Day 3’s taped drift-square next to this one. Everything converged — <code>for</code> repeats the move, the library names it, PD watches it, and absolute headings stop the corner errors stacking (the heading counts past 360, which is why the last appointment is 360 and not 0). The <code>[90, 180, 270, 360]</code> list is a deliberate wink — the mission-runner session turns whole missions into exactly this shape; don’t teach lists now, just let the shape sit there. Show off with <code>drive_square(200)</code>, <code>drive_square(400)</code>.</p>
+<p>Compare this against the Day 3 square. Because the corners are taken with <code>absolute=True</code> mat headings rather than relative turns, any angular error from wheel scrub is automatically corrected on the next corner.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1333,8 +1402,8 @@ window.NM = {
 <h2>Watch the square snap shut 🔲</h2>
 <div style="width:820px;margin:0 auto;">
   <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
-    <button onclick="sqDrive('drift')" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ Day 3: guessed turns</button>
-    <button onclick="sqDrive('heal')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight + turn_to</button>
+    <button onclick="sqDrive('drift')" style="background:#E96852;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ guessed turns</button>
+    <button onclick="sqDrive('heal')" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight + turn</button>
   </div>
   <svg width="420" height="360" viewbox="0 0 420 360" style="display:block;margin:0 auto;background:#eef3f8;border-radius:14px;">
     <circle id="sqStart" cx="140" cy="250" r="7" fill="#1C355E"></circle>
@@ -1349,7 +1418,7 @@ window.NM = {
   var raf=null, last=null, el=NM.el;
   window.sqDrive=function(mode){
     var side=110, x=140, y=250, h=-90, seg=0, prog=0, pts=['140,250'];
-    var drift = mode==='drift' ? 7 : 0;           // degrees of error added per corner
+    var drift = mode==='drift' ? 7 : 0;
     var col = mode==='drift' ? '#E96852' : '#00C9A7';
     el('sqTrace').setAttribute('stroke',col);
     el('sqTrace').setAttribute('points','140,250');
@@ -1367,8 +1436,8 @@ window.NM = {
     }
     function finish(fx,fy){
       var gap=Math.hypot(fx-140,fy-250);
-      if(mode==='drift'){ el('sqMsg').setAttribute('fill','#E96852'); el('sqMsg').textContent='never closes — gap of '+gap.toFixed(0)+' 😬'; }
-      else { el('sqMsg').setAttribute('fill','#00AE8D'); el('sqMsg').textContent='snaps shut 🎯'; }
+      if(mode==='drift'){ el('sqMsg').setAttribute('fill','#E96852'); el('sqMsg').textContent='Never closes: gap of '+gap.toFixed(0)+' mm'; }
+      else { el('sqMsg').setAttribute('fill','#00AE8D'); el('sqMsg').textContent='Snaps shut cleanly 🎯'; }
     }
     if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
   };
@@ -1376,12 +1445,12 @@ window.NM = {
 </script>
 <div class="fragment fade-up">
 <ul>
-<li>Same four sides, same four corners</li>
-<li>Day 3’s guessed turns spiral <strong>open</strong>; your library’s watched corners land the nose back on the <strong>start dot</strong> — every line of the cure is code <strong>you wrote</strong></li>
+<li><strong>Relative turns:</strong> Errors pile up into an open spiral</li>
+<li><strong>Today, with absolute headings:</strong> It comes back to the start dot</li>
 </ul>
 </div>
 <aside class="notes">
-<p>Run drift first, then the library version — the old red spiral vs the closed green square is the whole two-day arc in one picture. Emphasize ownership: unlike a black-box shortcut, there is nothing hidden here — if the square doesn’t close on a real robot, they can open <code>my_lib.py</code> and <em>see</em> every line that could be wrong (kp, kd, DEG_PER_MM, the heading appointments). Debuggability is the library’s superpower, and it’s the skill Week 3’s mission work leans on.</p>
+<p>Run drift mode first, then the library mode. The visual contrast demonstrates why competition robotics relies on closed-loop sensors and absolute navigation.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1403,37 +1472,37 @@ window.NM = {
 </colgroup>
 <thead>
 <tr class="header">
-<th>challenge</th>
-<th>prove it</th>
+<th>Challenge</th>
+<th>Goal</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1️⃣ <strong>Ring it on purpose</strong> — <code>turn_to(90)</code>, then <code>turn_to(90, kd=0)</code></td>
-<td>say which knob you turned — and what came back 🔔</td>
+<td>1️⃣ <strong>Ring on purpose</strong></td>
+<td>Run <code>turn(90, absolute=True, kd=0)</code> to see overshoot return 🔔</td>
 </tr>
 <tr class="even">
-<td>2️⃣ <strong>One slow straight</strong> — one <code>drive_straight</code> call at half speed, <em>without opening <code>my_lib.py</code></em></td>
-<td>every <em>other</em> call still fast</td>
+<td>2️⃣ <strong>Slow straight</strong></td>
+<td>Run one straight at half-speed with <code>speed=200</code></td>
 </tr>
 <tr class="odd">
-<td>3️⃣ <strong>Factory-set your square</strong> — make bare <code>drive_square()</code> draw a 300 mm square</td>
-<td>one <code>=</code> in one def line</td>
+<td>3️⃣ <strong>Set square default</strong></td>
+<td>Give <code>drive_square(side_mm=300)</code> a default side length</td>
 </tr>
 <tr class="even">
-<td>4️⃣ <strong>Detective</strong> 🔎 — slow <em>every</em> straight forever vs slow <em>one</em> call</td>
-<td>point at each edit spot <em>before</em> typing</td>
+<td>4️⃣ <strong>Code detective</strong> 🔎</td>
+<td>Identify where to change all straights vs one call</td>
 </tr>
 </tbody>
 </table>
 <div class="fragment fade-up">
 <ul>
-<li>⏱️ <strong>10 minutes, robots out.</strong> Pass = your squad says all four: <em>default = factory setting · keyword = one-call override · top of file = global · inside a def = local</em></li>
-<li>Fast squads: invent <code>wiggle(times=3)</code> — a new verb with a factory setting of its own 🐍</li>
+<li>⏱️ <strong>10 minutes with robots</strong></li>
+<li><strong>Check-off:</strong> Explain default, keyword argument, global, and local</li>
 </ul>
 </div>
 <aside class="notes">
-<p>Squads at their robots, ~10 minutes, coach roams. Answers: 1️⃣ the <code>kd</code> knob — the ring comes back (defaults were doing real work); 2️⃣ <code>drive_straight(1000, speed=200)</code> — keyword argument, library untouched; 3️⃣ <code>def drive_square(side_mm=300):</code> — their first <em>authored</em> default, prove it with a bare <code>drive_square()</code>; 4️⃣ every-straight-forever = the <code>speed=400</code> in the def line (or a top constant), one-call = a keyword at the call site. The pass is <strong>verbal, not gated</strong> — each squad says the four sentences on the slide in their own words; the Day-5 gate in the next section stays the motion benchmarks, unchanged. The finger-first rule on 4️⃣ matters: deciding <em>where</em> an edit belongs is the whole global/local/default lesson compressed into one gesture. Fast-squad <code>wiggle(times=3)</code>: a for-loop of two quick opposite <code>turn_to</code>s is plenty — the point is authoring a def line with a default of their own.</p>
+<p>Have squads test their parameters. Challenge 1 verifies that D damping was active. Challenge 2 exercises keyword arguments without modifying library source. Challenge 3 gives students practice writing default parameter syntax.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1462,7 +1531,7 @@ window.NM = {
 <p><strong>The challenge</strong></p>
 </div>
 <div class="callout-content">
-<p>Drive forward <strong>exactly 1 metre</strong> <em>with your own <code>drive_straight</code></em> and stop as close to the mark as you can. 3 attempts, best counts. <em>(Fast squads: <strong>Sniper</strong> — 3 mat targets, score = total distance error.)</em></p>
+<p>Drive forward <strong>exactly 1 metre</strong> using your own <code>drive_straight</code>. Stop as close to the target mark as possible (3 attempts, best counts).</p>
 </div>
 </div>
 </div>
@@ -1490,29 +1559,31 @@ window.NM = {
     el('beTrace').setAttribute('points','60,90'); el('beOut').textContent='–'; el('beOut').style.color='#1C355E';
     function frame(now){
       var dt=last?Math.min((now-last)/1000,0.05):0.016; last=now;
-      var sp=(720-x)*2.4+8;                        // eases to a stop at the 1 m line
+      var sp=(720-x)*2.4+8;
       if(sp>320)sp=320;
       if(nudgeReq && !nudged && x>320){ h=22; nudged=true; nudgeReq=false; }
-      h -= h*3.2*dt;                               // the healing loop steers the heading back to 0
+      h -= h*3.2*dt;
       var r=h*Math.PI/180;
       x+=sp*Math.cos(r)*dt; y+=sp*Math.sin(r)*dt; t+=dt;
       pts.push(x.toFixed(1)+','+y.toFixed(1)); el('beTrace').setAttribute('points',pts.join(' '));
       el('beBot').setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+') rotate('+h.toFixed(1)+')');
       if(x>=719 || t>6){ done=true; }
       if(!done){ raf=requestAnimationFrame(frame); }
-      else{ raf=null; el('beOut').innerHTML='<b>0.0 cm</b> off — measured Ø + your healing loop 🎯'; el('beOut').style.color='#00AE8D'; }
+      else{ raf=null; el('beOut').innerHTML='<b>0.0 cm</b> off · measured Ø + healing loop 🎯'; el('beOut').style.color='#00AE8D'; }
     }
     if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);
   };
   window.beNudge=function(){ nudgeReq=true; };
 })();
 </script>
+<div class="fragment fade-up">
 <ul>
-<li><code>drive_straight(1000)</code> + a wheel diameter <em>you measured</em> into <code>DEG_PER_MM</code>. Predict, then prove.</li>
-<li>Pro move: does your run survive a <strong>battery swap</strong>? A <strong>judge’s evil nudge</strong> mid-run? (It should — the healing loop is <em>yours</em>. 😏) The red ghost is where a <em>guessed</em> diameter would stop.</li>
+<li>Uses your measured wheel diameter in <code>DEG_PER_MM</code></li>
+<li>Tests gyro self-healing against table bumps and battery changes</li>
 </ul>
+</div>
 <aside class="notes">
-<p>The competition proves <em>their</em> code, not a shortcut — that’s the day’s whole point, so say it: the button reads <code>drive_straight</code>, the function they wrote an hour ago. Battery swap and nudge are the two classic fakes that expose open-loop code; their encoder finish line shrugs off the battery (degrees are degrees at any voltage) and their P-loop shrugs off the nudge. The ghost dot is the D2 lesson refusing to die: a guessed 90 mm wheel on an 88 mm robot misses by ~2 cm — exactly the gate tolerance. Squads that miss: check DEG_PER_MM first, KP second.</p>
+<p>The competition tests code reliability. A properly calibrated wheel diameter and tuned KP constant should land within 2 cm of the 1-meter mark consistently.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1533,18 +1604,23 @@ window.NM = {
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>You’re done today when…</strong></p>
+<p><strong>Checklist for today</strong></p>
 </div>
 <div class="callout-content">
-<p>Your own <code>drive_straight(1000)</code> lands <strong>1.0 m within ±2 cm</strong> and <code>turn_to</code> lands <strong>within ±2°</strong>, across 10 trials — on code you wrote line by line — your <code>drive_square()</code> (four library calls) <strong>closes the Day-3 square</strong>, and you can say what <strong>D</strong> and <strong>I</strong> each add to P.</p>
+<ol type="1">
+<li><code>drive_straight(1000)</code> lands within <strong>±2 cm</strong> of 1.0 m (10 runs)</li>
+<li><code>turn(…, absolute=True)</code> lands within <strong>±2°</strong> of target heading (10 runs)</li>
+<li><code>drive_square()</code> closes the square cleanly</li>
+<li>Can explain what <strong>D</strong> and <strong>I</strong> add to <strong>P</strong></li>
+</ol>
 </div>
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Next: <em>Line King</em> — the robot opens its <strong>eyes</strong> and steers with a formula you <strong>already own</strong>.</p>
+<p>Next: <em>Line King</em>, following a line with the colour sensor. 👑</p>
 </div>
 <aside class="notes">
-<p>The benchmarks are the plan’s Week-1 gate verbatim: drive_straight 1.0 m ±2 cm, turn_to ±2° over 10 trials, square closed, D and I explained in their own words (I is never gated as a build — it was a coach demo). Log each student’s pass in the scorecard; these same benchmarks are re-run at the end-of-week-2 gate, so a shaky pass today is a flag, not a fail. Teaser stays topic-only: next session the motor itself becomes a touch sensor (stall detection) and <code>drive_to_wall</code>/<code>wall_square</code> join the library.</p>
+<p>Benchmark evaluation: verify each squad’s straight driving and heading accuracy over 10 trials. Confirm students understand the roles of D and I.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1847,7 +1923,7 @@ window.NM = {
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/NaifMersal\.github\.io\/WRO-LEGO-pypricks\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

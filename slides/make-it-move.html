@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-09-05">
+  <meta name="dcterms.date" content="2026-09-06">
   <title>Make It Move</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,17 +206,17 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-09-05</p>
+  <p class="date">2026-09-06</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>A. Warm-Up</h1>
-<p>Finish the builds — every robot passes the four checks.</p>
+<p>Finish the builds. Every robot passes the four checks.</p>
 </section>
 <section id="before-we-code" class="slide level2">
 <h2>Before we code</h2>
 <ul>
-<li>🏗️ <strong>Build catch-up</strong> — didn’t finish yesterday? Finish now, no penalty.</li>
+<li>🏗️ <strong>Build catch-up.</strong> Didn’t finish yesterday? Finish now, no penalty.</li>
 <li>✅ Re-run the <strong>four checks</strong>: click · twin · shake · roll.</li>
 <li>🔋 Battery light <strong>green-ish</strong>? You’ll see <em>why</em> that matters today.</li>
 </ul>
@@ -238,7 +238,7 @@
 <p><strong>The game</strong></p>
 </div>
 <div class="callout-content">
-<p>One of you is the <em>programmer</em>; your blindfolded partner is the <em>robot</em>. Only <strong>discrete commands</strong> — “forward 30 cm,” “turn 90° right.” No steering, no touching. Get your robot across the mat to the target.</p>
+<p>One of you is the <em>programmer</em>, and your blindfolded partner is the <em>robot</em>. Only <strong>separate commands</strong>: “forward 30 cm,” “turn 90° right.” No steering, no touching. Get your robot across the mat to the target.</p>
 </div>
 </div>
 </div>
@@ -268,14 +268,14 @@
 </div></div>
 <div class="fragment">
 <div class="cardbox coral">
-<p>That gap is <strong>open-loop drift</strong> — moving without checking the result. Hold that thought: your LEGO robot is about to do <em>exactly</em> the same thing.</p>
+<p>That gap is <strong>open-loop drift</strong>: moving without checking the result. Your LEGO robot is about to do exactly the same thing.</p>
 </div>
 </div>
 </section></section>
 <section>
 <section id="c.-what-is-speed" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
 <h1>C. What IS Speed?</h1>
-<p>Two cars. One race. You already know the answer — now say it like a scientist.</p>
+<p>Two cars. One race. You already know the answer. Now say it like a scientist.</p>
 </section>
 <section id="the-race" class="slide level2">
 <h2>🏁 The race</h2>
@@ -369,7 +369,7 @@ function startRace(){
 </div></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><strong>speed = distance ÷ time</strong> — how far you get, <em>per second</em>. That’s the whole formula. You invented it.</p>
+<p><strong>speed = distance ÷ time</strong>: how far you get <em>per second</em>. That’s the whole formula, and you invented it.</p>
 </div>
 </div>
 <aside class="notes">
@@ -399,8 +399,8 @@ function startRace(){
 <span id="cb1-4"><a></a><span class="im">from</span> pybricks.tools <span class="im">import</span> wait</span>
 <span id="cb1-5"><a></a></span>
 <span id="cb1-6"><a></a>hub <span class="op">=</span> PrimeHub()</span>
-<span id="cb1-7"><a></a>left <span class="op">=</span> Motor(Port.A, Direction.COUNTERCLOCKWISE)</span>
-<span id="cb1-8"><a></a>right <span class="op">=</span> Motor(Port.E)</span>
+<span id="cb1-7"><a></a>left <span class="op">=</span> Motor(Port.F, Direction.COUNTERCLOCKWISE)   <span class="co"># yours</span></span>
+<span id="cb1-8"><a></a>right <span class="op">=</span> Motor(Port.B)                              <span class="co"># yours</span></span>
 <span id="cb1-9"><a></a></span>
 <span id="cb1-10"><a></a>left.run_time(<span class="dv">500</span>, <span class="dv">2000</span>, wait<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb1-11"><a></a>right.run_time(<span class="dv">500</span>, <span class="dv">2000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -421,7 +421,7 @@ function startRace(){
 <section>
 <section id="game-day" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
 <h1>Game Day 🎮</h1>
-<p>Yesterday you made it move. Today you make it <em>obey</em> — with the one tool you already own: <code>run_time</code>.</p>
+<p>Yesterday you made it move. Today you make it <em>obey</em>, with the one tool you already own: <code>run_time</code>.</p>
 </section>
 <section id="bug-hunt" class="slide level2">
 <h2>🐛 Bug hunt</h2>
@@ -430,14 +430,14 @@ function startRace(){
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">from</span> pybricks.parameters <span class="im">import</span> Port, Direction</span>
 <span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a>left <span class="op">=</span> Motor(Port.A, Direction.COUNTERCLOCKWISE)</span>
-<span id="cb2-4"><a></a>right <span class="op">=</span> Motor(Port.E)</span>
+<span id="cb2-3"><a></a>left <span class="op">=</span> Motor(Port.F, Direction.COUNTERCLOCKWISE)</span>
+<span id="cb2-4"><a></a>right <span class="op">=</span> Motor(Port.B)</span>
 <span id="cb2-5"><a></a></span>
 <span id="cb2-6"><a></a>left.run_time(<span class="dv">500</span>, <span class="dv">2000</span>, wait<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb2-7"><a></a>right.run_time(<span class="dv">500</span>, <span class="dv">2000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p><code>NameError: name 'Motor' is not defined</code> — we never <strong>imported</strong> <code>Motor</code>. Python only knows the tools you pull in: <code>from pybricks.pupdevices import Motor</code>.</p>
+<p><code>NameError: name 'Motor' is not defined</code>. We never <strong>imported</strong> <code>Motor</code>. Python only knows the tools you pull in: <code>from pybricks.pupdevices import Motor</code>.</p>
 </div>
 </div>
 <aside class="notes">
@@ -462,14 +462,14 @@ function startRace(){
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> pybricks.pupdevices <span class="im">import</span> Motor</span>
 <span id="cb3-2"><a></a><span class="im">from</span> pybricks.parameters <span class="im">import</span> Port, Direction</span>
 <span id="cb3-3"><a></a></span>
-<span id="cb3-4"><a></a>left <span class="op">=</span> Motor(Port.A, Direction.COUNTERCLOCKWISE)</span>
-<span id="cb3-5"><a></a>right <span class="op">=</span> Motor(Port.B)</span>
+<span id="cb3-4"><a></a>left <span class="op">=</span> Motor(Port.F, Direction.COUNTERCLOCKWISE)</span>
+<span id="cb3-5"><a></a>right <span class="op">=</span> Motor(Port.A)</span>
 <span id="cb3-6"><a></a></span>
 <span id="cb3-7"><a></a>left.run_time(<span class="dv">500</span>, <span class="dv">2000</span>, wait<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb3-8"><a></a>right.run_time(<span class="dv">500</span>, <span class="dv">2000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p><code>OSError</code> — the code says <strong>Port B</strong>, but the right motor is plugged into <strong>Port E</strong>. The program must match the <em>physical</em> robot. Check the cable, then check the letter.</p>
+<p><code>OSError</code>. The code says <strong>Port A</strong>, but the right motor is plugged into <strong>Port B</strong>. The program must match the <em>physical</em> robot. Check the cable, then check the letter.</p>
 </div>
 </div>
 </section>
@@ -484,7 +484,7 @@ function startRace(){
 <p><strong>The rules</strong></p>
 </div>
 <div class="callout-content">
-<p>Tape three zones on the floor: <strong>10 pts</strong> · <strong>25 pts</strong> · <strong>50 pts bullseye</strong>. Start behind the line, run your program, hands off. Robot must stop <strong>fully inside</strong> a zone — slide past the last zone and it’s <strong>0</strong>. You may change <strong>only one number: the <code>2000</code></strong>. <strong>3 throws, best one counts.</strong></p>
+<p>Tape three zones on the floor: <strong>10 pts</strong> · <strong>25 pts</strong> · <strong>50 pts bullseye</strong>. Start behind the line, run your program, hands off. Robot must stop <strong>fully inside</strong> a zone. Slide past the last zone and it’s <strong>0</strong>. You may change <strong>only one number: the <code>2000</code></strong>. <strong>3 throws, best one counts.</strong></p>
 </div>
 </div>
 </div>
@@ -492,7 +492,7 @@ function startRace(){
 <span id="cb4-2"><a></a>right.run_time(<span class="dv">500</span>, <span class="dv">2000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Throw 1 lands short, throw 2 with the <em>same number</em> lands somewhere else?! Keep your score sheet — that wobble is <strong>evidence</strong>, and we’ll need it later today. 🕵️</p>
+<p>Throw 1 lands short, throw 2 with the <em>same number</em> lands somewhere else?! Keep your score sheet. That wobble is <strong>evidence</strong>, and we need it later today. 🕵️</p>
 </div>
 </div>
 <p>⏱️ <strong>Time: 15 minutes</strong></p>
@@ -521,15 +521,15 @@ function startRace(){
 <p><strong>The rules</strong></p>
 </div>
 <div class="callout-content">
-<p>Park your robot’s nose <strong>as close to the wall as you can without touching it</strong>. Touch = <strong>0</strong>. Judge measures the gap with a ruler — <strong>smallest gap wins.</strong></p>
+<p>Park your robot’s nose <strong>as close to the wall as you can without touching it</strong>. Touch = <strong>0</strong>. The judge measures the gap with a ruler. <strong>Smallest gap wins.</strong></p>
 </div>
 </div>
 </div>
 <ul>
 <li>Same law as curling: tune the time, nothing else.</li>
-<li>Pro tip: sneak up in <em>two</em> runs? Not allowed — <strong>one program, one shot.</strong> 😏</li>
+<li>Pro tip: sneak up in <em>two</em> runs? Not allowed. <strong>One program, one shot.</strong> 😏</li>
 </ul>
-<p>⏱️ <strong>Time: 10 minutes — if the curling podium is settled</strong></p>
+<p>⏱️ <strong>Time: 10 minutes, if the curling podium is settled</strong></p>
 </section></section>
 <section>
 <section id="break" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
@@ -539,12 +539,12 @@ function startRace(){
 <section id="quick-quiz" class="slide level2">
 <h2>Quick quiz 🚨</h2>
 <div class="qbox">
-<p><span class="qtitle"><code>run_time(500, 2000)</code> — you just defined speed… so 500 is a speed of <em>what</em>? And the 2000?</span></p>
+<p><span class="qtitle"><code>run_time(500, 2000)</code>. You just defined speed, so 500 is a speed of <em>what</em>? And the 2000?</span></p>
 <p>Centimeters per second? Meters? Robot points? Guess!</p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p><code>2000</code> = <strong>milliseconds</strong> — how long it runs. <code>500</code> = <strong>degrees per second</strong>. It <em>is</em> a speed — something ÷ time — but the something isn’t distance… 🤔</p>
+<p><code>2000</code> = <strong>milliseconds</strong>. That’s how long it runs. <code>500</code> = <strong>degrees per second</strong>. It <em>is</em> a speed (something ÷ time), but the something isn’t distance… 🤔</p>
 </div>
 </div>
 <aside class="notes">
@@ -602,7 +602,7 @@ function spinMotors(){
 </script>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>No road, no distance — so count what a motor <em>does</em>: <strong>turns</strong>. Spin speed = <strong>rotations ÷ time</strong>. Same recipe, new ingredient.</p>
+<p>No road, no distance. So count what a motor <em>does</em>: <strong>turns</strong>. Spin speed = <strong>rotations ÷ time</strong>. Same recipe, new ingredient.</p>
 </div>
 </div>
 <aside class="notes">
@@ -647,10 +647,10 @@ function spinMotors(){
   <!-- buttons -->
   <div style="display:flex;flex-direction:column;gap:12px;justify-content:center;">
     <button onclick="setDial(0)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">0°</button>
-    <button onclick="setDial(90)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">90° — ¼ turn</button>
-    <button onclick="setDial(180)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">180° — ½ turn</button>
-    <button onclick="setDial(270)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">270° — ¾ turn</button>
-    <button onclick="setDial(360)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">360° — full turn</button>
+    <button onclick="setDial(90)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">90° = ¼ turn</button>
+    <button onclick="setDial(180)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">180° = ½ turn</button>
+    <button onclick="setDial(270)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">270° = ¾ turn</button>
+    <button onclick="setDial(360)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:10px 28px;font-size:20px;font-weight:700;cursor:pointer;">360° = full turn</button>
   </div>
 </div>
 
@@ -727,7 +727,7 @@ function spinMotors(){
 </script>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><strong>0, 30, 60, 90 … 360</strong> — ancient sky-watchers sliced a full circle into <strong>360 equal steps</strong> called <strong>degrees</strong>. The idea comes from the <strong>Babylonians</strong> (~2000 BCE), who loved multiples of 60. The Greeks inherited and spread it, and we are still using it today! 🏛️</p>
+<p><strong>0, 30, 60, 90 … 360.</strong> Ancient sky-watchers cut a full circle into <strong>360 equal steps</strong> called <strong>degrees</strong>. The idea comes from the <strong>Babylonians</strong> (~2000 BCE), who loved multiples of 60. The Greeks spread it, and we still use it today. 🏛️</p>
 </div>
 </div>
 <aside class="notes">
@@ -745,7 +745,7 @@ function spinMotors(){
       }</style></aside>
 </section>
 <section id="name-your-numbers-variables" class="slide level2">
-<h2>Name your numbers — variables</h2>
+<h2>Name your numbers: variables</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1-2|4-5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>DRIVE_SPEED <span class="op">=</span> <span class="dv">500</span>   <span class="co"># deg/s</span></span>
 <span id="cb5-2"><a></a>DRIVE_TIME <span class="op">=</span> <span class="dv">2000</span>   <span class="co"># ms</span></span>
 <span id="cb5-3"><a></a></span>
@@ -768,7 +768,7 @@ function spinMotors(){
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>The <strong>wheel</strong> 🛞 — every degree the motor turns becomes distance on the ground. Let’s see exactly how much.</p>
+<p>The <strong>wheel</strong> 🛞. Every degree the motor turns becomes distance on the ground.</p>
 </div>
 </div>
 </section>
@@ -776,7 +776,7 @@ function spinMotors(){
 <h2>🛞 Unroll the wheel</h2>
 <div style="width:880px;margin:0 auto;text-align:center;">
 <svg id="unrollSVG" viewbox="0 0 880 430" style="width:880px;height:430px;" xmlns="http://www.w3.org/2000/svg">
-  <text x="30" y="34" font-size="23" fill="#1C355E" font-weight="bold">Tiny wheel — rope around the rim = 8 cm</text>
+  <text x="30" y="34" font-size="23" fill="#1C355E" font-weight="bold">Tiny wheel: rope around the rim = 8 cm</text>
   <line x1="30" y1="150" x2="850" y2="150" stroke="#c9d4e0" stroke-width="3"></line>
   <line id="trace1" x1="60" y1="150" x2="60" y2="150" stroke="#00C9A7" stroke-width="9" stroke-dasharray="14 9" stroke-linecap="round"></line>
   <g id="wheel1G" transform="translate(60,115)">
@@ -790,7 +790,7 @@ function spinMotors(){
   <line x1="280" y1="152" x2="280" y2="170" stroke="#1C355E" stroke-width="3"></line>
   <text id="res1" x="170" y="192" text-anchor="middle" font-size="22" fill="#00C9A7" font-weight="bold" opacity="0">1 rotation = the whole rope = 8 cm</text>
 
-  <text x="30" y="234" font-size="23" fill="#1C355E" font-weight="bold">YOUR wheel — rope around the rim ≈ 27.6 cm</text>
+  <text x="30" y="234" font-size="23" fill="#1C355E" font-weight="bold">YOUR wheel: rope around the rim ≈ 27.6 cm</text>
   <line x1="30" y1="368" x2="850" y2="368" stroke="#c9d4e0" stroke-width="3"></line>
   <line id="trace2" x1="60" y1="368" x2="60" y2="368" stroke="#00C9A7" stroke-width="9" stroke-dasharray="14 9" stroke-linecap="round"></line>
   <g id="wheel2G" transform="translate(60,316)">
@@ -866,7 +866,7 @@ function rollWheels(){
 </div></div>
 </section>
 <section id="speed-lab-measure-your-robot" class="slide level2">
-<h2>🔬 Speed lab — measure YOUR robot</h2>
+<h2>🔬 Speed lab: measure YOUR robot</h2>
 <ol type="1">
 <li>Put tape at the <strong>front wheels</strong>. Run the program: <code>DRIVE_SPEED = 500</code>, <code>DRIVE_TIME = 2000</code>.</li>
 <li>Measure the distance with a ruler. <strong>Write it down.</strong></li>
@@ -874,7 +874,7 @@ function rollWheels(){
 </ol>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Got <em>less</em> than 77? And your neighbor got a <em>different</em> number — same code?! (Hint: check both battery lights. 🔋) <strong>Commanding is not the same as getting.</strong></p>
+<p>Got <em>less</em> than 77? And your neighbor got a <em>different</em> number from the same code?! (Hint: check both battery lights. 🔋) <strong>Commanding is not the same as getting.</strong></p>
 </div>
 </div>
 <p>⏱️ <strong>Time: 15 minutes</strong></p>
@@ -887,7 +887,7 @@ function rollWheels(){
 </div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>Short again — and different every run. <strong>Timed driving trusts the battery to keep its promise.</strong> There has to be a better way…</p>
+<p>Short again, and different every run. <strong>Timed driving trusts the battery to keep its promise.</strong> There has to be a better way…</p>
 </div>
 </div>
 <p>⏱️ <strong>Time: 10 minutes</strong></p>
@@ -895,7 +895,7 @@ function rollWheels(){
 <section>
 <section id="f.-count-degrees-not-seconds" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>F. Count Degrees, Not Seconds</h1>
-<p><code>run_angle</code> — the motor counts every degree for you.</p>
+<p><code>run_angle</code>: the motor counts every degree for you.</p>
 </section>
 <section id="run_time-vs-run_angle" class="slide level2">
 <h2>run_time vs run_angle</h2>
@@ -937,27 +937,27 @@ function rollWheels(){
 <section>
 <section id="g.-where-does-27.6-come-from" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
 <h1>G. Where Does 27.6 Come From?</h1>
-<p>Wheels don’t advertise their rope — they advertise their <strong>diameter</strong>.</p>
+<p>Wheels don’t advertise their rope. They advertise their <strong>diameter</strong>.</p>
 </section>
 <section id="diameter-circumference" class="slide level2">
 <h2>Diameter → circumference</h2>
 
 <img data-src="images/wheel-rollout.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:82.0%"><div class="fragment fade-up">
 <div class="cardbox teal">
-<p><strong>circumference = π × diameter.</strong> Your wheel: 3.14 × 8.8 cm ≈ <strong>27.6 cm</strong>. Any wheel on Earth: read the diameter off the tire, multiply by π, and you speak its language.</p>
+<p><strong>circumference = π × diameter.</strong> Your wheel: 3.14 × 8.8 cm ≈ <strong>27.6 cm</strong>. For any wheel, read the diameter off the tire and multiply by π.</p>
 </div>
 </div>
 </section>
 <section id="bonus-discover-π-yourself" class="slide level2">
 <h2>🧪 Bonus: discover π yourself</h2>
 <ul>
-<li>Wrap a string around anything round — cup, tape roll, bottle, your wheel. That’s <strong>C</strong>.</li>
+<li>Wrap a string around anything round: a cup, a tape roll, a bottle, your wheel. That’s <strong>C</strong>.</li>
 <li>Measure straight across the middle. That’s <strong>d</strong>.</li>
 <li>Divide: <strong>C ÷ d = ?</strong></li>
 </ul>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p><strong>≈ 3.14. Every. Single. Time.</strong> That number is <strong>π</strong> — the circle’s built-in constant. You didn’t memorize it; you <em>discovered</em> it.</p>
+<p><strong>≈ 3.14, every single time.</strong> That number is <strong>π</strong>, the circle’s built-in constant. You didn’t memorize it, you <em>discovered</em> it.</p>
 </div>
 </div>
 </section>
@@ -990,7 +990,7 @@ function rollWheels(){
 </div>
 <div class="fragment fade-up" data-fragment-index="3">
 <div class="cardbox purple">
-<p><strong>2.83 &lt; π &lt; 4</strong> — trapped, no string needed! A rough trap, though… how do we squeeze tighter? <strong>More sides →</strong></p>
+<p><strong>2.83 &lt; π &lt; 4</strong>, trapped with no string needed. It is a loose trap, though. How do we squeeze it tighter? <strong>More sides →</strong></p>
 </div>
 </div>
 <aside class="notes">
@@ -1059,7 +1059,7 @@ function rollWheels(){
 </script>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><strong>Archimedes</strong> (Syracuse, ~250 BCE) did exactly this by hand — doubling up to <strong>96 sides</strong> — and proved <strong>3 10/71 &lt; π &lt; 3 1/7</strong>. He squeezed π out of a circle 2,200 years before calculators. 🏛️</p>
+<p><strong>Archimedes</strong> (Syracuse, ~250 BCE) did exactly this by hand, doubling up to <strong>96 sides</strong>, and proved <strong>3 10/71 &lt; π &lt; 3 1/7</strong>. He squeezed π out of a circle 2,200 years before calculators. 🏛️</p>
 </div>
 </div>
 <aside class="notes">
@@ -1092,7 +1092,7 @@ function rollWheels(){
 <p><strong>The challenge</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>Predict, then prove.</strong> Measure your robot’s speed, then tell the judge <em>exactly</em> how many seconds it needs to cross the <strong>1.5 m</strong> finish line. Judge starts the stopwatch — closest prediction wins. 3 attempts, best counts.</p>
+<p><strong>Predict, then prove.</strong> Measure your robot’s speed, then tell the judge <em>exactly</em> how many seconds it needs to cross the <strong>1.5 m</strong> finish line. The judge starts the stopwatch, and the closest prediction wins. 3 attempts, best counts.</p>
 </div>
 </div>
 </div>
@@ -1117,15 +1117,11 @@ function rollWheels(){
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Next: <em>Drive a Square</em> — meet the <strong>gyro</strong>, a hidden sense you’ll <em>feel</em> with your own hands, and watch it snap tomorrow’s open-loop square shut.</p>
+<p>Next: <em>Drive a Square</em>. You meet the <strong>gyro</strong>, feel it in your own hands, and watch it snap an open-loop square shut.</p>
 </div>
-</section>
-<section id="tonights-mission" class="slide level2 sdaia-dark" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
-<h2>Tonight’s mission 🎬</h2>
-<div class="r-fit-text">
-<p>You made it move. You measured it like a scientist.</p>
+<div class="fragment fade-up">
+<p><strong>Optional at home:</strong> WRO-Learn, <a href="https://wro-learn.org/en_us/course/48"><em>Fundamentals of Mechanics</em></a>. Short videos, pure enrichment. Everything you need is taught in class.</p>
 </div>
-<p><strong>Optional at home:</strong> WRO-Learn — <a href="https://wro-learn.org/en_us/course/48"><em>Fundamentals of Mechanics</em></a> (short videos — pure enrichment; everything you need is delivered in class).</p>
 
 
 </section></section>
@@ -1417,7 +1413,7 @@ function rollWheels(){
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/NaifMersal\.github\.io\/WRO-LEGO-pypricks\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

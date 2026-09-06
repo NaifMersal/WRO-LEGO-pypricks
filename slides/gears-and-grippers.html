@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-09-05">
+  <meta name="dcterms.date" content="2026-09-06">
   <title>Gears &amp; Grippers</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,71 +206,14 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-09-05</p>
+  <p class="date">2026-09-06</p>
 </section>
 <section>
 <section id="a.-break-it" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>A. Break It</h1>
-<p>Yesterday you <strong>built</strong> a gripper. Today you <strong>understand</strong> it — and make it score. 🦾</p>
+<p>Yesterday you <strong>built</strong> a gripper. Today you <strong>understand</strong> it and make it score. 🦾</p>
 <aside class="notes">
-<p>Frame the day in one sentence: “You can build it and you can run it — today you’ll be able to <em>explain</em> it and <em>improve</em> it.” That’s the ladder: follow → modify → create. The deck goes straight to the gripper — the confidence today comes from their own build, not from drills. If you want a warm-up anyway, run an optional 5-minute retrieval opener off-deck (turn-angle cold calls or the P-loop blanks from the library days); it’s coach’s choice, not part of the session.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="predict-one-crank-two-claws" class="slide level2">
-<h2>Predict: one crank, two claws 🔮</h2>
-<div class="qbox">
-<p><span class="qtitle">Turn the gripper motor <strong>exactly one rotation</strong>. Before you touch it — predict:</span></p>
-<p>Which way does the <strong>top claw</strong> move? The <strong>bottom claw</strong>? The <strong>same amount</strong>? Write all three down.</p>
-</div>
-<div style="width:760px;margin:8px auto 0;">
-<svg width="760" height="215" viewbox="0 0 760 215" style="display:block;margin:0 auto;">
-  <!-- motor -->
-  <rect x="30" y="112" width="110" height="56" rx="10" fill="#1C355E"></rect>
-  <text x="85" y="146" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">MOTOR</text>
-  <!-- horizontal axle -->
-  <rect x="140" y="135" width="240" height="10" rx="5" fill="#5b6678"></rect>
-  <text x="260" y="168" text-anchor="middle" font-size="13" fill="#5b6678">axle</text>
-  <!-- one-turn arrow at motor -->
-  <path d="M 160 118 A 22 22 0 1 1 118 100" fill="none" stroke="#FFB548" stroke-width="4"></path>
-  <polygon points="112,108 126,96 122,110" fill="#FFB548"></polygon>
-  <text x="185" y="102" text-anchor="middle" font-size="13" font-weight="700" fill="#1C355E">1 turn</text>
-  <!-- bevel pair: two cones meeting at 90° -->
-  <polygon points="380,114 380,166 430,152 430,128" fill="#1C355E"></polygon>
-  <polygon points="418,76 470,76 456,122 432,122" fill="#00AE8D"></polygon>
-  <text x="420" y="196" text-anchor="middle" font-size="14" font-weight="700" fill="#1C355E">bevel pair — 90° corner</text>
-  <!-- vertical axle -->
-  <rect x="440" y="22" width="8" height="54" rx="4" fill="#5b6678"></rect>
-  <!-- top claw -->
-  <line x1="444" y1="34" x2="540" y2="34" stroke="#1C355E" stroke-width="8" stroke-linecap="round"></line>
-  <path d="M 540 34 Q 578 34 578 66" fill="none" stroke="#E96852" stroke-width="9" stroke-linecap="round"></path>
-  <text x="530" y="16" text-anchor="middle" font-size="14" font-weight="700" fill="#1C355E">top claw</text>
-  <!-- bottom claw -->
-  <line x1="444" y1="70" x2="540" y2="70" stroke="#1C355E" stroke-width="8" stroke-linecap="round"></line>
-  <path d="M 540 70 Q 578 70 578 102" fill="none" stroke="#E96852" stroke-width="9" stroke-linecap="round"></path>
-  <text x="535" y="122" text-anchor="middle" font-size="14" font-weight="700" fill="#1C355E">bottom claw</text>
-  <!-- mystery badges -->
-  <circle cx="630" cy="46" r="15" fill="#FFB548"></circle>
-  <text x="630" y="52" text-anchor="middle" font-size="18" font-weight="900" fill="#1C355E">?</text>
-  <circle cx="630" cy="88" r="15" fill="#FFB548"></circle>
-  <text x="630" y="94" text-anchor="middle" font-size="18" font-weight="900" fill="#1C355E">?</text>
-  <text x="692" y="74" text-anchor="middle" font-size="14" font-weight="700" fill="#5b6678">which way?</text>
-</svg>
-</div>
-<div class="fragment fade-up">
-<p>🤖 Now run <code>gripper.run_angle(200, 360)</code> — slowly. Watch. Who was right? 👀</p>
-</div>
-<aside class="notes">
-<p>Pure prediction ritual, same as every break-it: guesses on the board <em>before</em> the test, wrong guesses celebrated — they mark exactly where the replicated build outran the understanding. Have each squad trace the path with a finger while narrating: motor shaft → yellow axle → bevel gear pair → vertical axle → claw arm. The tracing IS the lesson; the vocabulary lands in Act B. If a squad traces it perfectly, push one level deeper: “why does the gear pair sit at 90°? What breaks if you remove it?” The diagram on the slide is the trace map — it deliberately shows the anatomy but not the answer (the badges are question marks, not arrows).</p>
+<p>Frame the day in one sentence: “You can build it and you can run it — today you’ll be able to <em>explain</em> it and <em>improve</em> it.” That’s the ladder: follow → modify → create. The deck goes straight to the gripper — the confidence today comes from their own build, not from drills.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -286,16 +229,16 @@
 <section id="feel-it-the-heavy-lift" class="slide level2">
 <h2>Feel it: the heavy lift 🏋️</h2>
 <div class="qbox">
-<p><span class="qtitle">Clamp something heavy — a full water bottle. Lift.</span></p>
-<p>What happens? Why? The motor is trying its hardest — <strong>where is the strength going?</strong></p>
+<p><span class="qtitle">Clamp something heavy, like a full water bottle. Lift.</span></p>
+<p>What happens? Why? The motor is trying its hardest, so <strong>where is the strength going?</strong></p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>The motor isn’t weak. The <strong>ratio</strong> is. Your gears hand the claw the motor’s strength <strong>1 : 1 — no bonus.</strong></p>
+<p>The motor isn’t weak. The <strong>ratio</strong> is. Your gears hand the claw exactly the strength the motor makes, <strong>1 : 1.</strong></p>
 </div>
 </div>
 <aside class="notes">
-<p>The engineered failure that makes gear theory land as a rescue instead of a lecture. With the 1:1 bevel pairs, a genuinely heavy object slips or stalls the medium motor — let them feel it strain (keep <code>duty_limit</code> modest so nothing is harmed, and don’t let a stall cook the motor for more than a moment). Then the hook question: “a car engine can’t lift a car either — yet the jack in the trunk lifts it with one hand. What’s the trick?” Someone will say gears or leverage — that someone just introduced Act B for you.</p>
+<p>The engineered failure that makes gear theory land as a rescue instead of a lecture. With the 1:1 bevel pairs, a genuinely heavy object slips or stalls the medium motor — let them feel it strain, and don’t let a stall cook the motor for more than a moment. Then the hook question: “a car engine can’t lift a car either — yet the jack in the trunk lifts it with one hand. What’s the trick?” Someone will say gears or leverage — that someone just introduced Act B for you.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -311,16 +254,17 @@
 <section id="break-it-two-claws-one-brain" class="slide level2">
 <h2>Break it: two claws, one brain 🧠</h2>
 <div class="qbox">
-<p><span class="qtitle">Carry the bottle in the <strong>top claw</strong>. Now open the <strong>bottom claw</strong> — without moving the top one.</span></p>
+<p><span class="qtitle">Carry the bottle in the <strong>top claw</strong>. Now open the <strong>bottom claw</strong> without moving the top one.</span></p>
 <p>Try. What happens? Is this a <strong>feature</strong> or a <strong>bug</strong>?</p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p><strong>Both.</strong> One motor → two claws = a <strong>port saved</strong>; the price = they <strong>always move together.</strong> Engineering is knowing the price. 🏷️</p>
+<p><strong>Both.</strong> One motor → two claws is a <strong>motor saved</strong>, and 4 motors is the Elementary cap (§5.2.8). The price is that they <strong>always move together.</strong> Engineering is knowing the price. 🏷️</p>
 </div>
 </div>
 <aside class="notes">
-<p>The coupling discovery, on their own design decision. Connect it straight to the port-budget wall they already know from the wall-sensing day: no free port for a distance sensor, and no free port for a second gripper motor either — one motor driving two claws is a genuinely clever answer to a real constraint, so praise the trade before naming its cost. Then plant the mission question that decides whether the price is affordable: does any moment in the anchor run need “top claw holding” AND “bottom claw moving” at the same time? Have squads check against the cables → mic sequence they know from the previews. If yes, the fixes are geometry (each claw engages in a different part of the motor’s rotation range) or making one claw passive — that’s a design conversation for the build block, not a reason to rebuild now. Point back at the trace diagram from the predict slide: one vertical axle feeds both arms — the coupling is right there in the picture.</p>
+<p>The coupling discovery, on their own design decision. Name the budget correctly, because this is where it is usually got wrong: our robot has a <strong>spare port (A)</strong>; what it does not have is a spare <strong>motor</strong> — F and B drive, E and C grip, and Elementary allows <strong>4, maximum</strong> (§5.2.8). A second gripper motor is what we cannot afford, not a second plug.</p>
+<p>Praise the trade before naming its cost, then plant the question that decides whether the price is affordable: does any moment in the anchor run need “top claw holding” AND “bottom claw moving” at once? Have squads check against the cables → mic sequence. If yes, the fixes are geometry (each claw engages in a different part of the rotation range) or making one claw passive — a design conversation for the build block. Point at the build itself: have a squad trace motor shaft → axle → gear pair → claw arm with a finger, and the coupling is right there in their hands.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -336,7 +280,7 @@
 <section>
 <section id="b.-name-it-the-gear-dictionary" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
 <h1>B. Name It: The Gear Dictionary</h1>
-<p>Everything you just felt has a name — and a <strong>number</strong>. 🔢</p>
+<p>Everything you just felt has a name and a <strong>number</strong>. 🔢</p>
 </section>
 <section id="count-teeth-know-the-future" class="slide level2">
 <h2>Count teeth, know the future</h2>
@@ -344,40 +288,43 @@
 <p><span class="qtitle">Every gear question starts the same way: <strong>count the teeth.</strong></span></p>
 <p>Ratio = follower teeth ÷ driver teeth.</p>
 </div>
-<div style="width:700px;margin:8px auto 0;">
-<svg width="700" height="185" viewbox="0 0 700 185" style="display:block;margin:0 auto;">
-  <!-- horizontal shaft in -->
-  <rect x="40" y="112" width="200" height="8" rx="4" fill="#5b6678"></rect>
-  <polygon points="52,102 76,116 52,130" fill="#FFB548"></polygon>
-  <text x="110" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#1C355E">in — 1 turn</text>
-  <!-- driver bevel cone -->
-  <polygon points="240,90 240,142 290,128 290,104" fill="#1C355E"></polygon>
-  <text x="265" y="166" text-anchor="middle" font-size="15" font-weight="800" fill="#1C355E">20T</text>
-  <!-- follower bevel cone -->
-  <polygon points="278,46 330,46 316,96 292,96" fill="#00AE8D"></polygon>
-  <text x="362" y="80" text-anchor="middle" font-size="15" font-weight="800" fill="#008f74">20T</text>
-  <!-- vertical shaft out -->
-  <rect x="300" y="8" width="8" height="38" rx="4" fill="#5b6678"></rect>
-  <polygon points="290,20 304,0 318,20" fill="#FFB548"></polygon>
-  <text x="368" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#1C355E">out — 1 turn</text>
-  <!-- ratio text block -->
-  <text x="530" y="82" text-anchor="middle" font-size="30" font-weight="900" fill="#1C355E">20 ÷ 20 = 1 : 1</text>
-  <text x="530" y="114" text-anchor="middle" font-size="15" fill="#5b6678">same speed · same strength</text>
-  <text x="530" y="144" text-anchor="middle" font-size="16" font-weight="800" fill="#E96852">all it buys: the 90° corner</text>
+<div style="width:800px;margin:6px auto 0;">
+<svg width="800" height="228" viewbox="34 20 669 191" style="display:block;margin:0 auto;">
+  <rect x="40" y="121" width="160" height="10" rx="5" fill="#5b6678"></rect>
+  <rect x="225" y="26" width="10" height="66" rx="5" fill="#5b6678"></rect>
+  <!-- driver turns once -->
+  <path d="M 85.57 117.11 A 26 26 0 0 1 134.43 117.11" fill="none" stroke="#FFB548" stroke-width="4"></path>
+  <polygon points="137.85,126.5 129.26,118.99 139.6,115.23" fill="#FFB548"></polygon>
+  <text x="110" y="94" text-anchor="middle" font-size="13" font-weight="700" fill="#1C355E">in: 1 turn</text>
+  <!-- 20 teeth into 20 teeth, so the follower turns once too -->
+  <path d="M 237.52 35.33 A 22 22 0 0 1 237.52 76.67" fill="none" stroke="#FFB548" stroke-width="4"></path>
+  <polygon points="228.13,80.09 235.64,71.5 239.41,81.84" fill="#FFB548"></polygon>
+  <text x="268" y="58" font-size="13" font-weight="700" fill="#1C355E">out: 1 turn</text>
+  <!-- the bevel pair itself -->
+  <path d="M 207.84 123.37 L 209.89 124.34 L 209.89 127.66 L 207.84 128.63 L 207.7 131.57 L 209.56 134.61 L 209.25 137.76 L 207.21 136.58 L 206.8 139.22 L 208.29 144.03 L 207.71 146.71 L 205.87 143.48 L 205.24 145.58 L 206.21 151.69 L 205.41 153.64 L 203.97 148.68 L 203.17 150.03 L 203.53 156.83 L 202.58 157.86 L 201.67 151.65 L 200.79 152.12 L 200.5 158.96 L 199.5 158.96 L 199.21 152.12 L 198.33 151.65 L 197.42 157.86 L 196.47 156.83 L 196.83 150.03 L 196.03 148.68 L 194.59 153.64 L 193.79 151.69 L 194.76 145.58 L 194.13 143.48 L 192.29 146.71 L 191.71 144.03 L 193.2 139.22 L 192.79 136.58 L 190.75 137.76 L 190.44 134.61 L 192.3 131.57 L 192.16 128.63 L 190.11 127.66 L 190.11 124.34 L 192.16 123.37 L 192.3 120.43 L 190.44 117.39 L 190.75 114.24 L 192.79 115.42 L 193.2 112.78 L 191.71 107.97 L 192.29 105.29 L 194.13 108.52 L 194.76 106.42 L 193.79 100.31 L 194.59 98.36 L 196.03 103.32 L 196.83 101.97 L 196.47 95.17 L 197.42 94.14 L 198.33 100.35 L 199.21 99.88 L 199.5 93.04 L 200.5 93.04 L 200.79 99.88 L 201.67 100.35 L 202.58 94.14 L 203.53 95.17 L 203.17 101.97 L 203.97 103.32 L 205.41 98.36 L 206.21 100.31 L 205.24 106.42 L 205.87 108.52 L 207.71 105.29 L 208.29 107.97 L 206.8 112.78 L 207.21 115.42 L 209.25 114.24 L 209.56 117.39 L 207.7 120.43 Z" fill="#1C355E" stroke="#0e2242" stroke-width="1.5"></path>
+  <path d="M 256.21 96.45 L 262.81 97.06 L 262.29 98.04 L 255.38 98.01 L 254.47 98.85 L 260.12 100.05 L 258.61 100.93 L 252.07 100.26 L 250.33 100.98 L 254.48 102.64 L 252.13 103.34 L 246.6 102.1 L 244.2 102.62 L 246.44 104.58 L 243.49 105.04 L 239.51 103.34 L 236.69 103.62 L 236.79 105.69 L 233.52 105.84 L 231.48 103.86 L 228.52 103.86 L 226.48 105.84 L 223.21 105.69 L 223.31 103.62 L 220.49 103.34 L 216.51 105.04 L 213.56 104.58 L 215.8 102.62 L 213.4 102.1 L 207.87 103.34 L 205.52 102.64 L 209.67 100.98 L 207.93 100.26 L 201.39 100.93 L 199.88 100.05 L 205.53 98.85 L 204.62 98.01 L 197.71 98.04 L 197.19 97.06 L 203.79 96.45 L 203.79 95.55 L 197.19 94.94 L 197.71 93.96 L 204.62 93.99 L 205.53 93.15 L 199.88 91.95 L 201.39 91.07 L 207.93 91.74 L 209.67 91.02 L 205.52 89.36 L 207.87 88.66 L 213.4 89.9 L 215.8 89.38 L 213.56 87.42 L 216.51 86.96 L 220.49 88.66 L 223.31 88.38 L 223.21 86.31 L 226.48 86.16 L 228.52 88.14 L 231.48 88.14 L 233.52 86.16 L 236.79 86.31 L 236.69 88.38 L 239.51 88.66 L 243.49 86.96 L 246.44 87.42 L 244.2 89.38 L 246.6 89.9 L 252.13 88.66 L 254.48 89.36 L 250.33 91.02 L 252.07 91.74 L 258.61 91.07 L 260.12 91.95 L 254.47 93.15 L 255.38 93.99 L 262.29 93.96 L 262.81 94.94 L 256.21 95.55 Z" fill="#00AE8D" stroke="#008f74" stroke-width="1.5"></path>
+  <text x="196" y="180" text-anchor="middle" font-size="15" font-weight="800" fill="#1C355E">20T</text>
+  <text x="274" y="102" font-size="15" font-weight="800" fill="#008f74">20T</text>
+  <text x="215" y="200" text-anchor="middle" font-size="13" fill="#5b6678">bevel pair: 90° corner</text>
+  <!-- the arithmetic -->
+  <text x="575" y="60" text-anchor="middle" font-size="14" fill="#5b6678">follower ÷ driver</text>
+  <text x="575" y="106" text-anchor="middle" font-size="32" font-weight="900" fill="#1C355E">20 ÷ 20 = 1 : 1</text>
+  <text x="575" y="138" text-anchor="middle" font-size="15" fill="#5b6678">same speed · same strength</text>
+  <text x="575" y="174" text-anchor="middle" font-size="17" font-weight="800" fill="#E96852">all it buys: the 90° corner</text>
 </svg>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><strong>Bevel gears buy direction, not strength.</strong> Your gripper spends its gears on the corner — that’s why the lift failed.</p>
+<p><strong>Bevel gears buy direction, not strength.</strong> Your gripper spent its gears on the corner, so the lift failed.</p>
 </div>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p><strong>Teeth = size</strong> (meshing gears share tooth size). And it’s a <em>ratio</em>, so — unlike the rolling wheel — <strong>π cancels. Just count.</strong> 🔢</p>
+<p><strong>Teeth = size</strong>: meshing gears share tooth size. It’s a <em>ratio</em>, so unlike the wheel, <strong>π cancels. Just count.</strong> 🔢</p>
 </div>
 </div>
 <aside class="notes">
-<p>Keep the arithmetic honest and tiny: teeth in, teeth out, one division. Have every squad physically count the teeth on a spare bevel gear from the kit — counting beats being told. The reveal sentence is the punchline of Act A: their gear pair spends its entire budget on turning the axis 90° (which the build <em>needs</em> — motor lies flat, claws swing on vertical axles) and has nothing left for strength. Now the fix is obvious before it’s taught: change the ratio.</p>
+<p>Keep the arithmetic tiny: teeth in, teeth out, one division. Have every squad physically count the teeth on a spare bevel gear — counting beats being told. The reveal sentence is the punchline of Act A: their gear pair spends its entire budget on turning the axis 90° (which the build <em>needs</em> — motor lies flat, claws swing on vertical axles) and has nothing left for strength. Now the fix is obvious before it’s taught: change the ratio.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -399,21 +346,25 @@
     <button class="grBtn" data-t="24" onclick="grSet(24)">24T</button>
     <button class="grBtn" data-t="36" onclick="grSet(36)">36T</button>
   </div>
-  <svg width="620" height="285" viewbox="0 0 620 285" style="display:block;margin:0 auto;">
-    <text id="grDrvTag" x="0" y="16" text-anchor="middle" font-size="14" font-weight="800" fill="#1C355E">DRIVER 24T</text>
-    <text id="grFolTag" x="0" y="16" text-anchor="middle" font-size="14" font-weight="800" fill="#008f74">FOLLOWER</text>
+  <svg width="620" height="292" viewbox="30 16 560 264" style="display:block;margin:0 auto;">
+    <text id="grDrvTag" x="0" y="0" text-anchor="middle" font-size="14" font-weight="800" fill="#1C355E">DRIVER 24T</text>
+    <text id="grFolTag" x="0" y="0" text-anchor="middle" font-size="14" font-weight="800" fill="#008f74">FOLLOWER</text>
     <g id="grDrv">
       <path id="grDrvGear" fill="#1C355E" stroke="#0e2242" stroke-width="2"></path>
-      <circle id="grDrvDot" cx="0" cy="0" r="6" fill="#FFD500"></circle>
-      <circle cx="0" cy="0" r="7" fill="#0e2242"></circle>
+      <line id="grDrvSpoke" x1="0" y1="0" x2="0" y2="0" stroke="#FFD500" stroke-width="5" stroke-linecap="round"></line>
+      <circle id="grDrvDot" cx="0" cy="0" r="7" fill="#FFD500"></circle>
+      <circle cx="0" cy="0" r="9" fill="#fff"></circle>
+      <circle cx="0" cy="0" r="9" fill="none" stroke="#0e2242" stroke-width="3"></circle>
     </g>
     <g id="grFol">
       <path id="grFolGear" fill="#00AE8D" stroke="#008f74" stroke-width="2"></path>
-      <circle id="grFolDot" cx="0" cy="0" r="6" fill="#FFD500"></circle>
-      <circle cx="0" cy="0" r="7" fill="#008f74"></circle>
+      <line id="grFolSpoke" x1="0" y1="0" x2="0" y2="0" stroke="#FFD500" stroke-width="5" stroke-linecap="round"></line>
+      <circle id="grFolDot" cx="0" cy="0" r="7" fill="#FFD500"></circle>
+      <circle cx="0" cy="0" r="9" fill="#fff"></circle>
+      <circle cx="0" cy="0" r="9" fill="none" stroke="#008f74" stroke-width="3"></circle>
     </g>
-    <text x="310" y="277" id="grLbl" text-anchor="middle" font-size="19" font-weight="800" fill="#1C355E"></text>
   </svg>
+  <div id="grLbl" style="font-size:19px;font-weight:800;color:#1C355E;margin-top:2px;"></div>
 </div>
 <style>
   .grBtn{background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:6px 16px;font-size:16px;font-weight:700;cursor:pointer;margin:0 3px;}
@@ -421,43 +372,60 @@
 </style>
 <script>
 (function(){
-  var DRV_T=24, folT=36, a=0, MOD=2.7;
+  var DRV_T=24, folT=36, a=0, MOD=6, DRV_X=220, CY=158, PERIOD=1080;
   var drvG=document.getElementById('grDrv'), folG=document.getElementById('grFol');
-  // Build an SVG outline for an N-tooth gear centered at (0,0), pitch radius rPitch.
-  function gearPath(N, rPitch){
-    var ra=rPitch+MOD*0.9, rd=rPitch-MOD*1.1, step=2*Math.PI/N;
-    var fr=[0.00,0.12,0.38,0.50], rr=[rd,ra,ra,rd], d='';
+
+  // One N-tooth outline, pitch radius rp = N*MOD/2, tooth CENTRES on exact
+  // multiples of 360/N measured from the +x axis. Anchoring the pattern to +x
+  // (the line of centres) is what lets the mesh phase below be exact.
+  function gearPath(N, rp){
+    var ra=rp+MOD, rd=rp-1.25*MOD, step=360/N, fr=[-0.30,-0.14,0.14,0.30], rr=[rd,ra,ra,rd], d='';
     for(var i=0;i<N;i++){
       for(var j=0;j<4;j++){
-        var ang=(i+fr[j])*step - Math.PI/2, r=rr[j];
+        var ang=(i+fr[j])*step*Math.PI/180, r=rr[j];
         d += (d===''?'M ':'L ') + (Math.cos(ang)*r).toFixed(2)+' '+(Math.sin(ang)*r).toFixed(2)+' ';
       }
     }
     return d+'Z';
   }
-  function fmt(f){ return f>=1 ? '×'+(Math.round(f*100)/100) : '÷'+(Math.round(100/f)/100); }
+  function fmt(v){ return v>=1 ? '×'+(Math.round(v*100)/100) : '÷'+(Math.round(100/v)/100); }
+  // Smallest driver angle that is a whole number of turns for BOTH gears, so
+  // wrapping it is invisible. 360 alone is not: at 24T→36T one driver turn is
+  // two thirds of a follower turn, and the wrap threw the follower spoke 240°.
+  function gcd(a,b){ return b ? gcd(b,a%b) : a; }
   function layout(){
-    var rpD=DRV_T*MOD, rpF=folT*MOD, cx=310, cy=132;
-    var drvX=cx-(rpD+rpF)/2, folX=drvX+rpD+rpF;   // centers exactly one pitch-sum apart = teeth mesh
-    drvG.dataset.x=drvX; drvG.dataset.y=cy;
-    folG.dataset.x=folX; folG.dataset.y=cy;
+    var rpD=DRV_T*MOD/2, rpF=folT*MOD/2, raD=rpD+MOD, raF=rpF+MOD;
+    var folX=DRV_X+rpD+rpF;
+    PERIOD=360*folT/gcd(DRV_T,folT);
+    a%=PERIOD;                           // PERIOD is whole turns, so this never jogs the driver
+
+    drvG.dataset.x=DRV_X; drvG.dataset.y=CY;
+    folG.dataset.x=folX;  folG.dataset.y=CY;
     document.getElementById('grDrvGear').setAttribute('d', gearPath(DRV_T, rpD));
     document.getElementById('grFolGear').setAttribute('d', gearPath(folT, rpF));
     document.getElementById('grDrvDot').setAttribute('cy', -rpD);
     document.getElementById('grFolDot').setAttribute('cy', -rpF);
-    document.getElementById('grDrvTag').setAttribute('x', drvX);
-    var fTag=document.getElementById('grFolTag');
-    fTag.setAttribute('x', folX); fTag.textContent='FOLLOWER '+folT+'T';
-    var sf=DRV_T/folT, tf=folT/DRV_T;   // claw speed factor · claw strength factor
-    document.getElementById('grLbl').textContent =
-      'ratio '+folT+':'+DRV_T+'   ·   claw speed '+fmt(sf)+'   ·   claw strength '+fmt(tf);
+    document.getElementById('grDrvSpoke').setAttribute('y2', -rpD);
+    document.getElementById('grFolSpoke').setAttribute('y2', -rpF);
+    var dTag=document.getElementById('grDrvTag'), fTag=document.getElementById('grFolTag');
+    dTag.setAttribute('x', DRV_X); dTag.setAttribute('y', CY-raD-12);
+    fTag.setAttribute('x', folX);  fTag.setAttribute('y', CY-raF-12);
+    fTag.textContent='FOLLOWER '+folT+'T';
+    var r=folT/DRV_T;                    // gear ratio = follower ÷ driver
+    document.getElementById('grLbl').textContent = r===1
+      ? folT+'T ÷ '+DRV_T+'T = 1   ·   same speed · same strength'
+      : folT+'T ÷ '+DRV_T+'T = '+(Math.round(r*100)/100)
+        +'   ·   claw speed '+fmt(1/r)+'   ·   claw strength '+fmt(r);
     document.querySelectorAll('.grBtn').forEach(function(b){
       b.classList.toggle('on', +b.dataset.t === folT);
     });
   }
   function tick(){
-    a=(a+1.6)%360;
-    var af=-a*DRV_T/folT + 180/folT;   // counter-rotate at the ratio; half-tooth phase so teeth interlock
+    a=(a+1.1)%PERIOD;
+    // Counter-rotate at the ratio, and park a follower TOOTH GAP on the line of
+    // centres (where the driver always presents a tooth) so the teeth interlock.
+    var stepF=360/folT, k=Math.round(180/stepF-0.5);
+    var af=-a*DRV_T/folT + (180-(k+0.5)*stepF);
     drvG.setAttribute('transform','translate('+drvG.dataset.x+','+drvG.dataset.y+') rotate('+a+')');
     folG.setAttribute('transform','translate('+folG.dataset.x+','+folG.dataset.y+') rotate('+af+')');
     requestAnimationFrame(tick);
@@ -467,55 +435,11 @@
 })();
 </script>
 <div class="cardbox coral">
-<p><strong>Small drives big → slower but stronger.</strong> Speed and strength are one budget — gears decide how to spend it.</p>
+<p><strong>Small drives big → slower but stronger.</strong> Speed and strength are one budget, and gears decide how to spend it.</p>
 </div>
 <aside class="notes">
-<p>Click through the three followers and narrate the yellow dots: 12T spins fast (fast claw, weak grip), 20T matches, 36T crawls but multiplies strength ×3. One sentence carries the whole slide: “speed and strength are the same budget — gears just move money between the accounts.” Then link each direction to a mission verb from the plan: gear <strong>for torque</strong> where a push needs <em>force</em> (cable pusher against friction), <strong>for speed</strong> where it needs <em>reach</em> (a claw that must open wide in a hurry). Physical demo beats the animation if time allows: 12T driving 36T between two fingers — feel the follower resist.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="one-more-word-you-now-own" class="slide level2">
-<h2>One more word you now own</h2>
-<div style="width:620px;margin:4px auto 0;">
-<svg width="620" height="225" viewbox="0 0 620 225" style="display:block;margin:0 auto;">
-  <!-- WORM panel, centered -->
-  <text x="310" y="34" text-anchor="middle" font-size="22" font-weight="900" fill="#1C355E">WORM 🐌</text>
-  <!-- worm screw -->
-  <rect x="188" y="98" width="150" height="40" rx="20" fill="#1C355E"></rect>
-  <line x1="212" y1="100" x2="198" y2="136" stroke="#fff" stroke-width="3"></line>
-  <line x1="242" y1="100" x2="228" y2="136" stroke="#fff" stroke-width="3"></line>
-  <line x1="272" y1="100" x2="258" y2="136" stroke="#fff" stroke-width="3"></line>
-  <line x1="302" y1="100" x2="288" y2="136" stroke="#fff" stroke-width="3"></line>
-  <line x1="332" y1="100" x2="318" y2="136" stroke="#fff" stroke-width="3"></line>
-  <!-- driven gear -->
-  <circle cx="418" cy="118" r="52" fill="#00AE8D" stroke="#008f74" stroke-width="7" stroke-dasharray="5 4"></circle>
-  <!-- motor drives forward -->
-  <line x1="188" y1="72" x2="298" y2="72" stroke="#00AE8D" stroke-width="4"></line>
-  <polygon points="298,64 316,72 298,80" fill="#00AE8D"></polygon>
-  <text x="232" y="58" text-anchor="middle" font-size="15" font-weight="800" fill="#008f74">motor drives ✓</text>
-  <!-- gear can't push back -->
-  <line x1="470" y1="170" x2="392" y2="170" stroke="#E96852" stroke-width="4" stroke-dasharray="7 6"></line>
-  <polygon points="392,162 374,170 392,178" fill="#E96852"></polygon>
-  <text x="470" y="164" text-anchor="middle" font-size="15" font-weight="800" fill="#E96852">can't push back ✗</text>
-  <text x="310" y="208" text-anchor="middle" font-size="15" font-weight="700" fill="#5b6678">huge ratio · self-locks — no pushing back</text>
-</svg>
-</div>
-<div class="fragment fade-up">
-<div class="cardbox purple">
-<p>Self-locking = the claw that never gets tired. Worth remembering when the microphone must <strong>stay</strong> held. 🎤</p>
-</div>
-</div>
-<aside class="notes">
-<p>One word only — resist the full gear zoo (idlers, racks, differentials, compound trains are continuation-season material; today’s set is exactly what the mechanism build can use). Pass a worm gear from the kit around and let them try to back-drive it by hand — the “it won’t budge” moment sells self-locking better than any slide. Concept sources for this act, coach prep: WRO-Learn <em>Fundamentals of Mechanics</em> + PrimeLessons <em>Robot Designs</em>/attachments + Competition Ready L7 <em>Time for an Upgrade</em> (its motorized ADB attachments are the direct pattern bank for the build block).</p>
+<p>Click through the three followers and narrate the yellow spokes — the driver is always the 24T, only the follower changes. <strong>12T:</strong> the claw spins twice as fast and grips half as hard. <strong>24T:</strong> exactly the motor, no bonus — the same 1:1 deal their own bevel pair gives them. <strong>36T:</strong> gives up a third of its speed and buys half again the strength (×1.5). One sentence carries the slide: “speed and strength are the same budget — gears just move money between the accounts.”</p>
+<p>Then link each direction to a mission verb: gear <strong>for torque</strong> where a push needs <em>force</em> (cable pusher against friction), <strong>for speed</strong> where it needs <em>reach</em> (a claw that must open wide in a hurry). Physical demo beats the animation if time allows: hold a 12T driving a 36T between two fingers and feel the follower resist. Resist the full gear zoo — idlers, racks, worms and compound trains are continuation-season material. Coach prep: WRO-Learn <em>Fundamentals of Mechanics</em>, PrimeLessons <em>Robot Designs</em>, Competition Ready L7 <em>Time for an Upgrade</em>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -536,23 +460,23 @@
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Pick one — 20 minutes</strong></p>
+<p><strong>Pick one, 20 minutes</strong></p>
 </div>
 <div class="callout-content">
 <ul>
-<li>💪 <strong>Stronger:</strong> re-gear so the bottle lift <strong>succeeds</strong> — prove it with the lift</li>
-<li>⚡ <strong>Faster:</strong> re-gear so open→close beats the stopwatch — prove it with a timed cycle</li>
+<li>💪 <strong>Stronger:</strong> re-gear so the bottle lift <strong>succeeds</strong>, and prove it with the lift</li>
+<li>⚡ <strong>Faster:</strong> re-gear so open→close beats the stopwatch, and prove it with a timed cycle</li>
 </ul>
 </div>
 </div>
 </div>
 <ul>
-<li>Rules: same motor, same port — <strong>only the gears change</strong></li>
+<li>Rules: same motor, same port, <strong>only the gears change</strong></li>
 <li>Still fits the <strong>250 mm cube</strong> with claws closed 📏</li>
-<li>Before you build: <strong>say the ratio out loud</strong> — predict, then prove</li>
+<li>Before you build: <strong>say the ratio out loud.</strong> Predict, then prove</li>
 </ul>
 <aside class="notes">
-<p>Modification is their proven skill — this stretches it exactly one step, with a prediction gate (“say the ratio before you touch a gear”) so the theory does the work. Squads choose their own goal; both choices are correct, which quietly teaches that gearing is a <em>decision</em>, not an answer. Watch for the classic trap: gearing so slow the claw takes 5 seconds to close — a run costs time, and the daily competitions have made time visceral. If a squad finishes early: “now make the two claws close at <em>different</em> speeds from the same motor” — that’s a compound ratio discovered, not assigned. This challenge is also where mechanism talent becomes visible post-draft (the scorecard note from Draft Day) — watch who leads the rebuild.</p>
+<p>Modification is their proven skill — this stretches it one step, with a prediction gate (“say the ratio before you touch a gear”) so the theory does the work. Squads choose their own goal; both choices are correct, which quietly teaches that gearing is a <em>decision</em>, not an answer. Watch for the classic trap: gearing so slow the claw takes 5 seconds to close — a run costs time. If a squad finishes early: “now make the two claws close at <em>different</em> speeds from the same motor” — a compound ratio discovered, not assigned. This is also where mechanism talent becomes visible post-draft; watch who leads the rebuild.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -600,11 +524,11 @@
 </table>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><strong>50 of the ~135 anchor — zero color needed.</strong> You’ve already shoved cables with the bare chassis. Now the claw makes it <em>repeatable</em>.</p>
+<p><strong>50 of the ~135 anchor, with zero color needed.</strong> You’ve already shoved cables with the bare chassis. Now the claw makes it <em>repeatable</em>.</p>
 </div>
 </div>
 <aside class="notes">
-<p>Both scoring lines come from the game rules via the plan’s scoring table — the operative word in both is <strong>upright</strong>, and upright is decided by <em>mechanism geometry + approach angle</em>, not by code. The mission previews planted this: squads already discovered that approach angle decides whether a shoved cable stands or falls. Today’s build makes that discovery mechanical. Map the two jobs onto their own two claws: the <strong>bottom sweep claw</strong> is a natural cable pusher, the <strong>top carry claw</strong> a natural mic carrier — the replicated design was pointed at these tasks all along; today they find that out.</p>
+<p>Both lines come from the game rules via the plan’s scoring table — the operative word in both is <strong>upright</strong>, and upright is decided by <em>mechanism geometry + approach angle</em>, not by code. The mission previews planted this: squads already discovered that approach angle decides whether a shoved cable stands or falls. Map the two jobs onto their own two claws: the <strong>bottom sweep claw</strong> is a natural cable pusher, the <strong>top carry claw</strong> a natural mic carrier — the design was pointed at these tasks all along; today they find that out.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -633,7 +557,7 @@
   <!-- funnel -->
   <line x1="230" y1="90" x2="325" y2="45" stroke="#00AE8D" stroke-width="10" stroke-linecap="round"></line>
   <line x1="230" y1="170" x2="325" y2="215" stroke="#00AE8D" stroke-width="10" stroke-linecap="round"></line>
-  <text x="300" y="30" text-anchor="middle" font-size="15" font-weight="800" fill="#008f74">① funnel — it centers itself</text>
+  <text x="300" y="30" text-anchor="middle" font-size="15" font-weight="800" fill="#008f74">① funnel: it centers itself</text>
   <!-- cable, arriving off-center -->
   <circle cx="310" cy="152" r="13" fill="#E96852" stroke="#b84a37" stroke-width="3"></circle>
   <text x="310" y="185" text-anchor="middle" font-size="13" font-weight="700" fill="#E96852">cable</text>
@@ -659,7 +583,7 @@
 </div>
 </div>
 <aside class="notes">
-<p>This slide is the difference between a build that works once and a mechanism that gates at ≥8/10. The funnel is tolerance engineering a 9-year-old can hold: the robot will <em>never</em> arrive perfectly, so build a mouth that makes imperfect arrivals perfect enough. Over-travel is its twin in code (they’ll write it in two slides). Worth saying explicitly: pros design the mechanism around the <em>worst</em> expected approach, not the best. The ±5 mm number is a design target to test against, not a rule — nudge their aim off on purpose and see if the funnel saves it. The third trick is the gear challenge coming home: torque where the push needs force, speed where the claw needs reach.</p>
+<p>This slide is the difference between a build that works once and a mechanism that gates at ≥8/10. The funnel is tolerance engineering a 9-year-old can hold: the robot will <em>never</em> arrive perfectly, so build a mouth that makes imperfect arrivals perfect enough. Over-travel is its twin in code. Pros design the mechanism around the <em>worst</em> expected approach, not the best. The ±5 mm number is a design target to test against, not a rule — nudge their aim off on purpose and see if the funnel saves it. The third trick is the gear challenge coming home: torque where the push needs force, speed where the claw needs reach.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -675,7 +599,7 @@
 <section id="break-it-the-claw-that-got-shoved" class="slide level2">
 <h2>Break it: the claw that got shoved 💥</h2>
 <div class="qbox">
-<p><span class="qtitle">Close the claw. Now <strong>shove it back open with your hand</strong> — program still running.</span></p>
+<p><span class="qtitle">Close the claw. Now <strong>shove it back open with your hand</strong>, with the program still running.</span></p>
 <p>Two squads, same nudge, one word different:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a>gripper.run_angle(<span class="dv">300</span>, <span class="dv">150</span>)     <span class="co"># squad A</span></span>
 <span id="cb1-2"><a></a>gripper.run_target(<span class="dv">300</span>, <span class="dv">150</span>)    <span class="co"># squad B</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -688,8 +612,8 @@
 </div>
 </div>
 <aside class="notes">
-<p>Five minutes, and it must be <em>felt</em>, not told — the whole slide dies if you announce the answer. Get real predictions on the board first; most of the room will guess both claws end up wrong, because “I moved it with my hand” feels like it must break something. Then the reveal question: <strong>counts from where, exactly?</strong> <code>run_angle</code> counts from <em>here</em> — wherever the claw happens to be the instant the line runs, nudge included. <code>run_target</code> counts from a <strong>zero</strong>, and it does not care how the claw got where it is; the motor kept counting your hand the whole time it was moving. Do NOT resolve which is “better” yet — that’s the next slide, and it lands much harder as a table they fill in than as a claim you made.</p>
-<p>Two staging notes. Keep the program running (a loop with a button wait, or the REPL) — that is what makes squad B recover, and it is the honest half of the lesson. And make the shove big and obvious, 30–40°; a 5° nudge is inside the precision profile and looks like noise. If a squad’s claw is heavily geared down, their hand-shove may back-drive the gears rather than the motor — have them nudge the motor’s own axle instead, or borrow another squad’s result for the board.</p>
+<p>Five minutes, and it must be <em>felt</em>, not told — the slide dies if you announce the answer. Get real predictions on the board first; most of the room will guess both claws end up wrong, because “I moved it with my hand” feels like it must break something. Then the reveal question: <strong>counts from where, exactly?</strong> <code>run_angle</code> counts from <em>here</em> — wherever the claw happens to be the instant the line runs, nudge included. <code>run_target</code> counts from a <strong>zero</strong>, and does not care how the claw got where it is. Do NOT resolve which is “better” yet — that’s the next slide, and it lands harder as a table they fill in.</p>
+<p>Two staging notes. Keep the program running (a loop with a button wait, or the REPL) — that is what makes squad B recover. And make the shove big and obvious, 30–40°; a 5° nudge looks like noise. If a squad’s claw is heavily geared down, their hand-shove may back-drive the gears rather than the motor — have them nudge the motor’s own axle instead.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -730,7 +654,7 @@
 </tr>
 <tr class="odd">
 <td>run it twice</td>
-<td>moves <strong>again</strong> — 300 total</td>
+<td>moves <strong>again</strong>, 300 total</td>
 <td>second one does <strong>nothing</strong></td>
 </tr>
 <tr class="even">
@@ -742,19 +666,19 @@
 </table>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>You already own this pair. <strong><code>turn_to(90)</code> is a compass. <code>run_angle</code> is a steering wheel.</strong> 🧭</p>
-<p>Wheels roll forever, so <em>by</em> is fine. A claw has <strong>a place it must be</strong> — so mechanisms use <strong><code>run_target</code></strong>.</p>
+<p>You already own this pair. <strong><code>robot.turn(90, absolute=True)</code> is a compass. <code>run_angle</code> is a steering wheel.</strong> 🧭</p>
+<p>Wheels roll forever, so <em>by</em> is fine. A claw has <strong>a place it must be</strong>, so mechanisms use <strong><code>run_target</code></strong>.</p>
 </div>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>⚠️ <strong><code>run_target</code> ignores the sign of the speed.</strong> The target decides the direction. <code>run_target(-300, 0)</code> and <code>run_target(300, 0)</code> do the <strong>same thing</strong> — to go the other way, change the <em>target</em>, not the speed.</p>
+<p>⚠️ <strong><code>run_target</code> ignores the sign of the speed.</strong> The target decides the direction. <code>run_target(-300, 0)</code> and <code>run_target(300, 0)</code> do the <strong>same thing</strong>, so to go the other way, change the <em>target</em>, not the speed.</p>
 </div>
 </div>
 <aside class="notes">
-<p>Build the table live, one row at a time, from what they just watched — do not present it finished. Row 3 is the cheapest one to prove and the most convincing: run either line twice in a row and the difference is unmissable, <code>run_angle</code> walks the claw across the room while <code>run_target</code> sits there refusing to move because it has already arrived.</p>
-<p>The <code>turn_to</code> callback is the sentence of the slide, and it is a genuine callback, not a metaphor you invented for today: the square day taught exactly this, on the gyro, and the checkpoint’s hardest question turned on it — absolute targets absorb the previous corner’s overshoot, relative ones stack it. Same idea, second place they meet it. Say the general rule out loud, because it is the transferable one: <strong>a relative move inherits every mistake before it; an absolute move forgets them.</strong> That is also why <code>movements.py</code> deliberately has no “turn 90 from here” verb.</p>
-<p>The purple fragment is a real trap and it costs an afternoon when it bites, because every other verb they own — <code>run_angle</code>, <code>run</code>, <code>run_until_stalled</code> — taught them “negative means the other way”, and this one quietly doesn’t. Show it: <code>run_target(-300, 0)</code> from a closed claw <em>opens</em> it, exactly like the positive version, because 0 is behind it either way. It matters most inside <code>home()</code>, where the direction genuinely <em>does</em> live in the sign — <code>run_until_stalled(-300, …)</code> means “open”, and that is the wrong-direction row waiting on the try-to-break-the-homing slide later in the act.</p>
+<p>Build the table live, one row at a time, from what they just watched. Row 3 is the cheapest to prove and the most convincing: run either line twice and <code>run_angle</code> walks the claw across the room while <code>run_target</code> sits there refusing to move because it has already arrived.</p>
+<p>The absolute-turn callback is the sentence of the slide, and it is a genuine callback: the square day taught exactly this on the gyro, and the checkpoint’s hardest question turned on it. Say the general rule out loud, because it is the transferable one: <strong>a relative move inherits every mistake before it; an absolute move forgets them.</strong> That is also why <code>movements.py</code> deliberately has no “turn 90 from here” verb.</p>
+<p>The purple fragment is a real trap that costs an afternoon, because every other verb they own — <code>run_angle</code>, <code>run</code>, <code>run_until_stalled</code> — taught them “negative means the other way”, and this one quietly doesn’t. Show it: <code>run_target(-300, 0)</code> from an open claw <em>closes</em> it, exactly like the positive version, because 0 is on the same side either way.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -772,7 +696,7 @@
 <div class="qbox">
 <p><span class="qtitle"><code>run_target</code> goes <strong>to 150</strong>. 150 measured from <strong>where</strong>?</span></p>
 <p>Not from your jaws. From a mark on the <strong>motor shaft</strong>, picked by the hub the moment your program started.</p>
-<p>Slip one gear tooth and the shaft mark stays put — <strong>your jaws don’t.</strong></p>
+<p>Slip one gear tooth and the shaft mark stays put. <strong>Your jaws don’t.</strong></p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
@@ -783,8 +707,8 @@
 <p>The code was never wrong. <strong>The zero was never yours.</strong> 🎯</p>
 </div>
 <aside class="notes">
-<p>This is the beat that earns <code>home()</code>, so don’t rush it — and it is a <em>different</em> failure from the shove two slides back, which is the point. A shove gets counted; the motor was awake and watching. What is <em>not</em> counted is anything that changes the relationship between the motor shaft and your jaws: a gear tooth skipping under load, an axle pulled and re-seated one notch round, a beam flexing back a different amount — and, most of all, a <strong>re-gear</strong>, which is a thing this room did to itself this morning. Stage the cheapest version: pull the claw axle, put it back one tooth over, re-run the exact same line, watch the jaws land somewhere new with no edit to the code. Thirty seconds, impossible to argue with.</p>
-<p>Say the ownership line slowly, because it is the whole argument: <strong>zero is a mark on the motor, and the motor has never seen your claw.</strong> Every angle they measure — <code>EMPTY_ANGLE</code> included, which they will measure this afternoon — is a number about their jaws, quoted from a datum that belongs to the motor. That mismatch is fine right up until something between the two moves, and then it is silent, because a wrong zero produces perfectly confident wrong behaviour. That’s the expensive failure class: passes on the bench, dies on the mat, no error message.</p>
+<p>This is the beat that earns <code>home()</code>, so don’t rush it — and it is a <em>different</em> failure from the shove two slides back, which is the point. A shove gets counted; the motor was awake and watching. What is <em>not</em> counted is anything that changes the relationship between the motor shaft and your jaws: a gear tooth skipping under load, an axle pulled and re-seated one notch round, and above all a <strong>re-gear</strong>, which is a thing this room did to itself this morning. Stage the cheapest version: pull the claw axle, put it back one tooth over, re-run the exact same line, watch the jaws land somewhere new with no edit to the code. Thirty seconds, impossible to argue with.</p>
+<p>Say the ownership line slowly, because it is the whole argument: <strong>zero is a mark on the motor, and the motor has never seen your claw.</strong> That mismatch is fine right up until something between the two moves, and then it is silent, because a wrong zero produces perfectly confident wrong behaviour. Passes on the bench, dies on the mat, no error message.</p>
 <p>Then hold the room in it. Do <strong>not</strong> give the fix. Someone will say “can’t it just find zero by itself?” — that sentence is the next slide, in their words, and it is worth waiting twenty seconds of silence for.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -798,9 +722,14 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="run_until_stalled-the-verb-that-finds-a-wall" class="slide level2">
-<h2><code>run_until_stalled</code> — the verb that finds a wall</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>motor.run_until_stalled(<span class="op">-</span><span class="dv">300</span>, then<span class="op">=</span>Stop.COAST, duty_limit<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="home-go-and-touch-your-zero" class="slide level2 code-shrink">
+<h2><code>home()</code>: go and touch your zero 🧱</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|3|4|5|6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="kw">def</span> home():</span>
+<span id="cb2-2"><a></a>    <span class="co">"""Shut on nothing. THAT is zero."""</span></span>
+<span id="cb2-3"><a></a>    claw.run_until_stalled(<span class="op">-</span>CLOSE_SPEED, then<span class="op">=</span>Stop.COAST, duty_limit<span class="op">=</span>___)</span>
+<span id="cb2-4"><a></a>    wait(<span class="dv">200</span>)                    <span class="co"># let the gears unwind before we believe it</span></span>
+<span id="cb2-5"><a></a>    claw.reset_angle(___)        <span class="co"># jaws met = 0 -- every run, every robot</span></span>
+<span id="cb2-6"><a></a>    claw.run_target(OPEN_SPEED, READY_ANGLE, then<span class="op">=</span>Stop.COAST)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -811,7 +740,7 @@
 <tbody>
 <tr class="odd">
 <td><code>speed</code></td>
-<td>which way, how fast — <strong>negative = the other way</strong></td>
+<td>which way and how fast, where <strong>negative = the other way</strong></td>
 </tr>
 <tr class="even">
 <td><code>then=Stop.COAST</code></td>
@@ -819,104 +748,20 @@
 </tr>
 <tr class="odd">
 <td><code>duty_limit</code></td>
-<td>how hard it may push, 0–100</td>
+<td>how hard it may push, 0–100. <strong>Start at 40</strong></td>
 </tr>
 </tbody>
 </table>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>You already own this verb — it’s how you found the <strong>wall</strong>. A claw’s end-stop is just a wall that came with the robot. 🧱</p>
-</div>
-</div>
-<div class="fragment fade-up">
-<div class="cardbox coral">
-<p>It answers <strong>“where is my claw?”</strong> — nothing else. Hold that thought. 🤔</p>
+<p>Why shut and not open? Because <strong>“did I catch it?” is a question about the jaws meeting.</strong> Put your zero where the question is, and the answer is just <em>“did we stop before 0?”</em> 🎯</p>
 </div>
 </div>
 <aside class="notes">
-<p>The whole point of putting the anatomy on its own slide: they used <code>run_until_stalled</code> once, on the wall day, and never got to practise it. Today it earns its real job, so the parts need names first. The callback sentence is the one to say slowly: <em>the end-stop is a wall that came with the robot.</em> Stall = touch, and touch = truth, whether it’s a mat wall or their own claw frame. Push on WHY that works, because the second fragment is a trap being set: the end-stop is rigid, it is part of the claw, and it is in the same place on every run — press into a thing like that and you get the same answer twice, which is the entire basis of <code>home()</code>. Ask them to name something that is <em>not</em> like that, and steer until somebody says the object. Do not resolve it — the whole grip arc later this session is the payoff, and it lands much harder if they have been sitting on the question for twenty minutes. If a squad has seen an older version of the gripper file that stalls to grip, tell them plainly it changed and why they’ll see it break with their own eyes shortly.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="duty_limit-the-knob-that-breaks-gears" class="slide level2">
-<h2><code>duty_limit</code> — the knob that breaks gears ⚠️</h2>
-<div class="qbox">
-<p><span class="qtitle">Try <code>duty_limit=100</code>, then <code>duty_limit=15</code>. Listen.</span></p>
-<p>One of them <strong>crunches</strong>. One of them <strong>gives up early</strong>. Find both.</p>
-</div>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Too high</th>
-<th>Too low</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>keeps shoving after it arrives</td>
-<td>stops before it arrives</td>
-</tr>
-<tr class="even">
-<td>you <strong>hear</strong> the teeth skip 🔊</td>
-<td>zero lands in a different place each time</td>
-</tr>
-<tr class="odd">
-<td>you strip a gear</td>
-<td>homing is a lie</td>
-</tr>
-</tbody>
-</table>
-<div class="fragment fade-up">
-<div class="cardbox purple">
-<p>Start at <strong>30</strong> — and that’s the only place this knob appears. <strong>Homing only.</strong> 👂</p>
-</div>
-</div>
-<aside class="notes">
-<p>Supervise this one — that’s the whole reason it’s a slide and not a footnote. Let them hear a real skip at <code>duty_limit=100</code> on a re-geared claw <em>once</em>, briefly, then stop it; the sound is worth more than any warning you could give, and it’s the same lesson the heavy-lift break-it opened the day with (torque has consequences at both ends of the chain). Do not let anyone sit at 100 for more than a second, and don’t run this on a build you can’t afford to re-teeth. The low-side failure is subtler and more valuable competitively: at 15 the claw stops short of the true end-stop, <code>reset_angle(0)</code> fires anyway, and now zero is <em>almost</em> right — which is worse than obviously wrong, because it passes on the bench and fails on the mat. Tie it back: this is a tuning knob found by feel, exactly like KP. <strong>Say the scope line deliberately</strong> — <code>duty_limit</code> lives in <code>home()</code> and nowhere else, because it is a <em>percentage of whatever power is available today</em>, which is the same objection they already accepted against <code>dc()</code>. Finding a rigid end-stop can afford that sloppiness; deciding how hard to squeeze an object cannot. That distinction is the hinge the rest of the session turns on, so plant it here and collect on it in the grip arc.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="home-the-claw-the-motor-is-a-sensor-again" class="slide level2">
-<h2>Home the claw: the motor is a sensor — again 🧱</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|3-8|4|5|6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>gripper <span class="op">=</span> Motor(Port.C)</span>
-<span id="cb3-2"><a></a></span>
-<span id="cb3-3"><a></a><span class="kw">def</span> home():</span>
-<span id="cb3-4"><a></a>    <span class="co">"""Find 'fully open' by feel — no guessing."""</span></span>
-<span id="cb3-5"><a></a>    gripper.run_until_stalled(<span class="op">-</span><span class="dv">300</span>, then<span class="op">=</span>Stop.COAST, duty_limit<span class="op">=</span>___)</span>
-<span id="cb3-6"><a></a>    wait(<span class="dv">200</span>)                    <span class="co"># let the gears unwind before we believe it</span></span>
-<span id="cb3-7"><a></a>    gripper.reset_angle(___)     <span class="co"># THIS position is now 0 — every time</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment fade-up">
-<div class="cardbox teal">
-<p><code>find_line()</code> for your wheels. <strong><code>home()</code> for your claw.</strong> Same trick, two places — stop guessing, go and <em>touch</em> something that’s where it says it is.</p>
-</div>
-</div>
-<div class="fragment fade-up">
-<p>Run it at the <strong>top of every single run.</strong> It costs one second. 🕐</p>
-</div>
-<aside class="notes">
-<p>Blanks: <code>duty_limit=30</code> and <code>reset_angle(0)</code>. Line 6 is the one they’ll want to delete — make them keep it: the gear train is still under load the instant the stall is detected, and reading the angle before it unwinds bakes a few degrees of backlash into zero, every run, in the same direction. That’s a systematic error, not noise, and systematic errors are the ones that survive into the competition. The <code>find_line</code>/<code>home</code> pairing is the sentence of the day; put both on the board side by side and let them name what’s shared — go until you reach something real, then believe where you are. Say the contrast too, because it is the whole reason the gripper gets a homing habit and the wheels don’t: the claw has a hard stop it can press against, so <code>home()</code> is exact; the mat only offers <em>landmarks to look at</em>, so <code>find_line()</code> fixes distance and nothing fixes heading. The mechanism is the better-instrumented half of this robot — which is why a sloppy <code>home()</code> is inexcusable. Assign it now as a hard habit: <code>home()</code> is line one of every mission program from today onward, no exceptions, and you’ll enforce it at the gate.</p>
+<p>Blanks: <code>duty_limit=40</code> and <code>reset_angle(0)</code>. They already own <code>run_until_stalled</code> from the wall day, so the table is a reminder, not a lesson — spend the time on the datum instead.</p>
+<p><strong>The teal fragment is the whole slide.</strong> The claw could home either way; homing <em>shut</em> is the choice that deletes a number. Zero at fully-open means “did I catch something?” can only be answered against a measured landmark — how far away the jaws meet — which is a number you must measure, re-measure after every re-gear, and which is silently wrong in between. Zero at <em>jaws met</em> makes that number <strong>0 by construction</strong>, so it cannot be mis-measured or go stale. Say the portable version: <strong>put the zero where the question is.</strong> This is the same move as <code>find_line()</code> for the wheels — stop guessing, go and touch something that is where it says it is — and the contrast is worth naming: the claw has a hard stop it can press against, so <code>home()</code> is exact; the mat only offers <em>landmarks to look at</em>, so <code>find_line()</code> fixes distance and nothing fixes heading.</p>
+<p>Line 4 is the one they’ll want to delete — make them keep it. The gear train is still under load the instant the stall is detected, and reading the angle before it unwinds bakes a few degrees of backlash into zero, every run, in the same direction. Systematic error, not noise, and systematic errors survive into competition. Line 6 is why the claw ends up <em>open and ready</em> rather than clamped shut — <code>READY_ANGLE</code> is a number they choose (wide enough for the biggest thing they carry), not one they measure.</p>
+<p>Assign it now as a hard habit: <code>home()</code> is line one of every mission program from today onward, no exceptions, enforced at the gate. It costs one second.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -932,7 +777,7 @@
 <section id="try-to-break-the-homing" class="slide level2">
 <h2>Try to break the homing 🔨</h2>
 <div class="qbox">
-<p><span class="qtitle">Four ways it goes wrong. <strong>Stage each one</strong> — then say what you’d see on the mat.</span></p>
+<p><span class="qtitle">Four ways it goes wrong. <strong>Stage each one.</strong></span></p>
 </div>
 <table class="caption-top">
 <colgroup>
@@ -948,19 +793,19 @@
 <tbody>
 <tr class="odd">
 <td>home the <strong>wrong direction</strong></td>
-<td>claw slams shut, zero is at <em>closed</em></td>
+<td>zero lands at <em>open</em>, and nothing closes again</td>
 </tr>
 <tr class="even">
-<td><code>duty_limit</code> too <strong>low</strong></td>
-<td>zero lands somewhere new every time</td>
+<td><code>duty_limit</code> too <strong>high</strong></td>
+<td>you <strong>hear</strong> the teeth skip, a stripped gear 🔊</td>
 </tr>
 <tr class="odd">
-<td>skip the <code>wait(200)</code></td>
-<td>zero drifts a few degrees — always the same way</td>
+<td><code>duty_limit</code> too <strong>low</strong></td>
+<td>zero lands somewhere new, so homing is a lie</td>
 </tr>
 <tr class="even">
-<td><strong>don’t home at all</strong></td>
-<td>works on the bench, dies on the mat 💀</td>
+<td>skip the <code>wait(200)</code></td>
+<td>zero drifts, always the same way</td>
 </tr>
 </tbody>
 </table>
@@ -970,7 +815,10 @@
 </div>
 </div>
 <aside class="notes">
-<p>Squads split the four and stage them for each other — this is a competition-grade debugging drill, not a demo, so protect ten minutes for it. The wrong-direction one is the most instructive and the most common: they flip a sign, the claw homes to <em>closed</em>, and every subsequent <code>run_target</code> runs the mechanism the wrong way through its own range. It also reconnects to the sign-convention rule in their gripper file — positive must mean closing, and if it doesn’t, you flip <code>Direction</code>, not the numbers. The last row is the one to dwell on, because it’s the honest description of what happened to somebody in this room already: bench-passing, mat-failing bugs are the expensive kind, and the only defence is staging the failure yourself before the judge does. Collect the four “what you’d see” answers on the board — that list is a diagnostic sheet they can use for the rest of the season.</p>
+<p>Squads split the four and stage them for each other — a competition-grade debugging drill, not a demo, so protect ten minutes for it.</p>
+<p><strong>Supervise the <code>duty_limit</code> rows.</strong> Let them hear a real skip at <code>duty_limit=100</code> on a re-geared claw <em>once</em>, briefly, then stop it; the sound is worth more than any warning, and it’s the same lesson the heavy-lift break-it opened the day with — torque has consequences at both ends of the chain. Do not let anyone sit at 100 for more than a second, and don’t run this on a build you can’t afford to re-teeth. The low side is subtler and more valuable: at 15 the jaws stop short of actually meeting, <code>reset_angle(0)</code> fires anyway, and now zero is <em>almost</em> right — worse than obviously wrong, because it passes on the bench and fails on the mat. Tie it back: a tuning knob found by feel, exactly like KP.</p>
+<p><strong>Say the scope line deliberately</strong> — <code>duty_limit</code> lives in <code>home()</code> and nowhere else, because it is a <em>percentage of whatever power is available today</em>, which is the same objection they already accepted against <code>dc()</code>. Finding a rigid stop can afford that sloppiness; deciding how hard to squeeze an object cannot. That distinction is the hinge the rest of the session turns on.</p>
+<p>The wrong-direction row is the most common: they flip a sign, the claw homes to <em>open</em>, zero lands at the wrong end of the travel, and every <code>grab()</code> afterwards asks the motor to drive somewhere it already is. It reconnects to the sign rule in their gripper file — positive must mean <strong>opening</strong>, and if it doesn’t, you flip <code>Direction</code>, not the numbers. Collect the four “what you’d see” answers on the board — that list is a diagnostic sheet for the rest of the season.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -987,18 +835,20 @@
 <h2>Break it: the claw that lets go 💥</h2>
 <div class="qbox">
 <p><span class="qtitle">Grip it by <strong>stalling</strong>. Then take the robot for a ride.</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>gripper.run_until_stalled(<span class="dv">300</span>, then<span class="op">=</span>Stop.HOLD, duty_limit<span class="op">=</span><span class="dv">50</span>)</span>
-<span id="cb4-2"><a></a>drive_straight(<span class="dv">600</span>)</span>
-<span id="cb4-3"><a></a>turn_to(<span class="dv">90</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>gripper.run_until_stalled(<span class="op">-</span><span class="dv">300</span>, then<span class="op">=</span>Stop.HOLD, duty_limit<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb3-2"><a></a>drive_straight(<span class="dv">600</span>)</span>
+<span id="cb3-3"><a></a>robot.turn(<span class="dv">90</span>, absolute<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The claw <strong>never opened.</strong> So how did the bottle get out? 🍾</p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>Stalling stopped where it stopped — then held <strong>that spot</strong>. The bottle settled 1 mm. The squeeze went to <strong>zero</strong>. 😱</p>
+<p>Stalling stopped where it stopped, then held <strong>that spot</strong>. The bottle settled 1 mm, and the squeeze went to <strong>zero</strong>. 😱</p>
 </div>
 </div>
 <aside class="notes">
-<p>Ten minutes, and it has to be felt — this is the break-it the whole grip arc hangs on, and it is the failure they will otherwise meet for the first time in front of a judge. Everyone grips by stalling, everyone drives, and most claws will shed the object on the turn; if a squad’s doesn’t, have them tap the object once mid-carry, or use something rounder. Sit in the confusion before explaining: the claw is visibly still closed, the code visibly never opened it, so the object <em>cannot</em> be gone — and yet it is. The reveal is the difference between HOLDING A POSITION and HOLDING A FORCE, and it is worth drawing on the board: <code>Stop.HOLD</code> after a stall means “stay at this angle”, so the instant the object shifts a hair, the error is zero, the motor relaxes, and the claw is now merely <em>resting on</em> the object. Ask what the motor would have to do instead to keep pressing — someone will say “keep closing”, and that is the next slide, in their words. Callback to the fragment you planted on the <code>run_until_stalled</code> anatomy slide: this is what “it only answers <em>where is my claw</em>” was hiding. Do not let the session frame this as stalling being bad — it is still exactly right for <code>home()</code>, and the distinction (rigid frame vs.&nbsp;a squashy object that moves) is the transferable idea.</p>
+<p>Ten minutes, and it has to be felt — this is the break-it the whole grip arc hangs on, and the failure they will otherwise meet for the first time in front of a judge. Everyone grips by stalling, everyone drives, and most claws will shed the object on the turn; if a squad’s doesn’t, have them tap the object once mid-carry, or use something rounder.</p>
+<p>Sit in the confusion before explaining: the claw is visibly still closed, the code visibly never opened it, so the object <em>cannot</em> be gone — and yet it is. The reveal is the difference between HOLDING A POSITION and HOLDING A FORCE, worth drawing on the board: <code>Stop.HOLD</code> after a stall means “stay at this angle”, so the instant the object shifts a hair, the error is zero, the motor relaxes, and the claw is merely <em>resting on</em> the object. Ask what the motor would have to do instead to keep pressing — someone will say “keep closing”, and that is the next slide, in their words.</p>
+<p>Do not let the session frame stalling as bad — it is still exactly right for <code>home()</code>, and the distinction (rigid frame vs.&nbsp;a squashy object that moves) is the transferable idea.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1013,23 +863,14 @@
 </section>
 <section id="grip-is-a-force-not-a-place" class="slide level2 code-shrink">
 <h2>Grip is a force, not a place 🤝</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-code-line-numbers="|1|4|6-11|13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>claw.control.limits(torque<span class="op">=</span>___)      <span class="co"># the squeeze — set ONCE</span></span>
-<span id="cb5-2"><a></a></span>
-<span id="cb5-3"><a></a><span class="kw">def</span> grab():</span>
-<span id="cb5-4"><a></a>    claw.run_target(CLOSE_SPEED, GRIP_ANGLE, then<span class="op">=</span>Stop.HOLD, wait<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-5"><a></a></span>
-<span id="cb5-6"><a></a>    timer <span class="op">=</span> StopWatch()</span>
-<span id="cb5-7"><a></a>    wait(<span class="dv">100</span>)                        <span class="co"># let it get moving</span></span>
-<span id="cb5-8"><a></a>    <span class="cf">while</span> timer.time() <span class="op">&lt;</span> GRIP_TIMEOUT_MS:</span>
-<span id="cb5-9"><a></a>        <span class="cf">if</span> claw.stalled() <span class="kw">or</span> claw.done():</span>
-<span id="cb5-10"><a></a>            <span class="cf">break</span></span>
-<span id="cb5-11"><a></a>        wait(<span class="dv">10</span>)</span>
-<span id="cb5-12"><a></a></span>
-<span id="cb5-13"><a></a>    <span class="cf">return</span> holding()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers="|1|4|5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>claw.control.limits(torque<span class="op">=</span>___)      <span class="co"># the squeeze -- set ONCE</span></span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a><span class="kw">def</span> grab():</span>
+<span id="cb4-4"><a></a>    close_and_watch(CLOSE_SPEED, GRIP_TIMEOUT_MS)   <span class="co"># lean in until it bites</span></span>
+<span id="cb4-5"><a></a>    <span class="cf">return</span> holding()        <span class="co"># no hold(), no stop() -- that IS the squeeze</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><code>GRIP_ANGLE</code> is set <strong>past</strong> where the jaws meet. It can never get there — <strong>that’s the point.</strong> It never stops trying. 🎯</p>
-<p><code>GRIP_ANGLE = EMPTY_ANGLE + GRIP_OVERSHOOT</code> — you measure <strong>one</strong> angle, the file adds the rest. 🧮</p>
+<p><code>close_and_watch</code> aims at <code>GRIP_TARGET</code>, a few degrees <strong>past</strong> where the jaws meet. It can never get there, and <strong>that’s the point.</strong> It never stops trying. 🎯</p>
 </div>
 </div>
 <div class="fragment fade-up">
@@ -1038,8 +879,10 @@
 </div>
 </div>
 <aside class="notes">
-<p>Blank is <code>torque=GRIP_TORQUE</code>, and the units matter: <strong>mNm</strong>, an amount of real turning force, not a percentage. Make them say why that beats <code>duty_limit</code> — they already accepted the argument this morning about <code>dc()</code>, and this is the same argument wearing a different hat: a percentage is a promise about the battery, a unit is a promise about the robot. Teach the aim-past trick with hands, not words: hold a squad’s claw half-closed and ask one student to keep squeezing while you slowly let the object shrink. To keep pressure they have to keep <em>moving</em>, which is exactly what an unreachable target buys. Line 4 is the whole idea; lines 6–11 are plumbing and should be presented as such — do not spend the room’s attention on the loop. What the loop is for, in one sentence: three ways out (found the object / found nothing / jammed), and the timer means a jam costs 1.5 seconds instead of the rest of the run. The <code>wait=False</code> is what makes watching possible, and the purple fragment is the trap they will otherwise fall into on their own — several will “tidy up” by adding <code>claw.hold()</code> at the end, which silently restores the exact bug the previous slide staged. Say it out loud: <strong>the move is left running on purpose.</strong> Contrast with <code>lift_gripper.py</code> if anyone built a fork — a fork asks for a height and means it, because gravity does the holding, so position control is right there and wrong here. Same four verbs, opposite reasoning; that is a genuinely good engineering moment if the room is with you.</p>
-<p>One more thing on the derived <code>GRIP_ANGLE</code>, and it is worth thirty seconds because it heads off a real afternoon-waster: students only ever measure <code>EMPTY_ANGLE</code>, and <code>GRIP_ANGLE</code> is computed from it. When both were typed by hand they chased each other — re-measure by running <code>grab()</code> on empty jaws, read back the <em>target</em> rather than the jaws, write that down, bump the target ten past it, repeat, and within four rounds the air test can never fail and the claw reports a firm grip on nothing. If you see a hand-typed number on that line, that is the bug.</p>
+<p>Blank is <code>torque=GRIP_TORQUE</code>, and the units matter: <strong>mNm</strong>, an amount of real turning force, not a percentage. Make them say why that beats <code>duty_limit</code> — they already accepted the argument about <code>dc()</code>, and this is the same argument in a different hat: a percentage is a promise about the battery, a unit is a promise about the robot.</p>
+<p>Teach the aim-past trick with hands, not words: hold a squad’s claw half-closed and ask one student to keep squeezing while you slowly let the object shrink. To keep pressure they have to keep <em>moving</em>, which is exactly what an unreachable target buys. And note that the unreachable target is now trivially easy to state — zero is where the jaws meet, so “past the jaws” is just a small <strong>negative</strong> number, the same in every squad’s file.</p>
+<p><code>close_and_watch</code> is the one piece of plumbing worth a sentence, not a slide: it starts the move with <code>wait=False</code> and watches for three ways out — found the object, found nothing, or jammed — with a timer so a jam costs 1.5 seconds instead of the rest of the run. Open the file if anyone asks; don’t spend the room’s attention on the loop.</p>
+<p>The purple fragment is the trap they will otherwise fall into: several will “tidy up” by adding <code>claw.hold()</code> at the end, which silently restores the exact bug the previous slide staged. Say it out loud: <strong>the move is left running on purpose.</strong> Contrast with <code>lift_gripper.py</code> if anyone built a fork — a fork asks for a height and means it, because gravity does the holding, so position control is right there and wrong here. Same verbs, opposite reasoning.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1052,56 +895,57 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="did-you-actually-catch-it" class="slide level2">
+<section id="did-you-actually-catch-it" class="slide level2 code-shrink">
 <h2>Did you actually catch it? 🎣</h2>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>angle</th>
+<th>jaws stopped</th>
 <th>load</th>
 <th>what happened</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>near <code>EMPTY_ANGLE</code></td>
+<td>at <strong>0</strong>, they met</td>
 <td>high</td>
 <td>closed on <strong>air</strong> 🌬️</td>
 </tr>
 <tr class="even">
-<td>short of it</td>
+<td><strong>short</strong> of 0</td>
 <td>high</td>
 <td><strong>holding it</strong> ✅</td>
 </tr>
 <tr class="odd">
-<td>short of it</td>
+<td><strong>short</strong> of 0</td>
 <td>low</td>
 <td><strong>it’s gone</strong> 👻</td>
 </tr>
 </tbody>
 </table>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="kw">def</span> holding():</span>
-<span id="cb6-2"><a></a>    <span class="cf">if</span> claw.angle() <span class="op">&gt;</span> EMPTY_ANGLE <span class="op">-</span> ___:</span>
-<span id="cb6-3"><a></a>        <span class="cf">return</span> <span class="va">False</span>              <span class="co"># jaws met — nothing in them</span></span>
-<span id="cb6-4"><a></a>    <span class="cf">return</span> grip_load() <span class="op">&gt;</span> ___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="kw">def</span> holding():</span>
+<span id="cb5-2"><a></a>    <span class="cf">if</span> claw.angle() <span class="op">&lt;</span> ___:        <span class="co"># jaws met -- nothing in them</span></span>
+<span id="cb5-3"><a></a>        <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb5-4"><a></a>    <span class="cf">return</span> grip_load() <span class="op">&gt;</span> ___</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><strong>One signal can’t do it.</strong> The angle can’t tell a held bottle from one that fell out a second ago — the jaws are in the same place either way. 📏</p>
+<p><strong>One signal can’t do it.</strong> The angle can’t tell a held bottle from one that fell out a second ago. 📏</p>
 </div>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>So ask the <strong>same question twice</strong> — once here, once at the far end. 🚚</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>claw.grab()                 <span class="co"># got it HERE?</span></span>
-<span id="cb7-2"><a></a>drive_straight(<span class="dv">600</span>)</span>
-<span id="cb7-3"><a></a><span class="cf">if</span> <span class="kw">not</span> claw.holding():      <span class="co"># still got it THERE?</span></span>
-<span id="cb7-4"><a></a>    <span class="bu">print</span>(<span class="st">"dropped it — skip the placing"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>So ask the <strong>same question twice</strong>. 🚚</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>claw.grab()                 <span class="co"># got it HERE?</span></span>
+<span id="cb6-2"><a></a>drive_straight(<span class="dv">600</span>)</span>
+<span id="cb6-3"><a></a><span class="cf">if</span> <span class="kw">not</span> claw.holding():      <span class="co"># still got it THERE?</span></span>
+<span id="cb6-4"><a></a>    <span class="bu">print</span>(<span class="st">"dropped it, skip the placing"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <aside class="notes">
-<p>Blanks are <code>AIR_MARGIN</code> (start at 20) and <code>GRIP_LOAD_MIN</code> (start at 60 mNm, then measure). Walk the truth table row by row and make them supply the third row themselves — rows one and two are last season’s <code>holding()</code>, row three is new and is the one that pays.</p>
-<p><strong>The move to teach here is that it is the same function, asked twice.</strong> There is no second verb, and there deliberately isn’t one: a <code>still_holding()</code> wrapper existed for exactly one season and did nothing but call <code>holding()</code>, which taught the room that two names meant two behaviours and sent students hunting for a difference that was never there (#40). “Ask it again later” is a <em>habit</em>, and habits belong in the mission list where the student can see the second call, not hidden behind a name that implies the library is doing something clever.</p>
-<p>Why asking late is possible at all is the second dividend from the previous slide, and worth naming explicitly: because <code>grab()</code> leaves the claw actively squeezing, the load reading stays meaningful for the whole carry. Under the old stall-and-hold grip the motor had already relaxed, so “do I still have it?” had no signal to read — the question could not be asked. That is competition thinking arriving early: a run that discovers an empty claw <em>before</em> the placing manoeuvre skips it and banks the time, while a run that discovers it after has spent both the time and the points. Get every squad to add the second call to one mission leg today.</p>
+<p>Blanks are <code>AIR_MARGIN</code> (start at 20) and <code>GRIP_LOAD_MIN</code> (start at 60 mNm, then measure). Walk the truth table row by row and make them supply the third row themselves — rows one and two are the obvious ones, row three is the one that pays.</p>
+<p>Notice how little there is to hold in your head now: the jaws meet at <strong>0</strong>, so “closed on air” is just “angle near zero” and <code>AIR_MARGIN</code> is the only slack you have to choose. There is no measured empty angle to look up, to get wrong, or to re-measure after this morning’s re-gear.</p>
+<p><strong>The move to teach here is that it is the same function, asked twice.</strong> There is no second verb, and deliberately isn’t one: a <code>still_holding()</code> wrapper existed for exactly one season and did nothing but call <code>holding()</code>, which taught the room that two names meant two behaviours and sent students hunting for a difference that was never there (#40). “Ask it again later” is a <em>habit</em>, and habits belong in the mission list where the student can see the second call.</p>
+<p>Why asking late is possible at all is the dividend from the previous slide: because <code>grab()</code> leaves the claw actively squeezing, the load reading stays meaningful for the whole carry. Under a stall-and-hold grip the motor had already relaxed, so “do I still have it?” had no signal to read. That is competition thinking arriving early — a run that discovers an empty claw <em>before</em> the placing manoeuvre skips it and banks the time. Get every squad to add the second call to one mission leg today.</p>
 <p>Nice bonus if you have a minute — ask what <code>holding()</code> should say for a squashy object versus a rigid one, and let them find that both margins are TUNE knobs, not constants handed down.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1119,7 +963,7 @@
 <h2>Ten grabs, not one 🔬</h2>
 <div class="qbox">
 <p><span class="qtitle">Run <code>grip_test.py</code>. Same object, same claw, <strong>ten times</strong>.</span></p>
-<p>Then write your <strong>spread</strong> on the board — not your angle.</p>
+<p>Then write your <strong>spread</strong> on the board, not your angle.</p>
 </div>
 <table class="caption-top">
 <thead>
@@ -1145,11 +989,13 @@
 </table>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>It also grabs five times by <strong>stalling</strong>, right next to five by <strong>torque</strong>. Don’t take my word for it — read the two spreads. 📊</p>
+<p>It also grabs five times by <strong>stalling</strong>, right next to five by <strong>torque</strong>. Don’t take my word for it, read the two spreads. 📊</p>
 </div>
 </div>
 <aside class="notes">
-<p>Note the one number they <em>do</em> write into <code>CLAW FACTS</code> from the empty test is <code>EMPTY_ANGLE</code>; <code>GRIP_ANGLE</code> follows from it automatically, so the board column is spread, not target. This slide replaces “write your EMPTY_ANGLE on the board” with a better question, and the upgrade is the lesson: one reading always looks fine, so a single number cannot tell you whether your claw is competition-grade. Spread can. Make the board column say <em>spread</em>, not <em>angle</em> — the room comparing spreads is a completely different conversation from the room comparing angles, because a wide spread is a <strong>build</strong> defect and points at a specific fix (the claw is rocking, the mount is flexing, the object is rolling before the jaws arrive) rather than at a number to fiddle with. Hold the line on the bottom row when someone wants to tune their way out of a 30° spread; that is the afternoon-wasting move, and naming it now saves it later. Budget: the script takes about two minutes per squad to run and they should run it more than once — ideally once now and once at the end of the day on a tired battery, which is the comparison that makes the stall-versus-torque column honest. If the two spreads come out close on a fresh battery, say so plainly rather than overselling; the effect grows as the battery sags, and a coach who oversells a result the students can see is fine loses the argument they actually need to win. The numbers they take away go straight into the CLAW FACTS block, and that is the promotion ritual again — measured on the bench, named in one place, marked TUNE.</p>
+<p>One reading always looks fine, so a single number cannot tell you whether your claw is competition-grade. Spread can. Make the board column say <em>spread</em>, not <em>angle</em> — the room comparing spreads is a completely different conversation, because a wide spread is a <strong>build</strong> defect and points at a specific fix (the claw rocks, the mount flexes, the object rolls before the jaws arrive) rather than at a number to fiddle with. Hold the line on the bottom row when someone wants to tune their way out of a 30° spread.</p>
+<p>The angle column is now directly readable: it is how far the object holds the jaws open, measured from shut. So the smallest number in the table is also the answer to “where does <code>AIR_MARGIN</code> go?” — comfortably under it. That is the only number the test asks them to write down, besides <code>GRIP_LOAD_MIN</code>.</p>
+<p>Budget: about two minutes per squad, and they should run it more than once — ideally now and again at the end of the day on a tired battery, which is what makes the stall-versus-torque column honest. If the two spreads come out close on a fresh battery, say so plainly rather than overselling; the effect grows as the battery sags, and a coach who oversells a result the students can see is fine loses the argument they actually need to win.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1162,25 +1008,31 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="two-new-verbs-join-the-library" class="slide level2 code-shrink">
-<h2>Two new verbs join the library 📦</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-code-line-numbers="|1-5|7-11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="kw">def</span> push_cable(dist_mm):</span>
-<span id="cb8-2"><a></a>    <span class="co">"""Drive the cable home — past the line, then back off."""</span></span>
-<span id="cb8-3"><a></a>    drive_straight(dist_mm <span class="op">+</span> ___)     <span class="co"># over-travel: push PAST</span></span>
-<span id="cb8-4"><a></a>    drive_straight(<span class="op">-</span>BACKOFF_MM)       <span class="co"># leave it standing</span></span>
-<span id="cb8-5"><a></a></span>
-<span id="cb8-6"><a></a><span class="kw">def</span> place_mic():</span>
-<span id="cb8-7"><a></a>    <span class="co">"""Carry high, arrive, let go gently."""</span></span>
-<span id="cb8-8"><a></a>    drive_straight(TO_TARGET_MM)</span>
-<span id="cb8-9"><a></a>    gripper.run_target(___, <span class="dv">0</span>)        <span class="co"># slow release = upright release</span></span>
-<span id="cb8-10"><a></a>    drive_straight(<span class="op">-</span>BACKOFF_MM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="two-new-jobs-and-no-new-verbs" class="slide level2 code-shrink">
+<h2>Two new jobs, and <strong>no</strong> new verbs 📦</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-code-line-numbers="|1-4|6-9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="co"># the cable -- push PAST the line, then leave it standing</span></span>
+<span id="cb7-2"><a></a>robot.turn(CABLE_UPPER_HEADING, absolute<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-3"><a></a>drive_straight(TO_CABLE_MM <span class="op">+</span> ___)     <span class="co"># over-travel: how far past?</span></span>
+<span id="cb7-4"><a></a>drive_straight(<span class="op">-</span>BACKOFF_MM)</span>
+<span id="cb7-5"><a></a></span>
+<span id="cb7-6"><a></a><span class="co"># the mic -- arrive, let go GENTLY, retreat</span></span>
+<span id="cb7-7"><a></a>drive_straight(TO_MIC_MM)</span>
+<span id="cb7-8"><a></a>claw.let_go()                         <span class="co"># a spring-open claw tips it over</span></span>
+<span id="cb7-9"><a></a>drive_straight(<span class="op">-</span>BACKOFF_MM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Driving verbs → <strong><code>movements.py</code></strong>. Claw verbs → <strong>your gripper file</strong>. One job per file. 🗂️</p>
+<p>Every line is a verb you <strong>already own</strong>. Six lines, zero <code>def</code>s: these are <strong>list entries</strong>, not library. 🗂️</p>
+</div>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>Tempted to call it <code>push_cable()</code>? Ask the wrapper test: <strong>does the name buy a new behaviour, or just hide three lines you can already read?</strong> 🧐</p>
 </div>
 </div>
 <aside class="notes">
-<p>The blanks are the point — the structure is given (that’s their level), the <em>numbers</em> are theirs to find (that’s the stretch): over-travel ≈ 20–30 mm, found on the mat, not chosen at the desk; the release speed in <code>place_mic</code> should be <em>slow</em> (≈150) — a claw that springs open knocks the mic over, and “upright” is where the 20 points live. Filing rule matters as much as the code now that the library is split: <code>push_cable</code> is driving and belongs in <code>movements.py</code>; <code>home</code>, <code>grab</code>, <code>release</code> and <code>holding</code> belong in a gripper file — <code>claw_gripper.py</code> and/or <code>lift_gripper.py</code>, one per mechanism the robot actually carries, and a robot may well carry both; <code>place_mic</code> uses both and lives in the mission program that imports them. Say the reason out loud — one job per file means you always know where to look, and it’s why nobody has to read someone else’s whole library to borrow one verb. Same promotion ritual as always: once tuned, these become steps the mission runner can call, and cables and mic stop being builds and become <em>list entries</em>.</p>
+<p>The blanks are the point — the structure is given (their level), the <em>numbers</em> are theirs to find (the stretch): over-travel ≈ 20–30 mm, found on the mat, not chosen at the desk; and <code>LET_GO_TRAVEL</code> in <code>CLAW FACTS</code> is what makes the mic land <em>upright</em>, because a claw that springs all the way open knocks it over and “upright” is where the 20 points live.</p>
+<p><strong>The slide’s real move is the one it refuses to make.</strong> Last season these six lines were handed over as <code>push_cable()</code> and <code>place_mic()</code>, and that was wrong for the same reason <code>still_holding()</code> was wrong: a name that wraps three calls you can already read buys you nothing and costs you the ability to see the run. Expect someone to propose the wrapper — they should, it’s the habit we drilled — and answer with the wrapper test on the slide. <code>drive_straight</code> earns its name (it hides the DriveBase settings dance); <code>push_cable</code> doesn’t (it hides a turn and two drives). Say plainly that this is a <strong>deferral, not a ban</strong>: when they have retyped the same three lines in four missions, that is the day the name is earned — in the continuation season, with the mission dictionary.</p>
+<p>Filing rule: driving verbs live in <code>movements.py</code>; <code>home</code>, <code>grab</code>, <code>release</code>, <code>let_go</code> and <code>holding</code> live in a gripper file — <code>claw_gripper.py</code> and/or <code>lift_gripper.py</code>, one per mechanism the robot actually carries; <strong>the cable and the mic live in the mission program</strong>, as steps, because they are the mission and nothing else.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1201,23 +1053,23 @@
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Until the competition — build, tune, log</strong></p>
+<p><strong>Until the competition: build, tune, log</strong></p>
 </div>
 <div class="callout-content">
 <ul>
 <li>🔌 Pusher: cable <strong>upright in grey</strong>, from 3 different approach angles</li>
 <li>🎤 Carry claw: mic <strong>upright in target</strong>, release and retreat</li>
-<li>📋 <strong>Log every rep</strong> — today’s log is tonight’s Accuracy score</li>
+<li>📋 <strong>Log every rep.</strong> Today’s log is tonight’s Accuracy score</li>
 </ul>
 </div>
 </div>
 </div>
 <ul>
-<li>Start every attempt with <code>home()</code> — position truth first, no exceptions</li>
-<li>Miss? Say <strong>which trick failed</strong>: funnel, over-travel, or ratio — then fix <em>that</em></li>
+<li>Start every attempt with <code>home()</code>. Position truth first, no exceptions</li>
+<li>Miss? Say <strong>which trick failed</strong>: funnel, over-travel, or ratio. Then fix <em>that</em></li>
 </ul>
 <aside class="notes">
-<p>The longest block of the day — protect it. Teams work on their competition robots; the parts donor pool is open under the usual rules (return daily, motor borrows need sign-off). Coach circulates with one diagnostic question only: “which trick failed?” — forcing the funnel/over-travel/ratio vocabulary to do diagnostic work on every miss. The rep log is not busywork: the daily head-to-head scores Accuracy from logged practice runs, so every logged rep is already competition scoring — and the week’s exit gate (both cables upright ≥8/10, mic in-target upright) is just this log grown up. If the coupling question from Act A bites here — a squad finds the mic claw disturbing the cable claw mid-sequence — that’s the day’s best possible problem: solve it with engagement geometry or sequencing, on the real mission, with the coach watching the design conversation happen.</p>
+<p>The longest block of the day — protect it. Teams work on their competition robots; the parts donor pool is open under the usual rules. Coach circulates with one diagnostic question only: “which trick failed?” — forcing the funnel/over-travel/ratio vocabulary to do diagnostic work on every miss. The rep log is not busywork: the daily head-to-head scores Accuracy from logged practice runs, and the week’s exit gate (both cables upright ≥8/10, mic in-target upright) is just this log grown up. If the coupling question from Act A bites here — a squad finds the mic claw disturbing the cable claw mid-sequence — that’s the day’s best possible problem: solve it on the real mission, with the coach watching the design conversation happen.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1233,10 +1085,10 @@
 <section>
 <section id="d.-compete-gate" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>D. Compete &amp; Gate</h1>
-<p>Today’s showdown: <strong>Cable Master</strong> 🎸 — the pusher meets the clock.</p>
+<p>Today’s showdown: <strong>Cable Master</strong> 🎸, where the pusher meets the clock.</p>
 </section>
 <section id="cable-master-live-on-the-mat" class="slide level2">
-<h2>Cable Master 🎸 — live on the mat</h2>
+<h2>Cable Master 🎸, live on the mat</h2>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1246,7 +1098,7 @@
 <p><strong>The challenge</strong></p>
 </div>
 <div class="callout-content">
-<p>Both cables <strong>upright in the grey areas</strong> — scored /2. Fastest clean run breaks the tie.</p>
+<p>Both cables <strong>upright in the grey areas</strong>, scored out of 2. Fastest clean run breaks the tie.</p>
 </div>
 </div>
 </div>
@@ -1256,7 +1108,7 @@
 <li>Say your plan before you run: which claw, which approach, which ratio</li>
 </ul>
 <aside class="notes">
-<p>First W3 head-to-head on a real mechanism — the former W2 mechanism competition, now landing on the competition robots as planned. Keep the anchor-first override in your pocket: if a team’s base driving has degraded under all the new hardware (weight shifts the balance and the tuned speeds!), convert their window to reliability reps without drama. The “say your plan” line is Technical-Summary seeding: describing which claw, approach, and ratio <em>before</em> running is exactly the explaining-your-robot muscle the judges will test. Most-improved call-out as always.</p>
+<p>First W3 head-to-head on a real mechanism, landing on the competition robots as planned. Keep the anchor-first override in your pocket: if a team’s base driving has degraded under all the new hardware (weight shifts the balance and the tuned speeds!), convert their window to reliability reps without drama. The “say your plan” line is Technical-Summary seeding — describing which claw, approach, and ratio <em>before</em> running is exactly the explaining-your-robot muscle the judges will test. Most-improved call-out as always.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1281,20 +1133,20 @@
 </div>
 <div class="callout-content">
 <ul>
-<li>You can trace <strong>motor → claw</strong> and say the <strong>ratio and direction</strong> at every gear — no notes</li>
-<li>Your re-geared gripper <strong>proved its goal</strong> — the lift or the stopwatch</li>
-<li><code>home()</code> runs <strong>first, every time</strong> — and you can say what breaks without it</li>
-<li><code>push_cable</code> lands a cable <strong>upright in grey</strong>; <code>place_mic</code> releases the mic <strong>upright</strong></li>
-<li><code>home</code>, <code>grab</code>, <code>release</code> in <strong>your gripper file</strong>; <code>push_cable</code> in <strong><code>movements.py</code></strong></li>
+<li>You can trace <strong>motor → claw</strong> and say the <strong>ratio and direction</strong> at every gear, with no notes</li>
+<li>Your re-geared gripper <strong>proved its goal</strong>, either the lift or the stopwatch</li>
+<li><code>home()</code> runs <strong>first, every time</strong>, and you can say what breaks without it</li>
+<li>Your cable steps land a cable <strong>upright in grey</strong>, and your mic steps release it <strong>upright</strong></li>
+<li><code>home</code>, <code>grab</code>, <code>release</code> live in <strong>your gripper file</strong>, and the cable and mic <strong>steps in your mission</strong></li>
 </ul>
 </div>
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Next: three instruments go backstage — and the robot learns to <strong>not touch</strong> what it must not touch. 🎻🚫</p>
+<p>Next: three instruments go backstage, and the robot learns to <strong>not touch</strong> what it must not touch. 🎻🚫</p>
 </div>
 <aside class="notes">
-<p>The first gate line is the day’s real deliverable — the explain-it-cold muscle, applied to the thing they built yesterday but couldn’t yet explain. Test it per student, not per team (both members must be interview-fluent eventually; start the habit now). The mechanism lines are day-gates, deliberately softer than the week’s exit gate (≥8/10 across both cables + mic) — that consistency bar is what the chaining days are for. Tomorrow’s teaser is instruments (45) + bonus-by-avoidance (+40): the sequencing + path-planning day, where <em>not touching</em> things becomes worth as much as touching them.</p>
+<p>The first gate line is the day’s real deliverable — the explain-it-cold muscle, applied to the thing they built yesterday but couldn’t yet explain. Test it per student, not per team; both members must be interview-fluent eventually. The mechanism lines are day-gates, deliberately softer than the week’s exit gate (≥8/10 across both cables + mic) — that consistency bar is what the chaining days are for. Tomorrow’s teaser is instruments (45) + bonus-by-avoidance (+40): the sequencing + path-planning day, where <em>not touching</em> things becomes worth as much as touching them.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1597,7 +1449,7 @@
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/NaifMersal\.github\.io\/WRO-LEGO-pypricks\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

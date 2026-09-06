@@ -2,14 +2,23 @@
 
     import claw_gripper as claw       # give it a name, don't star-import
 
-    claw.home()          # open all the way, call that zero
+    claw.home()          # shut on nothing = zero, then open ready
     claw.grab()          # close and keep squeezing -> True if we caught it
     claw.release()       # open all the way again
     claw.holding()       # are we still holding it?  ask again at the far end
 
-    claw.let_go()        # open just enough to free the object
-    claw.feel()          # touch without gripping -> True if something's there
-    claw.object_size()   # 30 or 70 mm -- which note is this?
+STALL TO FIND ZERO. TORQUE TO HOLD A THING.
+
+ZERO IS WHERE THE JAWS MEET. home() shuts them on nothing and calls that 0,
+so "did I catch something?" is just "did the jaws stop before 0?".
+
+    0 ........... contact ........... READY_ANGLE
+    jaws met      object grips        open, ready
+    caught air    VARIES BY SIZE
+
+POSITIVE OPENS -- the same way round as lift_gripper.py.
+
+Why any of this: docs/library-design-notes.md #3.
 """
 
 from pybricks.parameters import Direction, Port, Stop
@@ -20,34 +29,28 @@ from pybricks.tools import StopWatch, wait
 # ============================================================ CLAW FACTS ==
 
 CLAW_PORT = Port.E
-CLAW_DIRECTION = Direction.CLOCKWISE   # positive must mean CLOSING
+CLAW_DIRECTION = Direction.COUNTERCLOCKWISE   # POSITIVE must mean OPENING TUNE
 
 OPEN_SPEED = 300        # deg/s
 CLOSE_SPEED = 200       # deg/s -- slower so it doesn't slam the object
 
-HOME_EFFORT = 75        # % power, home() only                            TUNE
-GRIP_TORQUE = 180       # mNm -- how hard we squeeze                      TUNE
-EMPTY_ANGLE = 144       # deg, empty jaws shut. Measure with object_test  TUNE
-GRIP_OVERSHOOT = 4      # deg past the jaws, so the claw never stops leaning
-GRIP_ANGLE = EMPTY_ANGLE + GRIP_OVERSHOOT       # DERIVED -- never type this
+HOME_EFFORT = 40        # % power, home() only. Jaw on jaw -- keep it gentle TUNE
+GRIP_TORQUE = 180       # mNm -- how hard we squeeze                        TUNE
 
-AIR_MARGIN = 5          # deg of slack before we call it air              TUNE
-GRIP_LOAD_MIN = 60      # mNm -- below this it's resting, not squeezing   TUNE
-SETTLE_MS = 150         # ms -- let the squeeze finish                    TUNE
-GRIP_TIMEOUT_MS = 1500  # ms -- jammed, give up                           TUNE
+READY_ANGLE = 140       # deg open -- wide enough for your BIGGEST object   TUNE
 
-LET_GO_TRAVEL = 25      # deg to open, from wherever the jaws stopped     TUNE
+GRIP_OVERSHOOT = 10     # deg past shut. Unreachable on purpose: the jaws never
+GRIP_TARGET = -GRIP_OVERSHOOT       # arrive, so they never stop leaning in.
 
-TIP_REACH_MM = 172      # mm from the robot's turning centre to the jaws  TUNE
+AIR_MARGIN = 20         # deg. Stopped below this = we caught nothing. Must be
+                        # under what your SMALLEST object holds open.       TUNE
+GRIP_LOAD_MIN = 60      # mNm -- below this it's resting, not squeezing     TUNE
+SETTLE_MS = 150         # ms -- let the squeeze finish                      TUNE
+GRIP_TIMEOUT_MS = 1500  # ms -- jammed, give up                             TUNE
 
-NOTE_SMALL_MM = 30      # black, blue, white, yellow, and the microphone
-NOTE_BIG_MM = 70        # green and red
-BIG_ANGLE_MAX = 130     # deg. A WIDE note stops the jaws EARLY, so a big
-                        # note reads a SMALL angle.                       TUNE
+LET_GO_TRAVEL = 25      # deg to open, from wherever the jaws stopped       TUNE
 
-PROBE_TORQUE = 40       # mNm -- gentle, so feel() doesn't push the note  TUNE
-PROBE_SPEED = 100       # deg/s
-PROBE_TIMEOUT_MS = 1200 # ms
+TIP_REACH_MM = 172      # mm from the robot's turning centre to the jaws    TUNE
 
 
 # ============================================================== HARDWARE ==
@@ -59,16 +62,17 @@ claw.control.limits(torque=GRIP_TORQUE)
 # ================================================================= VERBS ==
 
 def home():
-    """Open all the way into the end stop and call that zero."""
-    claw.run_until_stalled(-OPEN_SPEED, then=Stop.COAST,
+    """Shut the jaws on NOTHING, call that zero, then open ready. Every run."""
+    claw.run_until_stalled(-CLOSE_SPEED, then=Stop.COAST,
                            duty_limit=HOME_EFFORT)
     wait(200)
     claw.reset_angle(0)
+    claw.run_target(OPEN_SPEED, READY_ANGLE, then=Stop.COAST)
 
 
 def close_and_watch(speed, timeout_ms):
     """Close until the claw stalls, finishes, or runs out of time."""
-    claw.run_target(speed, GRIP_ANGLE, then=Stop.HOLD, wait=False)
+    claw.run_target(speed, GRIP_TARGET, then=Stop.HOLD, wait=False)
 
     timer = StopWatch()
     wait(100)
@@ -89,7 +93,7 @@ def grab():
 
 def release():
     """Open the claw all the way and let go."""
-    claw.run_target(OPEN_SPEED, 0, then=Stop.COAST)
+    claw.run_target(OPEN_SPEED, READY_ANGLE, then=Stop.COAST)
 
 
 def let_go(angle=None):
@@ -98,7 +102,7 @@ def let_go(angle=None):
     Returns the angle it opened to, so you can come back to the same width.
     """
     if angle is None:
-        angle = claw.angle() - LET_GO_TRAVEL
+        angle = claw.angle() + LET_GO_TRAVEL
     claw.run_target(OPEN_SPEED, angle, then=Stop.HOLD)
     return angle
 
@@ -117,11 +121,32 @@ def grip_load(samples=5):
 def holding():
     """Are we holding something right now?
 
-    The jaws must have stopped short AND still be pushing.
+    The jaws must have stopped short of meeting AND still be pushing.
+    Ask it twice -- once at grab(), once at the far end of the mat.
     """
-    if claw.angle() > EMPTY_ANGLE - AIR_MARGIN:
+    if claw.angle() < AIR_MARGIN:
         return False                    # jaws met -- nothing between them
     return grip_load() > GRIP_LOAD_MIN
+
+
+def show_angle():
+    """Print one claw angle and load reading."""
+    print("claw angle:", claw.angle(), " load:", claw.load())
+
+
+# ================================ STRETCH -- the anchor run needs none of it ==
+#
+# Telling the notes apart is D24 and the continuation season. Everything the
+# ~135-point anchor run asks of the claw is above this line.
+
+PROBE_TORQUE = 40       # mNm -- gentle, so feel() doesn't push the note     TUNE
+PROBE_SPEED = 100       # deg/s
+PROBE_TIMEOUT_MS = 1200 # ms
+
+NOTE_SMALL_MM = 30      # black, blue, white, yellow, and the microphone
+NOTE_BIG_MM = 70        # green and red
+BIG_ANGLE_MIN = 60      # deg. A BIG note holds the jaws further open, so it
+                        # reads a BIGGER angle. Measure both with object_test TUNE
 
 
 def feel():
@@ -132,20 +157,15 @@ def feel():
     claw.control.limits(torque=PROBE_TORQUE)
     try:
         close_and_watch(PROBE_SPEED, PROBE_TIMEOUT_MS)
-        return claw.angle() < EMPTY_ANGLE - AIR_MARGIN
+        return claw.angle() > AIR_MARGIN
     finally:
         claw.control.limits(torque=GRIP_TORQUE)     # always put it back
 
 
 def object_size():
     """Which note is this -- 30 mm or 70 mm? None if the jaws are empty."""
-    if claw.angle() > EMPTY_ANGLE - AIR_MARGIN:
+    if claw.angle() < AIR_MARGIN:
         return None
-    if claw.angle() <= BIG_ANGLE_MAX:
+    if claw.angle() >= BIG_ANGLE_MIN:
         return NOTE_BIG_MM
     return NOTE_SMALL_MM
-
-
-def show_angle():
-    """Print one claw angle and load reading."""
-    print("claw angle:", claw.angle(), " load:", claw.load())

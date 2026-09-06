@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-09-05">
+  <meta name="dcterms.date" content="2026-09-06">
   <title>The Setlist</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -201,12 +201,12 @@
 
 <section id="title-slide" data-background-image="../slides_template/assets/anim.svg" data-background-opacity="0.15" data-background-size="cover" class="quarto-title-block center">
   <h1 class="title">The Setlist</h1>
-  <p class="subtitle">Day 9 · Robot Rockstars · SPIKE Prime + Pybricks</p>
+  <p class="subtitle">Day 16 · Robot Rockstars · SPIKE Prime + Pybricks</p>
 
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-09-05</p>
+  <p class="date">2026-09-06</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
@@ -228,25 +228,25 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>📦 <strong>one <code>my_lib.py</code></strong></td>
-<td>every verb in one module — one constants block tunes them all</td>
+<td>📦 <strong>one <code>movements.py</code></strong></td>
+<td>every verb in one module, with one constants block to tune them all</td>
 </tr>
 <tr class="even">
 <td>🚗 <strong>moving verbs</strong></td>
-<td><code>drive_straight</code> · <code>turn_to</code> — watched by <em>your</em> PD loop</td>
+<td><code>drive_straight</code> · <code>robot.turn</code>, watched by the gyro</td>
 </tr>
 <tr class="odd">
 <td>🧱 <strong>wall verbs</strong></td>
-<td><code>drive_to_wall</code> · <code>wall_square</code> — the motor as a touch sensor</td>
+<td><code>drive_to_wall</code> · <code>wall_square</code>, the motor as a touch sensor</td>
 </tr>
 <tr class="even">
 <td>👀 <strong>line verbs</strong></td>
-<td><code>follow_line</code> · <code>square_on_line</code> — the mat as a map</td>
+<td><code>follow_line</code> · <code>square_on_line</code>, the mat as a map</td>
 </tr>
 </tbody>
 </table>
 <div class="fragment fade-up">
-<p>🤔 The gauntlet proved every verb works <em>alone</em>. A competition run is verbs <strong>in a row</strong> — and the row keeps changing. Today: how pros hold a plan that has to change in seconds.</p>
+<p>🤔 The gauntlet proved every verb works <em>alone</em>. A competition run is verbs <strong>in a row</strong>, and the row keeps changing. Today: how pros hold a plan that has to change in seconds.</p>
 </div>
 <p>⏱️ <strong>Time: 10 minutes</strong></p>
 <aside class="notes">
@@ -266,16 +266,16 @@
 <section>
 <section id="b.-the-plan-that-couldnt-change" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
 <h1>B. The Plan That Couldn’t Change</h1>
-<p>Your verbs work. Now the judge calls a <em>sequence</em> — and then changes it. 😈</p>
+<p>Your verbs work. Now the judge calls a <em>sequence</em>, then changes it. 😈</p>
 </section>
 <section id="unplugged-the-pigeonholes" class="slide level2">
 <h2>Unplugged: the pigeonholes 📮</h2>
 <div class="qbox">
-<p><span class="qtitle">Six numbered boxes on the bench, a pile of colored bricks. “Red into box 0. Blue into box 2. What’s in box 1? Swap 0 and 3. Add a green one at the end — which box did it land in?”</span></p>
+<p><span class="qtitle">Six numbered boxes on the bench, a pile of colored bricks. “Red into box 0. Blue into box 2. What’s in box 1? Swap 0 and 3. Add a green one at the end. Which box did it land in?”</span></p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>You just used every list skill: a <strong>numbered row of slots</strong>, filled in order, <strong>counting from 0</strong> — read a slot by its number (<strong>index</strong>), walk the row front to back (<strong>iterate</strong>), grow it at the end (<strong>append</strong>). Python calls this row a <strong>list</strong>. No laptop needed — you already think this way.</p>
+<p>You just used every list skill: a <strong>numbered row of slots</strong>, filled in order, <strong>counting from 0</strong>. Read a slot by its number (<strong>index</strong>), walk the row front to back (<strong>iterate</strong>), grow it at the end (<strong>append</strong>). Python calls this row a <strong>list</strong>, and you already think this way.</p>
 </div>
 </div>
 <aside class="notes">
@@ -295,18 +295,18 @@
 <section id="break-it-the-pasted-plan" class="slide level2 code-shrink">
 <h2>Break it: the pasted plan 🔥</h2>
 <div class="qbox">
-<p><span class="qtitle">The judge calls: <em>cross the stage · face the band · square on the wall.</em> You paste it as one block. Then: <strong>“Actually — wall square FIRST.”</strong> How long does the edit take?</span></p>
+<p><span class="qtitle">The judge calls: <em>cross the stage · face the band · square on the wall.</em> You paste it as one block. Then: <strong>“Actually, wall square FIRST.”</strong> How long does the edit take?</span></p>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-5|6-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="co"># mission_friday.py — one pasted block 😬</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-5|6-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="co"># mission_friday.py -- one pasted block 😬</span></span>
 <span id="cb1-2"><a></a>drive_straight(<span class="dv">400</span>)          <span class="co"># cross the stage</span></span>
-<span id="cb1-3"><a></a>turn_to(<span class="dv">90</span>)           <span class="co"># face the band</span></span>
+<span id="cb1-3"><a></a>robot.turn(<span class="dv">90</span>, absolute<span class="op">=</span><span class="va">True</span>)   <span class="co"># face the band</span></span>
 <span id="cb1-4"><a></a>drive_to_wall()</span>
 <span id="cb1-5"><a></a>wall_square()         <span class="co"># reset at the wall</span></span>
 <span id="cb1-6"><a></a><span class="co"># judge: "wall square FIRST, then cross"…</span></span>
 <span id="cb1-7"><a></a><span class="co"># select lines… which? cut… paste… 🐛</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>The plan is <strong>trapped in the code</strong>. Reordering means surgery — select, cut, paste, and pray you moved <em>all</em> the lines of each step. Under a 5-minute clock, surgery loses. The plan needs to be a <strong>thing</strong> you can shuffle — like cards in a deck.</p>
+<p>The plan is <strong>trapped in the code</strong>. Reordering means surgery: select, cut, paste, and pray you moved <em>all</em> the lines of each step. Under a 5-minute clock, surgery loses. The plan needs to be a <strong>thing</strong> you can shuffle, like cards in a deck.</p>
 </div>
 </div>
 <aside class="notes">
@@ -331,14 +331,14 @@
 <section id="lists-in-sixty-seconds" class="slide level2">
 <h2>Lists in sixty seconds</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1|2|3|4|5-6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>setlist <span class="op">=</span> [<span class="st">"intro"</span>, <span class="st">"solo"</span>, <span class="st">"finale"</span>]   <span class="co"># a numbered row of slots</span></span>
-<span id="cb2-2"><a></a>setlist[<span class="dv">0</span>]                <span class="co"># "intro" — count from 0, like the boxes!</span></span>
+<span id="cb2-2"><a></a>setlist[<span class="dv">0</span>]                <span class="co"># "intro" -- count from 0, like the boxes!</span></span>
 <span id="cb2-3"><a></a>setlist.append(<span class="st">"encore"</span>)  <span class="co"># grows at the end → slot 3</span></span>
 <span id="cb2-4"><a></a>setlist[<span class="dv">1</span>] <span class="op">=</span> <span class="st">"duet"</span>       <span class="co"># swap what a slot holds</span></span>
 <span id="cb2-5"><a></a><span class="cf">for</span> song <span class="kw">in</span> setlist:      <span class="co"># visit every slot, front to back</span></span>
 <span id="cb2-6"><a></a>    <span class="bu">print</span>(song)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Index · append · iterate — the three moves from the pigeonhole game, now in Python. A list holds <strong>anything</strong>: strings, numbers… and (next slide) something sneakier. 😏</p>
+<p>Index · append · iterate: the three moves from the pigeonhole game, now in Python. A list holds <strong>anything</strong>: strings, numbers, and (next slide) something sneakier. 😏</p>
 </div>
 </div>
 <aside class="notes">
@@ -356,21 +356,21 @@
       }</style></aside>
 </section>
 <section id="steps-are-just-functions-hold-the-name-dont-play-it" class="slide level2">
-<h2>Steps are just functions — hold the name, don’t play it</h2>
+<h2>Steps are just functions: hold the name, don’t play it</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1-2|4-5|7-8|10-11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="kw">def</span> cross_stage():</span>
 <span id="cb3-2"><a></a>    drive_straight(<span class="dv">400</span>)</span>
 <span id="cb3-3"><a></a></span>
 <span id="cb3-4"><a></a><span class="kw">def</span> face_band():</span>
-<span id="cb3-5"><a></a>    turn_to(<span class="dv">90</span>)</span>
+<span id="cb3-5"><a></a>    robot.turn(<span class="dv">90</span>, absolute<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-6"><a></a></span>
 <span id="cb3-7"><a></a><span class="kw">def</span> reset_at_wall():</span>
 <span id="cb3-8"><a></a>    drive_to_wall()<span class="op">;</span> wall_square()</span>
 <span id="cb3-9"><a></a></span>
 <span id="cb3-10"><a></a>mission <span class="op">=</span> [reset_at_wall, cross_stage, face_band]</span>
-<span id="cb3-11"><a></a><span class="co">#          ^ no parentheses — cards in a deck, not moves happening</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-11"><a></a><span class="co">#          ^ no parentheses -- cards in a deck, not moves happening</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p><code>cross_stage()</code> <strong>plays</strong> the move. <code>cross_stage</code> — no parentheses — is the <strong>recipe card itself</strong>, a thing you can hold, hand around… and drop into a list. A list of names is a <strong>setlist</strong>: the whole show, and it hasn’t started yet.</p>
+<p><code>cross_stage()</code> <strong>plays</strong> the move. <code>cross_stage</code>, with no parentheses, is the <strong>recipe card itself</strong>: a thing you can hold, hand around, and drop into a list. A list of names is a <strong>setlist</strong>, the whole show before it has started.</p>
 </div>
 </div>
 <aside class="notes">
@@ -388,14 +388,14 @@
       }</style></aside>
 </section>
 <section id="the-runner-the-whole-thing" class="slide level2">
-<h2>The runner — the whole thing</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers="|1|2|3|5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> run_mission(steps):</span>
+<h2>The runner, the whole thing</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-code-line-numbers="|1|2|3|4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="kw">def</span> run_mission(steps):</span>
 <span id="cb4-2"><a></a>    <span class="cf">for</span> step <span class="kw">in</span> steps:   <span class="co"># take the next card…</span></span>
 <span id="cb4-3"><a></a>        step()           <span class="co"># …now play it</span></span>
 <span id="cb4-4"><a></a>run_mission(mission)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Three lines, and they <strong>never change again</strong>. Reorder the show → edit the <em>list</em>. Insert a step → <code>append</code> or slot it in. The judge changes the mission; you change <strong>data</strong>, not code. That’s the split the pros live by.</p>
+<p>Three lines, and they <strong>never change again</strong>. Reorder the show → edit the <em>list</em>. Insert a step → <code>append</code> or slot it in. The judge changes the mission, and you change <strong>data</strong>, not code. That’s the split the pros live by.</p>
 </div>
 </div>
 <aside class="notes">
@@ -510,7 +510,7 @@
     el('mlMsg').textContent='';
     var i=0;
     function next(){
-      if(i>=mission.length){ running=false; render(-1); el('mlMsg').textContent='show complete 🎉 — same runner, whatever the list says'; return; }
+      if(i>=mission.length){ running=false; render(-1); el('mlMsg').textContent='show complete 🎉 · same runner, whatever the list says'; return; }
       animate(i, STEPS[mission[i]].phases(), function(){ i++; next(); });
     }
     next();
@@ -519,7 +519,7 @@
     if(running) return;
     var i=mission.indexOf('reset_at_wall');
     if(i>0){ mission.splice(i,1); mission.unshift('reset_at_wall'); }
-    render(-1); el('mlMsg').textContent='one edit to the LIST — the runner never changed 😎';
+    render(-1); el('mlMsg').textContent='one edit to the LIST · the runner never changed 😎';
   };
   window.mlAppend=function(){
     if(running || appended) return; appended=true;
@@ -530,7 +530,7 @@
 </script>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>The judge’s reorder is <strong>one edit to the list</strong> — watch slot 0 change hands, then run the <em>same</em> three-line runner. Append a step: a new slot appears at the end, exactly like the pigeonholes. <strong>The plan is data now.</strong></p>
+<p>The judge’s reorder is <strong>one edit to the list</strong>. Watch slot 0 change hands, then run the <em>same</em> three-line runner. Append a step and a new slot appears at the end, exactly like the pigeonholes. <strong>The plan is data now.</strong></p>
 </div>
 </div>
 <aside class="notes">
@@ -563,14 +563,14 @@
 <p><strong>The challenge</strong></p>
 </div>
 <div class="callout-content">
-<p>The judge calls a <strong>3-step mini-mission</strong> — you have <strong>5 minutes</strong> to encode it as a mission list over your own library and run it. Score = steps completed; tiebreak = time.</p>
+<p>The judge calls a <strong>3-step mini-mission</strong>, and you have <strong>5 minutes</strong> to encode it as a mission list over your own library and run it. Score = steps completed, tiebreak = time.</p>
 </div>
 </div>
 </div>
 <ul>
-<li>Hear the mission → say it as <strong>verbs</strong> (<em>“that’s a <code>drive_straight</code>, a <code>turn_to</code>, a <code>wall_square</code>”</em>) → wrap, list, run.</li>
+<li>Hear the mission → say it as <strong>verbs</strong> (<em>“that’s a <code>drive_straight</code>, a <code>robot.turn</code>, a <code>wall_square</code>”</em>) → wrap, list, run.</li>
 <li>The judge <strong>will</strong> change the order on round two. 😈 Your surgery-free edit is the whole advantage.</li>
-<li>Fast squads: swap in <code>run_mission_logged</code> — per-step stopwatch + a printed transition log.</li>
+<li>Fast squads: swap in <code>run_mission_logged</code>, a per-step stopwatch plus a printed transition log.</li>
 </ul>
 <aside class="notes">
 <p>Score decomposition, not typing speed: the squads to praise are the ones who translate the judge’s sentence into library verbs <em>before</em> touching a keyboard. Round two’s reorder is the day’s thesis under pressure — a list squad edits one line; watch for anyone still cutting and pasting blocks and coach them on the spot. The logged runner is the exemplar’s stretch (timeouts + transition log) — offer it, never gate it. Coach’s private scorecard today: list fluency, decomposition into verbs, debugging a <em>sequence</em> (which step failed? the log says).</p>
@@ -597,15 +597,15 @@
 <p><strong>You’re done today when…</strong></p>
 </div>
 <div class="callout-content">
-<p>You can <strong>read and build a list</strong> (index from 0, iterate, append), your steps are <strong>named functions over your own library</strong>, and the three-line runner walks a judge-called <strong>3-step mission</strong> — with a reorder costing you <strong>one edit</strong>, not surgery.</p>
+<p>You can <strong>read and build a list</strong> (index from 0, iterate, append), your steps are <strong>named functions over your own library</strong>, and the three-line runner walks a judge-called <strong>3-step mission</strong>, with a reorder costing you <strong>one edit</strong> instead of surgery.</p>
 </div>
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Next: <strong>Draft Day</strong> — teams form, each team picks its competition robot… and the first <em>mechanism</em> gets built. 🤝</p>
+<p>Next: the runner stops being a demo and becomes <strong>the anchor run</strong>. Your mechanism verbs join the list, and the chain starts paying points. 🤝</p>
 </div>
 <aside class="notes">
-<p>The gate is the plan’s D9 outcome verbatim. This is the last solo-robot day — tomorrow’s session opens with the <em>Mini Mission</em> finale and the draft, so make sure every student’s library + runner are saved and named (they carry into the team merge: each member’s <code>RobotConfig</code> numbers get consolidated onto the selected robot). Then the mechanism builds begin — the anchor run’s cables, microphone, and instruments.</p>
+<p>The gate is the plan’s D16 outcome verbatim. Sequencing note: this content was authored for D9 and <strong>deferred to D16</strong> — by now the teams formed at Draft Day (D10) and the mechanisms are built, so the runner arrives with real verbs to call — <code>drive_straight</code>, <code>robot.turn</code>, <code>claw.grab()</code>, <code>claw.let_go()</code> — rather than as an abstract exercise. Note what the steps are <em>not</em> called: there is no <code>push_cable()</code> or <code>place_mic()</code> to drop into the list (#60), so the cable and the mic each arrive as a short run of ordinary verbs. That is the day’s thesis paying off rather than a gap — a list whose entries are mission-named wrappers reorders just as easily but reads like a black box, and the judge’s round-two change is exactly the moment a student needs to <em>see</em> what each step does. Say that out loud: the list they build today is the anchor run’s actual spine, not a rehearsal. Make sure every team’s <code>movements.py</code> + gripper files are saved and named before the chaining days.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -908,7 +908,7 @@
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/NaifMersal\.github\.io\/WRO-LEGO-pypricks\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

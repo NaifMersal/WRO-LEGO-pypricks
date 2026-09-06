@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-09-05">
+  <meta name="dcterms.date" content="2026-09-06">
   <title>The Earned Shortcut</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -201,17 +201,17 @@
 
 <section id="title-slide" data-background-image="../slides_template/assets/anim.svg" data-background-opacity="0.15" data-background-size="cover" class="quarto-title-block center">
   <h1 class="title">The Earned Shortcut</h1>
-  <p class="subtitle">Day 10 · Robot Rockstars · SPIKE Prime + Pybricks</p>
+  <p class="subtitle">Day 8 · Robot Rockstars · SPIKE Prime + Pybricks</p>
 
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-09-05</p>
+  <p class="date">2026-09-06</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>A. Warm-Up</h1>
-<p>Two weeks, one library — every verb hand-built, proven, and played from a list. Today teams form, one robot gets chosen… and you collect a surprise you’ve been earning since the square wouldn’t close. 🎁</p>
+<p>Two weeks, one library, every verb hand-built and proven. Today teams form, one robot gets chosen, and you collect a surprise you’ve been earning since the square wouldn’t close. 🎁</p>
 </section>
 <section id="where-we-left-off" class="slide level2">
 <h2>Where we left off</h2>
@@ -228,25 +228,25 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>📦 <strong><code>my_lib.py</code></strong></td>
-<td><code>drive_straight</code> · <code>turn_to</code> · <code>drive_to_wall</code> · <code>wall_square</code> · <code>follow_line</code> · <code>square_on_line</code> — one module, one constants block</td>
+<td>📦 <strong><code>movements.py</code></strong></td>
+<td><code>drive_straight</code> · <code>drive_to_wall</code> · <code>wall_square</code> · <code>follow_line</code> · <code>square_on_line</code> in one module, with one constants block</td>
 </tr>
 <tr class="even">
-<td>🎵 <strong>the runner</strong></td>
-<td>a mission is a <em>list</em>; three lines walk it</td>
+<td>🧱 <strong>the wall verbs</strong></td>
+<td>stall, back off, square up: the reset that erases drift</td>
 </tr>
 <tr class="odd">
-<td>🏁 <strong>gauntlet + setlist</strong></td>
+<td>🏁 <strong>the gauntlet</strong></td>
 <td>every verb proven alone <em>and</em> in sequence, under a judge’s clock</td>
 </tr>
 </tbody>
 </table>
 <div class="fragment fade-up">
-<p>🤔 Everything above was built by <strong>one student, for one robot</strong>. Today five students become <strong>two teams</strong> — and each team keeps just <strong>one</strong> robot. What happens to four robots’ worth of carefully tuned code?</p>
+<p>🤔 Everything above was built by <strong>one student, for one robot</strong>. Today five students become <strong>two teams</strong>, and each team keeps just <strong>one</strong> robot. What happens to four robots’ worth of carefully tuned code?</p>
 </div>
 <p>⏱️ <strong>Time: 10 minutes</strong></p>
 <aside class="notes">
-<p>Recap fast — the room already owns all of it; the table is there to make the <em>inventory</em> visible because today it gets audited. The warm-up question is the day’s whole arc: the merge (code from several authors onto one robot) is the break-it that motivates RobotConfig, and the reveal + draft close the two-week chapter. Structure of the day: Mini Mission finale runs in the competition window as usual; the draft itself lands after the gate. Keep the DriveBase surprise unspoiled until Act C.</p>
+<p>Recap fast — the room already owns all of it; the table is there to make the <em>inventory</em> visible because today it gets audited. The warm-up question is the day’s whole arc: the merge (code from several authors onto one robot) is the break-it that motivates the ROBOT FACTS block, and the reveal + draft close the two-week chapter. Structure of the day: Mini Mission finale runs in the competition window as usual; the draft itself lands after the gate. Keep the DriveBase surprise unspoiled until Act C.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -267,23 +267,23 @@
 <section id="break-it-the-merge" class="slide level2">
 <h2>Break it: the merge 🔥</h2>
 <div class="qbox">
-<p><span class="qtitle">Your team just picked its robot — and it’s <strong>not yours</strong>. Your <code>my_lib.py</code> thinks the wheels are 88 mm; the chosen robot’s are 87. Your teammate’s turn <code>kp</code> is tuned hotter. A motor sits on a different port. How many edits until <em>your</em> mission runs on <em>this</em> robot?</span></p>
+<p><span class="qtitle">Your team just picked its robot, and it’s <strong>not yours</strong>. Your <code>movements.py</code> thinks the wheels are 88 mm, and the chosen robot’s are 87. Your teammate’s turn <code>kp</code> is tuned hotter. A motor sits on a different port. How many edits until <em>your</em> mission runs on <em>this</em> robot?</span></p>
 </div>
 <div style="display:flex;justify-content:center;align-items:center;gap:18px;margin-top:10px;">
   <div style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
-    <div style="font-weight:800;color:#E96852;">sara/my_lib.py</div>
+    <div style="font-weight:800;color:#E96852;">sara/movements.py</div>
     <div>WHEEL_MM = <span style="background:#FFD50055;font-weight:800;">88</span></div>
     <div>KP = <span style="background:#FFD50055;font-weight:800;">4</span></div>
     <div>left = Motor(Port.<span style="background:#FFD50055;font-weight:800;">A</span>)</div>
   </div>
   <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
-    <div style="font-weight:800;color:#E96852;">omar/my_lib.py</div>
+    <div style="font-weight:800;color:#E96852;">omar/movements.py</div>
     <div>WHEEL_MM = <span style="background:#FFD50055;font-weight:800;">87</span></div>
     <div>KP = <span style="background:#FFD50055;font-weight:800;">6</span></div>
     <div>left = Motor(Port.<span style="background:#FFD50055;font-weight:800;">B</span>)</div>
   </div>
   <div class="fragment" style="background:#eef3f8;border-radius:12px;border-left:5px solid #E96852;padding:10px 16px;font-family:Consolas,monospace;font-size:15px;color:#1C355E;">
-    <div style="font-weight:800;color:#E96852;">lena/my_lib.py</div>
+    <div style="font-weight:800;color:#E96852;">lena/movements.py</div>
     <div>WHEEL_MM = <span style="background:#FFD50055;font-weight:800;">90</span> 😱</div>
     <div>KP = <span style="background:#FFD50055;font-weight:800;">3.5</span></div>
     <div>left = Motor(Port.<span style="background:#FFD50055;font-weight:800;">A</span>)</div>
@@ -292,7 +292,7 @@
 </div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>Every file was tuned for a robot that just became a <strong>parts donor</strong>. The facts — wheels, ports, gains, speeds — are <em>scattered</em> across files and functions: a robot swap means <strong>twenty hunted edits</strong>, and missing one means the robot <strong>lies quietly</strong>. The facts need <strong>one home</strong>.</p>
+<p>Every file was tuned for a robot that just became a <strong>parts donor</strong>. The facts (wheels, ports, gains, speeds) are <em>scattered</em> across files and functions, so a robot swap means <strong>twenty hunted edits</strong>, and missing one means the robot <strong>lies quietly</strong>. The facts need <strong>one home</strong>.</p>
 </div>
 </div>
 <aside class="notes">
@@ -309,27 +309,29 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="fix-it-robotconfig-the-robot-in-one-place" class="slide level2 code-shrink">
-<h2>Fix it: <code>RobotConfig</code> — the robot in one place</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-2|3-4|5-6|7-10|12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="at">@dataclass</span></span>
-<span id="cb1-2"><a></a><span class="kw">class</span> RobotConfig:</span>
-<span id="cb1-3"><a></a>    wheel_diameter: <span class="bu">int</span> <span class="op">=</span> <span class="dv">88</span>    <span class="co"># mm — MEASURE the team robot</span></span>
-<span id="cb1-4"><a></a>    axle_track: <span class="bu">int</span> <span class="op">=</span> <span class="dv">145</span>       <span class="co"># mm — wheel center to center</span></span>
-<span id="cb1-5"><a></a>    left_port: Port <span class="op">=</span> Port.A    <span class="co"># re-port a motor = one edit</span></span>
-<span id="cb1-6"><a></a>    right_port: Port <span class="op">=</span> Port.E</span>
-<span id="cb1-7"><a></a>    turn_kp: <span class="bu">float</span> <span class="op">=</span> <span class="fl">4.0</span>        <span class="co"># the tuned knobs live here too</span></span>
-<span id="cb1-8"><a></a>    turn_kd: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.5</span></span>
-<span id="cb1-9"><a></a>    straight_speed: <span class="bu">int</span> <span class="op">=</span> <span class="dv">300</span>   <span class="co"># mm/s</span></span>
-<span id="cb1-10"><a></a>    backoff_mm: <span class="bu">int</span> <span class="op">=</span> <span class="dv">50</span>        <span class="co"># the measured back-off</span></span>
+<section id="fix-it-robot-facts-the-robot-in-one-place" class="slide level2 code-shrink">
+<h2>Fix it: <code>ROBOT FACTS</code>, the robot in one place</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-4|6-7|9-10|12-14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="co"># movements.py -- ROBOT FACTS. The only place a number about the robot lives.</span></span>
+<span id="cb1-2"><a></a>LEFT_MOTOR_PORT  <span class="op">=</span> Port.F     <span class="co"># yours; re-port a motor = one edit</span></span>
+<span id="cb1-3"><a></a>RIGHT_MOTOR_PORT <span class="op">=</span> Port.B     <span class="co"># yours</span></span>
+<span id="cb1-4"><a></a>EYE_PORT         <span class="op">=</span> Port.D     <span class="co"># yours</span></span>
+<span id="cb1-5"><a></a></span>
+<span id="cb1-6"><a></a>LEFT_DIRECTION  <span class="op">=</span> Direction.COUNTERCLOCKWISE   <span class="co"># flip if it reverses  TUNE</span></span>
+<span id="cb1-7"><a></a>RIGHT_DIRECTION <span class="op">=</span> Direction.CLOCKWISE                             <span class="co"># TUNE</span></span>
+<span id="cb1-8"><a></a></span>
+<span id="cb1-9"><a></a>WHEEL_DIAMETER <span class="op">=</span> <span class="dv">88</span>           <span class="co"># mm, MEASURE the team robot        TUNE</span></span>
+<span id="cb1-10"><a></a>AXLE_TRACK     <span class="op">=</span> <span class="dv">128</span>          <span class="co"># mm, wheel centre to centre        TUNE</span></span>
 <span id="cb1-11"><a></a></span>
-<span id="cb1-12"><a></a>CFG <span class="op">=</span> RobotConfig()             <span class="co"># the ONE copy everyone reads</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-12"><a></a>CRUISE_SPEED   <span class="op">=</span> <span class="dv">300</span>          <span class="co"># mm/s</span></span>
+<span id="cb1-13"><a></a>LINE_THRESHOLD <span class="op">=</span> <span class="dv">50</span>           <span class="co"># halfway between black and white  TUNE</span></span>
+<span id="cb1-14"><a></a>KP_LINE        <span class="op">=</span> <span class="fl">1.2</span>          <span class="co"># how hard to steer back to the line TUNE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>A <code>@dataclass</code> is a <strong>labeled box for facts</strong> — every physical truth about the robot, in one file (<code>robot_config.py</code>), with a name on each line. Nothing else in the team’s code is allowed to <em>know</em> a number about the robot; it has to <strong>ask <code>CFG</code></strong>.</p>
+<p>One <strong>block at the top of the file</strong>, a name on every line, <code>TUNE</code> on everything you must measure. Nothing further down is allowed to <em>know</em> a number about the robot. It reads the block. Same instinct you’ve used twice already, one level up.</p>
 </div>
 </div>
 <aside class="notes">
-<p><code>@dataclass</code> is presented as “a class whose whole job is holding named facts” — no OOP lecture; it’s a form they fill in, and the decorator writes the boring plumbing. (Coach note: Pybricks MicroPython has no <code>dataclasses</code> module — the exemplar <code>robot_config.py</code> ships a 3-line try/except shim so the same syntax runs on the hub; hand it out rather than typing it.) Walk the categories: geometry, ports, tuned knobs — point out these are exactly the numbers that differed across the three files on the last slide. The full gold-reference config (all 6 ports, line thresholds, stall limits) is in the root exemplar; teams copy it and edit <em>their</em> measured values.</p>
+<p>No classes today, and none this season — a plain block of named constants does the whole job, and every student can already read one. Walk the categories: ports, geometry, tuned knobs — point out these are exactly the numbers that differed across the three files on the last slide. Make <code>TUNE</code> the habit: it marks every value that must be <em>measured on this robot</em>, so a squad scanning the block knows exactly what a robot swap costs them. The full gold-reference block is in <code>code/movements.py</code>; teams copy it and edit <em>their</em> measured values.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -342,25 +344,25 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="every-verb-now-asks-the-config" class="slide level2">
-<h2>Every verb now asks the config</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1-3|5-7|9-11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># my_lib.py — the verbs READ the config, they don't know numbers</span></span>
-<span id="cb2-2"><a></a>left  <span class="op">=</span> Motor(CFG.left_port, Direction.COUNTERCLOCKWISE)</span>
-<span id="cb2-3"><a></a>right <span class="op">=</span> Motor(CFG.right_port)</span>
+<section id="every-verb-reads-the-block" class="slide level2">
+<h2>Every verb reads the block</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-code-line-numbers="|1-3|5-6|8-10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="co"># movements.py -- the verbs READ the block, they don't hide numbers</span></span>
+<span id="cb2-2"><a></a>left_motor  <span class="op">=</span> Motor(LEFT_MOTOR_PORT, LEFT_DIRECTION)</span>
+<span id="cb2-3"><a></a>right_motor <span class="op">=</span> Motor(RIGHT_MOTOR_PORT, RIGHT_DIRECTION)</span>
 <span id="cb2-4"><a></a></span>
-<span id="cb2-5"><a></a>DEG_PER_MM <span class="op">=</span> <span class="dv">360</span> <span class="op">/</span> (<span class="fl">3.14</span> <span class="op">*</span> CFG.wheel_diameter)</span>
-<span id="cb2-6"><a></a></span>
-<span id="cb2-7"><a></a><span class="kw">def</span> turn_to(target, kp<span class="op">=</span><span class="va">None</span>, kd<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb2-8"><a></a>    kp <span class="op">=</span> kp <span class="kw">or</span> CFG.turn_kp</span>
-<span id="cb2-9"><a></a>    kd <span class="op">=</span> kd <span class="kw">or</span> CFG.turn_kd</span>
-<span id="cb2-10"><a></a>    <span class="co"># …the same PD loop as ever…</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-5"><a></a>robot <span class="op">=</span> DriveBase(left_motor, right_motor,</span>
+<span id="cb2-6"><a></a>                  WHEEL_DIAMETER, AXLE_TRACK)</span>
+<span id="cb2-7"><a></a></span>
+<span id="cb2-8"><a></a><span class="kw">def</span> drive_straight(distance_mm, speed<span class="op">=</span>CRUISE_SPEED):</span>
+<span id="cb2-9"><a></a>    robot.settings(straight_speed<span class="op">=</span>speed)</span>
+<span id="cb2-10"><a></a>    robot.straight(distance_mm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>New robot? <strong>Measure it, edit <code>robot_config.py</code>, done</strong> — the library and every mission file never change. The donor pool just became a <em>one-line insurance policy</em>. 🛡️</p>
+<p>New robot? <strong>Measure it, edit the block, done.</strong> The library and every mission file never change, and the donor pool just became a <em>one-line insurance policy</em>. 🛡️</p>
 </div>
 </div>
 <aside class="notes">
-<p>The team exercise that proves it (from the exemplar): run the merged code with teammate A’s old constants on the chosen robot — watch the square miss; then fix ONLY robot_config.py and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap. Continuity note: squads’ own <code>my_lib.py</code> from D5 may still spell the turn knob <code>gain=</code> — fold the rename into today’s promotion and say it once: “we’ve been calling this knob the gain; its code name is <code>kp</code>, same K-family as the <code>KP</code> constants.”</p>
+<p>The team exercise that proves it (from the exemplar): run the merged code with teammate A’s old constants on the chosen robot — watch the square miss; then fix ONLY the ROBOT FACTS block and rerun — the square closes. One file changed, zero functions touched. That felt difference is the lesson. Also flag the discipline cost honestly: from today, hard-coding a number inside a function is a team foul — a merge conflict waiting to happen. The constants block habit from the library days is what made this promotion cheap. Continuity note: squads’ own <code>movements.py</code> from D5 may still spell the turn knob <code>gain=</code> — fold the rename into today’s promotion and say it once: “we’ve been calling this knob the gain; its code name is <code>kp</code>, same K-family as the <code>KP</code> constants.”</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -375,8 +377,8 @@
 </section></section>
 <section>
 <section id="c.-the-reveal-let-drivebase-drive" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #625D9C)">
-<h1>C. The Reveal — Let DriveBase Drive</h1>
-<p>You built gyro turns, self-healing straights, and all three letters of P·I·D — by hand, from raw motors. Now meet the pro version that’s been in the box all along. 🎁</p>
+<h1>C. The Reveal: Let DriveBase Drive</h1>
+<p>You built gyro turns, self-healing straights, and all three letters of P·I·D by hand, from raw motors. Now meet the pro version that’s been in the box all along. 🎁</p>
 </section>
 <section id="you-built-a-robot-driver" class="slide level2">
 <h2>You built a robot driver 🏆</h2>
@@ -384,8 +386,8 @@
 <div class="column" style="width:50%;">
 <p><strong>You wrote, these two weeks</strong></p>
 <ul>
-<li><code>turn_to(target)</code> — a PD turn that watches itself, <strong>brakes before it arrives</strong>, and lands true</li>
-<li><code>drive_straight(distance)</code> — a self-healing straight with a finish line in degrees</li>
+<li>your <strong>turn verb</strong>, a PD turn that watches itself, <strong>brakes before it arrives</strong>, and lands true</li>
+<li><code>drive_straight(distance)</code>, a self-healing straight with a finish line in degrees</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><strong>Every WRO robot needs</strong></p>
@@ -396,7 +398,7 @@
 </div></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Pybricks ships both moves — polished, tuned, tested — inside one tool: <strong><code>DriveBase</code></strong>. It runs a professional <strong>P·I·D</strong> on every move. You’ll understand <em>every letter</em> it does… <em>because you spent two weeks building all three.</em></p>
+<p>Pybricks ships both moves, polished and tested, inside one tool: <strong><code>DriveBase</code></strong>. It runs a professional <strong>P·I·D</strong> on every move, and you’ll understand <em>every letter</em> of it, because you spent two weeks building all three.</p>
 </div>
 </div>
 <aside class="notes">
@@ -417,15 +419,15 @@
 <h2>Measure your robot first</h2>
 <div class="qbox">
 <p><span class="qtitle"><code>DriveBase</code> asks for two numbers: <strong>wheel diameter</strong> and <strong>axle track</strong> (tire-center to tire-center). Why does it need the <em>second</em> one?</span></p>
-<p>Hint: you already <em>used</em> it once — on Day 3…</p>
+<p>Hint: you already <em>used</em> it once, back when you drove a square…</p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>It’s your <strong>turn-circle</strong>! You ran that math by hand once to get 148 — DriveBase runs <em>your</em> derivation for <strong>any</strong> angle. The shortcut is math you already own.</p>
+<p>It’s your <strong>turn-circle</strong>! You ran that math by hand once to get 131, and DriveBase runs <em>your</em> derivation for <strong>any</strong> angle. The shortcut is math you already own.</p>
 </div>
 </div>
 <aside class="notes">
-<p>Both numbers are measured, not copied: roll the wheel 5 turns, divide by 5 and π for diameter (they’ll land near 88); the track they measured on Day 3 for the 148 derivation (≈145 mm on our build; the stock ADB is ≈114) — have each <em>team</em> re-measure its chosen robot now, since that’s the number going into its config. Wrong track → every turn systematically over- or under-shoots: that’s the afternoon’s tuning conversation (<code>drive.settings()</code>). If asked <em>why</em> the track matters: a spin-in-place drives the wheels around a circle as wide as the axle track — wider track = more wheel-degrees per robot-degree.</p>
+<p>Both numbers are measured, not copied: roll the wheel 5 turns, divide by 5 and π for diameter (they’ll land near 88); the track they measured on Day 3 for the 131 derivation (≈128 mm on the coach’s build; the stock ADB is ≈114) — have each <em>team</em> re-measure its chosen robot now, since that’s the number going into its config. Wrong track → every turn systematically over- or under-shoots: that’s the afternoon’s tuning conversation (<code>robot.settings()</code>). If asked <em>why</em> the track matters: a spin-in-place drives the wheels around a circle as wide as the axle track — wider track = more wheel-degrees per robot-degree.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -438,20 +440,84 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="build-your-drivebase-from-the-config" class="slide level2">
-<h2>Build your DriveBase — from the config</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|3-4|5|6-7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> pybricks.robotics <span class="im">import</span> DriveBase   <span class="co"># now earned</span></span>
+<section id="build-your-drivebase-from-the-block" class="slide level2">
+<h2>Build your DriveBase from the block</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-code-line-numbers="|1|3-4|5|6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> pybricks.robotics <span class="im">import</span> DriveBase   <span class="co"># now earned</span></span>
 <span id="cb3-2"><a></a></span>
-<span id="cb3-3"><a></a>drive <span class="op">=</span> DriveBase(left, right,</span>
-<span id="cb3-4"><a></a>                  CFG.wheel_diameter, CFG.axle_track)</span>
-<span id="cb3-5"><a></a>drive.use_gyro(<span class="va">True</span>)  <span class="co"># your gyro + full PID, switched on</span></span>
-<span id="cb3-6"><a></a>drive.settings(straight_speed<span class="op">=</span>CFG.straight_speed,</span>
-<span id="cb3-7"><a></a>               turn_rate<span class="op">=</span><span class="dv">150</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a></a>robot <span class="op">=</span> DriveBase(left_motor, right_motor,</span>
+<span id="cb3-4"><a></a>                  WHEEL_DIAMETER, AXLE_TRACK)</span>
+<span id="cb3-5"><a></a>robot.use_gyro(<span class="va">True</span>)  <span class="co"># your gyro + full PID, switched on</span></span>
+<span id="cb3-6"><a></a>robot.settings(straight_speed<span class="op">=</span>CRUISE_SPEED)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cardbox teal">
-<p><code>DriveBase</code> speaks <strong>mm and robot-degrees</strong> — <code>drive.straight(300)</code>, <code>drive.turn(90)</code> — and with <code>use_gyro(True)</code> every move is <em>watched</em> and <em>PID-corrected</em>, exactly like yours were. And it reads its facts from <strong><code>CFG</code></strong>, so it survives a robot swap like everything else.</p>
+<p><code>DriveBase</code> speaks <strong>mm and robot-degrees</strong>, as in <code>robot.straight(300)</code> and <code>robot.turn(90)</code>. With <code>use_gyro(True)</code> every move is <em>watched</em> and <em>PID-corrected</em>, exactly like yours were. Its two constructor arguments are the two facts you measured: <strong>wheel diameter</strong> and <strong>axle track</strong>.</p>
+</div>
+</section>
+<section id="now-delete-your-turn-verb" class="slide level2">
+<h2>✂️ Now delete your turn verb</h2>
+<div class="qbox">
+<p><span class="qtitle">Your <code>turn(angle, absolute=False)</code> from the library days. Here is Pybricks’:</span></p>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>robot.turn(angle, then<span class="op">=</span>Stop.HOLD, wait<span class="op">=</span><span class="va">True</span>, absolute<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment fade-up">
+<div class="cardbox coral">
+<p><strong>The same word, the same default, the same meaning:</strong> <code>robot.turn(90)</code> spins 90 <strong>more</strong>, <code>robot.turn(90, absolute=True)</code> <strong>faces</strong> 90. You didn’t guess it, you re-derived it, because it’s the only sensible way to say it. <em>(Pybricks puts <code>absolute</code> last, after <code>then=</code> and <code>wait=</code>, so always name it: <code>absolute=True</code>, never a bare <code>True</code>.)</em></p>
+</div>
+</div>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>So the verb goes. A function that only re-spells a built-in is one more name to maintain, so <strong>delete it and call <code>robot.turn()</code></strong>. <code>movements.py</code> keeps the verbs that do real work: <code>drive_straight</code>, <code>find_line</code>, <code>follow_line</code>, <code>drive_to_wall</code>, <code>wall_square</code>, <code>square_on_line</code>.</p>
+</div>
 </div>
 <aside class="notes">
-<p>Two acts of the day snap together here: the reveal is wired straight into the config, so the shortcut is born team-proof. <code>drive.settings()</code> is the pro version of their tuned constants — speeds and accelerations, adjustable per robot, stored in the config. Also worth naming: <code>drive.stalled()</code> now replaces the per-motor stall trick from the wall day <em>inside DriveBase moves</em>, and <code>drive.distance()</code> is a free odometer. Don’t tour the whole API — the duel is next; let the tool prove itself.</p>
+<p>This is the moment the fortnight pays off twice — don’t rush it. Put their D5 turn on screen beside the Pybricks line and let the room notice the match before you say it; the “we invented the same thing” feeling is what makes the deletion satisfying instead of deflating. Then make the rule explicit and general, because it governs every file they write from here: <strong>a wrapper has to earn its name.</strong> If a function only renames something Pybricks already gives you, it is one more thing to keep in sync and one more name for a teammate to learn — delete it. If it holds real logic (hunting a line, feeling a wall), keep it. Same test kills the <code>heading()</code> wrapper someone always proposes: <code>robot.angle()</code> already says it. Expect one squad to object that “our name is friendlier” — the answer is that the friendly name is now <em>wrong</em> half the time, because theirs took no <code>then=</code> or <code>wait=</code>. Land the positional trap explicitly, because it bites silently: in their version <code>absolute</code> was the 2nd argument, in Pybricks’ it is the 4th, so <code>robot.turn(90, True)</code> sets <strong><code>then=True</code></strong> and turns relative anyway. The habit that makes it a non-issue is one they already have from <code>speed=</code> and <code>kd=</code> — name the argument.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-the-shortcut-is-team-proof" class="slide level2">
+<h2>Why the shortcut is team-proof</h2>
+<p><code>DriveBase</code> reads the <strong>same block</strong>, so the pro tool is per-robot too. And it hands you three things your library already wanted:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>It gives you</th>
+<th>Your library uses it for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>robot.settings()</code></td>
+<td>speeds and accelerations, the pro version of your tuned constants</td>
+</tr>
+<tr class="even">
+<td><code>robot.stalled()</code></td>
+<td><code>drive_to_wall()</code> · <code>wall_square()</code>, feeling the border</td>
+</tr>
+<tr class="odd">
+<td><code>robot.distance()</code></td>
+<td>a free odometer that every hunting verb measures with</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment fade-up">
+<div class="cardbox teal">
+<p>Nothing here is a new idea. It’s your <strong>own</strong> three needs, already built. 🧰</p>
+</div>
+</div>
+<aside class="notes">
+<p>Two acts of the day snap together here: the reveal is wired straight into the ROBOT FACTS block, so the shortcut is born team-proof. <code>robot.settings()</code> is the pro version of their tuned constants — speeds and accelerations, adjustable per robot, stored in the block. Also worth naming: <code>robot.stalled()</code> is what <code>drive_to_wall</code> and <code>wall_square</code> are built on, and <code>robot.distance()</code> is a free odometer. Don’t tour the whole API — the duel is next; let the tool prove itself.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -468,14 +534,14 @@
 <h2>The duel: your verb vs the pro’s 🥊</h2>
 <div style="width:840px;margin:0 auto;">
   <div style="display:flex;justify-content:center;gap:14px;margin-bottom:8px;">
-    <button onclick="duRun()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight(1000) vs drive.straight(1000)</button>
+    <button onclick="duRun()" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">▶ drive_straight(1000) vs robot.straight(1000)</button>
     <button onclick="duNudge()" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:8px 20px;font-size:19px;font-weight:700;cursor:pointer;">😈 nudge them BOTH</button>
   </div>
   <svg width="820" height="240" viewbox="0 0 820 240" style="display:block;margin:0 auto;">
     <rect x="0" y="20" width="820" height="95" rx="12" fill="#eef3f8"></rect>
     <rect x="0" y="125" width="820" height="95" rx="12" fill="#eef3f8"></rect>
-    <text x="14" y="44" font-size="14" font-weight="800" fill="#625D9C">YOURS — drive_straight</text>
-    <text x="14" y="149" font-size="14" font-weight="800" fill="#00AE8D">PRO — drive.straight</text>
+    <text x="14" y="44" font-size="14" font-weight="800" fill="#625D9C">YOURS: drive_straight</text>
+    <text x="14" y="149" font-size="14" font-weight="800" fill="#00AE8D">PRO: robot.straight</text>
     <line x1="720" y1="28" x2="720" y2="108" stroke="#00AE8D" stroke-width="4"></line>
     <line x1="720" y1="133" x2="720" y2="213" stroke="#00AE8D" stroke-width="4"></line>
     <text x="720" y="16" font-size="13" fill="#00AE8D" font-weight="800" text-anchor="middle">1 m 🎯</text>
@@ -507,7 +573,7 @@
       if(s.done) return;
       var sp=(720-s.x)*2.4+8; if(sp>300)sp=300;
       if(nudgeReq && !s.nudged && s.x>300){ s.h=(laneY<100?22:-22); s.nudged=true; }
-      s.h -= s.h*heal*dt;                       // both heal — same three letters inside
+      s.h -= s.h*heal*dt;                       // both heal -- same three letters inside
       var r=s.h*Math.PI/180;
       s.x+=sp*Math.cos(r)*dt; s.y+=sp*Math.sin(r)*dt;
       // stay in lane visually
@@ -534,11 +600,11 @@
 </script>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Nudge them both: <strong>both heal</strong> — same three letters inside. The pro edges ahead on polish (smooth speed ramps, factory-tuned gains, years of testing), not on magic. <strong>You didn’t get replaced — you hired a chauffeur for the part you already mastered.</strong></p>
+<p>Nudge them both: <strong>both heal</strong>, with the same three letters inside. The pro edges ahead on polish (smooth speed ramps, factory-tuned gains, years of testing), not on magic. <strong>You didn’t get replaced. You hired a chauffeur for the part you already mastered.</strong></p>
 </div>
 </div>
 <aside class="notes">
-<p>Run the duel on the real robots too — their drive_straight next to drive.straight under a nudge and a battery swap; the sim just makes the point projectable. Expected honest outcome: both survive, DriveBase is a bit crisper on arrival (its speed ramps are S-curves, its gains factory-tuned per motor model). The verdict to speak: hand-rolled took two weeks to build and would take another season to polish; the pro one is <em>free</em> and made of math they own. That’s why the reveal waited — a shortcut is only a shortcut if you know the long way.</p>
+<p>Run the duel on the real robots too — their drive_straight next to robot.straight under a nudge and a battery swap; the sim just makes the point projectable. Expected honest outcome: both survive, DriveBase is a bit crisper on arrival (its speed ramps are S-curves, its gains factory-tuned per motor model). The verdict to speak: hand-rolled took two weeks to build and would take another season to polish; the pro one is <em>free</em> and made of math they own. That’s why the reveal waited — a shortcut is only a shortcut if you know the long way.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -551,31 +617,32 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="what-retires-what-stays-yours" class="slide level2">
+<section id="what-retires-what-stays-yours" class="slide level2 smaller">
 <h2>What retires, what stays yours</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Retires today</strong> 🪦</p>
 <ul>
-<li><code>drive_straight(d)</code> → <code>drive.straight(d)</code></li>
-<li><code>turn_to(a)</code> → <code>drive.turn(…)</code> <em>(gyro-watched)</em></li>
-<li>hand-tuned <code>KP</code>/<code>kd</code> → <code>drive.settings()</code></li>
+<li>your <strong>turn verb</strong> → <code>robot.turn(…)</code></li>
+<li>the hand-tuned turn <code>kp</code>/<code>kd</code> → DriveBase’s own PID</li>
+<li><code>hub.imu.reset_heading(0)</code> → <code>robot.reset(angle=0)</code></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<p><strong>Stays in <code>my_lib.py</code></strong> 💪</p>
+<p><strong>Stays in <code>movements.py</code></strong> 💪</p>
 <ul>
-<li><code>drive_to_wall()</code> · <code>wall_square()</code> — the <em>feel</em> verbs</li>
-<li><code>follow_line()</code> · <code>square_on_line()</code> — the <em>eyes</em> verbs</li>
+<li><code>drive_straight()</code>, new insides and the <strong>same name</strong></li>
+<li><code>drive_to_wall()</code> · <code>wall_square()</code>, the <em>feel</em> verbs</li>
+<li><code>follow_line()</code> · <code>square_on_line()</code>, the <em>eyes</em> verbs</li>
 <li>every mechanism verb Week 3 will add</li>
 </ul>
 </div></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><code>DriveBase</code> replaces exactly <strong>two internals</strong> — the moving. It has no idea how to <em>feel a wall</em>, <em>ride a line’s edge</em>, or <em>work a mechanism</em>. The library keeps every verb the pro tool doesn’t have — which is most of them. <strong>Missions from here on: <code>DriveBase</code> drives, your library does everything else.</strong></p>
+<p><code>DriveBase</code> replaces the <strong>moving</strong> and nothing else. It has no idea how to <em>feel a wall</em>, <em>ride a line’s edge</em>, or <em>work a mechanism</em>. <strong>From here on: <code>DriveBase</code> drives, your library does the rest.</strong></p>
 </div>
 </div>
 <aside class="notes">
-<p>This boundary slide is the anti-demoralizer — put numbers on it: two verbs retire, four survive today, and every mechanism verb from Week 3 joins the surviving side. Mechanically the retirement is gentle: inside my_lib, drive_straight/turn_to can simply <em>become</em> one-line wrappers over drive.straight/drive.turn, so every mission list and runner from the setlist day works unchanged — nothing downstream even notices. (That’s the payoff of naming moves: swap the engine, keep the verbs.) drive.stalled() similarly upgrades the inside of drive_to_wall without changing its name.</p>
+<p>This boundary slide is the anti-demoralizer — put numbers on it: two verbs retire, five survive today, and every mechanism verb from Week 3 joins the surviving side. Be precise about <em>how</em> they retire, because the two cases differ. <code>drive_straight</code> <strong>keeps its name</strong>: it still does real work (it sets the speed, then drives), so its insides swap to <code>robot.straight()</code> and every mission list from the setlist day runs unchanged — that’s the payoff of naming moves, swap the engine and keep the verb. The turn verb is the other case: <code>robot.turn()</code> already takes the same <code>absolute</code> flag, so wrapping it would add a name and nothing else — <strong>it is deleted, not rewrapped.</strong> <code>robot.stalled()</code> upgrades the inside of <code>drive_to_wall</code> without changing its name, same as <code>drive_straight</code>. Name one more so nobody is surprised later: <strong><code>square_on_line</code> changes shape inside.</strong> The version they wrote on the line day drives both wheels and lets each one park itself the moment its own eye crosses — which works because those were two independent motors. Once the motors belong to a <code>DriveBase</code>, starting one stops the other, so the library version creeps until <em>either</em> eye finds the line and then pivots to bring the second one on. Same verb, same reason it needs two eyes, different insides — and that difference is itself the lesson about what you traded away for <code>DriveBase</code>’s gyro. Last, the zero: from today <code>hub.imu.reset_heading(0)</code> is the wrong verb — <code>DriveBase</code> owns the gyro now, so <code>robot.reset(angle=0)</code> is what says “this way is zero”, and it moves the gyro and the odometer together. Say it out loud, because every program they wrote in the last fortnight opens with the old line, and a squad that keeps it ends up with two zeros that disagree.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -591,7 +658,7 @@
 <section>
 <section id="d.-draft-day" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>D. Draft Day</h1>
-<p>Today’s showdown: <strong>Mini Mission</strong> 🎤 — the finale. Then the draft.</p>
+<p>Today’s showdown: <strong>Mini Mission</strong> 🎤, then the draft.</p>
 </section>
 <section id="mini-mission" class="slide level2">
 <h2>Mini Mission 🎤</h2>
@@ -604,12 +671,12 @@
 <p><strong>The challenge</strong></p>
 </div>
 <div class="callout-content">
-<p>A <strong>3-task run</strong> — drive, turn, push an object home — in <strong>60 seconds</strong>. Everything from two weeks, on one clock: integration, time management, nerve.</p>
+<p>A <strong>3-task run</strong> (drive, turn, push an object home) in <strong>60 seconds</strong>. Everything from two weeks on one clock: integration, time management, nerve.</p>
 </div>
 </div>
 </div>
 <ul>
-<li>Plan it as a <strong>mission list</strong> over your verbs — you have a runner for exactly this.</li>
+<li>Plan it as a <strong>sequence</strong> of your verbs, written out longhand. The <em>list</em> that walks itself is still ahead of you.</li>
 <li>Budget the clock: a clean 2-task run beats a chaotic 3-task attempt. <em>(Sound familiar? It’s the anchor-first rule, in miniature.)</em></li>
 </ul>
 <aside class="notes">
@@ -629,14 +696,14 @@
 <section id="the-draft" class="slide level2">
 <h2>The draft 🤝</h2>
 <ul>
-<li>Teams are formed on <strong>who works well together and what each team needs</strong> — complementary skills beat matching skills.</li>
+<li>Teams are formed on <strong>who works well together and what each team needs</strong>. Complementary skills beat matching skills.</li>
 <li>Each team reviews its members’ robots and <strong>selects one</strong> as its competition robot.</li>
-<li>The unselected robots become the <strong>parts donor pool</strong> — your insurance, one config edit away. 🛡️</li>
-<li>From tomorrow: <strong>team vs team, every day</strong> — double the mat time, twice the fun.</li>
+<li>The unselected robots become the <strong>parts donor pool</strong>, your insurance one config edit away. 🛡️</li>
+<li>From tomorrow: <strong>team vs team, every day</strong>, which doubles the mat time.</li>
 </ul>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Your robot may retire to the donor pool — <strong>your code and your skills don’t.</strong> Everything merges onto the team robot through <code>robot_config.py</code>, and both of the team’s cross-trained roles need every verb you built. The draft picks a <em>chassis</em>, not a <em>coder</em>.</p>
+<p>Your robot may retire to the donor pool. <strong>Your code and your skills don’t.</strong> Everything merges onto the team robot through one <code>ROBOT FACTS</code> block, and both of the team’s cross-trained roles need every verb you built. The draft picks a <em>chassis</em>, not a <em>coder</em>.</p>
 </div>
 </div>
 <aside class="notes">
@@ -664,12 +731,12 @@
 <p><strong>You’re done today when…</strong></p>
 </div>
 <div class="callout-content">
-<p>Your library passes its benchmarks one last time <strong>solo</strong> (<code>drive_straight</code> ±2 cm · <code>turn_to</code> ±2° · wall and line verbs demonstrated · the runner walks a called mission) — and your <strong>team</strong> leaves with one chosen robot, a donor pool, and a single <code>robot_config.py</code> that drives it with the merged code.</p>
+<p>Your library passes its benchmarks one last time <strong>solo</strong> (<code>drive_straight</code> ±2 cm · <code>robot.turn(…, absolute=True)</code> ±2° · wall and line verbs demonstrated · the runner walks a called mission), and your <strong>team</strong> leaves with one chosen robot, a donor pool, and a single <code>ROBOT FACTS</code> block that drives it with the merged code.</p>
 </div>
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Next week: your robot grows <strong>hands</strong> — the mechanisms that start turning driving skill into <strong>scored points</strong>, and the runner starts chaining them into the anchor run. 🔌🎤</p>
+<p>Next week: your robot grows <strong>hands</strong>, the mechanisms that turn driving skill into <strong>scored points</strong>, and the runner starts chaining them into the anchor run. 🔌🎤</p>
 </div>
 <aside class="notes">
 <p>The student-facing end-of-week-2 gate: individual benchmarks (they’re part of the draft evidence) plus the team artifacts — chosen robot, donor pool, one working config. The coach’s own checklist for today (gold-reference validation against the same gate, dimensions/weight/wireless-off, CAD capture in BrickLink Studio) runs off-stage and isn’t student material. Teaser lands on Week 3: mechanisms first — cables and microphone, instruments and avoidance — then the mission runner chains the ~135 anchor.</p>
@@ -975,7 +1042,7 @@
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/NaifMersal\.github\.io\/WRO-LEGO-pypricks\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

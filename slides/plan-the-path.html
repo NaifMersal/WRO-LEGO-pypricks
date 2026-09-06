@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-09-05">
+  <meta name="dcterms.date" content="2026-09-06">
   <title>Plan the Path</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -206,16 +206,20 @@
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-09-05</p>
+  <p class="date">2026-09-06</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>A. Warm-Up</h1>
-<p>You own every verb the robot needs. Today you decide <strong>where they point</strong> — on paper, before the wheels move.</p>
+<p>You own every verb the robot needs. Today you decide <strong>where they point</strong>, on paper, before the wheels move.</p>
 </section>
 <section id="what-you-already-own" class="slide level2">
 <h2>What you already own</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Verb</th>
@@ -224,16 +228,16 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>🧭 <code>reset_heading(0)</code></td>
+<td>🧭 <code>robot.reset(angle=0)</code></td>
 <td>“the way I’m facing now is zero”</td>
 </tr>
 <tr class="even">
 <td>📏 <code>drive_straight(mm)</code></td>
-<td>drive straight; negative = backward</td>
+<td>drive straight, or backward if the number is negative</td>
 </tr>
 <tr class="odd">
-<td>🎯 <code>turn_to(heading)</code></td>
-<td>turn until you <strong>face</strong> that heading</td>
+<td>🎯 <code>robot.turn(h, absolute=True)</code></td>
+<td>turn until you <strong>face</strong> heading <code>h</code></td>
 </tr>
 </tbody>
 </table>
@@ -242,7 +246,7 @@
 </div>
 <p>⏱️ <strong>Time: 10 minutes</strong></p>
 <aside class="notes">
-<p>Open by making the inventory feel finished — the driving problem is <em>closed</em>, and that is exactly why today is a planning day, not a coding day. Nothing new gets typed for the first hour. If a squad is itching to code, point at the gate: today’s deliverable is a written path with marked reset points, and squads that plan first will out-run squads that type first. Keep <code>turn_to</code> visible on the board all session; the whole day hangs off the word <strong>face</strong>.</p>
+<p>Open by making the inventory feel finished — the driving problem is <em>closed</em>, and that is exactly why today is a planning day, not a coding day. Nothing new gets typed for the first hour. If a squad is itching to code, point at the gate: today’s deliverable is a written path with marked reset points, and squads that plan first will out-run squads that type first. Keep <code>absolute=True</code> visible on the board all session; the whole day hangs off the word <strong>face</strong>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -259,9 +263,9 @@
 <h2>Today’s job</h2>
 <div class="fragment fade-up">
 <ul>
-<li>Turn the mat into <strong>numbers</strong> — a measured path, not a guessed one</li>
+<li>Turn the mat into <strong>numbers</strong>: a measured path, not a guessed one</li>
 <li>Learn where the robot’s error gets <strong>erased</strong>, and put those points on purpose</li>
-<li>Read a heading off a <strong>map</strong> and paste it into <code>turn_to()</code> without it lying to you</li>
+<li>Read a heading off a <strong>map</strong> and paste it into <code>robot.turn(…, absolute=True)</code> without it lying to you</li>
 </ul>
 </div>
 <div class="fragment fade-up">
@@ -273,7 +277,7 @@
 <section>
 <section id="b.-break-it" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
 <h1>B. Break It</h1>
-<p>Plan a route the way it <em>feels</em> natural — and watch the plan fall apart before the robot even leaves the bench.</p>
+<p>Plan a route the way it <em>feels</em> natural, and watch it fall apart before the robot leaves the bench.</p>
 </section>
 <section id="write-me-a-route" class="slide level2">
 <h2>Write me a route 📝</h2>
@@ -309,7 +313,7 @@
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p><strong>12° off</strong> — and it <em>stays</em> 12° off. Nothing in the plan ever measures the mistake, so nothing can ever give it back. The fourth side is driving into the weeds.</p>
+<p><strong>12° off</strong>, and it <em>stays</em> 12° off. Nothing in the plan ever measures the mistake, so nothing can give it back. The fourth side is driving into the weeds.</p>
 </div>
 </div>
 <div class="fragment fade-up">
@@ -334,9 +338,9 @@
 <section id="the-word-you-cant-write-down" class="slide level2">
 <h2>The word you can’t write down ✍️</h2>
 <div class="fragment fade-up">
-<p>“Turn right” is not an instruction. It’s an instruction <strong>plus a secret</strong> — <em>where you were already pointing</em>.</p>
+<p>“Turn right” is not an instruction. It’s an instruction <strong>plus a secret</strong>: <em>where you were already pointing</em>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>turn_right(<span class="dv">90</span>)        <span class="co"># 90 from... where? the plan doesn't say</span></span>
-<span id="cb2-2"><a></a>turn_to(<span class="dv">90</span>)           <span class="co"># face 90. no secret.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-2"><a></a>robot.turn(<span class="dv">90</span>, absolute<span class="op">=</span><span class="va">True</span>)   <span class="co"># face 90. no secret.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
@@ -364,7 +368,7 @@
 </section>
 <section id="meet-the-field-tool" class="slide level2">
 <h2>Meet the field tool 🗺️</h2>
-<p><span class="qtitle"><code>tools/odommap/OdomMap.html</code></span> — opens in a browser, works offline, and has the real <strong>2026 RoboMission Elementary</strong> mat in it.</p>
+<p><span class="qtitle"><code>tools/odommap/OdomMap.html</code></span> opens in a browser, works offline, and has the real <strong>2026 RoboMission Elementary</strong> mat in it.</p>
 <div class="fragment fade-up">
 <table class="caption-top">
 <colgroup>
@@ -394,7 +398,7 @@
 </table>
 </div>
 <div class="fragment fade-up">
-<p>The mat is <strong>2362 × 1143 mm</strong>. Set <strong>Wheel = 88 mm</strong> — the same number that lives in your <code>ROBOT FACTS</code>.</p>
+<p>The mat is <strong>2362 × 1143 mm</strong>. Set <strong>Wheel = 88 mm</strong>, the same number that lives in your <code>ROBOT FACTS</code>.</p>
 </div>
 <aside class="notes">
 <p>Have the tool already open on the projector and one laptop per squad — this is a hands-on block, not a demo. The wheel field matters: it converts every measured distance into wheel rotations, and if a squad’s robot has a different wheel they must type <em>their</em> number, not 88. Point out that 88 also lives in <code>code/movements.py</code> under <code>ROBOT FACTS</code> — same fact, two places, and the mat tool is the one that is allowed to be approximate because the mat is flat and the robot is not.</p>
@@ -415,8 +419,8 @@
 <div class="fragment fade-up">
 <p>In <strong>Odometry mode</strong> you click twice:</p>
 <ol type="1">
-<li><strong>the origin</strong> — “this corner is (0, 0)”</li>
-<li><strong>the bar</strong> — you swing an arrow and click. <em>“This direction is zero.”</em></li>
+<li><strong>the origin</strong>: “this corner is (0, 0)”</li>
+<li><strong>the bar</strong>: you swing an arrow and click. <em>“This direction is zero.”</em></li>
 </ol>
 </div>
 <div class="fragment fade-up">
@@ -444,10 +448,10 @@
     <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;max-width:330px;">
       <button onclick="pcNudge(-15)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:7px 16px;font-size:19px;font-weight:700;cursor:pointer;">↶ −15°</button>
       <button onclick="pcNudge(15)" style="background:#eef3f8;color:#1C355E;border:2px solid #1C355E;border-radius:10px;padding:7px 16px;font-size:19px;font-weight:700;cursor:pointer;">+15° ↷</button>
-      <button onclick="pcSet(90)" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:17px;font-weight:700;cursor:pointer;">turn_to(90)</button>
-      <button onclick="pcSet(180)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:17px;font-weight:700;cursor:pointer;">turn_to(180)</button>
+      <button onclick="pcSet(90)" style="background:#00AE8D;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:17px;font-weight:700;cursor:pointer;">turn(90, absolute)</button>
+      <button onclick="pcSet(180)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:17px;font-weight:700;cursor:pointer;">turn(180, absolute)</button>
     </div>
-    <div id="pcMsg" style="font-size:16px;color:#625D9C;font-weight:700;margin-top:10px;max-width:330px;min-height:44px;">swing the bar, then press a <b>turn_to</b> button — watch where it lands</div>
+    <div id="pcMsg" style="font-size:16px;color:#625D9C;font-weight:700;margin-top:10px;max-width:330px;min-height:44px;">swing the bar, then press an <b>absolute turn</b> button, then watch where it lands</div>
   </div>
 </div>
 <script>
@@ -464,7 +468,7 @@
   }
   window.pcNudge = function(d){
     h = norm(h + d); el('pcArc').setAttribute('d','');
-    el('pcMsg').innerHTML = 'the bar points <b>' + h.toFixed(0) + '&#176;</b> &#8212; this is where the robot is <i>now</i>';
+    el('pcMsg').innerHTML = 'the bar points <b>' + h.toFixed(0) + '&#176;</b>, which is where the robot is <i>now</i>';
     draw();
   };
   window.pcSet = function(t){
@@ -482,7 +486,7 @@
 </script>
 </div>
 <aside class="notes">
-<p>Run this from their predictions, every time: swing the bar somewhere ugly like 47°, ask “if I call <code>turn_to(90)</code>, how far does it turn?” — collect numbers, <em>then</em> click. Do it again from −120°. The yellow arc is the amount turned and it changes every time; the bar always finishes on the label. Say the sentence out loud and make them say it back: <strong>the turn changed, the destination did not.</strong> That is the whole of <code>turn_to</code> in one line. The snap hint (within 10°) mirrors the real tool — OdomMap grabs 0/90/180/−90 so a hand-swung bar still lands on a clean axis; tell them to <em>use</em> that, because a mat laid square to the table has no business having a 3° origin.</p>
+<p>Run this from their predictions, every time: swing the bar somewhere ugly like 47°, ask “if I call <code>robot.turn(90, absolute=True)</code>, how far does it turn?” — collect numbers, <em>then</em> click. Do it again from −120°. The yellow arc is the amount turned and it changes every time; the bar always finishes on the label. Say the sentence out loud and make them say it back: <strong>the turn changed, the destination did not.</strong> That is the whole of <code>absolute=True</code> in one line. The snap hint (within 10°) mirrors the real tool — OdomMap grabs 0/90/180/−90 so a hand-swung bar still lands on a clean axis; tell them to <em>use</em> that, because a mat laid square to the table has no business having a 3° origin.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -498,10 +502,10 @@
 <section id="zero-is-a-decision-not-a-fact" class="slide level2">
 <h2>Zero is a decision, not a fact</h2>
 <div class="fragment fade-up">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>reset_heading(<span class="dv">0</span>)      <span class="co"># "the way I'm facing NOW is zero"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>robot.reset(angle<span class="op">=</span><span class="dv">0</span>)  <span class="co"># "the way I'm facing NOW is zero"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment fade-up">
-<p>Placing the bar in the tool and calling <code>reset_heading(0)</code> on the mat are <strong>the same act</strong>, done in two places:</p>
+<p>Placing the bar in the tool and calling <code>robot.reset(angle=0)</code> on the mat are <strong>the same act</strong>, done in two places:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -516,11 +520,11 @@
 </tr>
 <tr class="even">
 <td>swing the bar, click</td>
-<td>point it, <code>reset_heading(0)</code></td>
+<td>point it, <code>robot.reset(angle=0)</code></td>
 </tr>
 <tr class="odd">
 <td>every point is now (x, y)</td>
-<td>every <code>turn_to</code> is now a promise</td>
+<td>every absolute turn is now a promise</td>
 </tr>
 </tbody>
 </table>
@@ -547,7 +551,7 @@
 <section>
 <section id="d.-two-maps-two-zeros" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #FF7A5C)">
 <h1>D. Two Maps, Two Zeros</h1>
-<p>There is a second set of headings on this mat — and it does <strong>not</strong> agree with yours.</p>
+<p>There is a second set of headings on this mat, and it does <strong>not</strong> agree with yours.</p>
 </section>
 <section id="the-trap" class="slide level2">
 <h2>The trap 🪤</h2>
@@ -589,7 +593,7 @@
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Both spin the same way round. They just <strong>start counting in different places</strong> — exactly <strong>90° apart</strong>.</p>
+<p>Both spin the same way round. They just <strong>start counting in different places</strong>, exactly <strong>90° apart</strong>.</p>
 </div>
 </div>
 <aside class="notes">
@@ -637,7 +641,7 @@
 </div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>🏷️ <strong>Label every heading you write down.</strong> A number with no frame attached is not a measurement — it’s a rumour.</p>
+<p>🏷️ <strong>Label every heading you write down.</strong> A number with no frame attached is not a measurement, it’s a rumour.</p>
 </div>
 </div>
 <aside class="notes">
@@ -682,7 +686,7 @@
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p><strong>No.</strong> 128 − 79.7 = <strong>48.3 mm too long.</strong> It has to go the long way. The orientation isn’t a choice you get to make — the geometry already made it. 🔒</p>
+<p><strong>No.</strong> 128 − 79.7 = <strong>48.3 mm too long.</strong> It has to go the long way. The orientation isn’t a choice you get to make, because the geometry already made it. 🔒</p>
 </div>
 </div>
 <aside class="notes">
@@ -736,7 +740,7 @@
 </div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Yaw tolerance is <strong>±31°</strong> — generous. A rough approach still scores <strong>if it aims at the right heading</strong>. Paste <code>100</code> straight into <code>turn_to()</code> and you’re <strong>90° out</strong>: sideways, and 128 mm won’t fit in 79.7. 💸</p>
+<p>Yaw tolerance is <strong>±31°</strong>, which is generous. A rough approach still scores <strong>if it aims at the right heading</strong>. Paste <code>100</code> straight into <code>robot.turn(…, absolute=True)</code> and you’re <strong>90° out</strong>: sideways, and 128 mm won’t fit in 79.7. 💸</p>
 </div>
 </div>
 <aside class="notes">
@@ -753,26 +757,27 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="so-the-verb-takes-a-heading" class="slide level2">
-<h2>So the verb takes a heading</h2>
+<section id="so-the-step-has-to-name-a-heading" class="slide level2">
+<h2>So the step has to <strong>name</strong> a heading</h2>
 <div class="fragment fade-up">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="kw">def</span> push_cable(heading):       <span class="co"># NOT a fixed move</span></span>
-<span id="cb6-2"><a></a>    turn_to(heading)           <span class="co"># 190 for upper, 170 for lower</span></span>
-<span id="cb6-3"><a></a>    ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>CABLE_UPPER_HEADING <span class="op">=</span> <span class="dv">190</span>     <span class="co"># facts about the MAT</span></span>
+<span id="cb6-2"><a></a>CABLE_LOWER_HEADING <span class="op">=</span> <span class="dv">170</span></span>
+<span id="cb6-3"><a></a></span>
+<span id="cb6-4"><a></a>robot.turn(CABLE_UPPER_HEADING, absolute<span class="op">=</span><span class="va">True</span>)   <span class="co"># …then push</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment fade-up">
 <ul>
-<li>One verb, two cables, <strong>two numbers</strong> — not two verbs, and definitely not one</li>
+<li>Two cables, <strong>two numbers</strong>, one step shape: not one number, and not two copies</li>
 <li>The heading is a <strong>fact about the mat</strong>, so it lives with the other mat facts</li>
 </ul>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Try writing this with a relative turn. You can’t — “turn 20” only means something if you already know where you were. The mat doesn’t care where you were. 🤷</p>
+<p>Try writing this with a relative turn. You can’t, because “turn 20” only means something if you already know where you were. The mat doesn’t care where you were. 🤷</p>
 </div>
 </div>
 <aside class="notes">
-<p>This closes the loop opened in section B: the circled “turn right” phrases on the board are now provably unwritable for this job. Note the design point for the stronger squads — <code>push_cable</code> takes a <strong>parameter</strong> rather than existing twice, which is the same lesson as <code>drive_straight(distance_mm)</code>: when two jobs differ only by a number, the number becomes an argument. Do not let anyone hard-code 190 inside the verb and write a second copy for 170; that is the exact habit the library was built to kill.</p>
+<p>This closes the loop opened in section B: the circled “turn right” phrases on the board are now provably unwritable for this job. The design point for the stronger squads is that <strong>the two cables differ by a number, not by a behaviour</strong> — same lesson as <code>drive_straight(distance_mm)</code> — so the number gets a <em>name</em> and the step gets written once in shape. Do not let anyone paste <code>190</code> into one place and <code>170</code> into a near-identical copy of the same block; a bare 190 in the middle of a mission is a magic number that nobody will find when the mat is re-measured, and a second copy is the habit the constants block was built to kill. If a squad proposes wrapping the turn-and-push into <code>push_cable(heading)</code>, say the honest thing: that is a good instinct and it is <strong>deferred, not wrong</strong>. Three lines that appear twice do not yet earn a name in a 5-week course, and hiding the mission behind mission-named verbs is what stops a student reading their own run; composing verbs is a continuation-season job (decision #60). What they must take away today is the <em>heading</em>, which is worth 15 points and cannot be recovered later.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -796,9 +801,9 @@
 <p>On your mat printout, mark <strong>every</strong> one of these:</p>
 <ol type="1">
 <li>🏁 the <strong>origin</strong> and the <strong>zero direction</strong> (the same one your code will reset to)</li>
-<li>📍 each job in order — instruments <strong>45</strong> · cables <strong>30</strong> · avoidance <strong>40</strong> · mic <strong>20</strong></li>
+<li>📍 each job in order: instruments <strong>45</strong> · cables <strong>30</strong> · avoidance <strong>40</strong> · mic <strong>20</strong></li>
 <li>🧭 the <strong>heading</strong> for every leg, tagged <code>(map)</code></li>
-<li>🩹 every <strong>reset point</strong> — a wall square or a line, where error goes back to zero</li>
+<li>🩹 every <strong>reset point</strong>: a wall square or a line, where error goes back to zero</li>
 </ol>
 </div>
 <div class="fragment fade-up">
@@ -853,7 +858,7 @@
 <p><strong>Gate</strong></p>
 </div>
 <div class="callout-content">
-<p>Your squad has a <strong>written path plan</strong> for the ~135 anchor run: every leg’s heading <strong>tagged with its frame</strong>, every distance in mm off the map, and <strong>every reset point marked</strong> — and you can convert a <code>field_data.py</code> heading to a robot heading without looking it up.</p>
+<p>Your squad has a <strong>written path plan</strong> for the ~135 anchor run: every leg’s heading <strong>tagged with its frame</strong>, every distance in mm off the map, and <strong>every reset point marked</strong>. You can also convert a <code>field_data.py</code> heading to a robot heading without looking it up.</p>
 </div>
 </div>
 </div>
@@ -1164,7 +1169,7 @@
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/NaifMersal\.github\.io\/WRO-LEGO-pypricks\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

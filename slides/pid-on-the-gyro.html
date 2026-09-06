@@ -9,7 +9,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
-  <meta name="dcterms.date" content="2026-09-05">
+  <meta name="dcterms.date" content="2026-09-06">
   <title>The Drive That Heals Itself</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -201,17 +201,17 @@
 
 <section id="title-slide" data-background-image="../slides_template/assets/anim.svg" data-background-opacity="0.15" data-background-size="cover" class="quarto-title-block center">
   <h1 class="title">The Drive That Heals Itself</h1>
-  <p class="subtitle">Day 4 · Robot Rockstars · SPIKE Prime + Pybricks</p>
+  <p class="subtitle">Days 4a–4c · Robot Rockstars · SPIKE Prime + Pybricks</p>
 
 <div class="quarto-title-authors">
 </div>
 
-  <p class="date">2026-09-05</p>
+  <p class="date">2026-09-06</p>
 </section>
 <section>
 <section id="a.-warm-up" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>A. Warm-Up</h1>
-<p>Yesterday your turn <em>watched itself</em> — and coasted to 94, guilty party named. Today: the cure. Then the cure gets a brain.</p>
+<p>Yesterday your turn <em>watched itself</em>, then coasted to 94 with the guilty party named. Today: the cure. Then the cure gets a brain.</p>
 </section>
 <section id="where-we-left-off" class="slide level2">
 <h2>Where we left off</h2>
@@ -229,19 +229,19 @@
 <tbody>
 <tr class="odd">
 <td>🧭 <strong>heading</strong></td>
-<td>one number for “which way” — net turning since <code>reset_heading(0)</code></td>
+<td>one number for “which way”: net turning since <code>reset_heading(0)</code></td>
 </tr>
 <tr class="even">
 <td>👀 the <strong>watched turn</strong></td>
-<td>spin · watch <code>heading()</code> · stop <em>at</em> the target — <code>while</code></td>
+<td>spin · watch <code>heading()</code> · stop <em>at</em> the target, with <code>while</code></td>
 </tr>
 <tr class="odd">
 <td>🔁 <strong>loops, nested</strong></td>
-<td><code>for</code> draws the shape, <code>while</code> lands the corner — 360 ÷ sides</td>
+<td><code>for</code> draws the shape, <code>while</code> lands the corner, 360 ÷ sides</td>
 </tr>
 <tr class="even">
 <td>🚨 the <strong>open case</strong></td>
-<td>it printed <strong>94</strong> — guilty party: <em>momentum</em>. Diagnosed, not cured</td>
+<td>it printed <strong>94</strong>. Guilty party: <em>momentum</em>. Diagnosed, not cured</td>
 </tr>
 </tbody>
 </table>
@@ -251,17 +251,17 @@
 <p>⏱️ <strong>Time: 10 minutes</strong></p>
 </section>
 <section id="setup-same-bench-one-new-import" class="slide level2">
-<h2>Setup — same bench, one new import</h2>
+<h2>Setup: same bench, one new import</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-code-line-numbers="|1-4|6-8|10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">from</span> pybricks.hubs <span class="im">import</span> PrimeHub</span>
 <span id="cb1-2"><a></a><span class="im">from</span> pybricks.pupdevices <span class="im">import</span> Motor</span>
 <span id="cb1-3"><a></a><span class="im">from</span> pybricks.parameters <span class="im">import</span> Port, Direction</span>
 <span id="cb1-4"><a></a><span class="im">from</span> pybricks.tools <span class="im">import</span> wait, StopWatch</span>
 <span id="cb1-5"><a></a></span>
 <span id="cb1-6"><a></a>hub <span class="op">=</span> PrimeHub()</span>
-<span id="cb1-7"><a></a>left <span class="op">=</span> Motor(Port.A, Direction.COUNTERCLOCKWISE)</span>
-<span id="cb1-8"><a></a>right <span class="op">=</span> Motor(Port.E)</span>
+<span id="cb1-7"><a></a>left <span class="op">=</span> Motor(Port.F, Direction.COUNTERCLOCKWISE)   <span class="co"># yours</span></span>
+<span id="cb1-8"><a></a>right <span class="op">=</span> Motor(Port.B)                              <span class="co"># yours</span></span>
 <span id="cb1-9"><a></a></span>
-<span id="cb1-10"><a></a><span class="co"># your watched turn from yesterday goes here — it still coasts to ~94. For now.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-10"><a></a><span class="co"># your watched turn from yesterday goes here. It still coasts to ~94, for now.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p>Everyone starts from their own D3 file — imports plus their watched-turn lines. <code>StopWatch</code> sneaks into the imports here; it gets used (and explained in one breath) in the race lab. Recap by asking, not telling: “walk me through your watched turn line by line — and who was guilty for the 94?” — two or three students, one loop. Do NOT preview the fix; the next act builds it from the coast they already diagnosed.</p>
 <style type="text/css">
@@ -279,11 +279,11 @@
 <section>
 <section id="b.-the-cure-arrive-slowly" class="title-slide slide level1 sdaia-dark center" data-background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)">
 <h1>B. The Cure: Arrive Slowly</h1>
-<p>Momentum needs <em>speed</em> to steal degrees. So give it none — at the end.</p>
+<p>Momentum needs <em>speed</em> to steal degrees. So give it none at the end.</p>
 </section>
 <section id="feel-the-fix-arrive-slowly" class="slide level2">
 <h2>Feel the fix: arrive slowly</h2>
-<div style="text-align:center;font-size:17px;color:#5b6678;margin-bottom:2px;">🚗 that's your <b>robot seen from above</b> — nose up = heading 0°. The judge calls: turn right to the <b style="color:#00AE8D;">90° tick</b>.</div>
+<div style="text-align:center;font-size:17px;color:#5b6678;margin-bottom:2px;">🚗 that's your <b>robot seen from above</b>: nose up = heading 0°. The judge calls: turn right to the <b style="color:#00AE8D;">90° tick</b>.</div>
 <div style="display:flex;justify-content:center;align-items:flex-start;gap:80px;">
   <div style="text-align:center;">
     <div style="font-weight:800;color:#1C355E;font-size:23px;">🚀 Full speed all the way</div>
@@ -354,8 +354,8 @@ function raceDials(){
     else {
       odRAF = null;
       document.getElementById('odArc').setAttribute('opacity','1');
-      var s1 = document.getElementById('odS1'); s1.textContent = '— coasted past 😬'; s1.style.color = '#E96852';
-      var s2 = document.getElementById('odS2'); s2.textContent = '— parked on it 🎯'; s2.style.color = '#00AE8D';
+      var s1 = document.getElementById('odS1'); s1.textContent = '· coasted past 😬'; s1.style.color = '#E96852';
+      var s2 = document.getElementById('odS2'); s2.textContent = '· parked on it 🎯'; s2.style.color = '#00AE8D';
     }
   }
   odRAF = requestAnimationFrame(step);
@@ -363,7 +363,7 @@ function raceDials(){
 </script>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Same target. Same gyro. The only difference: the 🐢 arrives <strong>slowly</strong> — so there’s nothing left to coast. Fast when far, slow when close.</p>
+<p>Same target. Same gyro. The only difference: the 🐢 arrives <strong>slowly</strong>, so there’s nothing left to coast. Fast when far, slow when close.</p>
 </div>
 </div>
 </section>
@@ -382,11 +382,11 @@ function raceDials(){
 <span id="cb2-11"><a></a>gyro_turn(<span class="dv">90</span>)     <span class="co"># or gyro_turn(45), gyro_turn(180)…</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Two speeds, two <code>while</code>s: <strong>fast for the long haul, crawl the last 30°</strong> — momentum arrives with nothing left to steal. And line 1: <code>def</code> <strong>names the move once</strong>; every call replays it.</p>
+<p>Two speeds, two <code>while</code>s: <strong>fast for the long haul, crawl the last 30°</strong>, so momentum arrives with nothing left to steal. And line 1: <code>def</code> <strong>names the move once</strong>, and every call replays it.</p>
 </div>
 </div>
 <aside class="notes">
-<p>First <code>def</code> of the bootcamp — land it hard: a function is a <em>named move</em>, exactly like <code>run_angle</code> is someone else’s named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two <code>run</code> signs and the <code>&lt;</code> to <code>&gt;</code>, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; <code>RobotConfig</code> at D8. Demo on the next slide — walk the highlights here first.</p>
+<p>First <code>def</code> of the bootcamp — land it hard: a function is a <em>named move</em>, exactly like <code>run_angle</code> is someone else’s named move. This version handles right turns (positive targets); if a kid asks about left turns, brilliant — flip the two <code>run</code> signs and the <code>&lt;</code> to <code>&gt;</code>, or park it as a challenge. The constants 200/50/30 are the raw material the afternoon interrogates; they get promoted into the <code>ROBOT FACTS</code> block at D8. Demo on the next slide — walk the highlights here first.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -463,12 +463,12 @@ function raceDials(){
 </script>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p><strong>The 94 is cured</strong> — and you just wrote your first robot <em>move</em>: one recipe card, any number of calls, and the 🚗 parks on every tick.</p>
+<p><strong>The 94 is cured</strong>, and you just wrote your first robot <em>move</em>: one recipe card, any number of calls, and the 🚗 parks on every tick.</p>
 </div>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Can you beat two speeds? Imagine speed <strong>shrinking as the degrees-left shrink</strong>. Hold that thought — it comes due before lunch. 😏</p>
+<p>Can you beat two speeds? Imagine speed <strong>shrinking as the degrees-left shrink</strong>. That idea comes due before lunch. 😏</p>
 </div>
 </div>
 <aside class="notes">
@@ -498,7 +498,7 @@ function raceDials(){
 <span id="cb3-6"><a></a>    left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p><code>def</code> only <strong>writes</strong> the recipe — it never cooks it. Nothing happens until you <strong>call</strong> the move by name: add <code>gyro_turn(90)</code> below. Defining a move and <em>using</em> a move are two separate steps.</p>
+<p><code>def</code> only <strong>writes</strong> the recipe, it never cooks it. Nothing happens until you <strong>call</strong> the move by name: add <code>gyro_turn(90)</code> below. Defining a move and <em>using</em> a move are two separate steps.</p>
 </div>
 </div>
 <aside class="notes">
@@ -518,8 +518,8 @@ function raceDials(){
 <section id="bench-check-tune-your-crawl" class="slide level2">
 <h2>Bench check: tune your crawl 🎯</h2>
 <ul>
-<li>Build <code>gyro_turn</code>, then judge-call yourself: <strong>90° · 45° · 180°</strong> — print the landing each time.</li>
-<li>Tune <strong>200 / 50 / 30</strong> until 90° lands within a degree or two. Write your three numbers on a sticky note — they’re about to testify.</li>
+<li>Build <code>gyro_turn</code>, then judge-call yourself: <strong>90° · 45° · 180°</strong>, printing the landing each time.</li>
+<li>Tune <strong>200 / 50 / 30</strong> until 90° lands within a degree or two. Write your three numbers on a sticky note. They’re about to testify.</li>
 </ul>
 <p>⏱️ <strong>Time: 20 minutes</strong></p>
 <aside class="notes">
@@ -544,9 +544,9 @@ function raceDials(){
 <section id="three-calls-one-sticky-note" class="slide level2">
 <h2>Three calls, one sticky note ⏱️</h2>
 <div class="qbox">
-<p><span class="qtitle">The judge calls <strong>45° → 90° → 180°</strong> — same <code>gyro_turn</code>, same sticky note, and today the <strong>clock counts too</strong>. Two predictions with your partner:</span></p>
-<p>🐢 <strong>Sleepy check:</strong> the crawl always covers the <strong>last 30°</strong>. Which call spends the biggest <em>slice</em> of its turn crawling — what does that do to its time?</p>
-<p>🚀 <strong>Fly-past check:</strong> you crank the fast speed to beat the clock. Which call now risks blowing past its tick — and why <em>that</em> one?</p>
+<p><span class="qtitle">The judge calls <strong>45° → 90° → 180°</strong> with the same <code>gyro_turn</code> and the same sticky note, and today the <strong>clock counts too</strong>. Two predictions with your partner:</span></p>
+<p>🐢 <strong>Sleepy check:</strong> the crawl always covers the <strong>last 30°</strong>. Which call spends the biggest <em>slice</em> of its turn crawling, and what does that do to its time?</p>
+<p>🚀 <strong>Fly-past check:</strong> you crank the fast speed to beat the clock. Which call now risks blowing past its tick, and why <em>that</em> one?</p>
 </div>
 <div style="width:920px;margin:6px auto 0 auto;">
   <div style="font-size:16px;color:#5b6678;text-align:center;margin-bottom:4px;">Hint: each bar is one turn, start → 🎯. Mark where the crawl <b>starts</b> (target − 30) on each.</div>
@@ -557,7 +557,7 @@ function raceDials(){
   </div>
 </div>
 <div class="fragment fade-up">
-<p>Sketch it, then <strong>write both predictions down</strong> — the stopwatch grades them. 👀</p>
+<p>Sketch it, then <strong>write both predictions down</strong>. The stopwatch grades them. 👀</p>
 </div>
 <aside class="notes">
 <p>Pure prediction, nothing revealed — the bars are deliberately unshaded; 90° is pre-filled as the worked example, squads fill 15 and 150 themselves. The sketch gives it away for 45: crawl from 15° means <strong>two-thirds of the turn is crawl</strong> — sleepy. For 180 the zone is proportionally tiny — fine at 200 deg/s, but crank the speed and the robot arrives at the zone hot: 30° isn’t enough braking distance. Don’t say any of that — take answers to both checks on the board and let the race lab grade them.</p>
@@ -585,12 +585,12 @@ function raceDials(){
 <span id="cb4-8"><a></a>    <span class="bu">print</span>(target, <span class="st">"-&gt;"</span>, elapsed, <span class="st">"ms, landed"</span>, hub.imu.heading())</span>
 <span id="cb4-9"><a></a>    wait(<span class="dv">3000</span>)                      <span class="co"># set the robot straight again</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Run it with <strong>your bench tuning</strong> — the sticky note. Look at 45°’s time. Sleepy? That’s the crawl lane eating two-thirds of a small turn.</li>
+<li>Run it with <strong>your bench tuning</strong> from the sticky note. Look at 45°’s time. Sleepy? That’s the crawl lane eating two-thirds of a small turn.</li>
 <li>Now chase the clock: crank the fast speed <strong>200 → 500</strong> and rerun. Look at where <strong>180° lands</strong>. 😬</li>
 </ul>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>One tuning, three calls: <strong>accurate but sleepy</strong> — or <strong>fast but flying past</strong>. The fixed crawl zone can’t serve every angle <em>and</em> every speed.</p>
+<p>One tuning, three calls: <strong>accurate but sleepy</strong>, or <strong>fast but flying past</strong>. The fixed crawl zone can’t serve every angle <em>and</em> every speed.</p>
 </div>
 </div>
 <aside class="notes">
@@ -610,11 +610,11 @@ function raceDials(){
 <section id="the-tuning-treadmill" class="slide level2">
 <h2>The tuning treadmill 🎡</h2>
 <div class="qbox">
-<p><span class="qtitle">Fix it with yesterday’s toolbox: a <strong>wider</strong> crawl zone? A <strong>third</strong> speed? A different tuning <strong>per angle</strong>? — what does each one cost?</span></p>
+<p><span class="qtitle">Fix it with yesterday’s toolbox: a <strong>wider</strong> crawl zone? A <strong>third</strong> speed? A different tuning <strong>per angle</strong>? What does each one cost?</span></p>
 <p>Talk it out. Follow each fix two steps ahead.</p>
 </div>
 <div class="fragment fade-up">
-<p>Board your fixes — then we <strong>test-drive every single one</strong>. 🚗</p>
+<p>Board your fixes, then we <strong>test-drive every one</strong>. 🚗</p>
 </div>
 <p>⏱️ <strong>Time: 20 minutes</strong> <em>(discussion + test-drives)</em></p>
 <aside class="notes">
@@ -680,7 +680,7 @@ function raceDials(){
     </div>
   </div>
   <div style="text-align:center;font-size:18px;color:#1C355E;margin-top:2px;">
-    knobs to hand-tune: <b style="color:#E96852;"><span id="stKnobs">2</span></b> · <span id="stMsg" style="color:#625D9C;">two speeds, one crawl zone — where we started</span>
+    knobs to hand-tune: <b style="color:#E96852;"><span id="stKnobs">2</span></b> · <span id="stMsg" style="color:#625D9C;">two speeds, one crawl zone, where we started</span>
   </div>
 </div>
 <script>
@@ -779,13 +779,13 @@ function raceDials(){
     }
     render();
   };
-  window.stReset=function(){ clearRun(); steps=2; ghosts=0; sleepy=0; el('stGhosts').innerHTML=''; el('stMsg').textContent='two speeds, one crawl zone — where we started'; el('stMsg').style.color='#625D9C'; render(); };
+  window.stReset=function(){ clearRun(); steps=2; ghosts=0; sleepy=0; el('stGhosts').innerHTML=''; el('stMsg').textContent='two speeds, one crawl zone, where we started'; el('stMsg').style.color='#625D9C'; render(); };
   render();
 })();
 </script>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>Every fix adds a <strong>step</strong> and a <strong>knob</strong> — and <em>every</em> drive still ends the same: the 🚗 crosses the cliff <strong>still moving</strong>. What you actually want: speed that <strong>shrinks by itself</strong> as the degrees-left shrink.</p>
+<p>Every fix adds a <strong>step</strong> and a <strong>knob</strong>, and <em>every</em> drive still ends the same: the 🚗 crosses the cliff <strong>still moving</strong>. What you actually want is speed that <strong>shrinks by itself</strong> as the degrees-left shrink.</p>
 </div>
 </div>
 <aside class="notes">
@@ -818,13 +818,13 @@ function raceDials(){
 <p><strong>The game</strong></p>
 </div>
 <div class="callout-content">
-<p>Stand three big steps from the wall. Walk to it and stop with your toes <strong>exactly on the line</strong>. Round 1: normal. Round 2: <em>robot style</em> — full speed, then slam the brakes at the end. Round 3: crawl the entire way. Which round felt right — and what were your legs doing in it?</p>
+<p>Stand three big steps from the wall. Walk to it and stop with your toes <strong>exactly on the line</strong>. Round 1: normal. Round 2: <em>robot style</em>, full speed then slam the brakes at the end. Round 3: crawl the entire way. Which round felt right, and what were your legs doing in it?</p>
 </div>
 </div>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Your legs already run the deal: <strong>far → fast · close → gentle · there → zero.</strong> No zones, no steps — your speed simply <em>follows</em> the distance left. Robots can sign the same deal.</p>
+<p>Your legs already run the deal: <strong>far → fast · close → gentle · there → zero.</strong> No zones, no steps. Your speed simply <em>follows</em> the distance left, and robots can sign the same deal.</p>
 </div>
 </div>
 <p>⏱️ <strong>Time: 5 minutes</strong></p>
@@ -845,7 +845,7 @@ function raceDials(){
 <section id="say-the-deal-in-numbers" class="slide level2">
 <h2>Say the deal in numbers</h2>
 <div class="qbox">
-<p><span class="qtitle">Target <strong>90°</strong>, heading reads <strong>20°</strong>. Call the degrees-left the <strong>error</strong> — here, 70. Build the wheel speed <em>from</em> the error: you’re allowed one multiplication.</span></p>
+<p><span class="qtitle">Target <strong>90°</strong>, heading reads <strong>20°</strong>. Call the degrees-left the <strong>error</strong>, which is 70 here. Build the wheel speed <em>from</em> the error: you’re allowed one multiplication.</span></p>
 <p>What does your rule give at error 70? At 10? At 0?</p>
 </div>
 <div class="fragment fade-up">
@@ -858,7 +858,7 @@ function raceDials(){
 </div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p><strong><code>speed = error × KP</code></strong> — the whole staircase, in one line. <code>KP</code> is the slope — engineers call this knob the <strong>gain</strong>: how hard to push <em>per degree left</em>. And at error 0 the speed is 0 — it parks itself.</p>
+<p><strong><code>speed = error × KP</code></strong>: the whole staircase in one line. <code>KP</code> is the slope, and engineers call this knob the <strong>gain</strong>: how hard to push <em>per degree left</em>. At error 0 the speed is 0, so it parks itself.</p>
 </div>
 </div>
 <aside class="notes">
@@ -897,7 +897,7 @@ function raceDials(){
     <polyline points="70,90 397,90 397,248 560,248 560,300" fill="none" stroke="#FF7A5C" stroke-width="6" stroke-linejoin="round"></polyline>
     <text x="150" y="78" font-size="16" fill="#E96852" font-weight="800">🪜 two speeds: 200</text>
     <text x="440" y="236" font-size="15" fill="#E96852" font-weight="700">crawl: 50</text>
-    <!-- ramp (P) — dim until it runs -->
+    <!-- ramp (P), dim until it runs -->
     <g id="opRampG" opacity="0.15">
       <line x1="70" y1="73" x2="560" y2="300" stroke="#00C9A7" stroke-width="6" stroke-linecap="round"></line>
       <text x="150" y="130" font-size="16" fill="#00AE8D" font-weight="800">📈 speed = error × 4</text>
@@ -934,7 +934,7 @@ function raceDials(){
       <div>wheel speed: <b><span id="opSpdV">0</span></b></div>
       <div style="height:16px;background:#eef3f8;border-radius:5px;overflow:hidden;margin-top:2px;"><div id="opSpdBar" style="height:100%;width:0%;background:#00AE8D;"></div></div>
     </div>
-    <div id="opMsg" style="font-size:15px;font-weight:700;color:#625D9C;margin-top:8px;min-height:44px;">the dot and the 🚗 move <b>together</b> — same robot, two views</div>
+    <div id="opMsg" style="font-size:15px;font-weight:700;color:#625D9C;margin-top:8px;min-height:44px;">the dot and the 🚗 move <b>together</b>: same robot, two views</div>
   </div>
 </div>
 <script>
@@ -975,7 +975,7 @@ function raceDials(){
         el('opSpdBar').style.width = Math.min(spOf(mode,e)/360*100,100)+'%';
         if(done){
           el('opMsg').style.color='#00AE8D';
-          el('opMsg').innerHTML='speed hit 0 <b>exactly at the target</b> — parked at 90.0° 🎯';
+          el('opMsg').innerHTML='speed hit 0 <b>exactly at the target</b>: parked at 90.0° 🎯';
           raf=null; return;
         }
         raf=requestAnimationFrame(frame);
@@ -1000,7 +1000,7 @@ function raceDials(){
 </script>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Every staircase fix added a step. The ramp has <strong>no steps to tune</strong> — it re-measures the error <strong>200×/second</strong> and touches zero exactly at the target, so there’s never anything left to coast.</p>
+<p>Every staircase fix added a step. The ramp has <strong>no steps to tune</strong>. It re-measures the error <strong>200×/second</strong> and touches zero exactly at the target, so there’s never anything left to coast.</p>
 </div>
 </div>
 <aside class="notes">
@@ -1031,12 +1031,12 @@ function raceDials(){
 <span id="cb5-10"><a></a>gyro_turn_p(<span class="dv">90</span>)   <span class="co"># gyro_turn_p(45)… gyro_turn_p(180)… gyro_turn_p(-90)!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Line 10: a <strong>negative</strong> target flips the sign, the wheels swap — <strong>left turns come free.</strong> Yesterday’s version needed surgery for that.</p>
+<p>Line 10: a <strong>negative</strong> target flips the sign and the wheels swap, so <strong>left turns come free.</strong> Yesterday’s version needed surgery for that.</p>
 </div>
 </div>
 <aside class="notes">
 <p>Walk the highlight stops: <code>kp</code> arrives as a <em>parameter with a default</em> — new syntax, teach it in one breath (“a knob you can leave alone”). Line 3’s <code>abs()</code> is what makes negative targets work. Demo on the next slide.</p>
-<p><strong>Coach aside — “why <code>run()</code> and not <code>motor.dc()</code>?”</strong> (for the sharp student who’s read ahead). Honest truth: <code>run()</code> is <em>itself</em> a closed-loop <strong>speed</strong> controller inside Pybricks — so this hand-written P sits <em>on top</em> of it, a controller-on-a-controller. Your <code>kp</code> sets a speed <em>target</em>; Pybricks’ own loop chases it. A pro writing a controller from scratch often reaches for <code>motor.dc()</code> instead — raw power/duty — so their formula is the <em>whole</em> controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep <code>run()</code> on purpose for two reasons: it’s <strong>smoother and battery-proof</strong> (a fresh vs.&nbsp;tired hub turns the same — priceless with five robots on the bench), and it speaks the same <strong>“speed”</strong> language as <code>drive.drive(speed, turn)</code> and <code>DriveBase</code> — so <code>speed = error × KP</code> stays literally true all the way from this turn, through the self-healing straight, to D6’s line-follower. <code>dc()</code> is the right tool the day you build a controller with no help underneath; that day isn’t this bootcamp.</p>
+<p><strong>Coach aside — “why <code>run()</code> and not <code>motor.dc()</code>?”</strong> (for the sharp student who’s read ahead). Honest truth: <code>run()</code> is <em>itself</em> a closed-loop <strong>speed</strong> controller inside Pybricks — so this hand-written P sits <em>on top</em> of it, a controller-on-a-controller. Your <code>kp</code> sets a speed <em>target</em>; Pybricks’ own loop chases it. A pro writing a controller from scratch often reaches for <code>motor.dc()</code> instead — raw power/duty — so their formula is the <em>whole</em> controller, one layer, nothing hidden underneath. Totally legitimate, and purer. We keep <code>run()</code> on purpose for two reasons: it’s <strong>smoother and battery-proof</strong> (a fresh vs.&nbsp;tired hub turns the same — priceless with five robots on the bench), and it speaks the same <strong>“speed”</strong> language as <code>robot.drive(speed, turn)</code> and <code>DriveBase</code> — so <code>speed = error × KP</code> stays literally true all the way from this turn, through the self-healing straight, to D6’s line-follower. <code>dc()</code> is the right tool the day you build a controller with no help underneath; that day isn’t this bootcamp.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1057,7 +1057,7 @@ function raceDials(){
     <button onclick="pgRun(45)" style="background:#00C9A7;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ 45°</button>
     <button onclick="pgRun(90)" style="background:#625D9C;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ 90°</button>
     <button onclick="pgRun(180)" style="background:#FF7A5C;color:#fff;border:none;border-radius:10px;padding:7px 18px;font-size:19px;font-weight:700;cursor:pointer;">▶ 180°</button>
-    <span style="font-size:17px;color:#1C355E;margin-left:14px;">the game: land within <b>±2°</b> and under <b>1.3 s</b> — on <b>all three</b> calls. Which side can?</span>
+    <span style="font-size:17px;color:#1C355E;margin-left:14px;">the game: land within <b>±2°</b> and under <b>1.3 s</b> on <b>all three</b> calls. Which side can?</span>
   </div>
   <div style="display:flex;justify-content:center;gap:70px;">
     <div style="text-align:center;">
@@ -1192,11 +1192,11 @@ function raceDials(){
 <p>You just built: a controller whose push is <strong>proportional</strong> to the error.</p>
 <div class="fragment fade-up">
 <div style="text-align:center;font-size:44px;font-weight:800;color:#1C355E;margin:18px 0 6px 0;">the <span style="color:#00AE8D;">P</span>-controller</div>
-<div style="text-align:center;font-size:22px;color:#1C355E;">P = proportional — the first letter of <b>PID</b></div>
+<div style="text-align:center;font-size:22px;color:#1C355E;">P = proportional, the first letter of <b>PID</b></div>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>This exact line runs inside every drone, thermostat, cruise control, elevator, and Mars rover. You didn’t learn a LEGO trick today — you wrote the opening letter of the most-used formula in robotics. <strong>I</strong> and <strong>D</strong>? They earn their seats tomorrow.</p>
+<p>This exact line runs inside every drone, thermostat, cruise control, elevator, and Mars rover. You didn’t learn a LEGO trick today. You wrote the opening letter of the most-used formula in robotics. <strong>I</strong> and <strong>D</strong>? They earn their seats tomorrow.</p>
 </div>
 </div>
 <aside class="notes">
@@ -1216,11 +1216,11 @@ function raceDials(){
 <section id="quick-quiz-the-kp-knob" class="slide level2">
 <h2>Quick quiz: the KP knob 🚨</h2>
 <div class="qbox">
-<p><span class="qtitle">Before you touch the robot: <strong>KP = 1</strong> — what will the turn <em>feel</em> like? <strong>KP = 20</strong>? Predict both.</span></p>
+<p><span class="qtitle">Before you touch the robot: with <strong>KP = 1</strong>, what will the turn <em>feel</em> like? And with <strong>KP = 20</strong>? Predict both.</span></p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p><strong>1 = lazy</strong> — near the target it pushes too weakly to beat friction and <strong>parks short.</strong> <strong>20 = hot</strong> — it flies past and zig-zags back. Tuning is the middle: hard enough to <em>arrive</em>, soft enough to arrive <em>calm</em>. That lazy leftover it parks on gets a name tomorrow. 😏</p>
+<p><strong>1 = lazy.</strong> Near the target it pushes too weakly to beat friction and <strong>parks short. 20 = hot.</strong> It flies past and zig-zags back. Tuning is the middle: hard enough to <em>arrive</em>, soft enough to arrive <em>calm</em>. That lazy leftover it parks on gets a name tomorrow. 😏</p>
 </div>
 </div>
 <aside class="notes">
@@ -1240,7 +1240,7 @@ function raceDials(){
 <section id="lab-your-kp-your-rematch" class="slide level2">
 <h2>Lab: your KP, your rematch 🎛️</h2>
 <ul>
-<li>Build <code>gyro_turn_p</code>, then rerun the <strong>morning race</strong> — same three calls, one KP. Beat your two-speed times <em>and</em> landings?</li>
+<li>Build <code>gyro_turn_p</code>, then rerun the <strong>morning race</strong>: same three calls, one KP. Beat your two-speed times <em>and</em> landings?</li>
 <li>Find <strong>your</strong> KP: start at 4 → halve it, double it, feel both failures, close in from the middle.</li>
 <li>Try <code>gyro_turn_p(-90)</code>. No surgery required. 😎</li>
 </ul>
@@ -1266,16 +1266,16 @@ function raceDials(){
 </section>
 <section id="break-it-the-nudge-test" class="slide level2">
 <h2>Break it: the nudge test 💥</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="|1-2|4-7|8-9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>hub.imu.reset_heading(<span class="dv">0</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-code-line-numbers="|1-2|4-7|8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a>hub.imu.reset_heading(<span class="dv">0</span>)</span>
 <span id="cb6-2"><a></a>left.reset_angle(<span class="dv">0</span>)              <span class="co"># zero the wheel's degree-counter</span></span>
 <span id="cb6-3"><a></a></span>
 <span id="cb6-4"><a></a>left.run(<span class="dv">500</span>)<span class="op">;</span> right.run(<span class="dv">500</span>)</span>
-<span id="cb6-5"><a></a><span class="cf">while</span> left.angle() <span class="op">&lt;</span> <span class="dv">1304</span>:       <span class="co"># ≈ 100 cm — Day 2's number!</span></span>
+<span id="cb6-5"><a></a><span class="cf">while</span> left.angle() <span class="op">&lt;</span> <span class="dv">1304</span>:       <span class="co"># ≈ 100 cm, your own number</span></span>
 <span id="cb6-6"><a></a>    <span class="bu">print</span>(hub.imu.heading())</span>
 <span id="cb6-7"><a></a>    wait(<span class="dv">100</span>)</span>
 <span id="cb6-8"><a></a>left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li><code>left.angle()</code> = the same degree-counter <code>run_angle</code> uses — now <strong>you</strong> read it.</li>
+<li><code>left.angle()</code> is the same degree-counter <code>run_angle</code> uses. Now <strong>you</strong> read it.</li>
 <li>While it drives, give the robot’s side a <strong>gentle nudge</strong> (or lay a pencil in its path). Watch the printout…</li>
 </ul>
 <aside class="notes">
@@ -1331,24 +1331,24 @@ function raceDials(){
 </script>
 <div class="fragment fade-up">
 <div class="cardbox coral">
-<p>It jumps to <strong>8 — and stays at 8.</strong> <code>run()</code> spins the wheels equally; nobody keeps the robot <em>pointing</em>.</p>
+<p>It jumps to <strong>8 and stays at 8.</strong> <code>run()</code> spins the wheels equally, and nobody keeps the robot <em>pointing</em>.</p>
 </div>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>But the gyro <strong>knew</strong> — it read the 8 the whole time. 👀</p>
+<p>But the gyro <strong>knew</strong>. It read the 8 the whole time. 👀</p>
 </div>
 </div>
 </section>
 <section id="talk-it-out" class="slide level2">
 <h2>Talk it out</h2>
 <div class="qbox">
-<p><span class="qtitle">Heading says <strong>+8</strong> — nosed right. You command each wheel’s speed. What should the wheels do about it?</span></p>
+<p><span class="qtitle">Heading says <strong>+8</strong>, so it’s nosed right. You command each wheel’s speed. What should the wheels do about it?</span></p>
 <p>And should a +2 error get the same medicine as a +20 error?</p>
 </div>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p>Steer back <strong>left</strong> — right wheel faster, left slower — until heading reads 0. And the <strong>bigger</strong> the error, the <strong>harder</strong> the push.</p>
+<p>Steer back <strong>left</strong>, with the right wheel faster and the left slower, until heading reads 0. And the <strong>bigger</strong> the error, the <strong>harder</strong> the push.</p>
 </div>
 </div>
 </section>
@@ -1363,10 +1363,10 @@ function raceDials(){
 <span id="cb7-7"><a></a>    right.run(<span class="dv">500</span> <span class="op">+</span> <span class="dv">4</span> <span class="op">*</span> error)    <span class="co"># …right pushes harder → steers back left</span></span>
 <span id="cb7-8"><a></a>    wait(<span class="dv">10</span>)</span>
 <span id="cb7-9"><a></a>left.stop()<span class="op">;</span> right.stop()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Run it — and <strong>nudge it again.</strong> 😈</p>
+<p>Run it, then <strong>nudge it again.</strong> 😈</p>
 <div class="fragment fade-up">
 <div class="cardbox purple">
-<p><strong>It fights back.</strong> A hundred times a second: read the error, steer against it. Error 0 → wheels equal → dead straight. That tiny loop is the heart of every self-driving machine on Earth.</p>
+<p><strong>It fights back.</strong> A hundred times a second: read the error, steer against it. Error 0 → wheels equal → dead straight. That tiny loop is the heart of every self-driving machine.</p>
 </div>
 </div>
 <aside class="notes">
@@ -1460,7 +1460,7 @@ function raceDials(){
 </script>
 <div class="fragment fade-up">
 <div class="cardbox teal">
-<p>Gyro fix <strong>OFF</strong>: one nudge and it rides the wall forever. <strong>ON</strong>: every nudge gets steered right back out. Same robot — the only difference is <em>watching the error</em>.</p>
+<p>Gyro fix <strong>OFF</strong>: one nudge and it rides the wall forever. <strong>ON</strong>: every nudge gets steered right back out. Same robot. The only difference is <em>watching the error</em>.</p>
 </div>
 </div>
 <p>⏱️ <strong>Time: 15 minutes</strong></p>
@@ -1486,7 +1486,7 @@ function raceDials(){
 </div>
 </div>
 <ul>
-<li>Tune on the bench first — your straight’s <code>4</code> is a knob too: too soft and a shove sends you wandering; too hot and the trace zig-zags all the way down the lane.</li>
+<li>Tune on the bench first. Your straight’s <code>4</code> is a knob too: too soft and a shove sends you wandering, too hot and the trace zig-zags all the way down the lane.</li>
 <li>Watch one recovery closely: the harder the shove, the harder the fight-back. <strong>The shove <em>is</em> the error.</strong></li>
 </ul>
 <aside class="notes">
@@ -1514,15 +1514,15 @@ function raceDials(){
 <p><strong>You’re done today when…</strong></p>
 </div>
 <div class="callout-content">
-<p>One KP turns your robot to <strong>any called angle</strong> — both directions — with your own <code>gyro_turn_p</code>; your 1.5 m straight <strong>fights back</strong> through two nudges; and you can say <em>“the bigger the error, the harder the push”</em> and predict what a too-small / too-big KP does <strong>before</strong> running it.</p>
+<p>One KP turns your robot to <strong>any called angle</strong>, in both directions, with your own <code>gyro_turn_p</code>. Your 1.5 m straight <strong>fights back</strong> through two nudges, and you can say <em>“the bigger the error, the harder the push”</em> and predict what a too-small / too-big KP does <strong>before</strong> running it.</p>
 </div>
 </div>
 </div>
 <div class="fragment fade-up">
-<p>Tomorrow: put P in a <em>hurry</em> and watch it slam past the target — meet the letter that <strong>damps</strong> it. Then a lean P never quite kills — one more letter. Finish the acronym… and start naming moves in a library of your <strong>own</strong>. 📦</p>
+<p>Tomorrow: put P in a <em>hurry</em> and watch it slam past the target, then meet the letter that <strong>damps</strong> it. After that, the lean a P never quite kills earns one more letter. You finish the acronym and start naming moves in a library of your <strong>own</strong>. 📦</p>
 </div>
 <aside class="notes">
-<p>The gate is the plan’s D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the KP prediction in their own words — same formula, two applications today (turn + straight); the third is D6’s line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins <code>my_lib.py</code> (<code>drive_straight</code>/<code>turn_to</code>) — the <code>DriveBase</code> surprise now waits at the D8 reveal (decision #20, re-timed by #26), earned only after the whole library is theirs.</p>
+<p>The gate is the plan’s D4 outcome verbatim: turn to any angle + hold heading through nudges with a hand-written P, plus the KP prediction in their own words — same formula, two applications today (turn + straight); the third is D6’s line. The teaser sets up D5 without naming D or I; D5 finishes the acronym and begins <code>movements.py</code> (<code>drive_straight</code>/<code>turn</code>) — the <code>DriveBase</code> surprise now waits at the D8 reveal (decision #20, re-timed by #26), earned only after the whole library is theirs.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1825,7 +1825,7 @@ function raceDials(){
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/NaifMersal\.github\.io\/WRO-LEGO-pypricks\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
