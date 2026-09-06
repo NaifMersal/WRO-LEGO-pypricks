@@ -4,7 +4,7 @@ A five-week youth robotics bootcamp that takes beginners from a box of LEGO to a
 robot for the **WRO 2026 RoboMission Elementary** season (*"Robot Rockstars"*), on **LEGO SPIKE
 Prime programmed in Python with [Pybricks](https://pybricks.com/)**.
 
-**▶ The course portal is the thing to look at: <https://naifmersal.github.io/WRO-LEGO-pypricks/>** —
+**▶ The course portal is the thing to look at: <https://naifmersal.github.io/WRO-LEGO-pybricks/>** —
 a card grid of all 25 sessions, each opening a reveal.js deck, plus the recap arcade and the field
 tool.
 
