@@ -27,22 +27,6 @@ tool.
 hand-written standalone HTML. Put a new page in the matching place and list it in `_quarto.yml` if
 it is not a `.qmd`.
 
-## 🚫 What is not here, and why
-
-This repo is public, so it carries the **site sources only**. The coach side is kept out
-deliberately, and `.gitignore` enforces it:
-
-- **The planning documents** — the bootcamp plan, the decision log, the robot specs, the WRO rules.
-  They are the working record of a live cohort and are not distributed. Decks and READMEs still
-  cite them by path (`docs/…`); those references will not resolve in a clone.
-- **Student data** — photographs, names, exam scripts and marks. The students are children.
-- **The Skills Check** — the exam page, its answer key, the Apps Script endpoint and the results.
-  The exam page is generated coach-side and opened from disk on the day; it is **not** published,
-  and must never be added to `resources:` in `_quarto.yml`.
-- **The rest of `tools/`** — the Brython bench simulator, the route optimiser, the spec extractor.
-
-If you are the coach and you are looking for those, they are on your own disk, not in this history.
-
 ## 🛠️ Requirements
 
 - **Hardware** — LEGO SPIKE Prime Core Set (45678) + Expansion Set (45681).
