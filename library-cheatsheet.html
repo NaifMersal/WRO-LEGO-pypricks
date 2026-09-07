@@ -4118,7 +4118,7 @@ code{ color:var(--navy); }
 <p>It also tells you <em>which file to open</em> when something misbehaves, and it makes rebuilding a claw as a fork a <strong>one-word</strong> change on the import line.</p>
 <p>Driving is different: there’s only one <code>movements.py</code>, so nothing can shadow it and <code>import *</code> is safe. <strong>Star-import a file when it’s the only one of its kind. Name it when something else could claim the same words.</strong></p>
 </blockquote>
-<p>Downloads: <a href="code/movements.py">movements.py</a> · <a href="code/claw_gripper.py">claw_gripper.py</a> · <a href="code/lift_gripper.py">lift_gripper.py</a> · <a href="code/grip_test.py">grip_test.py</a></p>
+<p>Downloads: <a href="code/movements.py">movements.py</a> · <a href="code/claw_gripper.py">claw_gripper.py</a> · <a href="code/lift_gripper.py">lift_gripper.py</a></p>
 </section>
 <section id="the-rules-of-the-road" class="level2">
 <h2 class="anchored" data-anchor-id="the-rules-of-the-road">The rules of the road</h2>
@@ -4239,42 +4239,36 @@ code{ color:var(--navy); }
 </tr>
 <tr class="even">
 <td><code>gripper.grab()</code></td>
-<td>take the object and hold it; <code>True</code> if you caught something</td>
+<td>close on the object and keep squeezing it</td>
 </tr>
 <tr class="odd">
 <td><code>gripper.release()</code></td>
-<td>let it go</td>
+<td>open all the way and let go</td>
 </tr>
 <tr class="even">
-<td><code>gripper.holding()</code></td>
-<td><strong>have I got it?</strong> — ask any time, and ask it <strong>twice</strong></td>
-</tr>
-<tr class="odd">
-<td><code>gripper.show_angle()</code></td>
-<td>print angle + load — <strong>use this to tune</strong></td>
+<td><code>gripper.release(50)</code></td>
+<td>open <strong>to 50°</strong> and stop there, so the jaws shove nothing</td>
 </tr>
 </tbody>
 </table>
 <blockquote class="blockquote">
-<p>🎣 <strong>Ask <code>holding()</code> twice — that’s the one worth remembering.</strong> <code>grab()</code> already tells you whether you caught it <em>here</em>. The call that saves runs is the <strong>second</strong> one, at the far end of the mat: you find out you’re empty <strong>before</strong> you place nothing into the target and drive away happy.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gripper.grab()               <span class="co"># did I catch it HERE?</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>drive_straight(<span class="dv">600</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> gripper.holding():    <span class="co"># ...do I still have it THERE?</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;dropped it -- don&#39;t bother placing&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>It’s the same function both times. It works late because <code>grab()</code> leaves the claw <em>still squeezing</em>, so there is still a load to read — a claw that had merely stalled and stopped would have relaxed, and the question would have no answer.</p>
+<p>🎤 <strong>Open only as far as you need.</strong> Plain <code>release()</code> swings the jaws out to <code>READY_ANGLE</code>, and beside a standing microphone those jaw arms sweep a wide arc and flatten it — the 20 points are for <strong>upright</strong>. Zero is where the jaws meet, so the number you pass is simply <em>how far open</em>: find the smallest one that still lets the object go, on the mat, and keep it in your mission list next to the drive that gets you there.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>🎯 <strong>There is no “did I get it?” verb, and that is deliberate.</strong> If a grab comes up empty, the claw was in the <strong>wrong place</strong> — and a robot that knows it missed still has no idea <em>where</em> it actually is, so it can’t do anything useful about it. Spend the effort on arriving at the same spot every time instead: a <code>wall_square()</code> before the grab beats any amount of checking after it.</p>
 </blockquote>
 <blockquote class="blockquote">
 <p>⚠️ <strong>Two mechanisms means two <code>home()</code> calls.</strong> Every mechanism needs its own datum, and neither one homes the other:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>claw.home()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>lift.home()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>claw.home()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lift.home()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </blockquote>
 <blockquote class="blockquote">
 <p>📦 <strong>Same three words on every robot.</strong> Four students built four different mechanisms. A claw closes sideways; a fork scoops upward; they share no parts. But the mission list can’t tell them apart —</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gripper.home()</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>drive_straight(<span class="dv">200</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>gripper.grab()</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>drive_straight(<span class="op">-</span><span class="dv">200</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>gripper.release()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gripper.home()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>drive_straight(<span class="dv">200</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>gripper.grab()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>drive_straight(<span class="op">-</span><span class="dv">200</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>gripper.release()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>That list runs on all four robots. The only line that differs between them is the <code>import</code>. <strong>That</strong> is what a library is for: hide the machine behind the word.</p>
 <p>Built two mechanisms? Then the name in front says which one you’re talking to — <code>claw.grab()</code>, <code>lift.grab()</code> — and the three verbs stay exactly the same.</p>
 </blockquote>
@@ -4298,9 +4292,9 @@ code{ color:var(--navy); }
 <p><strong><code>gripper.home()</code> — the same idea, for your mechanism</strong></p>
 <p>The motor counts degrees from a mark on its <strong>own shaft</strong> — it has never seen your claw. Skip a gear tooth in a crash, re-seat an axle, or re-gear the mechanism, and the mark stays where it was while your jaws move. That zero is now <strong>garbage</strong>, and every <code>run_target</code> after it inherits the mistake. <a href="#move-by-or-move-to">More on that pair of verbs.</a></p>
 <p>So don’t guess. Drive it until it physically can’t move, and call <em>that</em> zero.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>claw.run_until_stalled(<span class="op">-</span>OPEN_SPEED, then<span class="op">=</span>Stop.COAST, duty_limit<span class="op">=</span>HOME_EFFORT)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>wait(<span class="dv">200</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>claw.reset_angle(<span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>claw.run_until_stalled(<span class="op">-</span>OPEN_SPEED, then<span class="op">=</span>Stop.COAST, duty_limit<span class="op">=</span>HOME_EFFORT)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>wait(<span class="dv">200</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>claw.reset_angle(<span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>The printed mat never lies — neither does the end stop.</strong> Same trick, two places: stop guessing, go and <em>touch</em> something that is where it says it is.</p>
 <p>That works because the end stop is <strong>rigid and always in the same place</strong>. An object in the jaws is neither — which is why <code>grab()</code> does something different. <a href="#stall-to-find-zero-torque-to-hold-a-thing">See below.</a></p>
 <blockquote class="blockquote">
@@ -4386,8 +4380,8 @@ code{ color:var(--navy); }
 </table>
 <section id="finding-zero-run_until_stalled" class="level3">
 <h3 class="anchored" data-anchor-id="finding-zero-run_until_stalled">Finding zero — <code>run_until_stalled</code></h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>motor.run_until_stalled(<span class="op">-</span>CLOSE_SPEED, then<span class="op">=</span>Stop.COAST, duty_limit<span class="op">=</span>HOME_EFFORT)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>motor.reset_angle(<span class="dv">0</span>)                    <span class="co"># the jaws just met -- THAT is zero</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>motor.run_until_stalled(<span class="op">-</span>CLOSE_SPEED, then<span class="op">=</span>Stop.COAST, duty_limit<span class="op">=</span>HOME_EFFORT)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>motor.reset_angle(<span class="dv">0</span>)                    <span class="co"># the jaws just met -- THAT is zero</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -4419,7 +4413,7 @@ code{ color:var(--navy); }
 <p>An <strong>object</strong> is none of those things. It sits where it landed, it squashes, it rolls. Press into that and “where it stopped” is a different number every run — which is why gripping needs the other tool.</p>
 </blockquote>
 <blockquote class="blockquote">
-<p>🎯 <strong>Zero goes where the question is.</strong> Both gripper files home the jaws <strong>shut</strong> and call that 0. That is not an accident: the question you ask all run long is <em>“did I catch something, or did the jaws meet?”</em> — and with zero at the meeting point the answer is just <em>“did we stop before 0?”</em> There is no empty-jaw angle to measure, to mistype, or to re-measure after you re-gear.</p>
+<p>🎯 <strong>Zero goes where the jaws meet.</strong> Both gripper files home the jaws <strong>shut</strong> and call that 0, so every angle in the file reads as <em>how far open</em> the mechanism is. <code>READY_ANGLE</code> is a positive number and <code>GRIP_TARGET</code> a small negative one. Nothing to measure, nothing to mistype, and nothing to re-measure after you re-gear.</p>
 </blockquote>
 <blockquote class="blockquote">
 <p>⚠️ <strong><code>duty_limit</code> is the knob that breaks gears.</strong> Too high and the motor keeps shoving after the mechanism has arrived — you’ll <em>hear</em> the plastic teeth skip. Too low and it gives up early, <code>reset_angle(0)</code> fires anyway, and now zero is <strong>almost</strong> right. It lives in your gripper file’s facts block as <code>HOME_EFFORT</code> (the claw starts at <strong>40</strong> — it is pressing jaw on jaw — and the lift at <strong>75</strong>) — change it there, never at the call, and adjust by ear.</p>
@@ -4427,56 +4421,18 @@ code{ color:var(--navy); }
 </section>
 <section id="holding-a-thing-aim-past-it-cap-the-torque" class="level3">
 <h3 class="anchored" data-anchor-id="holding-a-thing-aim-past-it-cap-the-torque">Holding a thing — aim past it, cap the torque</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>claw.control.limits(torque<span class="op">=</span>GRIP_TORQUE)     <span class="co"># the squeeze, set once</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>claw.run_target(CLOSE_SPEED, GRIP_TARGET, then<span class="op">=</span>Stop.HOLD, wait<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>claw.control.limits(torque<span class="op">=</span>GRIP_TORQUE)     <span class="co"># the squeeze, set once</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>claw.run_target(CLOSE_SPEED, GRIP_TARGET, then<span class="op">=</span>Stop.HOLD, wait<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>GRIP_TARGET</code> is deliberately set a little <strong>past</strong> where the jaws meet. The claw can never get there — the object is in the way — so it never stops trying, and it leans in at <code>GRIP_TORQUE</code> for the whole carry.</p>
 <blockquote class="blockquote">
-<p>🧮 <strong><code>GRIP_TARGET</code> is a small negative number, and that’s the whole trick.</strong> Zero is where the jaws meet, so “a few degrees past shut” is just <code>-GRIP_OVERSHOOT</code> — the same line in every squad’s file, with nothing to measure. There is no empty-jaw angle to keep it in step with, so it cannot drift out of step.</p>
+<p>🧮 <strong><code>GRIP_TARGET</code> is a small negative number, and that’s the whole trick.</strong> Zero is where the jaws meet, so “a few degrees past shut” is just <code>-10</code> — the same line in every squad’s file, with nothing to measure and nothing to keep it in step with.</p>
 </blockquote>
 <blockquote class="blockquote">
 <p>🤝 <strong>Why aim at a place you can’t reach?</strong> Because that’s what keeps the pressure on. A motor that <em>arrives</em> stops pushing: it holds the angle it reached, and the moment the object settles a hair, your squeeze is gone and the object walks out on the next turn. A motor that’s still trying takes up that slack by itself.</p>
 <p>This is also why <code>grab()</code> never calls <code>hold()</code> — freezing the claw where it is would undo the entire trick.</p>
 </blockquote>
 <blockquote class="blockquote">
-<p>🔩 <strong><code>GRIP_TORQUE</code> is one number doing two jobs.</strong> It’s how hard you squeeze, <em>and</em> it’s the gear protection: the motor physically cannot shove harder than this, whatever you ask it. Raise it if the object slips on turns; lower it if you hear crunching or the object deforms. Find it with <a href="code/grip_test.py">grip_test.py</a> — not by guessing at the desk.</p>
-</blockquote>
-</section>
-<section id="did-you-get-it-two-signals-not-one" class="level3">
-<h3 class="anchored" data-anchor-id="did-you-get-it-two-signals-not-one">Did you get it? — two signals, not one</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gripper.holding()          <span class="co"># right now</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>gripper.holding()          <span class="co"># ...and again, after driving 60 cm</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>jaws stopped</th>
-<th>load</th>
-<th>what happened</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>at <strong>0</strong> — they met</td>
-<td>high</td>
-<td>closed on <strong>air</strong></td>
-</tr>
-<tr class="even">
-<td><strong>short</strong> of 0 (past <code>AIR_MARGIN</code>)</td>
-<td>high</td>
-<td><strong>holding it</strong> ✅</td>
-</tr>
-<tr class="odd">
-<td><strong>short</strong> of 0</td>
-<td>low</td>
-<td><strong>it’s gone</strong> — knocked out on a turn</td>
-</tr>
-</tbody>
-</table>
-<blockquote class="blockquote">
-<p>📏 <strong>Neither signal is enough alone.</strong> The angle can’t tell a held object from one that fell out a second ago — the jaws are still in the same place. The load can’t tell a gripped object from jaws squeezing each other. Two readings, two failures caught.</p>
-</blockquote>
-<blockquote class="blockquote">
-<p>🔬 <strong>One reading always looks fine.</strong> The question that decides your run is <em>how much does the same grab wander over ten tries?</em> You can’t see a spread one number at a time — that’s what <code>grip_test.py</code> is for. Under 10° of spread, build on it. Over 25°, fix the <strong>build</strong>, not the code.</p>
+<p>🔩 <strong><code>GRIP_TORQUE</code> is one number doing two jobs.</strong> It’s how hard you squeeze, <em>and</em> it’s the gear protection: the motor physically cannot shove harder than this, whatever you ask it. Raise it if the object slips on turns; lower it if you hear crunching or the object deforms. Find it on the mat, with the object you actually carry — not by guessing at the desk.</p>
 </blockquote>
 </section>
 </section>
