@@ -444,13 +444,14 @@ Do not let the session frame stalling as bad — it is still exactly right for `
 claw.control.limits(torque=___)      # the squeeze -- set ONCE
 
 def grab():
-    close_and_watch(CLOSE_SPEED, GRIP_TIMEOUT_MS)   # lean in until it bites
-    return holding()        # no hold(), no stop() -- that IS the squeeze
+    claw.run_target(CLOSE_SPEED, GRIP_TARGET, then=Stop.HOLD, wait=False)
+    while not claw.stalled() and not claw.done():
+        wait(10)            # no hold(), no stop() -- that IS the squeeze
 ```
 
 ::: {.fragment .fade-up}
 ::: {.cardbox .teal}
-`close_and_watch` aims at `GRIP_TARGET`, a few degrees **past** where the jaws meet. It can never get there, and **that's the point.** It never stops trying. 🎯
+`GRIP_TARGET` sits a few degrees **past** where the jaws meet. The claw can never get there, and **that's the point.** It never stops trying. 🎯
 :::
 :::
 
@@ -465,48 +466,9 @@ Blank is `torque=GRIP_TORQUE`, and the units matter: **mNm**, an amount of real 
 
 Teach the aim-past trick with hands, not words: hold a squad's claw half-closed and ask one student to keep squeezing while you slowly let the object shrink. To keep pressure they have to keep *moving*, which is exactly what an unreachable target buys. And note that the unreachable target is now trivially easy to state — zero is where the jaws meet, so "past the jaws" is just a small **negative** number, the same in every squad's file.
 
-`close_and_watch` is the one piece of plumbing worth a sentence, not a slide: it starts the move with `wait=False` and watches for three ways out — found the object, found nothing, or jammed — with a timer so a jam costs 1.5 seconds instead of the rest of the run. Open the file if anyone asks; don't spend the room's attention on the loop.
+The wait loop is the one piece of plumbing worth a sentence, not a slide: `wait=False` starts the squeeze and hands the program straight back, and the loop then waits for the jaws to stop moving — stalled on the object, or shut on air. Open the file if anyone asks; don't spend the room's attention on the loop.
 
 The purple fragment is the trap they will otherwise fall into: several will "tidy up" by adding `claw.hold()` at the end, which silently restores the exact bug the previous slide staged. Say it out loud: **the move is left running on purpose.** Contrast with `lift_gripper.py` if anyone built a fork — a fork asks for a height and means it, because gravity does the holding, so position control is right there and wrong here. Same verbs, opposite reasoning.
-:::
-
-## Did you actually catch it? 🎣 {.code-shrink}
-
-| jaws stopped | load | what happened |
-|---|---|---|
-| at **0**, they met | high | closed on **air** 🌬️ |
-| **short** of 0 | high | **holding it** ✅ |
-| **short** of 0 | low | **it's gone** 👻 |
-
-```{.python}
-def holding():
-    if claw.angle() < ___:        # jaws met -- nothing in them
-        return False
-    return grip_load() > ___
-```
-
-::: {.fragment .fade-up}
-::: {.cardbox .teal}
-**One signal can't do it.** The angle can't tell a held bottle from one that fell out a second ago. 📏
-:::
-:::
-
-::: {.fragment .fade-up}
-::: {.cardbox .purple}
-So ask the **same question twice**: once at `claw.grab()`, and again after the drive. Same function, no second verb. 🚚
-:::
-:::
-
-::: {.notes}
-Blanks are `AIR_MARGIN` (start at 20) and `GRIP_LOAD_MIN` (start at 60 mNm, then measure). Walk the truth table row by row and make them supply the third row themselves — rows one and two are the obvious ones, row three is the one that pays.
-
-Notice how little there is to hold in your head now: the jaws meet at **0**, so "closed on air" is just "angle near zero" and `AIR_MARGIN` is the only slack you have to choose. There is no measured empty angle to look up, to get wrong, or to re-measure after this morning's re-gear.
-
-**The move to teach here is that it is the same function, asked twice.** There is no second verb, and deliberately isn't one: a `still_holding()` wrapper existed for exactly one season and did nothing but call `holding()`, which taught the room that two names meant two behaviours and sent students hunting for a difference that was never there (#40). "Ask it again later" is a *habit*, and habits belong in the mission list where the student can see the second call.
-
-Why asking late is possible at all is the dividend from the previous slide: because `grab()` leaves the claw actively squeezing, the load reading stays meaningful for the whole carry. Under a stall-and-hold grip the motor had already relaxed, so "do I still have it?" had no signal to read. That is competition thinking arriving early — a run that discovers an empty claw *before* the placing manoeuvre skips it and banks the time. Get every squad to add the second call to one mission leg today.
-
-Nice bonus if you have a minute — ask what `holding()` should say for a squashy object versus a rigid one, and let them find that both margins are TUNE knobs, not constants handed down.
 :::
 
 ## Two new jobs, and **no** new verbs 📦 {.code-shrink}
@@ -519,7 +481,7 @@ drive_straight(-BACKOFF_MM)
 
 # the mic -- arrive, let go GENTLY, retreat
 drive_straight(TO_MIC_MM)
-claw.let_go()                         # a spring-open claw tips it over
+claw.release(___)                     # how far open? just enough to let go
 drive_straight(-BACKOFF_MM)
 ```
 
@@ -536,11 +498,11 @@ Tempted to call it `push_cable()`? Ask the wrapper test: **does the name buy a n
 :::
 
 ::: {.notes}
-The blanks are the point — the structure is given (their level), the *numbers* are theirs to find (the stretch): over-travel ≈ 20–30 mm, found on the mat, not chosen at the desk; and `LET_GO_TRAVEL` in `CLAW FACTS` is what makes the mic land *upright*, because a claw that springs all the way open knocks it over and "upright" is where the 20 points live.
+The blanks are the point — the structure is given (their level), the *numbers* are theirs to find (the stretch): over-travel ≈ 20–30 mm, found on the mat, not chosen at the desk; and the number inside `release()` is what decides whether the mic lands *upright*, because a claw that swings all the way out to `READY_ANGLE` sweeps its jaw arms straight through it, and "upright" is where the 20 points live — smallest angle that still lets go, found on the mat.
 
-**The slide's real move is the one it refuses to make.** Last season these six lines were handed over as `push_cable()` and `place_mic()`, and that was wrong for the same reason `still_holding()` was wrong: a name that wraps three calls you can already read buys you nothing and costs you the ability to see the run. Expect someone to propose the wrapper — they should, it's the habit we drilled — and answer with the wrapper test on the slide. `drive_straight` earns its name (it hides the DriveBase settings dance); `push_cable` doesn't (it hides a turn and two drives). Say plainly that this is a **deferral, not a ban**: when they have retyped the same three lines in four missions, that is the day the name is earned — in the continuation season, with the mission dictionary.
+**The slide's real move is the one it refuses to make.** Last season these six lines were handed over as `push_cable()` and `place_mic()`, and that was wrong for the same reason a `still_holding()` wrapper was wrong the season before it — it existed for one term and did nothing but call the verb underneath, which taught the room that two names meant two behaviours and sent students hunting for a difference that was never there (#40). A name that wraps three calls you can already read buys you nothing and costs you the ability to see the run. Expect someone to propose the wrapper — they should, it's the habit we drilled — and answer with the wrapper test on the slide. `drive_straight` earns its name (it hides the DriveBase settings dance); `push_cable` doesn't (it hides a turn and two drives). Say plainly that this is a **deferral, not a ban**: when they have retyped the same three lines in four missions, that is the day the name is earned — in the continuation season, with the mission dictionary.
 
-Filing rule: driving verbs live in `movements.py`; `home`, `grab`, `release`, `let_go` and `holding` live in a gripper file — `claw_gripper.py` and/or `lift_gripper.py`, one per mechanism the robot actually carries; **the cable and the mic live in the mission program**, as steps, because they are the mission and nothing else.
+Filing rule: driving verbs live in `movements.py`; `home`, `grab` and `release` live in a gripper file — `claw_gripper.py` and/or `lift_gripper.py`, one per mechanism the robot actually carries; **the cable and the mic live in the mission program**, as steps, because they are the mission and nothing else.
 :::
 
 ## Build block: make it gate 🔧 {.smaller}
@@ -550,7 +512,7 @@ Filing rule: driving verbs live in `movements.py`; `home`, `grab`, `release`, `l
 
 - 🔌 Pusher: cable **upright in grey**, from 3 different approach angles
 - 🎤 Carry claw: mic **upright in target**, release and retreat
-- 🔬 Ten grabs with `grip_test.py`. Write your **spread**, not your angle: under 10° build a run on it, 10–25° your claw rocks in its mounting, over 25° fix the **build**, not the code
+- 🔬 Ten grabs by hand: `home()`, `grab()`, write the angle down, `release()`. Write your **spread**, not your angle: under 10° build a run on it, 10–25° your claw rocks in its mounting, over 25° fix the **build**, not the code
 - 📋 **Log every rep.** Today's log is tonight's Accuracy score
 :::
 
@@ -571,7 +533,7 @@ The longest block of the day — protect it, and note it now carries three jobs,
 
 **The homing table is a drill, not a demo — protect ten minutes for it.** Squads split the four and stage them for each other. **Supervise the `duty_limit` rows.** Let them hear a real skip at `duty_limit=100` on a re-geared claw *once*, briefly, then stop it; the sound is worth more than any warning, and it's the same lesson the heavy-lift break-it opened the day with — torque has consequences at both ends of the chain. Do not let anyone sit at 100 for more than a second, and don't run this on a build you can't afford to re-teeth. The low side is subtler and more valuable: at 15 the jaws stop short of actually meeting, `reset_angle(0)` fires anyway, and now zero is *almost* right — worse than obviously wrong, because it passes on the bench and fails on the mat. Tie it back: a tuning knob found by feel, exactly like KP. The wrong-direction row is the most common: they flip a sign, the claw homes to *open*, and every `grab()` afterwards asks the motor to drive somewhere it already is — the fix is to flip `Direction` in their gripper file, not the numbers. Collect the four "what you'd see" answers on the board; that list is a diagnostic sheet for the rest of the season.
 
-**On `grip_test.py`:** one reading always looks fine, so a single number cannot tell you whether a claw is competition-grade. Spread can. Make the board column say *spread*, not *angle* — a wide spread is a **build** defect and points at a specific fix (the claw rocks, the mount flexes, the object rolls before the jaws arrive) rather than at a number to fiddle with, so hold the line on the bottom row when someone wants to tune their way out of a 30° spread. The angle it reports is how far the object holds the jaws open, measured from shut, so the smallest number is also the answer to "where does `AIR_MARGIN` go?" — comfortably under it. The test also grabs five times by **stalling** right next to five by **torque**: have them read the two spreads rather than take the previous slides on faith. Budget two minutes per squad, and have them run it twice — now, and again at the end of the day on a tired battery, which is what makes the stall-versus-torque column honest. If the two spreads come out close on a fresh battery, say so plainly rather than overselling; the effect grows as the battery sags, and a coach who oversells a result the students can see is fine loses the argument they actually need to win.
+**On the ten grabs:** one reading always looks fine, so a single number cannot tell you whether a claw is competition-grade. Spread can. Make the board column say *spread*, not *angle* — a wide spread is a **build** defect and points at a specific fix (the claw rocks, the mount flexes, the object rolls before the jaws arrive) rather than at a number to fiddle with, so hold the line on the bottom row when someone wants to tune their way out of a 30° spread. Have them home, grab, write the angle down, release, and repeat — ten rows in a notebook, which is the whole experiment. Budget two minutes per squad, and have them run it twice: now, and again at the end of the day on a tired battery, which is when a claw that squeezes by force pulls away from one that merely stalled. If the two look close on a fresh battery, say so plainly rather than overselling; a coach who oversells a result the students can see is fine loses the argument they actually need to win.
 :::
 
 # D. Compete & Gate {.sdaia-dark background-gradient="linear-gradient(135deg, #1C355E, #00C9A7)"}

@@ -11,7 +11,6 @@ resources:
   - code/movements.py
   - code/claw_gripper.py
   - code/lift_gripper.py
-  - code/grip_test.py
 ---
 
 ```{=html}
@@ -75,8 +74,7 @@ lift to **C**. If a mechanism won't answer, check `CLAW_PORT` and `LIFT_PORT`
 
 Downloads: [movements.py](code/movements.py) ·
 [claw_gripper.py](code/claw_gripper.py) ·
-[lift_gripper.py](code/lift_gripper.py) ·
-[grip_test.py](code/grip_test.py)
+[lift_gripper.py](code/lift_gripper.py)
 
 ## The rules of the road
 
@@ -152,27 +150,23 @@ import line goes in front — `gripper.`, `claw.`, `lift.`:
 | Verb | What it does |
 |---|---|
 | `gripper.home()` | find the end stop, call it zero — **run this first, always** |
-| `gripper.grab()` | take the object and hold it; `True` if you caught something |
-| `gripper.release()` | let it go |
-| `gripper.holding()` | **have I got it?** — ask any time, and ask it **twice** |
-| `gripper.show_angle()` | print angle + load — **use this to tune** |
+| `gripper.grab()` | close on the object and keep squeezing it |
+| `gripper.release()` | open all the way and let go |
+| `gripper.release(50)` | open **to 50°** and stop there, so the jaws shove nothing |
 
-> 🎣 **Ask `holding()` twice — that's the one worth remembering.** `grab()`
-> already tells you whether you caught it *here*. The call that saves runs is
-> the **second** one, at the far end of the mat: you find out you're empty
-> **before** you place nothing into the target and drive away happy.
->
-> ```python
-> gripper.grab()               # did I catch it HERE?
-> drive_straight(600)
-> if not gripper.holding():    # ...do I still have it THERE?
->     print("dropped it -- don't bother placing")
-> ```
->
-> It's the same function both times. It works late because `grab()` leaves the
-> claw *still squeezing*, so there is still a load to read — a claw that had
-> merely stalled and stopped would have relaxed, and the question would have
-> no answer.
+> 🎤 **Open only as far as you need.** Plain `release()` swings the jaws
+> out to `READY_ANGLE`, and beside a standing microphone those jaw arms sweep a
+> wide arc and flatten it — the 20 points are for **upright**. Zero is where
+> the jaws meet, so the number you pass is simply *how far open*: find the
+> smallest one that still lets the object go, on the mat, and keep it in your
+> mission list next to the drive that gets you there.
+
+> 🎯 **There is no "did I get it?" verb, and that is deliberate.** If a
+> grab comes up empty, the claw was in the **wrong place** — and a robot that
+> knows it missed still has no idea *where* it actually is, so it can't do
+> anything useful about it. Spend the effort on arriving at the same spot every
+> time instead: a `wall_square()` before the grab beats any amount of checking
+> after it.
 
 > ⚠️ **Two mechanisms means two `home()` calls.** Every mechanism needs its own
 > datum, and neither one homes the other:
@@ -321,11 +315,11 @@ motor.reset_angle(0)                    # the jaws just met -- THAT is zero
 > it rolls. Press into that and "where it stopped" is a different number every
 > run — which is why gripping needs the other tool.
 
-> 🎯 **Zero goes where the question is.** Both gripper files home the jaws
-> **shut** and call that 0. That is not an accident: the question you ask all
-> run long is *"did I catch something, or did the jaws meet?"* — and with zero
-> at the meeting point the answer is just *"did we stop before 0?"* There is no
-> empty-jaw angle to measure, to mistype, or to re-measure after you re-gear.
+> 🎯 **Zero goes where the jaws meet.** Both gripper files home the jaws
+> **shut** and call that 0, so every angle in the file reads as *how far open*
+> the mechanism is. `READY_ANGLE` is a positive number and `GRIP_TARGET` a
+> small negative one. Nothing to measure, nothing to mistype, and nothing to
+> re-measure after you re-gear.
 
 > ⚠️ **`duty_limit` is the knob that breaks gears.** Too high and the motor
 > keeps shoving after the mechanism has arrived — you'll *hear* the plastic
@@ -346,10 +340,9 @@ claw can never get there — the object is in the way — so it never stops
 trying, and it leans in at `GRIP_TORQUE` for the whole carry.
 
 > 🧮 **`GRIP_TARGET` is a small negative number, and that's the whole trick.**
-> Zero is where the jaws meet, so "a few degrees past shut" is just
-> `-GRIP_OVERSHOOT` — the same line in every squad's file, with nothing to
-> measure. There is no empty-jaw angle to keep it in step with, so it cannot
-> drift out of step.
+> Zero is where the jaws meet, so "a few degrees past shut" is just `-10` — the
+> same line in every squad's file, with nothing to measure and nothing to keep
+> it in step with.
 
 > 🤝 **Why aim at a place you can't reach?** Because that's what keeps the
 > pressure on. A motor that *arrives* stops pushing: it holds the angle it
@@ -363,32 +356,8 @@ trying, and it leans in at `GRIP_TORQUE` for the whole carry.
 > 🔩 **`GRIP_TORQUE` is one number doing two jobs.** It's how hard you squeeze,
 > *and* it's the gear protection: the motor physically cannot shove harder
 > than this, whatever you ask it. Raise it if the object slips on turns; lower
-> it if you hear crunching or the object deforms. Find it with
-> [grip_test.py](code/grip_test.py) — not by guessing at the desk.
-
-### Did you get it? — two signals, not one
-
-```python
-gripper.holding()          # right now
-...
-gripper.holding()          # ...and again, after driving 60 cm
-```
-
-| jaws stopped | load | what happened |
-|---|---|---|
-| at **0** — they met | high | closed on **air** |
-| **short** of 0 (past `AIR_MARGIN`) | high | **holding it** ✅ |
-| **short** of 0 | low | **it's gone** — knocked out on a turn |
-
-> 📏 **Neither signal is enough alone.** The angle can't tell a held object
-> from one that fell out a second ago — the jaws are still in the same place.
-> The load can't tell a gripped object from jaws squeezing each other. Two
-> readings, two failures caught.
-
-> 🔬 **One reading always looks fine.** The question that decides your run is
-> *how much does the same grab wander over ten tries?* You can't see a spread
-> one number at a time — that's what `grip_test.py` is for. Under 10° of
-> spread, build on it. Over 25°, fix the **build**, not the code.
+> it if you hear crunching or the object deforms. Find it on the mat, with the
+> object you actually carry — not by guessing at the desk.
 
 ## Three ways to move a motor
 

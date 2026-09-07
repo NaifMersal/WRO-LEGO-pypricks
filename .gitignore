@@ -50,12 +50,11 @@ coach.html
 tools/*
 !tools/odommap/
 
-# ── Gold-reference programs: the four the cheat sheet links, nothing else ─────
-# library-cheatsheet.qmd declares exactly these four under `resources:` and
-# offers them as downloads; without them those links 404. code/.venv/,
-# code/archive/, and the mission and object-test harnesses stay out.
+# ── Gold-reference programs: the three the cheat sheet links, nothing else ────
+# library-cheatsheet.qmd declares exactly these three under `resources:` and
+# offers them as downloads; without them those links 404. code/.venv/ and
+# code/archive/ stay out.
 code/*
 !code/movements.py
 !code/claw_gripper.py
 !code/lift_gripper.py
-!code/grip_test.py
