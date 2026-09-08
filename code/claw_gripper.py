@@ -15,10 +15,6 @@ so an angle is simply how far the object holds the jaws open.
     0 ........... contact ........... READY_ANGLE
     jaws met      object grips        open, ready
                   VARIES BY SIZE
-
-POSITIVE OPENS -- the same way round as lift_gripper.py.
-
-Why any of this: docs/library-design-notes.md #3.
 """
 
 from pybricks.parameters import Direction, Port, Stop
@@ -29,7 +25,7 @@ from pybricks.tools import wait
 # ============================================================ CLAW FACTS ==
 
 CLAW_PORT = Port.E
-CLAW_DIRECTION = Direction.COUNTERCLOCKWISE   # POSITIVE must mean OPENING TUNE
+CLAW_DIRECTION = Direction.CLOCKWISE   # POSITIVE must mean OPENING TUNE
 
 OPEN_SPEED = 300        # deg/s
 CLOSE_SPEED = 200       # deg/s -- slower so it doesn't slam the object
@@ -37,8 +33,8 @@ CLOSE_SPEED = 200       # deg/s -- slower so it doesn't slam the object
 HOME_EFFORT = 40        # % power, home() only. Jaw on jaw -- keep it gentle TUNE
 GRIP_TORQUE = 180       # mNm -- how hard we squeeze                        TUNE
 
-READY_ANGLE = 140       # deg open -- wide enough for your BIGGEST object   TUNE
-GRIP_TARGET = -10       # deg past shut. Unreachable on purpose: the jaws never
+READY_ANGLE = 10       # deg open -- wide enough for your BIGGEST object   TUNE
+GRIP_TARGET = 130       # deg past shut. Unreachable on purpose: the jaws never
                         # arrive, so they never stop leaning in.
 
 
