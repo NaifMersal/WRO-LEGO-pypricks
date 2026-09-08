@@ -23,8 +23,6 @@ lift target would swing them to different heights. LIFT_TRAVEL is degrees
 
 POSITIVE OPENS, and zero is where the jaws MEET -- the same way round as
 claw_gripper.py, so a sign means the same thing in both files.
-
-Why any of this: docs/library-design-notes.md #1, #4.
 """
 
 from pybricks.parameters import Direction, Port, Stop
@@ -44,16 +42,16 @@ OPEN_SPEED = 300        # deg/s
 CLOSE_SPEED = 200       # deg/s -- slow enough not to slam the object
 LIFT_SPEED = 150        # deg/s -- slowest: it is carrying now
 
-HOME_EFFORT = 75        # % raw power, home() only. Too high strips gears.  TUNE
+HOME_EFFORT = 50        # % raw power, home() only. Too high strips gears.  TUNE
 GRIP_TORQUE = 60        # mNm -- phase 1 squeeze. High crushes, low slips.  TUNE
 LIFT_TORQUE = 200       # mNm -- phase 2. MUST exceed GRIP_TORQUE or the
                         # lift can never push past its own grip.            TUNE
 
-READY_ANGLE = 120       # deg open -- wide enough for your BIGGEST object.  TUNE
+READY_ANGLE = 140       # deg open -- wide enough for your BIGGEST object.  TUNE
 GRIP_TARGET = -10       # deg past shut. Unreachable on purpose: the jaws never
                         # arrive, so they never stop leaning in.
 
-LIFT_TRAVEL = 75        # deg PAST CONTACT -- the lift itself. Not a position:
+LIFT_TRAVEL = 60        # deg PAST CONTACT -- the lift itself. Not a position:
                         # raise until the object clears the mat.            TUNE
 
 
